@@ -13,10 +13,6 @@ const PromoWrapper = styled.div`
   font-size: 1.2rem;
   line-height: 1.2;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-    flex-direction: row;
-  }
-
   p {
     margin-bottom: ${({ theme }) => theme.space[4]};
   }
@@ -32,7 +28,11 @@ const PromoText = styled.div`
   flex-direction: column;
   align-items: center;
   p {
-    width: ${({ size }) => (size ? size : "100%")};
+    width: 100%;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
+      width: ${({ size }) => (size ? size : "100%")};
+    }
   }
 `;
 
@@ -46,7 +46,7 @@ const PromoTitle = styled.span`
 export const Promo = () => {
   return (
     <PromoWrapper>
-      <PromoText size="470px">
+      <PromoText size="50vw">
         <p>
           At <PromoTitle>Gillette Kennels</PromoTitle>, we offer a comfortable
           and safe place for your pets to stay while your are away!
@@ -57,10 +57,19 @@ export const Promo = () => {
         </p>
       </PromoText>
       <PromoPics>
-        <GridItems size="200px">
-          <GridItem img="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg"></GridItem>
-          <GridItem img="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg"></GridItem>
-          <GridItem img="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg"></GridItem>
+        <GridItems>
+          <GridItem
+            size="25vw"
+            img="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg"
+          ></GridItem>
+          <GridItem
+            size="25vw"
+            img="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005633/gk-app/gk_home.jpg"
+          ></GridItem>
+          <GridItem
+            size="25vw"
+            img="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg"
+          ></GridItem>
         </GridItems>
       </PromoPics>
     </PromoWrapper>

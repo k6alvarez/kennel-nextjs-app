@@ -22,15 +22,15 @@ export const GridItems = styled.ul`
 `;
 
 export const GridItem = styled.li`
-  min-width: 200px;
-  height: 200px;
+  min-width: 20vw;
+  height: 20vw;
   background-image: url(${({ img }) => (img ? img : "")});
   background-color: ${({ theme }) => theme.colors.nav};
   background-size: cover;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 
   @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-    min-width: ${({ size }) => (size ? size : "200px")};
-    height: ${({ size }) => (size ? size : "200px")};
+    min-width: ${({ size }) => (size ? size : "20vw")};
+    height: ${({ size }) => (size ? size : "20vw")};
   }
 `;

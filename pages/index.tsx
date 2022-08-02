@@ -51,11 +51,12 @@ const Blog: React.FC<Props> = (props) => {
           entire room, complete with rocking chairs, cozy baskets, and wide
           window sills, is available on a first come first serve basis.
         </p>
-        <GridItems as="div" size="320px">
+        <GridItems as="div">
           <div>
             <p>Vaccinatons</p>
             <GridItem
               as="div"
+              size="25vw"
               img="https://res.cloudinary.com/dhcv2fdfq/image/upload/c_scale,h_450/v1585006544/gk-app/gktwopups.jpg"
             ></GridItem>
           </div>
@@ -63,6 +64,7 @@ const Blog: React.FC<Props> = (props) => {
             <p>We board cats!</p>
             <GridItem
               as="div"
+              size="25vw"
               img="https://res.cloudinary.com/dhcv2fdfq/image/upload/c_scale,h_450/v1585006782/gk-app/catsgk.jpg"
             ></GridItem>
           </div>
@@ -70,6 +72,7 @@ const Blog: React.FC<Props> = (props) => {
             <p>Before you board</p>
             <GridItem
               as="div"
+              size="25vw"
               img="https://res.cloudinary.com/dhcv2fdfq/image/upload/c_scale,h_450/v1585007798/gk-app/sierragk.jpg"
             ></GridItem>
           </div>
@@ -97,14 +100,14 @@ const Blog: React.FC<Props> = (props) => {
           can better serve you. Please Contact Us with your suggestions.
         </p>
         <p>Thank you, Kirk L. Gillette, M.A.</p>
-        {/* <h1>Public Feed</h1>
+        <h1>Public Feed</h1>
         <main>
           {props.feed.map((post) => (
             <div key={post.id}>
               <Post post={post} />
             </div>
           ))}
-        </main> */}
+        </main>
       </Content>
     </Layout>
   );
