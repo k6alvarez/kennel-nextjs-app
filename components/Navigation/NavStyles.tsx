@@ -369,10 +369,7 @@ export const LogoName = styled.h2`
   } */
 
   a {
-    &:focus,
-    &.active {
-      text-decoration: none;
-    }
+    text-decoration: none;
   }
 
   /* @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {

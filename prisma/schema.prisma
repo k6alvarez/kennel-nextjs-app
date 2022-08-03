@@ -63,6 +63,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
+  Reservation Reservation[]
   @@map(name: "users")
 }
 
@@ -73,4 +74,20 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verificationtokens")
+}
+
+model Reservation {
+  id                  String   @id @default(cuid())
+  createdAt           DateTime @default(now()) @map(name: "created_at")
+  updatedAt           DateTime @updatedAt @map(name: "updated_at")
+  submitted           Boolean  @default(false)
+  confirmed           Boolean  @default(false)
+  author              User     @relation(fields: [authorId], references: [id])
+  authorId            String
+  arrivalDate         String
+  arrivalTime         String
+  departureDate       String
+  departureTime       String
+  dateConfirmed       String
+  specialInstructions String
 }

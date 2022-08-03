@@ -15,11 +15,28 @@ const StyledNav = styled.nav`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   a {
     color: ${({ theme }) => theme.colors.textPrimary};
+
+    &[data-active="true"] {
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    background-color: ${({ theme }) => theme.colors.nav};
+    color: ${({ theme }) => theme.colors.primary};
+    border: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   }
 `;
 const NavWrapper = styled.div`
   display: flex;
   align-items: center;
+  flex: 1;
+
+  &:last-child {
+    justify-content: flex-end;
+  }
+
   a {
     font-size: ${({ theme }) => theme.fontSizes[1]};
     text-decoration: none;
@@ -34,28 +51,23 @@ const Header: React.FC = () => {
 
   const { data: session, status } = useSession();
 
-  let leftNav = (
-    <NavWrapper>
-      <Link href="/">
-        <a data-active={isActive("/")}>Boarding</a>
-      </Link>
-      {/* <Link href="/">
-        <a data-active={isActive("/")}>Feed</a>
-      </Link> */}
-      <Link href="/">
-        <a data-active={isActive("/")}>Training</a>
-      </Link>
-    </NavWrapper>
-  );
+  let leftNav = <ShieldLogo />;
 
   let rightNav = null;
 
   if (status === "loading") {
     leftNav = (
       <div>
-        <Link href="/">
-          <a data-active={isActive("/")}>Feed</a>
+        <Link href="/boarding">
+          <a data-active={isActive("/boarding")}>Boarding</a>
         </Link>
+        {/* <Link href="/">
+        <a data-active={isActive("/")}>Feed</a>
+      </Link> */}
+        <Link href="/training">
+          <a data-active={isActive("/training")}>Training</a>
+        </Link>
+        <ShieldLogo />
       </div>
     );
     rightNav = (
@@ -68,8 +80,17 @@ const Header: React.FC = () => {
   if (!session) {
     rightNav = (
       <NavWrapper>
-        <Link href="/">
-          <a data-active={isActive("/signup")}>Reservations</a>
+        <Link href="/boarding">
+          <a data-active={isActive("/boarding")}>Boarding</a>
+        </Link>
+        {/* <Link href="/">
+        <a data-active={isActive("/")}>Feed</a>
+      </Link> */}
+        <Link href="/training">
+          <a data-active={isActive("/training")}>Training</a>
+        </Link>
+        <Link href="/create-reservation">
+          <a data-active={isActive("/create-reservation")}>Book Reservation</a>
         </Link>
         <Link href="/api/auth/signin">
           <a data-active={isActive("/signup")}>Log in</a>
@@ -79,38 +100,40 @@ const Header: React.FC = () => {
   }
 
   if (session) {
-    leftNav = (
-      <NavWrapper>
-        <Link href="/">
-          <a data-active={isActive("/")}>Feed</a>
-        </Link>
-        <Link href="/drafts">
-          <a data-active={isActive("/drafts")}>My drafts</a>
-        </Link>
-      </NavWrapper>
-    );
     rightNav = (
       <NavWrapper>
-        <p>
-          {session.user.name} ({session.user.email})
-        </p>
-        <Link href="/create">
+        <Link href="/boarding">
+          <a data-active={isActive("/boarding")}>Boarding</a>
+        </Link>
+        {/* <Link href="/">
+        <a data-active={isActive("/")}>Feed</a>
+      </Link> */}
+        <Link href="/training">
+          <a data-active={isActive("/training")}>Training</a>
+        </Link>
+        {/* <Link href="/draft-reservations">
+          <a data-active={isActive("/draft-reservations")}>My Book Reservation</a>
+        </Link> */}
+        <Link href="/create-reservation">
+          <a data-active={isActive("/create-reservation")}>Book Reservation</a>
+        </Link>
+        <Link href="/profile">
+          <a data-active={isActive("/profile")}>My Profile</a>
+        </Link>
+        {/* <Link href="/create">
           <button>
             <a>New post</a>
           </button>
-        </Link>
-        <button onClick={() => signOut()}>
-          <a>Log out</a>
-        </button>
+        </Link> */}
+        <button onClick={() => signOut()}>Log out</button>
       </NavWrapper>
     );
   }
 
   return (
     <StyledNav>
-      {/* {leftNav} */}
-      <ShieldLogo setMobileMenuOpen={undefined} />
-      {/* {rightNav} */}
+      {leftNav}
+      {rightNav}
     </StyledNav>
   );
 };

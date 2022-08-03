@@ -11,29 +11,21 @@ import {
 const GlobalStyle = createGlobalStyle`
   ${BadgeStyles}
 `;
-export const ShieldLogo = ({ setMobileMenuOpen }) => {
+export const ShieldLogo = () => {
   return (
     <>
       <GlobalStyle />
       {/* <LogoGrid>
-        <Crest setMobileMenuOpen={setMobileMenuOpen} />
+        <Crest />
       </LogoGrid> */}
       <LogoName>
         <RouteLink activeClassName="active" href="/">
-          <a
-            onClick={() => {
-              setMobileMenuOpen(false);
-            }}
-          >
-            Gillette Kennels
-          </a>
+          <a>Gillette Kennels</a>
         </RouteLink>
       </LogoName>
       {/* <RouteLink activeClassName="active" href="/">
         <a
-          onClick={() => {
-            setMobileMenuOpen(false);
-          }}
+
         >
           Gillette Kennels
         </a>
@@ -42,7 +34,7 @@ export const ShieldLogo = ({ setMobileMenuOpen }) => {
   );
 };
 
-export const Crest = ({ setMobileMenuOpen }) => {
+export const Crest = () => {
   return (
     <figure className="shield">
       <div className="shield-off">
@@ -55,11 +47,7 @@ export const Crest = ({ setMobileMenuOpen }) => {
         <div className="circles"></div>
 
         <RouteLink activeClassName="active" href="/">
-          <a
-            onClick={() => {
-              setMobileMenuOpen(false);
-            }}
-          >
+          <a>
             <div className="rect-box">
               <CrestLogo src="/images/gk_new_crest_only.png" />
             </div>
