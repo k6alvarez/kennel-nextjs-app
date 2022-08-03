@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Router from "next/router";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const Reservation: React.FC = () => {
+  const { data: session } = useSession();
   const [fields, setFields] = useState({
     arrivalDate: "",
     arrivalTime: "",
@@ -29,6 +32,11 @@ const Reservation: React.FC = () => {
   return (
     <Layout>
       <div>
+        {session && (
+          <Link href="/draft-reservations">
+            <a>Pending Reservations</a>
+          </Link>
+        )}
         <form onSubmit={submitData}>
           <h1>Create New Reservation</h1>
           <input

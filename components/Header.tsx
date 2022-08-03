@@ -51,10 +51,13 @@ const NavWrapper = styled.div`
   }
 `;
 
+export const isActive: (pathname: string, routerPathname: string) => boolean = (
+  pathname,
+  routerPathname
+) => routerPathname === pathname;
+
 const Header: React.FC = () => {
   const router = useRouter();
-  const isActive: (pathname: string) => boolean = (pathname) =>
-    router.pathname === pathname;
 
   const { data: session, status } = useSession();
 
@@ -66,13 +69,13 @@ const Header: React.FC = () => {
     leftNav = (
       <div>
         <Link href="/boarding">
-          <a data-active={isActive("/boarding")}>Boarding</a>
+          <a data-active={isActive("/boarding", router.pathname)}>Boarding</a>
         </Link>
         {/* <Link href="/">
         <a data-active={isActive("/")}>Feed</a>
       </Link> */}
         <Link href="/training">
-          <a data-active={isActive("/training")}>Training</a>
+          <a data-active={isActive("/training", router.pathname)}>Training</a>
         </Link>
         <ShieldLogo />
       </div>
@@ -118,9 +121,6 @@ const Header: React.FC = () => {
         <Link href="/training">
           <a data-active={isActive("/training")}>Training</a>
         </Link>
-        {/* <Link href="/draft-reservations">
-          <a data-active={isActive("/draft-reservations")}>My Book Reservation</a>
-        </Link> */}
         <Link href="/create-reservation">
           <a data-active={isActive("/create-reservation")}>Book Reservation</a>
         </Link>

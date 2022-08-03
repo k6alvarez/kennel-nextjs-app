@@ -9,6 +9,10 @@ const PageWrapper = styled.div`
     font-size: ${({ theme }) => theme.fontSizes[4]};
     margin: ${({ theme }) => theme.space[3]} 0;
   }
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 type Props = {
