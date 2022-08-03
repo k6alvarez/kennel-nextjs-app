@@ -147,6 +147,12 @@ button {
     border: none;
     cursor: pointer;
 }
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 /**
   ****************
   * END CSS RESET

@@ -362,7 +362,12 @@ export const LogoName = styled.h2`
   z-index: 2;
   letter-spacing: 1px; */
   font-family: "Dancing_Script", sans-serif;
+  font-size: ${({ theme }) => theme.fontSizes[2]};
   font-weight: bold;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
+    font-size: ${({ theme }) => theme.fontSizes[3]};
+  }
 
   /* .space {
     display: none;

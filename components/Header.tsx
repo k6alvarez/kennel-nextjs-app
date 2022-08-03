@@ -38,9 +38,16 @@ const NavWrapper = styled.div`
   }
 
   a {
-    font-size: ${({ theme }) => theme.fontSizes[1]};
     text-decoration: none;
     margin: 0 ${({ theme }) => theme.space[3]};
+  }
+
+  a,
+  button {
+    font-size: ${({ theme }) => theme.fontSizes[0]};
+    @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
+      font-size: ${({ theme }) => theme.fontSizes[1]};
+    }
   }
 `;
 
@@ -93,7 +100,7 @@ const Header: React.FC = () => {
           <a data-active={isActive("/create-reservation")}>Book Reservation</a>
         </Link>
         <Link href="/api/auth/signin">
-          <a data-active={isActive("/signup")}>Log in</a>
+          <a data-active={isActive("/signup")}>Log In</a>
         </Link>
       </NavWrapper>
     );
@@ -125,7 +132,7 @@ const Header: React.FC = () => {
             <a>New post</a>
           </button>
         </Link> */}
-        <button onClick={() => signOut()}>Log out</button>
+        <button onClick={() => signOut()}>Log Out</button>
       </NavWrapper>
     );
   }
