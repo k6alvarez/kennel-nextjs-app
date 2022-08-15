@@ -40,12 +40,12 @@ const options = {
         const { host } = new URL(url);
         const transport = createTransport(server);
         await transport.sendMail({
-           to: email,
-           from,
-           subject: `Sign in to ${host}`,
+          to: email,
+          from,
+          subject: `Sign in to ${host}`,
           text: text({ url, host }),
-           // we can pass in 'theme' to access default theme as a new parameter
-           html: html({ url, host, email }),
+          // we can pass in 'theme' to access default theme as a new parameter
+          html: html({ url, host, email }),
         });
      },
     }),

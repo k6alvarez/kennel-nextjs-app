@@ -22,7 +22,7 @@ type Props = {
 const Layout: React.FC<Props> = ({ children }) => (
   <PageWrapper>
     <Header />
-    <div>{children}</div>
+    <>{children}</>
   </PageWrapper>
 );
 

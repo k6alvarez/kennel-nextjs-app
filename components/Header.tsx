@@ -51,13 +51,10 @@ const NavWrapper = styled.div`
   }
 `;
 
-export const isActive: (pathname: string, routerPathname: string) => boolean = (
-  pathname,
-  routerPathname
-) => routerPathname === pathname;
-
 const Header: React.FC = () => {
   const router = useRouter();
+  const isActive: (pathname: string) => boolean = (pathname) =>
+    router.pathname === pathname;
 
   const { data: session, status } = useSession();
 
