@@ -66,13 +66,10 @@ const Header: React.FC = () => {
     leftNav = (
       <div>
         <Link href="/boarding">
-          <a data-active={isActive("/boarding", router.pathname)}>Boarding</a>
+          <a data-active={isActive("/boarding")}>Boarding</a>
         </Link>
-        {/* <Link href="/">
-        <a data-active={isActive("/")}>Feed</a>
-      </Link> */}
         <Link href="/training">
-          <a data-active={isActive("/training", router.pathname)}>Training</a>
+          <a data-active={isActive("/training")}>Training</a>
         </Link>
         <ShieldLogo />
       </div>
