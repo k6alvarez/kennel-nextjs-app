@@ -3,11 +3,14 @@ import styled from "styled-components";
 export const Content = styled.article`
   padding: ${({ theme }) => theme.space[4]};
 
+  h1 {
+    font-weight: bold;
+    font-size: ${({ theme }) => theme.fontSizes[4]};
+  }
+
   h2 {
     font-family: ${({ theme }) => theme.fonts.heading};
-    font-size: 2rem;
-    letter-spacing: 1px;
-    margin: ${({ theme }) => theme.space[3]} 0;
+    font-size: ${({ theme }) => theme.fontSizes[4]};
   }
 `;
 

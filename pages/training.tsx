@@ -31,7 +31,7 @@ const Training: React.FC<Props> = (props) => {
   return (
     <Layout>
       <Content>
-        <h2>Gillette Obedience Training</h2>
+        <h1>Gillette Obedience Training</h1>
         <p>
           Kirk L. Gillette holds a M.A. in Behavioral Psychology from Western
           Michigan University, a diploma from West Virginia Canine College, and

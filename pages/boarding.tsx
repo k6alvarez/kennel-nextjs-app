@@ -31,7 +31,7 @@ const Boarding: React.FC<Props> = (props) => {
   return (
     <Layout>
       <Content>
-        <h2>Boarding</h2>
+        <h1>Boarding</h1>
         <p>
           We constructed our modern boarding facility in 1998 to fill a need
           made evident by an overwhelming number of requests from clients who

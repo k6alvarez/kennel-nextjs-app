@@ -12,7 +12,16 @@ export const base = {
     heading: '"Dancing_Script", cursive',
     body: '"Lato", sans-serif',
   },
-  fontSizes: ["12px", "14px", "16px", "20px", "24px"],
+  fontSizes: [
+    "1rem",
+    "1.2rem",
+    "1.4rem",
+    "1.6rem",
+    "1.8rem",
+    "2rem",
+    "2.4rem",
+    "3rem",
+  ],
 };
 export const light = {
   primary: "#8c0b3e",

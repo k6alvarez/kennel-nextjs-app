@@ -32,7 +32,7 @@ const Blog: React.FC<Props> = (props) => {
     <Layout>
       <Promo />
       <Content>
-        <h2>About Our Boarding Kennel</h2>
+        <h1>About Our Boarding Kennel</h1>
         <p>
           Inside we feature central air conditioning and in-floor radiant heat.
           It’s so cozy, some of our guests prefer sleeping next to their beds!
@@ -100,14 +100,6 @@ const Blog: React.FC<Props> = (props) => {
           can better serve you. Please Contact Us with your suggestions.
         </p>
         <p>Thank you, Kirk L. Gillette, M.A.</p>
-        <h1>Public Feed</h1>
-        <main>
-          {props.feed.map((post) => (
-            <div key={post.id}>
-              <Post post={post} />
-            </div>
-          ))}
-        </main>
       </Content>
     </Layout>
   );
