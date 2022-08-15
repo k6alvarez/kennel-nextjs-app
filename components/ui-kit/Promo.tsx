@@ -10,7 +10,7 @@ const PromoWrapper = styled.div`
   align-items: center;
   gap: ${({ theme }) => theme.space[2]};
   padding: ${({ theme }) => theme.space[4]};
-  font-size: 1.2rem;
+  font-size: ${({ theme }) => theme.fontSizes[4]};
   line-height: 1.2;
 
   p {
@@ -29,7 +29,7 @@ const PromoText = styled.div`
   align-items: center;
   p {
     width: 100%;
-
+    text-align: center;
     @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
       width: ${({ size }) => (size ? size : "100%")};
     }
@@ -38,7 +38,7 @@ const PromoText = styled.div`
 
 const PromoTitle = styled.span`
   font-family: ${({ theme }) => theme.fonts.heading};
-  font-size: 1.6rem;
+  font-size: ${({ theme }) => theme.fontSizes[6]};
   letter-spacing: 1px;
   line-height: 1;
 `;
@@ -46,7 +46,7 @@ const PromoTitle = styled.span`
 export const Promo = () => {
   return (
     <PromoWrapper>
-      <PromoText size="50vw">
+      <PromoText size="70vw">
         <p>
           At <PromoTitle>Gillette Kennels</PromoTitle>, we offer a comfortable
           and safe place for your pets to stay while your are away!

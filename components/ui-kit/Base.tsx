@@ -25,8 +25,8 @@ export const GridItems = styled.ul`
 `;
 
 export const GridItem = styled.li`
-  min-width: 20vw;
-  height: 20vw;
+  min-width: 80vw;
+  height: 80vw;
   background-image: url(${({ img }) => (img ? img : "")});
   background-color: ${({ theme }) => theme.colors.nav};
   background-size: cover;
