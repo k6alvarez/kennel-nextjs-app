@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const Content = styled.article`
   padding: ${({ theme }) => theme.space[4]};
+  max-width: 80vw;
+  margin: 0 auto;
 
   h1 {
     font-weight: bold;
