@@ -21,7 +21,7 @@ export const FormIntroGuest = () => {
       </p>{" "}
       <p>
         <Link href="/api/auth/signin">
-          <a>Log in to your account for faster booking</a>
+          <a>Login to your account</a>
         </Link>
         <span> or you may continue to book a reservation as a guest.</span>
       </p>

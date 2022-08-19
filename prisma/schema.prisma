@@ -60,6 +60,7 @@ model Session {
 model User {
   id            String        @id @default(cuid())
   name          String?
+  lastName      String?
   email         String?       @unique
   emailVerified DateTime?     @map("email_verified")
   image         String?
@@ -72,6 +73,7 @@ model User {
   reservation   Reservation[]
 
   GuestReservation GuestReservation[]
+
   @@map(name: "users")
 }
 
@@ -109,6 +111,7 @@ model GuestReservation {
   author              User?    @relation(fields: [authorId], references: [id])
   authorId            String?
   name                String
+  lastName            String
   email               String
   arrivalDate         String
   arrivalTime         String

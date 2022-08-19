@@ -110,8 +110,8 @@ section {
 }
 
 body {
-    line-height: 1.6;
-    font-size: 21px;
+    line-height: 1.2;
+    font-size: 18px;
 
 }
 
@@ -152,6 +152,10 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+p {
+    margin-bottom: 1rem;
 }
 /**
   ****************

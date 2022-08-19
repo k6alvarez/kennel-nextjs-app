@@ -13,6 +13,7 @@ const StyledNav = styled.nav`
   background-color: ${({ theme }) => theme.colors.primary};
   padding: ${({ theme }) => theme.space[2]};
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
   a {
     color: ${({ theme }) => theme.colors.textPrimary};
 

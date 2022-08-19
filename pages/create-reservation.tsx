@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Layout from "../components/Layout";
-import Router from "next/router";
 import { useSession } from "next-auth/react";
 import { Content } from "../components/ui-kit/Base";
-import { ReservationGuest } from "../components/Reservations/ReservationGuest";
-import { ReservationClient } from "../components/Reservations/ReservationClient";
+import { NewClientForm } from "../components/Reservations/NewClients/NewClientForm";
+import { ClientForm } from "../components/Reservations/Clients/ClientForm";
 
 const Reservation: React.FC = () => {
   const { data: session } = useSession();
@@ -13,11 +12,7 @@ const Reservation: React.FC = () => {
     <Layout>
       <Content>
         <h1>{!session?.user ? "New Client" : "Client"} Reservation</h1>
-        {!session?.user ? (
-          <ReservationGuest />
-        ) : (
-          <ReservationClient session={session} />
-        )}
+        {!session?.user ? <NewClientForm /> : <ClientForm session={session} />}
       </Content>
     </Layout>
   );

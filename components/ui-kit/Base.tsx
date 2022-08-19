@@ -2,8 +2,12 @@ import styled from "styled-components";
 
 export const Content = styled.article`
   padding: ${({ theme }) => theme.space[4]};
-  max-width: 80vw;
+  max-width: 95vw;
   margin: 0 auto;
+
+  @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
+    max-width: 80vw;
+  }
 
   h1 {
     font-weight: bold;
