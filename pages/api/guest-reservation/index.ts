@@ -49,7 +49,7 @@ export default async function handle(req, res) {
   //   }
   // })
 
-  const result: GuestReservation = await prisma.guestReservation.create({
+  const result: any = await prisma.guestReservation.create({
     data: {
       name: name,
       lastName: lastName,
