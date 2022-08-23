@@ -1,4 +1,5 @@
 
+import { GuestReservation } from "@prisma/client";
 import { INITIAL_USER_STATE } from "../../../components/Reservations/NewClients/formInitialState";
 import prisma from "../../../lib/prisma";
 
@@ -48,7 +49,7 @@ export default async function handle(req, res) {
   //   }
   // })
 
-  const result = await prisma.guestReservation.create({
+  const result: GuestReservation = await prisma.guestReservation.create({
     data: {
       name: name,
       lastName: lastName,
