@@ -19,15 +19,20 @@ export const base = {
 export const light = {
   primary: "#8c0b3e",
   primaryDark: "#740833",
+  secondary: "#d9e5e8",
   nav: "#f8f8f8",
   border: "#212121",
   textPrimary: "#ffffff",
   textSecondary: "#212121",
+  inputFocus: "#1890ff",
 };
 export const dark = {
-  primary: "#f8f8f8",
-  nav: "#740833",
-  border: "#ffffff",
-  textPrimary: "#212121",
-  textSecondary: "#ffffff",
+  primary: "#8c0b3e",
+  primaryDark: "#740833",
+  secondary: "#d9e5e8",
+  nav: "#f8f8f8",
+  border: "#212121",
+  textPrimary: "#ffffff",
+  textSecondary: "#212121",
+  inputFocus: "#1890ff",
 };

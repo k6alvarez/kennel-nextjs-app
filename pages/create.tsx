@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Router from "next/router";
+import { Content } from "../components/ui-kit/Base";
 
 const Draft: React.FC = () => {
   const [title, setTitle] = useState("");
@@ -23,7 +24,7 @@ const Draft: React.FC = () => {
 
   return (
     <Layout>
-      <div>
+      <Content>
         <form onSubmit={submitData}>
           <h1>New Draft</h1>
           <input
@@ -45,7 +46,7 @@ const Draft: React.FC = () => {
             or Cancel
           </a>
         </form>
-      </div>
+      </Content>
     </Layout>
   );
 };

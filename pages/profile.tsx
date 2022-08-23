@@ -3,9 +3,8 @@ import { GetStaticProps } from "next";
 import prisma from "../lib/prisma";
 
 import Layout from "../components/Layout";
-import Post, { PostProps } from "../components/Post";
-import { Promo } from "../components/ui-kit/Promo";
-import { Content, GridItem, GridItems } from "../components/ui-kit/Base";
+import { Content } from "../components/ui-kit/Base";
+import { PostProps } from "../components/Post";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({

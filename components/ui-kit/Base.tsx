@@ -43,3 +43,16 @@ export const GridItem = styled.li`
     height: ${({ size }) => (size ? size : "20vw")};
   }
 `;
+
+export const Button = styled.button`
+  margin-top: ${({ theme }) => theme.space[4]};
+  padding: ${({ theme }) => theme.space[3]};
+  font-size: ${({ theme }) => theme.fontSizes[1]};
+  background-color: ${({ theme, primary }) =>
+    primary ? theme.colors.primary : theme.colors.secondary};
+  color: ${({ theme, primary }) =>
+    primary ? theme.colors.textPrimary : theme.colors.textSecondary};
+  border: none;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 100px;
+`;

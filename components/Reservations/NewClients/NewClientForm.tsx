@@ -1,22 +1,22 @@
-import React, { useState, useReducer } from "react";
-import { message, Steps } from "antd";
+import React, { useState } from "react";
+import { Steps } from "antd";
+import Router from "next/router";
 import { FormIntroGuest } from "./FormIntro";
-import { formReducer, INITIAL_STATE } from "./formReducer";
-import { FormProvider } from "./formContext";
+import { useFormContext } from "./formContext";
 import { FieldsetBoardingInfo } from "./FieldsetBoardingInfo";
 import { FieldsetClientInfo } from "./FieldsetClientInfo";
 import { FieldsetPetsInfo } from "./FieldsetPetsInfo";
-import styled from "styled-components";
+import { Button } from "../../ui-kit/Base";
+import { StepsContent, StepsAction } from "./styles";
+import {
+  INITIAL_PETS_STATE,
+  INITIAL_RESERVATION_STATE,
+  INITIAL_USER_STATE,
+} from "./formInitialState";
 
-const StepsAction = styled.div`
-  display: flex;
-`;
-const StepsContent = styled.div`
-  width: 100%;
-`;
 const { Step } = Steps;
 
-const steps = [
+const formSteps = [
   {
     title: "Your Information",
     content: <FieldsetClientInfo />,
@@ -34,14 +34,13 @@ const steps = [
     content: (
       <fieldset>
         <p>payment</p>
-        {/* <input type="submit" value="Create Reservation    " /> */}
       </fieldset>
     ),
   },
 ];
 
 export const NewClientForm = () => {
-  const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
+  const { state, dispatch } = useFormContext();
 
   const [current, setCurrent] = useState(0);
 
@@ -55,28 +54,38 @@ export const NewClientForm = () => {
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-
+    const data = Object.entries(state).map(([key, _value]) => {
+      return { [key]: state[key].value };
+    });
     try {
       await fetch("/api/guest-reservation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(state),
+        body: JSON.stringify(Object.assign({}, ...data)),
       }).then((res) => {
+        return res.json();
+      }).then(async(res) => {
         console.log(res);
-      });
-      // await Router.push("/draft-guest-reservations");
+        await Router.push("/guest-reservation/[id]", `/guest-reservation/${res.id}`)
+      })
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleChange = (name, newValue) => {
-    // const error = validateInput(name, newValue);
-    const error = null;
-    dispatch({
-      key: name,
-      payload: { newValue, error },
-    });
+  const theFieldsAreValid = (currentFormSection) => {
+    let sectionInputs = [INITIAL_USER_STATE, INITIAL_RESERVATION_STATE, INITIAL_PETS_STATE];
+    for (const field of Object.entries(sectionInputs[currentFormSection])) {
+      if (state[field[0]].required && !state[field[0]].value) {
+        const error = `${state[field[0]].label} is required`;
+        dispatch({
+          key: field[0],
+          payload: { newValue: state[field[0]].value, error },
+        });
+        return false;
+      }
+    }
+    return true;
   };
 
   return (
@@ -84,24 +93,35 @@ export const NewClientForm = () => {
       <FormIntroGuest />
       <form onSubmit={submitData}>
         <Steps current={current}>
-          {steps.map((item) => (
+          {formSteps.map((item) => (
             <Step key={item.title} title={item.title} />
           ))}
         </Steps>
-        <FormProvider value={{ state, handleChange }}>
-          <StepsContent>{steps[current].content}</StepsContent>
-          <StepsAction>
-            {current > 0 && <button onClick={() => prev()}>Previous</button>}
-            {current < steps.length - 1 && (
-              <button onClick={() => next()}>Next</button>
-            )}
-            {current === steps.length - 1 && (
-              <button onClick={() => message.success("Processing complete!")}>
-                Done
-              </button>
-            )}
-          </StepsAction>
-        </FormProvider>
+
+        <StepsContent>{formSteps[current].content}</StepsContent>
+        <StepsAction>
+          {current > 0 && (
+            <Button type="button" onClick={() => prev()}>
+              Previous
+            </Button>
+          )}
+          {current < formSteps.length - 1 && (
+            <Button
+              primary
+              type="button"
+              onClick={() => {
+                if (theFieldsAreValid(current)) {
+                  next();
+                }
+              }}
+            >
+              Next
+            </Button>
+          )}
+          {current === formSteps.length - 1 && (
+            <input type="submit" value="Create Reservation" />
+          )}
+        </StepsAction>
       </form>
     </>
   );
