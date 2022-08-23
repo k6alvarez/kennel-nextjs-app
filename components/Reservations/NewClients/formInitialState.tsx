@@ -33,7 +33,7 @@ export const INITIAL_USER_STATE = {
     grow: true,
   },
   addressUnit: { value: "", error: null, type: "text", label: "Apt/Unit/Ste" },
-  city: { value: "Atlanta", error: null, type: "text", label: "City", required: true },
+  city: { value: "", error: null, type: "text", label: "City", required: true },
   state: {
     value: "",
     error: null,
