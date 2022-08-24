@@ -1,7 +1,7 @@
 
+import { getSession } from "next-auth/react";
 import prisma from "../../../lib/prisma";
 
-// POST /api/guest-reservation
 export default async function handle(req, res) {
   const {
     name,
@@ -41,14 +41,10 @@ export default async function handle(req, res) {
     petOneFeedingCount,
   } = req.body;
 
-  // Object.entries(req.body).map(([key, value]) => {
-  //   if (INITIAL_USER_STATE[key]?.required && !value ) {
-  //     throw new Error(`${INITIAL_USER_STATE[key]?.label} field is required.`)
-  //   }
-  // })
-
+  const session = await getSession({ req });
   const result = await prisma.guestReservation.create({
     data: {
+      author: { connect: { email: session?.user?.email } },
       name: name,
       lastName: lastName,
       email: email,
