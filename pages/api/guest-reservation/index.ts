@@ -1,6 +1,5 @@
 
-import { GuestReservation } from "@prisma/client";
-import { INITIAL_USER_STATE } from "../../../components/Reservations/NewClients/formInitialState";
+import { getSession } from 'next-auth/react';
 import prisma from "../../../lib/prisma";
 
 // POST /api/guest-reservation
@@ -48,9 +47,10 @@ export default async function handle(req, res) {
   //     throw new Error(`${INITIAL_USER_STATE[key]?.label} field is required.`)
   //   }
   // })
-
+  const session = await getSession({ req });
   const result: any = await prisma.guestReservation.create({
     data: {
+      author: { connect: { email: session?.user?.email } },
       name: name,
       lastName: lastName,
       email: email,
