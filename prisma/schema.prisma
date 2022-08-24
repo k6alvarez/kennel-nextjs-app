@@ -103,27 +103,27 @@ model Reservation {
 }
 
 model GuestReservation {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
-  submitted Boolean  @default(false)
-  confirmed Boolean  @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  String?
-  name      String
+  id                    String   @id @default(cuid())
+  createdAt             DateTime @default(now()) @map(name: "created_at")
+  updatedAt             DateTime @updatedAt @map(name: "updated_at")
+  submitted             Boolean  @default(false)
+  confirmed             Boolean  @default(false)
+  author                User?    @relation(fields: [authorId], references: [id])
+  authorId              String?
+  name                  String
+  lastName              String
+  email                 String
+  address               String
+  addressUnit           String?
+  city                  String
+  state                 String
+  zip                   String
+  phone                 String
+  altPhone              String?
+  emergencyContactName  String
+  emergencyContactPhone String
 }
 
-// lastName                     String
-// email                        String
-// address                      String
-// addressUnit                  String?
-// city                         String
-// state                        String
-// zip                          String
-// phone                        String
-// altPhone                     String?
-// emergencyContactName         String
-// emergencyContactPhone        String
 // arrivalDate                  String
 // arrivalTime                  String
 // departureDate                String
