@@ -62,19 +62,25 @@ export const NewClientForm = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(Object.assign({}, ...data)),
-      }).then((res) => {
-        return res.json();
-      }).then(async(res) => {
-        console.log(res);
-        await Router.push("/guest-reservation/[id]", `/guest-reservation/${res.id}`)
       })
+        .then((res) => {
+          return res.json();
+        })
+        .then(async (res) => {
+          console.log(res);
+          await Router.push("/guest-res/[id]", `/guest-res/${res.id}`);
+        });
     } catch (error) {
       console.error(error);
     }
   };
 
   const theFieldsAreValid = (currentFormSection) => {
-    let sectionInputs = [INITIAL_USER_STATE, INITIAL_RESERVATION_STATE, INITIAL_PETS_STATE];
+    let sectionInputs = [
+      INITIAL_USER_STATE,
+      INITIAL_RESERVATION_STATE,
+      INITIAL_PETS_STATE,
+    ];
     for (const field of Object.entries(sectionInputs[currentFormSection])) {
       if (state[field[0]].required && !state[field[0]].value) {
         const error = `${state[field[0]].label} is required`;
