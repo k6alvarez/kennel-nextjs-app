@@ -1,11 +1,21 @@
+import { GuestReservation } from '@prisma/client';
 import { getSession } from 'next-auth/react';
+import { INITIAL_STATE } from '../../../components/Reservations/NewClients/formReducer';
 import prisma from '../../../lib/prisma';
 
-const validateFields = async (fields: any) => {
-  const errors: any = {};
-  if (!fields.name) {
-    errors.name = 'Name is required';
-  }
+type Errors = {
+  [key in keyof GuestReservation]: string;
+};
+
+
+const validateFields = async (fields: GuestReservation) => {
+  const errors: Partial<Errors> = undefined;
+  Object.entries(INITIAL_STATE).filter(([key, _value]) => {
+    const isRequired = INITIAL_STATE[key].required && !fields[key];
+    if (isRequired) {
+      errors[key] = `${INITIAL_STATE[key].label} is required`;
+    }
+  });
   return errors;
 }
 
@@ -36,6 +46,4 @@ export default async function handle(req, res) {
     const result = await prisma.guestReservation.create(apiOptions);
     res.json(result);
   }
-
-
 }

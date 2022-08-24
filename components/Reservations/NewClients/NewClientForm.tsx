@@ -54,6 +54,7 @@ export const NewClientForm = () => {
     const data = Object.entries(state).map(([key, _value]) => {
       return { [key]: state[key].value };
     });
+    setFormError(undefined);
     try {
       await fetch("/api/guest-reservation", {
         method: "POST",
@@ -79,6 +80,9 @@ export const NewClientForm = () => {
             setFormError(validationError);
             throw new Error(validationError);
           }
+          dispatch({
+            type: "resetForm",
+          });
           await Router.push("/res-guest/[id]", `/res-guest/${res.id}`);
         });
     } catch (error) {

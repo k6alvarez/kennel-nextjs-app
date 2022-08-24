@@ -52,3 +52,20 @@ export const Error = styled.span`
   padding: ${({ theme }) => theme.space[2]} 0;
   margin: ${({ theme }) => theme.space[2]};
 `;
+
+export const StyledTextarea = styled.textarea`
+  border: 1px solid
+    ${({ theme, error }) =>
+      error ? theme.colors.primary : theme.colors.textSecondary};
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.inputFocus};
+  }
+`;
+export const StyledSelect = styled.select`
+  border: 1px solid
+    ${({ theme, error }) =>
+      error ? theme.colors.primary : theme.colors.textSecondary};
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.inputFocus};
+  }
+`;

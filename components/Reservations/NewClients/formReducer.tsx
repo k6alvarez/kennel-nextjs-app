@@ -10,14 +10,19 @@ export const INITIAL_STATE = {
   ...INITIAL_PETS_STATE,
 };
 
-export const formReducer = (state, { key, payload }) => {
-  const inputState = {
-    ...state[key],
-    value: payload.newValue,
-    error: payload.error,
-  };
-  return {
-    ...state,
-    [key]: inputState,
-  };
+export const formReducer = (state, { type = "inputChange", key, payload }) => {
+  switch (type) {
+    case "resetForm":
+      return { ...INITIAL_STATE };
+    case "inputChange":
+      const inputState = {
+        ...state[key],
+        value: payload.newValue,
+        error: payload.error,
+      };
+      return {
+        ...state,
+        [key]: inputState,
+      };
+  }
 };

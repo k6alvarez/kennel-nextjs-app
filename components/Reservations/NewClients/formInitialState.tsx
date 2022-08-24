@@ -1,5 +1,12 @@
 import { DateTime } from "luxon";
-import { Field, StyledLabel, StyledInput, Hint } from "./styles";
+import {
+  Field,
+  StyledLabel,
+  StyledInput,
+  Hint,
+  StyledTextarea,
+  StyledSelect,
+} from "./styles";
 
 export const INITIAL_USER_STATE = {
   name: {
@@ -265,28 +272,36 @@ export const renderFormFields = (initialState, state, handleChange) => {
     const { value, error, type, label, required, grow, options } = state[key];
     const onChange = (e) => handleChange(key, e.target.value);
     const autoFocus = i === 0;
+    const requiredField = required || false;
     return (
       <Field key={key} grow={grow}>
         <StyledLabel htmlFor={key} error={error || false}>
           {`${label}${required ? "*" : ""}`}
         </StyledLabel>
         {type === "textarea" && (
-          <textarea
+          <StyledTextarea
             onChange={onChange}
             value={value}
             id={key}
             autoFocus={autoFocus}
+            error={error}
           />
         )}
 
         {type === "select" && (
-          <select autoFocus={autoFocus} id={key} name={key} onChange={onChange}>
+          <StyledSelect
+            autoFocus={autoFocus}
+            id={key}
+            name={key}
+            onChange={onChange}
+            error={error}
+          >
             {options.map((option, i) => (
               <option key={i} value={option}>
                 {option}
               </option>
             ))}
-          </select>
+          </StyledSelect>
         )}
 
         {type !== "textarea" && type !== "select" && (
@@ -294,7 +309,7 @@ export const renderFormFields = (initialState, state, handleChange) => {
             autoFocus={autoFocus}
             onChange={onChange}
             type={type || "text"}
-            required={required || false}
+            required={requiredField}
             id={key}
             value={value}
             error={error}
