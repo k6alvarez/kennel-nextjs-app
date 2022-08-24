@@ -67,8 +67,8 @@ export const NewClientForm = () => {
           return res.json();
         })
         .then(async (res) => {
-          console.log(res);
-          await Router.push("/guest-res/[id]", `/guest-res/${res.id}`);
+          console.log(res, "wut");
+          await Router.push("/res-guest/[id]", `/res-guest/${res.id}`);
         });
     } catch (error) {
       console.error(error);

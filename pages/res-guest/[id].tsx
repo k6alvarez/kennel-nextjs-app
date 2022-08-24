@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   });
   return {
     props: {
-        reservation: JSON.parse(JSON.stringify(reservation)),
+      reservation: JSON.parse(JSON.stringify(reservation)),
     },
   };
 };
@@ -41,33 +41,35 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 // }
 
 interface GuestReservation {
-    id: string;
+  id: string;
 }
 
 export type GuestReservationProps = {
-    id: string;
-    reservation: GuestReservation;
-  };
+  id: string;
+  reservation: GuestReservation;
+};
 
-
-const GuestReservation: React.FC<GuestReservationProps> = ({reservation}) => {
-//   const { data: session, status } = useSession();
-//   if (status === "loading") {
-//     return <div>Loading ...</div>;
-//   }
-//   const userHasValidSession = Boolean(session);
-//   const postBelongsToUser = session?.user?.email === props.author?.email;
-//   let title = props.title;
-//   if (!props.published) {
-//     title = `${title} (Draft)`;
-//   }
+const GuestReservation: React.FC<GuestReservationProps> = ({ reservation }) => {
+  //   const { data: session, status } = useSession();
+  //   if (status === "loading") {
+  //     return <div>Loading ...</div>;
+  //   }
+  //   const userHasValidSession = Boolean(session);
+  //   const postBelongsToUser = session?.user?.email === props.author?.email;
+  //   let title = props.title;
+  //   if (!props.published) {
+  //     title = `${title} (Draft)`;
+  //   }
 
   return (
     <Layout>
       <Content>
         <h1>Your Reservation</h1>
-        <p>You can view your reservation details here. We have also emailed you a link to this page.</p>
-        <p>By {reservation.id}</p>
+        <p>
+          You can view your reservation details here. We have also emailed you a
+          link to this page.
+        </p>
+        <p>By {reservation?.id}</p>
         {/* <h1>{title}</h1> */}
         {/* <p>By {props?.author?.name || "Unknown author"}</p>
         <ReactMarkdown children={props.content} />
