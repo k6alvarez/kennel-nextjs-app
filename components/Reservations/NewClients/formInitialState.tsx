@@ -229,7 +229,6 @@ export const INITIAL_RESERVATION_STATE = {
     type: "time",
     required: true,
   },
-
   specialInstructions: {
     value: "",
     error: null,
@@ -245,11 +244,10 @@ export const INITIAL_RESERVATION_STATE = {
 };
 
 export const renderFormFields = (initialState, state, handleChange) => {
-
   return Object.entries(initialState).map(([key, _value], i) => {
     const { value, error, type, label, required, grow, options } = state[key];
     const onChange = (e) => handleChange(key, e.target.value);
-    const autoFocus = i === 0
+    const autoFocus = i === 0;
     return (
       <Field key={key} grow={grow}>
         <StyledLabel htmlFor={key} error={error || false}>
