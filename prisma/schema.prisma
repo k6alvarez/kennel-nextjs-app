@@ -103,47 +103,46 @@ model Reservation {
 }
 
 model GuestReservation {
-  id                    String   @id @default(cuid())
-  createdAt             DateTime @default(now()) @map(name: "created_at")
-  updatedAt             DateTime @updatedAt @map(name: "updated_at")
-  submitted             Boolean  @default(false)
-  confirmed             Boolean  @default(false)
-  author                User?    @relation(fields: [authorId], references: [id])
-  authorId              String?
-  name                  String
-  lastName              String
-  email                 String
-  address               String
-  addressUnit           String?
-  city                  String
-  state                 String
-  zip                   String
-  phone                 String
-  altPhone              String?
-  emergencyContactName  String
-  emergencyContactPhone String
+  id                           String   @id @default(cuid())
+  createdAt                    DateTime @default(now()) @map(name: "created_at")
+  updatedAt                    DateTime @updatedAt @map(name: "updated_at")
+  submitted                    Boolean  @default(false)
+  confirmed                    Boolean  @default(false)
+  author                       User?    @relation(fields: [authorId], references: [id])
+  authorId                     String?
+  name                         String
+  lastName                     String
+  email                        String
+  address                      String
+  addressUnit                  String?
+  city                         String
+  state                        String
+  zip                          String
+  phone                        String
+  altPhone                     String?
+  emergencyContactName         String
+  emergencyContactPhone        String
+  arrivalDate                  String
+  arrivalTime                  String
+  departureDate                String
+  departureTime                String
+  dateConfirmed                String?
+  specialInstructions          String?
+  howHear                      String?
+  petOneType                   String
+  petOneName                   String
+  petOneBreed                  String
+  petOneGender                 String
+  petOneFixed                  String
+  petOneColor                  String
+  petOneImage                  String?
+  petOneLargeImage             String?
+  petOneVaccinations           String
+  petOneVaccinationsLargeImage String?
+  petOneAge                    String
+  petOneWeight                 String
+  petOneVet                    String
+  petOnePreferredRunSize       String
+  petOneFeeding                String
+  petOneFeedingCount           String
 }
-
-// arrivalDate                  String
-// arrivalTime                  String
-// departureDate                String
-// departureTime                String
-// dateConfirmed                String?
-// specialInstructions          String?
-// howHear                      String?
-// petOneType                   String
-// petOneName                   String
-// petOneBreed                  String
-// petOneGender                 String
-// petOneFixed                  String
-// petOneColor                  String
-// petOneImage                  String?
-// petOneLargeImage             String?
-// petOneVaccinations           String
-// petOneVaccinationsLargeImage String?
-// petOneAge                    String
-// petOneWeight                 String
-// petOneVet                    String
-// petOnePreferredRunSize       String
-// petOneFeeding                String
-// petOneFeedingCount           String
