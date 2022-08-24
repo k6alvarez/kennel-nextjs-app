@@ -2,8 +2,12 @@ import styled from "styled-components";
 
 export const Content = styled.article`
   padding: ${({ theme }) => theme.space[4]};
-  max-width: 80vw;
+  max-width: 95vw;
   margin: 0 auto;
+
+  @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
+    max-width: 80vw;
+  }
 
   h1 {
     font-weight: bold;
@@ -38,4 +42,17 @@ export const GridItem = styled.li`
     min-width: ${({ size }) => (size ? size : "20vw")};
     height: ${({ size }) => (size ? size : "20vw")};
   }
+`;
+
+export const Button = styled.button`
+  margin-top: ${({ theme }) => theme.space[4]};
+  padding: ${({ theme }) => theme.space[3]};
+  font-size: ${({ theme }) => theme.fontSizes[1]};
+  background-color: ${({ theme, primary }) =>
+    primary ? theme.colors.primary : theme.colors.secondary};
+  color: ${({ theme, primary }) =>
+    primary ? theme.colors.textPrimary : theme.colors.textSecondary};
+  border: none;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 100px;
 `;

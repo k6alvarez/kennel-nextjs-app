@@ -1,11 +1,17 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useReducer } from "react";
 import { SessionProvider } from "next-auth/react";
 import { AppProps } from "next/app";
+import "antd/dist/antd.css";
 import "../styles/reset.css";
 import "../styles/fonts.css";
 import { ThemeProvider } from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import { light, dark, base } from "../components/ui-kit/Theme";
+import {
+  formReducer,
+  INITIAL_STATE,
+} from "../components/Reservations/NewClients/formReducer";
+import { FormProvider } from "../components/Reservations/NewClients/formContext";
 
 const themesMap = {
   light,
@@ -14,21 +20,55 @@ const themesMap = {
 
 const GlobalStyle = createGlobalStyle`
   form, fieldset {
-    gap: ${({ theme }) => theme.space[4]};
-    width: 100%;
     display: flex;
     flex-direction: column ;
   }
 
-  main, section, article { max-width: 100%; }
+  fieldset {
+    max-width: 100%;
+    margin: 0 auto;
 
-  input, textarea {
-    font-family: ${({ theme }) => theme.fonts.body};
+    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+      max-width: 40vw;
+    }
 
   }
 
-  input[type="submit"] {
+  main, section, article {
+    max-width: 100%;
+  }
+
+  input, textarea, label, select {
     font-family: ${({ theme }) => theme.fonts.body};
+    padding: ${({ theme }) => theme.space[2]};
+    border-width: initial;
+    width: 100%;
+    border-radius: 3px;
+  }
+
+  textarea {
+    max-width: 80vw;
+    max-height:20vh;
+    resize: vertical;
+  }
+
+  label {
+    margin-top: ${({ theme }) => theme.space[3]};
+    line-height: 1;
+    padding-left: 0;
+    white-space: nowrap;
+  }
+
+  input[type="submit"] {
+    margin-top: ${({ theme }) => theme.space[4]};
+    padding: ${({ theme }) => theme.space[3]};
+    font-size: ${({ theme }) => theme.fontSizes[1]};
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.textPrimary};
+    border: none;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    width: max-content;
+    min-width: 100px;
   }
 `;
 
@@ -36,8 +76,17 @@ export const ThemePreferenceContext = createContext(null);
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [currentTheme, setCurrentTheme] = useState("light");
+  const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
 
   const theme = { ...base, colors: themesMap[currentTheme] };
+
+  const handleChange = (name, newValue) => {
+    const error = null;
+    dispatch({
+      key: name,
+      payload: { newValue, error },
+    });
+  };
 
   return (
     <SessionProvider session={pageProps.session}>
@@ -45,8 +94,10 @@ const App = ({ Component, pageProps }: AppProps) => {
         value={{ currentTheme, setCurrentTheme }}
       >
         <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <Component {...pageProps} />
+          <FormProvider value={{ state, handleChange, dispatch }}>
+            <GlobalStyle />
+            <Component {...pageProps} />
+          </FormProvider>
         </ThemeProvider>
       </ThemePreferenceContext.Provider>
     </SessionProvider>

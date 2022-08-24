@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Router from "next/router";
 
-export const ReservationClient = ({ session }) => {
+export const ClientForm = ({ session }) => {
   const [fields, setFields] = useState({
     arrivalDate: "",
     arrivalTime: "",

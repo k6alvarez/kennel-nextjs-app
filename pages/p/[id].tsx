@@ -6,6 +6,7 @@ import Layout from "../../components/Layout";
 import { PostProps } from "../../components/Post";
 import { useSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
+import { Content } from "../../components/ui-kit/Base";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const post = await prisma.post.findUnique({
@@ -51,7 +52,7 @@ const Post: React.FC<PostProps> = (props) => {
 
   return (
     <Layout>
-      <div>
+      <Content>
         <h1>{title}</h1>
         <p>By {props?.author?.name || "Unknown author"}</p>
         <ReactMarkdown children={props.content} />
@@ -61,7 +62,7 @@ const Post: React.FC<PostProps> = (props) => {
         {userHasValidSession && postBelongsToUser && (
           <button onClick={() => deletePost(props.id)}>Delete</button>
         )}
-      </div>
+      </Content>
     </Layout>
   );
 };

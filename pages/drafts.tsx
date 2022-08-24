@@ -4,6 +4,7 @@ import { useSession, getSession } from "next-auth/react";
 import Layout from "../components/Layout";
 import Post, { PostProps } from "../components/Post";
 import prisma from "../lib/prisma";
+import { Content } from "../components/ui-kit/Base";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -38,15 +39,17 @@ const Drafts: React.FC<Props> = (props) => {
   if (!session) {
     return (
       <Layout>
+       <Content>
         <h1>My Drafts</h1>
         <div>You need to be authenticated to view this page.</div>
+       </Content>
       </Layout>
     );
   }
 
   return (
     <Layout>
-      <div>
+      <Content>
         <h1>My Drafts</h1>
         <main>
           {props.drafts.map((post) => (
@@ -55,7 +58,7 @@ const Drafts: React.FC<Props> = (props) => {
             </div>
           ))}
         </main>
-      </div>
+      </Content>
     </Layout>
   );
 };
