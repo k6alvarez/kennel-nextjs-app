@@ -11,7 +11,7 @@ import {
   formReducer,
   INITIAL_STATE,
 } from "../components/Reservations/NewClients/formReducer";
-import { FormProvider } from "../components/Reservations/NewClients/formContext";
+import { GuestFormProvider } from "../components/Reservations/NewClients/formContext";
 
 const themesMap = {
   light,
@@ -77,6 +77,7 @@ export const ThemePreferenceContext = createContext(null);
 const App = ({ Component, pageProps }: AppProps) => {
   const [currentTheme, setCurrentTheme] = useState("light");
   const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
+  const [formError, setFormError] = useState(undefined);
 
   const theme = { ...base, colors: themesMap[currentTheme] };
 
@@ -94,10 +95,12 @@ const App = ({ Component, pageProps }: AppProps) => {
         value={{ currentTheme, setCurrentTheme }}
       >
         <ThemeProvider theme={theme}>
-          <FormProvider value={{ state, handleChange, dispatch }}>
+          <GuestFormProvider
+            value={{ state, handleChange, dispatch, formError, setFormError }}
+          >
             <GlobalStyle />
             <Component {...pageProps} />
-          </FormProvider>
+          </GuestFormProvider>
         </ThemeProvider>
       </ThemePreferenceContext.Provider>
     </SessionProvider>

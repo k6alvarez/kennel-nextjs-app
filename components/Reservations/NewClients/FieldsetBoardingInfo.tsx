@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormContext } from "./formContext";
+import { useGuestFormContext } from "./formContext";
 import {
   INITIAL_RESERVATION_STATE,
   renderFormFields,
@@ -8,7 +8,7 @@ import {
 import { Fields } from "./styles";
 
 export const FieldsetBoardingInfo = () => {
-  const { state, handleChange } = useFormContext();
+  const { state, handleChange } = useGuestFormContext();
 
   return (
     <fieldset>

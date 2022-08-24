@@ -42,3 +42,13 @@ export const StyledLabel = styled.label`
   color: ${({ theme, error }) =>
     error ? theme.colors.primary : theme.colors.textSecondary};
 `;
+
+export const Error = styled.span`
+  color: ${({ theme }) => theme.colors.primary};
+  font-size: ${({ theme }) => theme.fontSizes[1]};
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: ${({ theme }) => theme.space[2]} 0;
+  margin: ${({ theme }) => theme.space[2]};
+`;

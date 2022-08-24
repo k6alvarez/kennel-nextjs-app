@@ -1,13 +1,15 @@
 import { createContext, useContext } from "react";
 
-export const FormContext = createContext(null);
+export const GuestFormContext = createContext(null);
 
-export const FormProvider = FormContext.Provider;
+export const GuestFormProvider = GuestFormContext.Provider;
 
-export function useFormContext() {
-  const context = useContext(FormContext);
+export function useGuestFormContext() {
+  const context = useContext(GuestFormContext);
   if (!context) {
-    throw new Error("useFormContext must be used within a FormProvider");
+    throw new Error(
+      "useGuestFormContext must be used within a GuestFormProvider"
+    );
   }
   return context;
 }

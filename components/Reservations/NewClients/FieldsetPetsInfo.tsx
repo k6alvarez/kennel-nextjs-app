@@ -1,11 +1,11 @@
 import React from "react";
-import { useFormContext } from "./formContext";
+import { useGuestFormContext } from "./formContext";
 import { INITIAL_PETS_STATE, renderFormFields } from "./formInitialState";
 
 import { Fields } from "./styles";
 
 export const FieldsetPetsInfo = () => {
-  const { state, handleChange } = useFormContext();
+  const { state, handleChange } = useGuestFormContext();
   return (
     <fieldset>
       <Fields>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Steps } from "antd";
 import Router from "next/router";
 import { FormIntroGuest } from "./FormIntro";
-import { useFormContext } from "./formContext";
+import { useGuestFormContext } from "./formContext";
 import { FieldsetBoardingInfo } from "./FieldsetBoardingInfo";
 import { FieldsetClientInfo } from "./FieldsetClientInfo";
 import { FieldsetPetsInfo } from "./FieldsetPetsInfo";
@@ -13,6 +13,7 @@ import {
   INITIAL_RESERVATION_STATE,
   INITIAL_USER_STATE,
 } from "./formInitialState";
+import { FieldSetPaymentInfo } from "./FieldSetPaymentInfo";
 
 const { Step } = Steps;
 
@@ -31,16 +32,12 @@ const formSteps = [
   },
   {
     title: "Payment Information",
-    content: (
-      <fieldset>
-        <p>payment</p>
-      </fieldset>
-    ),
+    content: <FieldSetPaymentInfo />,
   },
 ];
 
 export const NewClientForm = () => {
-  const { state, dispatch } = useFormContext();
+  const { state, dispatch, setFormError } = useGuestFormContext();
 
   const [current, setCurrent] = useState(0);
 
@@ -67,6 +64,21 @@ export const NewClientForm = () => {
           return res.json();
         })
         .then(async (res) => {
+          if (res.errors) {
+            const validationError =
+              "Form submission failed. Please verify all required fields are filled out.";
+            Object.entries(res.errors).forEach(([key, value]) => {
+              dispatch({
+                key: key,
+                payload: {
+                  newValue: state[key].value,
+                  error: value,
+                },
+              });
+            });
+            setFormError(validationError);
+            throw new Error(validationError);
+          }
           await Router.push("/res-guest/[id]", `/res-guest/${res.id}`);
         });
     } catch (error) {
