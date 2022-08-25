@@ -18,11 +18,12 @@ export const PayPalCheckout = ({
   transactionTotal = "25.00",
 }) => {
   useEffect(() => {
+    // @ts-ignore
     if (paypal) {
+      // @ts-ignore
       paypal
         .Buttons({
           createOrder: function (data, actions) {
-            // This function sets up the details of the transaction, including the amount and line item details.
             return actions.order.create({
               purchase_units: [
                 {
