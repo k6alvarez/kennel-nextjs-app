@@ -23,20 +23,20 @@ export const BlockQuote = styled.blockquote`
 export const FormIntroGuest = () => {
   return (
     <div>
-      <BlockQuote>
-        A $25.00 per run deposit is required for new client reservations. Your
-        reservation is not complete and will not be confirmed until we receive
-        your deposit and the completed reservation form.
-      </BlockQuote>
       <p>
-        You can pay the deposit using debit or credit cards online. The deposit
-        will be applied to your pets stay and will reduce your total amount due.
-        This deposit is non-refundable but may be applied to another reservation
-        upon at least a 24-hour cancellation notice.
+        A $25.00 per run deposit is required for new client reservations. You
+        can pay the deposit using debit or credit cards online. The deposit will
+        be applied to your pets stay and will reduce your total amount due. This
+        deposit is non-refundable but may be applied to another reservation upon
+        at least a 24-hour cancellation notice.
       </p>
       <p>
         Furthermore, when you submit the deposit payment you atest that you have
-        read, understand, and agree to our policies.
+        read, understand, and agree to our{" "}
+        <Link href="/">
+          <a>policies</a>
+        </Link>
+        .
       </p>{" "}
       <p>
         <Link href="/api/auth/signin">

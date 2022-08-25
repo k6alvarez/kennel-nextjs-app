@@ -11,8 +11,9 @@ type Errors = {
 const validateFields = async (fields: GuestReservation) => {
   const errors: Partial<Errors> = undefined;
   Object.entries(INITIAL_STATE).filter(([key, _value]) => {
-    const isRequired = INITIAL_STATE[key].required && !fields[key];
-    if (isRequired) {
+    const fieldIsRequired = INITIAL_STATE[key].required;
+    const fieldIsEmpty = fields[key].length === 0;
+    if (fieldIsRequired && fieldIsEmpty) {
       errors[key] = `${INITIAL_STATE[key].label} is required`;
     }
   });

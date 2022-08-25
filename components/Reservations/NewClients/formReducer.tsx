@@ -10,8 +10,13 @@ export const INITIAL_STATE = {
   ...INITIAL_PETS_STATE,
 };
 
-export const formReducer = (state, { type = "inputChange", key, payload }) => {
+export const formReducer = (
+  state,
+  { type = "inputChange", key = undefined, payload = undefined }
+) => {
   switch (type) {
+    case "depositConfirmed":
+      return { ...state, ...payload };
     case "resetForm":
       return { ...INITIAL_STATE };
     case "inputChange":

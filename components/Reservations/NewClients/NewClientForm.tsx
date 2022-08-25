@@ -17,28 +17,8 @@ import { FieldSetPaymentInfo } from "./FieldSetPaymentInfo";
 
 const { Step } = Steps;
 
-const formSteps = [
-  {
-    title: "Your Information",
-    content: <FieldsetClientInfo />,
-  },
-  {
-    title: "Boarding Information",
-    content: <FieldsetBoardingInfo />,
-  },
-  {
-    title: "Pet Information",
-    content: <FieldsetPetsInfo />,
-  },
-  {
-    title: "Payment Information",
-    content: <FieldSetPaymentInfo />,
-  },
-];
-
 export const NewClientForm = () => {
   const { state, dispatch, setFormError } = useGuestFormContext();
-
   const [current, setCurrent] = useState(0);
 
   const next = () => {
@@ -50,9 +30,11 @@ export const NewClientForm = () => {
   };
 
   const submitData = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+    e?.preventDefault();
     const data = Object.entries(state).map(([key, _value]) => {
-      return { [key]: state[key].value };
+      return {
+        [key]: state[key].value !== undefined ? state[key].value : state[key],
+      };
     });
     setFormError(undefined);
     try {
@@ -109,6 +91,25 @@ export const NewClientForm = () => {
     return true;
   };
 
+  const formSteps = [
+    {
+      title: "Owner",
+      content: <FieldsetClientInfo />,
+    },
+    {
+      title: "Boarding",
+      content: <FieldsetBoardingInfo />,
+    },
+    {
+      title: "Pets",
+      content: <FieldsetPetsInfo />,
+    },
+    {
+      title: "Deposit",
+      content: <FieldSetPaymentInfo submitData={submitData} />,
+    },
+  ];
+
   return (
     <>
       <FormIntroGuest />
@@ -138,9 +139,6 @@ export const NewClientForm = () => {
             >
               Next
             </Button>
-          )}
-          {current === formSteps.length - 1 && (
-            <input type="submit" value="Create Reservation" />
           )}
         </StepsAction>
       </form>

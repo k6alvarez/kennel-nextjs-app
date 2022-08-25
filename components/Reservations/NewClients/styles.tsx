@@ -69,3 +69,9 @@ export const StyledSelect = styled.select`
     border-color: ${({ theme }) => theme.colors.inputFocus};
   }
 `;
+
+export const TotalDeposit = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes[2]};
+  text-align: center;
+  font-weight: bold;
+`;

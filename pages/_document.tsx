@@ -28,6 +28,7 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
+        <script src="https://www.paypal.com/sdk/js?client-id=AbLaJ0f3j-sjyIj049RDVvjvpXztrcmwSqbBH4Yla0g9rUJ7O-6M_-gMFc4FxN8uXBfJJCLOkFvOsaJQ"></script>
       </Html>
     );
   }
