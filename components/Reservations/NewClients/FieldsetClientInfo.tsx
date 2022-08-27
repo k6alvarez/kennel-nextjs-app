@@ -4,13 +4,17 @@ import { INITIAL_USER_STATE, renderFormFields } from "./formInitialState";
 
 import { Fields } from "./styles";
 
-export const FieldsetClientInfo = () => {
-  const { state, handleChange } = useGuestFormContext();
+export const FieldsetClientInfo = ({}) => {
+  const { state, handleChangeGuestReservation } = useGuestFormContext();
 
   return (
     <fieldset>
       <Fields>
-        {renderFormFields(INITIAL_USER_STATE, state, handleChange)}
+        {renderFormFields(
+          INITIAL_USER_STATE,
+          state,
+          handleChangeGuestReservation
+        )}
       </Fields>
     </fieldset>
   );

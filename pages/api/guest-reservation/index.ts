@@ -18,6 +18,10 @@ const validateFields = async (fields: GuestReservation) => {
     if (fieldIsRequired && fieldIsEmpty) {
       errors[key] = `${INITIAL_STATE[key].label} is required`;
     }
+
+    if (key === 'email' && !/^[^@]+@[^@]+\.[^@]+$/.test(fields[key])) {
+      errors[key] = `${INITIAL_STATE[key].label} is not a valid email address`;
+    }
   });
   return errors;
 }

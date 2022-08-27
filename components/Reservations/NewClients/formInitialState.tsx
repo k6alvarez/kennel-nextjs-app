@@ -26,7 +26,8 @@ export const INITIAL_USER_STATE = {
   email: {
     value: "",
     error: null,
-    type: "email",
+    type: "text",
+    inputMode: "email",
     label: "Email",
     required: true,
     grow: true,
@@ -53,9 +54,62 @@ export const INITIAL_USER_STATE = {
     required: true,
   },
   state: {
-    value: "",
+    value: "MI",
     error: null,
-    type: "text",
+    type: "select",
+    options: [
+      "AL",
+      "AK",
+      "AZ",
+      "AR",
+      "CA",
+      "CO",
+      "CT",
+      "DE",
+      "DC",
+      "FL",
+      "GA",
+      "HI",
+      "ID",
+      "IL",
+      "IN",
+      "IA",
+      "KS",
+      "KY",
+      "LA",
+      "ME",
+      "MD",
+      "MA",
+      "MI",
+      "MN",
+      "MS",
+      "MO",
+      "MT",
+      "NE",
+      "NV",
+      "NH",
+      "NJ",
+      "NM",
+      "NY",
+      "NC",
+      "ND",
+      "OH",
+      "OK",
+      "OR",
+      "PA",
+      "RI",
+      "SC",
+      "SD",
+      "TN",
+      "TX",
+      "UT",
+      "VT",
+      "VA",
+      "WA",
+      "WV",
+      "WI",
+      "WY",
+    ],
     label: "State",
     required: true,
   },
@@ -63,20 +117,29 @@ export const INITIAL_USER_STATE = {
     value: "",
     error: null,
     type: "text",
+    inputMode: "numeric",
+    minLength: 5,
+    maxLength: 5,
     label: "Zip",
     required: true,
   },
   phone: {
     value: "",
     error: null,
-    type: "tel",
+    type: "text",
+    inputMode: "numeric",
+    minLength: 10,
+    maxLength: 11,
     label: "Phone",
     required: true,
   },
   altPhone: {
     value: "",
     error: null,
-    type: "tel",
+    type: "text",
+    inputMode: "numeric",
+    minLength: 10,
+    maxLength: 11,
     label: "Alt Phone",
     required: true,
   },
@@ -89,7 +152,10 @@ export const INITIAL_USER_STATE = {
   emergencyContactPhone: {
     value: "",
     error: null,
-    type: "tel",
+    type: "text",
+    inputMode: "numeric",
+    minLength: 10,
+    maxLength: 11,
     label: "Emergency Contact Phone",
     required: true,
   },
@@ -167,16 +233,20 @@ export const INITIAL_PETS_STATE = {
     label: "Vaccinations Large Image",
   },
   petOneAge: {
-    value: "0",
+    value: "1",
     error: null,
     type: "number",
+    inputMode: "numeric",
+    min: "1",
     label: "Age",
     required: true,
   },
   petOneWeight: {
-    value: "0",
+    value: "1",
     error: null,
     type: "number",
+    inputMode: "numeric",
+    min: "1",
     label: "Weight (lbs)",
     required: true,
   },
@@ -203,9 +273,11 @@ export const INITIAL_PETS_STATE = {
     required: true,
   },
   petOneFeedingCount: {
-    value: "0",
+    value: "1",
     error: null,
     type: "number",
+    inputMode: "numeric",
+    min: "1",
     label: "Feeding Count",
     required: true,
   },
@@ -267,10 +339,42 @@ export const INITIAL_RESERVATION_STATE = {
   },
 };
 
-export const renderFormFields = (initialState, state, handleChange) => {
+export const renderFormFields = (
+  initialState: { [s: string]: unknown } | ArrayLike<unknown>,
+  state: {
+    [x: string]: {
+      inputMode: any;
+      value: any;
+      error: any;
+      type: any;
+      min: any;
+      minLength: any;
+      maxLength: any;
+      pattern: any;
+      label: any;
+      required: any;
+      grow: any;
+      options: any;
+    };
+  },
+  handleChangeGuestReservation: (arg0: string, arg1: any) => any
+) => {
   return Object.entries(initialState).map(([key, _value], i) => {
-    const { value, error, type, label, required, grow, options } = state[key];
-    const onChange = (e) => handleChange(key, e.target.value);
+    const {
+      inputMode,
+      value,
+      error,
+      type,
+      min,
+      minLength,
+      maxLength,
+      pattern,
+      label,
+      required,
+      grow,
+      options,
+    } = state[key];
+    const onChange = (e) => handleChangeGuestReservation(key, e.target.value);
     const autoFocus = i === 0;
     const requiredField = required || false;
     return (
@@ -295,6 +399,7 @@ export const renderFormFields = (initialState, state, handleChange) => {
             name={key}
             onChange={onChange}
             error={error}
+            defaultValue={value}
           >
             {options.map((option, i) => (
               <option key={i} value={option}>
@@ -309,6 +414,11 @@ export const renderFormFields = (initialState, state, handleChange) => {
             autoFocus={autoFocus}
             onChange={onChange}
             type={type || "text"}
+            inputMode={inputMode || "text"}
+            minLength={minLength}
+            maxLength={maxLength}
+            min={min}
+            pattern={pattern}
             required={requiredField}
             id={key}
             value={value}

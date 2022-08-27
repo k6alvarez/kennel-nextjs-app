@@ -4,12 +4,16 @@ import { INITIAL_PETS_STATE, renderFormFields } from "./formInitialState";
 
 import { Fields } from "./styles";
 
-export const FieldsetPetsInfo = () => {
-  const { state, handleChange } = useGuestFormContext();
+export const FieldsetPetsInfo = ({}) => {
+  const { state, handleChangeGuestReservation } = useGuestFormContext();
   return (
     <fieldset>
       <Fields>
-        {renderFormFields(INITIAL_PETS_STATE, state, handleChange)}
+        {renderFormFields(
+          INITIAL_PETS_STATE,
+          state,
+          handleChangeGuestReservation
+        )}
       </Fields>
     </fieldset>
   );

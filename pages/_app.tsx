@@ -81,7 +81,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   const theme = { ...base, colors: themesMap[currentTheme] };
 
-  const handleChange = (name, newValue) => {
+  const handleChangeGuestReservation = (name, newValue) => {
     const error = null;
     dispatch({
       key: name,
@@ -96,7 +96,13 @@ const App = ({ Component, pageProps }: AppProps) => {
       >
         <ThemeProvider theme={theme}>
           <GuestFormProvider
-            value={{ state, handleChange, dispatch, formError, setFormError }}
+            value={{
+              state,
+              handleChangeGuestReservation,
+              dispatch,
+              formError,
+              setFormError,
+            }}
           >
             <GlobalStyle />
             <Component {...pageProps} />

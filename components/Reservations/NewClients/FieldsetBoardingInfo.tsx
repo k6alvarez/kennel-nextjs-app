@@ -7,13 +7,17 @@ import {
 
 import { Fields } from "./styles";
 
-export const FieldsetBoardingInfo = () => {
-  const { state, handleChange } = useGuestFormContext();
+export const FieldsetBoardingInfo = ({}) => {
+  const { state, handleChangeGuestReservation } = useGuestFormContext();
 
   return (
     <fieldset>
       <Fields>
-        {renderFormFields(INITIAL_RESERVATION_STATE, state, handleChange)}
+        {renderFormFields(
+          INITIAL_RESERVATION_STATE,
+          state,
+          handleChangeGuestReservation
+        )}
       </Fields>
     </fieldset>
   );
