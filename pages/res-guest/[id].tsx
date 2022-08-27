@@ -24,7 +24,7 @@ const ResId = styled.span`
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
 
   @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
     grid-template-columns: 1fr 1fr 1fr;
