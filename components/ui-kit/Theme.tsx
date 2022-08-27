@@ -20,6 +20,7 @@ export const light = {
   primary: "#8c0b3e",
   primaryDark: "#740833",
   secondary: "#d9e5e8",
+  secondaryDark: "#ececec",
   nav: "#f8f8f8",
   border: "#212121",
   textPrimary: "#ffffff",

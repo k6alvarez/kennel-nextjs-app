@@ -4,6 +4,8 @@ export const Content = styled.article`
   padding: ${({ theme }) => theme.space[4]};
   max-width: 95vw;
   margin: 0 auto;
+  background-color: ${({ theme, cardWrapper }) =>
+    cardWrapper ? theme.colors.secondaryDark : "inherit"};
 
   @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
     max-width: 80vw;
@@ -17,6 +19,18 @@ export const Content = styled.article`
   h2 {
     font-family: ${({ theme }) => theme.fonts.heading};
     font-size: ${({ theme }) => theme.fontSizes[4]};
+  }
+
+  .ant-card {
+    margin-bottom: ${({ theme }) => theme.space[4]};
+  }
+
+  .ant-card-head-title {
+    text-transform: capitalize;
+  }
+
+  .ant-card-head {
+    padding: 0 ${({ theme }) => theme.space[4]};
   }
 `;
 
