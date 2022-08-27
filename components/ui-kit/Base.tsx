@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 export const Content = styled.article`
   padding: ${({ theme }) => theme.space[4]};
-  max-width: 95vw;
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "95vw")};
   margin: 0 auto;
   background-color: ${({ theme, cardWrapper }) =>
     cardWrapper ? theme.colors.secondaryDark : "inherit"};
 
   @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
-    max-width: 80vw;
+    max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "80vw")};
   }
 
   h1 {

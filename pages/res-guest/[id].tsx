@@ -183,14 +183,14 @@ const ResGuest: React.FC<GuestReservationProps> = ({ reservation }) => {
   };
   return (
     <Layout>
-      <Content>
+      <Content maxWidth="900px">
         <h1>Boarding Reservation for {reservation.arrivalDate}</h1>
         <p>
           Your reservation details are below. We have also emailed you a link to
           this page.
         </p>
       </Content>
-      <Content cardWrapper>
+      <Content maxWidth="900px" cardWrapper>
         <Card
           title={
             <Flex>
