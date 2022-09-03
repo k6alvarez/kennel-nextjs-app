@@ -12,7 +12,10 @@ export const prev = ({ current, setCurrent }) => {
   setCurrent(current - 1);
 };
 
-export const theFieldsAreValid = (currentFormSection, { state, dispatch }) => {
+export const guestFormFieldsValid = (
+  currentFormSection,
+  { state, dispatch }
+) => {
   let sectionInputs = [
     INITIAL_USER_STATE,
     INITIAL_RESERVATION_STATE,
@@ -40,6 +43,16 @@ export const theFieldsAreValid = (currentFormSection, { state, dispatch }) => {
       });
       return false;
     }
+
+    if (field[0] === "arrivalDate") {
+      const error = `We are closed Saturdays. Please choose a new ${fieldFromState.label}`;
+      dispatch({
+        key: field[0],
+        payload: { newValue: fieldFromState.value, error },
+      });
+      return false;
+    }
   }
+
   return true;
 };

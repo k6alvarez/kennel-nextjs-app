@@ -2,19 +2,24 @@ import React, { useEffect, useState } from "react";
 import { PayPalCheckout } from "../Checkout";
 import { useGuestFormContext } from "./formContext";
 import { BlockQuote } from "./FormIntro";
-import { submitData } from "./services";
+import { guestFormSubmit } from "./services";
 import { Error, TotalDeposit } from "./styles";
 
 export const FieldSetPaymentInfo = () => {
-  const { formError, dispatch, state, setFormError } = useGuestFormContext();
+  const { formError, guestFormDispatch, guestFormState, setFormError } =
+    useGuestFormContext();
   const [depositConfirmed, setDepositConfirmed] = useState(false);
 
   useEffect(() => {
-    if (depositConfirmed && state.depositStatus === "COMPLETED") {
-      submitData(undefined, { state, setFormError, dispatch });
+    if (depositConfirmed && guestFormState.depositStatus === "COMPLETED") {
+      guestFormSubmit(undefined, {
+        state: guestFormState,
+        setFormError,
+        dispatch: guestFormDispatch,
+      });
     }
   }),
-    [state];
+    [guestFormState];
 
   return (
     <fieldset>
@@ -29,7 +34,7 @@ export const FieldSetPaymentInfo = () => {
         <PayPalCheckout
           onConfirm={(results) => {
             setDepositConfirmed(true);
-            dispatch({
+            guestFormDispatch({
               type: "depositConfirmed",
               payload: {
                 depositStatus: results.status,

@@ -8,9 +8,9 @@ import { ThemeProvider } from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import { light, dark, base } from "../components/ui-kit/Theme";
 import {
-  formReducer,
+  guestFormReducer,
   INITIAL_STATE,
-} from "../components/Reservations/NewClients/formReducer";
+} from "../components/Reservations/NewClients/guestFormReducer";
 import { GuestFormProvider } from "../components/Reservations/NewClients/formContext";
 
 const themesMap = {
@@ -76,18 +76,13 @@ export const ThemePreferenceContext = createContext(null);
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [currentTheme, setCurrentTheme] = useState("light");
-  const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
+  const [guestFormState, guestFormDispatch] = useReducer(
+    guestFormReducer,
+    INITIAL_STATE
+  );
   const [formError, setFormError] = useState(undefined);
 
   const theme = { ...base, colors: themesMap[currentTheme] };
-
-  const handleChangeGuestReservation = (name, newValue) => {
-    const error = null;
-    dispatch({
-      key: name,
-      payload: { newValue, error },
-    });
-  };
 
   return (
     <SessionProvider session={pageProps.session}>
@@ -97,9 +92,15 @@ const App = ({ Component, pageProps }: AppProps) => {
         <ThemeProvider theme={theme}>
           <GuestFormProvider
             value={{
-              state,
-              handleChangeGuestReservation,
-              dispatch,
+              guestFormState,
+              handleChange: (name: string, newValue: any) => {
+                const error = null;
+                guestFormDispatch({
+                  key: name,
+                  payload: { newValue, error },
+                });
+              },
+              guestFormDispatch,
               formError,
               setFormError,
             }}

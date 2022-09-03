@@ -10,23 +10,23 @@ export const INITIAL_STATE = {
   ...INITIAL_PETS_STATE,
 };
 
-export const formReducer = (
-  state,
-  { type = "inputChange", key = undefined, payload = undefined }
+export const guestFormReducer = (
+  guestFormState: { [x: string]: any },
+  { type = "inputChange", key = undefined, payload = undefined }: any
 ) => {
   switch (type) {
     case "depositConfirmed":
-      return { ...state, ...payload };
+      return { ...guestFormState, ...payload };
     case "resetForm":
       return { ...INITIAL_STATE };
     case "inputChange":
       const inputState = {
-        ...state[key],
+        ...guestFormState[key],
         value: payload.newValue,
         error: payload.error,
       };
       return {
-        ...state,
+        ...guestFormState,
         [key]: inputState,
       };
   }

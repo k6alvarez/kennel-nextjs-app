@@ -1,19 +1,19 @@
 import React from "react";
+import { renderFormFields } from "../../Forms/renderFormFields";
+import { Fields } from "../../Forms/styles";
 import { useGuestFormContext } from "./formContext";
-import { INITIAL_PETS_STATE, renderFormFields } from "./formInitialState";
-
-import { Fields } from "./styles";
+import { INITIAL_PETS_STATE } from "./formInitialState";
 
 export const FieldsetPetsInfo = ({}) => {
-  const { state, handleChangeGuestReservation } = useGuestFormContext();
+  const { guestFormState, handleChange } = useGuestFormContext();
   return (
     <fieldset>
       <Fields>
-        {renderFormFields(
-          INITIAL_PETS_STATE,
-          state,
-          handleChangeGuestReservation
-        )}
+        {renderFormFields({
+          initialState: INITIAL_PETS_STATE,
+          state: guestFormState,
+          handleChange,
+        })}
       </Fields>
     </fieldset>
   );

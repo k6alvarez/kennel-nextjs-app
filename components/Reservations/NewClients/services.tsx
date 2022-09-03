@@ -1,6 +1,6 @@
 import Router from "next/router";
 
-export const submitData = async (
+export const guestFormSubmit = async (
   e: React.SyntheticEvent,
   { state, setFormError, dispatch }
 ) => {

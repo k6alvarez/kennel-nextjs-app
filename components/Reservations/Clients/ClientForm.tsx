@@ -11,7 +11,7 @@ export const ClientForm = ({ session }) => {
     specialInstructions: "",
   });
 
-  const submitData = async (e: React.SyntheticEvent) => {
+  const clientFormState = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     try {
@@ -31,7 +31,7 @@ export const ClientForm = ({ session }) => {
   return (
     <>
       <p>Let's get started with your boarding reservation.</p>
-      <form onSubmit={submitData}>
+      <form onSubmit={clientFormState}>
         <fieldset>
           <input
             disabled

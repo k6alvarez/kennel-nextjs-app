@@ -7,7 +7,7 @@ const Draft: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const submitData = async (e: React.SyntheticEvent) => {
+  const submitPost = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
       const body = { title, content };
@@ -25,7 +25,7 @@ const Draft: React.FC = () => {
   return (
     <Layout>
       <Content>
-        <form onSubmit={submitData}>
+        <form onSubmit={submitPost}>
           <h1>New Draft</h1>
           <input
             autoFocus
