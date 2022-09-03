@@ -5,72 +5,15 @@ import "antd/dist/antd.css";
 import "../styles/reset.css";
 import "../styles/fonts.css";
 import { ThemeProvider } from "styled-components";
-import { createGlobalStyle } from "styled-components";
-import { light, dark, base } from "../components/ui-kit/Theme";
+import { GlobalStyle, themesMap } from "../components/appStyles";
+import { base } from "../components/ui-kit/Theme";
 import {
   guestFormReducer,
   INITIAL_STATE,
 } from "../components/Reservations/NewClients/guestFormReducer";
 import { GuestFormProvider } from "../components/Reservations/NewClients/formContext";
-
-const themesMap = {
-  light,
-  dark,
-};
-
-const GlobalStyle = createGlobalStyle`
-  form, fieldset {
-    display: flex;
-    flex-direction: column ;
-  }
-
-  fieldset {
-    max-width: 100%;
-    margin: 0 auto;
-
-    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-      max-width: 40vw;
-    }
-
-  }
-
-  main, section, article {
-    max-width: 100%;
-  }
-
-  input, textarea, label, select {
-    font-family: ${({ theme }) => theme.fonts.body};
-    padding: ${({ theme }) => theme.space[2]};
-    border-width: initial;
-    width: 100%;
-    border-radius: 3px;
-  }
-
-  textarea {
-    max-width: 80vw;
-    max-height:20vh;
-    resize: vertical;
-  }
-
-  label {
-    margin-top: ${({ theme }) => theme.space[3]};
-    line-height: 1;
-    padding-left: 0;
-    white-space: nowrap;
-  }
-
-  input[type="submit"] {
-    margin-top: ${({ theme }) => theme.space[4]};
-    padding: ${({ theme }) => theme.space[3]};
-    font-size: ${({ theme }) => theme.fontSizes[1]};
-    background-color: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.textPrimary};
-    border: none;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    width: max-content;
-    min-width: 100px;
-  }
-`;
+import { ClientFormProvider } from "../components/Reservations/Clients/clientFormContext";
+import { clientFormReducer } from "../components/Reservations/Clients/clientFormReducer";
 
 export const ThemePreferenceContext = createContext(null);
 
@@ -80,7 +23,12 @@ const App = ({ Component, pageProps }: AppProps) => {
     guestFormReducer,
     INITIAL_STATE
   );
-  const [formError, setFormError] = useState(undefined);
+  const [clientFormState, clientFormDispatch] = useReducer(
+    clientFormReducer,
+    {}
+  );
+  const [guestFormError, setFormError] = useState(undefined);
+  const [clientFormError, setClientFormError] = useState(undefined);
 
   const theme = { ...base, colors: themesMap[currentTheme] };
 
@@ -90,9 +38,9 @@ const App = ({ Component, pageProps }: AppProps) => {
         value={{ currentTheme, setCurrentTheme }}
       >
         <ThemeProvider theme={theme}>
-          <GuestFormProvider
+          <ClientFormProvider
             value={{
-              guestFormState,
+              clientFormState,
               handleChange: (name: string, newValue: any) => {
                 const error = null;
                 guestFormDispatch({
@@ -100,14 +48,30 @@ const App = ({ Component, pageProps }: AppProps) => {
                   payload: { newValue, error },
                 });
               },
-              guestFormDispatch,
-              formError,
-              setFormError,
+              clientFormDispatch,
+              clientFormError,
+              setClientFormError,
             }}
           >
-            <GlobalStyle />
-            <Component {...pageProps} />
-          </GuestFormProvider>
+            <GuestFormProvider
+              value={{
+                guestFormState,
+                handleChange: (name: string, newValue: any) => {
+                  const error = null;
+                  guestFormDispatch({
+                    key: name,
+                    payload: { newValue, error },
+                  });
+                },
+                guestFormDispatch,
+                guestFormError,
+                setFormError,
+              }}
+            >
+              <GlobalStyle />
+              <Component {...pageProps} />
+            </GuestFormProvider>
+          </ClientFormProvider>
         </ThemeProvider>
       </ThemePreferenceContext.Provider>
     </SessionProvider>

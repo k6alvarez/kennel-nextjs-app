@@ -1,8 +1,14 @@
 import styled from "styled-components";
 export const Fields = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: ${({ gridColumns }) =>
+    gridColumns ? gridColumns : "1fr 1fr"};
   width: 100%;
+`;
+
+export const Fieldset = styled.fieldset`
+  width: 100%;
+  max-width: 100%;
 `;
 
 export const Field = styled.div`

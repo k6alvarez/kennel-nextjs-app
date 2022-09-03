@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer, useState } from "react";
 import { GetServerSideProps } from "next";
 import prisma from "../lib/prisma";
 
@@ -7,7 +7,11 @@ import { Content } from "../components/ui-kit/Base";
 import { PostProps } from "../components/Post";
 import { getSession } from "next-auth/react";
 import { User } from "@prisma/client";
-import { getUserName } from "../components/Profile/helpers";
+import { getProfileHeader, getUserName } from "../components/Profile/helpers";
+import { profileFormReducer } from "../components/Profile/profileFormReducer";
+import { profileFormSubmit } from "../components/Profile/services";
+import { Error, Fields, Fieldset } from "../components/Forms/styles";
+import { renderFormFields } from "../components/Forms/renderFormFields";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -37,85 +41,109 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   };
 };
 
-async function updateProfile(
-  e: React.SyntheticEvent,
-  { xstate, xsetFormError, xdispatch }
-): Promise<void> {
-  e?.preventDefault();
-  const data = Object.entries(xstate).map(([key, _value]) => {
-    return {
-      [key]: xstate[key].value !== undefined ? xstate[key].value : xstate[key],
-    };
-  });
-  xsetFormError(undefined);
-  try {
-    await fetch(`/api/profile/${xstate.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then(async (res) => {
-        if (res.errors) {
-          const validationError =
-            "Form submission failed. Please verify all required fields are filled out.";
-          Object.entries(res.errors).forEach(([key, value]) => {
-            xdispatch({
-              key: key,
-              payload: {
-                newValue: xstate[key].value,
-                error: value,
-              },
-            });
-          });
-          xsetFormError(validationError);
-          throw new Error(validationError);
-        }
-        xdispatch({
-          type: "resetForm",
-        });
-      });
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 type Props = {
   feed: PostProps[];
   user: User | null;
 };
 
 const Profile: React.FC<Props> = ({ user }) => {
+  const INITIAL_PROFILE_STATE = {
+    email: {
+      value: user?.email || "",
+      error: null,
+      type: "text",
+      inputMode: "email",
+      label: "Email",
+      disabled: true,
+    },
+    name: {
+      value: user?.name || "",
+      error: null,
+      type: "text",
+      label: "First Name",
+    },
+    lastName: {
+      value: user?.lastName || "",
+      error: null,
+      type: "text",
+      label: "Last Name",
+    },
+    address: {
+      value: user?.address || "",
+      error: null,
+      type: "text",
+      label: "Address",
+    },
+    addressUnit: {
+      value: user?.addressUnit || "",
+      error: null,
+      type: "text",
+      label: "Apt/Unit/Ste",
+    },
+    city: {
+      value: user?.city || "",
+      error: null,
+      type: "text",
+      label: "City",
+    },
+    state: {
+      value: user?.state || "MI",
+      error: null,
+      type: "select",
+      options: ["AL"],
+      label: "State",
+    },
+    zip: {
+      value: user?.zip || "",
+      error: null,
+
+      type: "text",
+      label: "Zip",
+    },
+    phone: {
+      value: user?.phone || "",
+      error: null,
+      type: "text",
+      label: "Phone",
+    },
+  };
+  const [profileFormState, profileFormDispatch] = useReducer(
+    profileFormReducer,
+    INITIAL_PROFILE_STATE
+  );
+  const [formError, setFormError] = useState(undefined);
   return (
     <Layout>
       <Content>
-        <h1>
-          {user.permissions.includes("ADMIN")
-            ? "Admin"
-            : user.permissions.includes("EMPLOYEE")
-            ? "Employee"
-            : "Admin"}{" "}
-          Profile
-        </h1>
-        <p>Signed in as {getUserName(user)}</p>
+        <h1>{getProfileHeader(user.permissions)}</h1>
+        <p>{getUserName(user)}</p>
         <form
           onSubmit={(e) => {
-            e.preventDefault();
-            // updateProfile(e, { xstate, xsetFormError, xdispatch });
+            profileFormSubmit(e, {
+              state: profileFormState,
+              setFormError,
+              dispatch: profileFormDispatch,
+              userId: user.id,
+            });
           }}
         >
-          <label htmlFor="name">Name</label>
-          <input type="text" name="name" id="name" defaultValue={user.name} />
+          {formError && <Error>{formError}</Error>}
+          <Fieldset>
+            <Fields gridColumns="1fr">
+              {renderFormFields({
+                initialState: INITIAL_PROFILE_STATE,
+                state: profileFormState,
+                handleChange: (name: string, newValue: any) => {
+                  const error = null;
+                  profileFormDispatch({
+                    key: name,
+                    payload: { newValue, error },
+                  });
+                },
+              })}
+            </Fields>
+          </Fieldset>
         </form>
-        {Object.entries(user).map(([key, value]) => {
-          return (
-            <p>
-              {key}: {value}
-            </p>
-          );
-        })}
       </Content>
     </Layout>
   );

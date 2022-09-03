@@ -3,10 +3,11 @@ import { PayPalCheckout } from "../Checkout";
 import { useGuestFormContext } from "./formContext";
 import { BlockQuote } from "./FormIntro";
 import { guestFormSubmit } from "./services";
-import { Error, TotalDeposit } from "./styles";
+import { TotalDeposit } from "./styles";
+import { Error } from "../../Forms/styles";
 
 export const FieldSetPaymentInfo = () => {
-  const { formError, guestFormDispatch, guestFormState, setFormError } =
+  const { guestFormError, guestFormDispatch, guestFormState, setFormError } =
     useGuestFormContext();
   const [depositConfirmed, setDepositConfirmed] = useState(false);
 
@@ -23,7 +24,7 @@ export const FieldSetPaymentInfo = () => {
 
   return (
     <fieldset>
-      <Error>{formError}</Error>
+      <Error>{guestFormError}</Error>
       <>
         <BlockQuote>
           A $25.00 per run deposit is required for new client reservations. Your

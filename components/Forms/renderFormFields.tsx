@@ -23,6 +23,7 @@ export interface renderFormFieldProps {
       required: any;
       grow: any;
       options: any;
+      disabled: boolean;
     };
   };
   handleChange: (arg0: string, arg1: any) => any;
@@ -35,7 +36,7 @@ export const renderFormFields = ({
 }: renderFormFieldProps) => {
   return Object.entries(initialState).map(([key, _value], i) => {
     const {
-      inputMode,
+      inputMode = "text",
       value,
       error,
       type,
@@ -47,6 +48,7 @@ export const renderFormFields = ({
       required,
       grow,
       options,
+      disabled = false,
     } = state[key];
     const onChange = (e) => handleChange(key, e.target.value);
     const autoFocus = i === 0;
@@ -63,6 +65,7 @@ export const renderFormFields = ({
             id={key}
             autoFocus={autoFocus}
             error={error}
+            disabled={disabled}
           />
         )}
 
@@ -74,6 +77,7 @@ export const renderFormFields = ({
             onChange={onChange}
             error={error}
             defaultValue={value}
+            disabled={disabled}
           >
             {options.map((option, i) => (
               <option key={i} value={option}>
@@ -97,6 +101,7 @@ export const renderFormFields = ({
             id={key}
             value={value}
             error={error}
+            disabled={disabled}
           />
         )}
 
