@@ -13,14 +13,6 @@ export const Field = styled.div`
   grid-column: ${({ grow }) => (grow ? "span 2" : "auto")};
 `;
 
-export const StepsAction = styled.div`
-  display: flex;
-  gap: ${({ theme }) => theme.space[4]};
-`;
-export const StepsContent = styled.div`
-  width: 100%;
-`;
-
 export const Hint = styled.span`
   color: ${({ theme }) => theme.colors.primary};
   font-size: ${({ theme }) => theme.fontSizes[0]};
