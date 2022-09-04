@@ -8,4 +8,4 @@ export const getProfileHeader = (permissions) => `${permissions.includes("ADMIN"
 ? "Admin"
 : permissions.includes("EMPLOYEE")
 ? "Employee"
-: "Admin"} Profile`
+: "Client"} Profile`

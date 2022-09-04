@@ -34,9 +34,6 @@ export const profileFormSubmit = async (
           setFormError(validationError);
           throw new Error(validationError);
         }
-        dispatch({
-          type: "resetForm",
-        });
       });
   } catch (error) {
     console.error(error);

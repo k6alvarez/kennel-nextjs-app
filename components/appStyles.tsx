@@ -63,4 +63,8 @@ export const GlobalStyle = createGlobalStyle`
     width: max-content;
     min-width: 100px;
   }
+
+  .ant-message {
+    font-family: ${({ theme }) => theme.fonts.body};
+  }
 `;

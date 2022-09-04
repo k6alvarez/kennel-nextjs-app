@@ -1,5 +1,6 @@
 import React, { useReducer, useState } from "react";
 import { GetServerSideProps } from "next";
+import { message, Collapse } from "antd";
 import prisma from "../lib/prisma";
 
 import Layout from "../components/Layout";
@@ -12,6 +13,7 @@ import { profileFormReducer } from "../components/Profile/profileFormReducer";
 import { profileFormSubmit } from "../components/Profile/services";
 import { Error, Fields, Fieldset } from "../components/Forms/styles";
 import { renderFormFields } from "../components/Forms/renderFormFields";
+import { statesArray } from "../components/Reservations/NewClients/formInitialState";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -55,6 +57,7 @@ const Profile: React.FC<Props> = ({ user }) => {
       inputMode: "email",
       label: "Email",
       disabled: true,
+      grow: true,
     },
     name: {
       value: user?.name || "",
@@ -73,6 +76,7 @@ const Profile: React.FC<Props> = ({ user }) => {
       error: null,
       type: "text",
       label: "Address",
+      grow: true,
     },
     addressUnit: {
       value: user?.addressUnit || "",
@@ -90,21 +94,49 @@ const Profile: React.FC<Props> = ({ user }) => {
       value: user?.state || "MI",
       error: null,
       type: "select",
-      options: ["AL"],
+      options: statesArray,
       label: "State",
     },
     zip: {
       value: user?.zip || "",
       error: null,
-
       type: "text",
+      inputMode: "numeric",
+      minLength: 5,
+      maxLength: 5,
       label: "Zip",
     },
     phone: {
       value: user?.phone || "",
       error: null,
       type: "text",
+      inputMode: "numeric",
+      minLength: 10,
+      maxLength: 11,
       label: "Phone",
+    },
+    altPhone: {
+      value: user?.altPhone || "",
+      error: null,
+      type: "text",
+      inputMode: "numeric",
+      minLength: 10,
+      maxLength: 11,
+      label: "Alt Phone",
+    },
+    emergencyContactName: {
+      value: user?.emergencyContactName || "",
+      error: null,
+      label: "Emergency Contact Name",
+    },
+    emergencyContactPhone: {
+      value: user?.emergencyContactPhone || "",
+      error: null,
+      type: "text",
+      inputMode: "numeric",
+      minLength: 10,
+      maxLength: 11,
+      label: "Emergency Contact Phone",
     },
   };
   const [profileFormState, profileFormDispatch] = useReducer(
@@ -112,38 +144,49 @@ const Profile: React.FC<Props> = ({ user }) => {
     INITIAL_PROFILE_STATE
   );
   const [formError, setFormError] = useState(undefined);
+
+  const onChange = (key: string | string[]) => {
+    console.log(key);
+  };
   return (
     <Layout>
       <Content>
         <h1>{getProfileHeader(user.permissions)}</h1>
-        <p>{getUserName(user)}</p>
-        <form
-          onSubmit={(e) => {
-            profileFormSubmit(e, {
-              state: profileFormState,
-              setFormError,
-              dispatch: profileFormDispatch,
-              userId: user.id,
-            });
-          }}
-        >
-          {formError && <Error>{formError}</Error>}
-          <Fieldset>
-            <Fields gridColumns="1fr">
-              {renderFormFields({
-                initialState: INITIAL_PROFILE_STATE,
-                state: profileFormState,
-                handleChange: (name: string, newValue: any) => {
-                  const error = null;
-                  profileFormDispatch({
-                    key: name,
-                    payload: { newValue, error },
-                  });
-                },
-              })}
-            </Fields>
-          </Fieldset>
-        </form>
+
+        <Collapse defaultActiveKey={["1"]} onChange={onChange}>
+          <Collapse.Panel header={getUserName(user)} key="1">
+            <form
+              onSubmit={async (e) => {
+                await profileFormSubmit(e, {
+                  state: profileFormState,
+                  setFormError,
+                  dispatch: profileFormDispatch,
+                  userId: user.id,
+                }).then(() => {
+                  message.success("Profile updated successfully");
+                });
+              }}
+            >
+              {formError && <Error>{formError}</Error>}
+              <Fieldset>
+                <Fields>
+                  {renderFormFields({
+                    initialState: INITIAL_PROFILE_STATE,
+                    state: profileFormState,
+                    handleChange: (name: string, newValue: any) => {
+                      const error = null;
+                      profileFormDispatch({
+                        key: name,
+                        payload: { newValue, error },
+                      });
+                    },
+                  })}
+                </Fields>
+                <input type="submit" value="Update Profile" />
+              </Fieldset>
+            </form>
+          </Collapse.Panel>
+        </Collapse>
       </Content>
     </Layout>
   );
