@@ -1,8 +1,6 @@
-import Router from "next/router";
-
-export const guestFormSubmit = async (
+export const profileFormSubmit = async (
   e: React.SyntheticEvent,
-  { state, setFormError, dispatch }
+  { state, setFormError, dispatch, userId }
 ) => {
   e?.preventDefault();
   const data = Object.entries(state).map(([key, _value]) => {
@@ -12,8 +10,8 @@ export const guestFormSubmit = async (
   });
   setFormError(undefined);
   try {
-    await fetch("/api/guest-reservation", {
-      method: "POST",
+    await fetch(`/api/profile/${userId}`, {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(Object.assign({}, ...data)),
     })
@@ -36,10 +34,6 @@ export const guestFormSubmit = async (
           setFormError(validationError);
           throw new Error(validationError);
         }
-        dispatch({
-          type: "resetForm",
-        });
-        await Router.push("/res-guest/[id]", `/res-guest/${res.id}`);
       });
   } catch (error) {
     console.error(error);

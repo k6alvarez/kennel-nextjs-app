@@ -1,20 +1,20 @@
 import React from "react";
+import { renderFormFields } from "../../Forms/renderFormFields";
+import { Fields } from "../../Forms/styles";
 import { useGuestFormContext } from "./formContext";
-import { INITIAL_USER_STATE, renderFormFields } from "./formInitialState";
-
-import { Fields } from "./styles";
+import { INITIAL_USER_STATE } from "./formInitialState";
 
 export const FieldsetClientInfo = ({}) => {
-  const { state, handleChangeGuestReservation } = useGuestFormContext();
+  const { guestFormState, handleChange } = useGuestFormContext();
 
   return (
     <fieldset>
       <Fields>
-        {renderFormFields(
-          INITIAL_USER_STATE,
-          state,
-          handleChangeGuestReservation
-        )}
+        {renderFormFields({
+          initialState: INITIAL_USER_STATE,
+          state: guestFormState,
+          handleChange,
+        })}
       </Fields>
     </fieldset>
   );

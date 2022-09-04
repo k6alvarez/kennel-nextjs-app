@@ -58,19 +58,28 @@ model Session {
 }
 
 model User {
-  id            String        @id @default(cuid())
-  name          String?
-  lastName      String?
-  email         String?       @unique
-  emailVerified DateTime?     @map("email_verified")
-  image         String?
-  createdAt     DateTime      @default(now()) @map(name: "created_at")
-  updatedAt     DateTime      @updatedAt @map(name: "updated_at")
-  posts         Post[]
-  accounts      Account[]
-  sessions      Session[]
-  permissions   Permission[]  @default(value: [USER])
-  reservation   Reservation[]
+  id                    String        @id @default(cuid())
+  name                  String?
+  lastName              String?
+  email                 String?       @unique
+  emailVerified         DateTime?     @map("email_verified")
+  image                 String?
+  address               String?
+  addressUnit           String?
+  city                  String?
+  state                 String?
+  zip                   String?
+  phone                 String?
+  altPhone              String?
+  emergencyContactName  String?
+  emergencyContactPhone String?
+  createdAt             DateTime      @default(now()) @map(name: "created_at")
+  updatedAt             DateTime      @updatedAt @map(name: "updated_at")
+  posts                 Post[]
+  accounts              Account[]
+  sessions              Session[]
+  permissions           Permission[]  @default(value: [USER])
+  reservation           Reservation[]
 
   GuestReservation GuestReservation[]
 

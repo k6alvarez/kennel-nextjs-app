@@ -8,13 +8,14 @@ import { FieldsetPetsInfo } from "./FieldsetPetsInfo";
 import { Button } from "../../ui-kit/Base";
 import { StepsContent, StepsAction } from "./styles";
 import { FieldSetPaymentInfo } from "./FieldSetPaymentInfo";
-import { next, prev, theFieldsAreValid } from "./helpers";
-import { submitData } from "./services";
+import { next, prev, guestFormFieldsValid } from "./helpers";
+import { guestFormSubmit } from "./services";
 
 const { Step } = Steps;
 
 export const NewClientForm = () => {
-  const { state, dispatch, setFormError } = useGuestFormContext();
+  const { guestFormState, guestFormDispatch, setFormError } =
+    useGuestFormContext();
   const [current, setCurrent] = useState(0);
 
   const formSteps = [
@@ -41,7 +42,11 @@ export const NewClientForm = () => {
       <FormIntroGuest />
       <form
         onSubmit={(e) => {
-          submitData(e, { state, setFormError, dispatch });
+          guestFormSubmit(e, {
+            state: guestFormState,
+            setFormError,
+            dispatch: guestFormDispatch,
+          });
         }}
       >
         <Steps current={current}>
@@ -62,7 +67,12 @@ export const NewClientForm = () => {
               primary
               type="button"
               onClick={() => {
-                if (theFieldsAreValid(current, { state, dispatch })) {
+                if (
+                  guestFormFieldsValid(current, {
+                    state: guestFormState,
+                    dispatch: guestFormDispatch,
+                  })
+                ) {
                   next({ current, setCurrent });
                 }
               }}

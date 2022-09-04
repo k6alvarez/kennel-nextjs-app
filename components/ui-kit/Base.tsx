@@ -8,7 +8,8 @@ export const Content = styled.article`
     cardWrapper ? theme.colors.secondaryDark : "inherit"};
 
   @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
-    max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "80vw")};
+    width: ${({ maxWidth }) => (maxWidth ? maxWidth : "80vw")};
+    max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "1200px")};
   }
 
   h1 {
