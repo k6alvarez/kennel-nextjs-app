@@ -19,7 +19,8 @@ const PromoWrapper = styled.div`
 `;
 
 const PromoPics = styled.div`
-  flex-grow: 1;
+  flex: 1;
+  width: 100%;
 `;
 
 const PromoText = styled.div`
@@ -64,7 +65,7 @@ export const Promo = () => {
           ></GridItem>
           <GridItem
             size="25vw"
-            img="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005633/gk-app/gk_home.jpg"
+            img="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg"
           ></GridItem>
           <GridItem
             size="25vw"

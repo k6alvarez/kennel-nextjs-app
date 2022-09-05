@@ -1,6 +1,6 @@
-export const getUserName = (user) => {
-    const userEmail = user.email;
-    const fullName = user.name && user.lastName && `${user.name} ${user.lastName}`;
+export const getUserName = (user = undefined) => {
+    const userEmail = user?.email;
+    const fullName = user?.name && user.lastName && `${user.name} ${user.lastName}`;
     return `Signed in as ${fullName || userEmail}`;
 }
 
