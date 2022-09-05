@@ -1,33 +1,10 @@
 import React from "react";
-import { GetStaticProps } from "next";
-import prisma from "../lib/prisma";
-
 import Layout from "../components/Layout";
-import Post, { PostProps } from "../components/Post";
 import { Promo } from "../components/ui-kit/Promo";
-import { Content, GridItem, GridItems } from "../components/ui-kit/Base";
+import { Content } from "../components/ui-kit/Base";
+import { Callouts } from "../components/ui-kit/Callouts";
 
-export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.post.findMany({
-    where: { published: true },
-    include: {
-      author: {
-        select: { name: true },
-      },
-    },
-  });
-
-  return {
-    props: { feed },
-    revalidate: 10,
-  };
-};
-
-type Props = {
-  feed: PostProps[];
-};
-
-const Blog: React.FC<Props> = (props) => {
+const Blog: React.FC = () => {
   return (
     <Layout>
       <Promo />
@@ -51,32 +28,7 @@ const Blog: React.FC<Props> = (props) => {
           entire room, complete with rocking chairs, cozy baskets, and wide
           window sills, is available on a first come first serve basis.
         </p>
-        <GridItems as="div">
-          <div>
-            <p>Vaccinatons</p>
-            <GridItem
-              as="div"
-              size="25vw"
-              img="https://res.cloudinary.com/dhcv2fdfq/image/upload/c_scale,h_450/v1585006544/gk-app/gktwopups.jpg"
-            ></GridItem>
-          </div>
-          <div>
-            <p>We board cats!</p>
-            <GridItem
-              as="div"
-              size="25vw"
-              img="https://res.cloudinary.com/dhcv2fdfq/image/upload/c_scale,h_450/v1585006782/gk-app/catsgk.jpg"
-            ></GridItem>
-          </div>
-          <div>
-            <p>Before you board</p>
-            <GridItem
-              as="div"
-              size="25vw"
-              img="https://res.cloudinary.com/dhcv2fdfq/image/upload/c_scale,h_450/v1585007798/gk-app/sierragk.jpg"
-            ></GridItem>
-          </div>
-        </GridItems>
+        <Callouts />
 
         <h2>Gillette Kennels is also proud to offer Obedience Training!</h2>
         <p>

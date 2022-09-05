@@ -6,7 +6,7 @@ import prisma from "../lib/prisma";
 import Layout from "../components/Layout";
 import { Content } from "../components/ui-kit/Base";
 import { PostProps } from "../components/Post";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { User } from "@prisma/client";
 import { getProfileHeader, getUserName } from "../components/Profile/helpers";
 import { profileFormReducer } from "../components/Profile/profileFormReducer";
@@ -49,6 +49,7 @@ type Props = {
 };
 
 const Profile: React.FC<Props> = ({ user }) => {
+  const { data: session } = useSession();
   const INITIAL_PROFILE_STATE = {
     email: {
       value: user?.email || "",
@@ -145,16 +146,24 @@ const Profile: React.FC<Props> = ({ user }) => {
   );
   const [formError, setFormError] = useState(undefined);
 
-  const onChange = (key: string | string[]) => {
-    console.log(key);
-  };
+  if (!session) {
+    return (
+      <Layout>
+        <Content>
+          <h1>Profile</h1>
+          <div>You need to be authenticated to view this page.</div>
+        </Content>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <Content>
-        <h1>{getProfileHeader(user.permissions)}</h1>
-
-        <Collapse defaultActiveKey={["1"]} onChange={onChange}>
-          <Collapse.Panel header={getUserName(user)} key="1">
+        <h1>{getProfileHeader(user?.permissions || [])}</h1>
+        <p>{getUserName(user)}</p>
+        <Collapse defaultActiveKey={["1"]}>
+          <Collapse.Panel header="Profile Details" key="1">
             <form
               onSubmit={async (e) => {
                 await profileFormSubmit(e, {
