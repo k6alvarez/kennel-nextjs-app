@@ -7,7 +7,31 @@ import { Callouts } from "../components/ui-kit/Callouts";
 const Blog: React.FC = () => {
   return (
     <Layout>
-      <Promo />
+      <Promo
+        promos={[
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg",
+            title: "",
+            description: "",
+            size: "28vw",
+          },
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
+            title: "",
+            description: "",
+            size: "28vw",
+          },
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg",
+            title: "",
+            description: "",
+            size: "28vw",
+          },
+        ]}
+      />
       <Content>
         <h1>About Our Boarding Kennel</h1>
         <p>

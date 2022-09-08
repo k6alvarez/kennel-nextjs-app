@@ -20,6 +20,7 @@ export const Content = styled.article`
   h2 {
     font-family: ${({ theme }) => theme.fonts.heading};
     font-size: ${({ theme }) => theme.fontSizes[4]};
+    margin: 2.5rem 0 0.8rem;
   }
 
   .ant-card {
@@ -35,22 +36,29 @@ export const Content = styled.article`
   }
 `;
 
-export const GridItems = styled.ul`
+export const GridItems = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.space[4]};
+  margin: ${({ theme }) => theme.space[6]} 0;
   justify-content: space-evenly;
-  list-style: none;
-  margin: ${({ theme }) => theme.space[3]} 0;
+  overflow-x: auto;
+
+  @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
+    flex-direction: row;
+  }
 `;
 
-export const GridItem = styled.li`
-  min-width: 27vw;
-  height: 27vw;
+export const GridItem = styled.div`
+  position: relative;
+  min-width: 100px;
+  width: 100%;
+  height: 300px;
   background-image: url(${({ img }) => (img ? img : "")});
   background-color: ${({ theme }) => theme.colors.nav};
   background-size: cover;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  background-position: center;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 
   &:first-child {
     margin-left: 0;
@@ -61,9 +69,32 @@ export const GridItem = styled.li`
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-    min-width: ${({ size }) => (size ? size : "20vw")};
-    height: ${({ size }) => (size ? size : "20vw")};
+    min-width: ${({ size }) => (size ? size : "15vw")};
+    height: ${({ size }) => (size ? size : "15vw")};
   }
+
+  /* &:hover {
+    cursor: pointer;
+
+    p {
+      background-color: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.textPrimary};
+      transition: all 0.1s ease-in-out;
+    }
+  } */
+`;
+
+export const GridItemTitle = styled.p`
+  font-size: ${({ theme }) => theme.fontSizes[2]};
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.textPrimary};
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  text-transform: capitalize;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  margin: 0;
 `;
 
 export const Button = styled.button`

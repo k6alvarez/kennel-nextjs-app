@@ -55,7 +55,28 @@ const Boarding: React.FC<Props> = (props) => {
           radiant heat.
         </p>
       </Content>
-      <Promo />
+      <Promo
+        promos={[
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg",
+            title: "",
+            description: "",
+          },
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
+            title: "",
+            description: "",
+          },
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg",
+            title: "",
+            description: "",
+          },
+        ]}
+      />
       <Content>
         <h2>C-Wing: Our Original Kennel (Updated 2020)</h2>
         <p>

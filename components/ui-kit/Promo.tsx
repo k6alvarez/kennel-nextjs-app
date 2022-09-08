@@ -1,78 +1,73 @@
-import React from "react";
-import styled from "styled-components";
-import { GridItem, GridItems } from "./Base";
+import React, { useState } from "react";
+import { animated, config, useSpring } from "react-spring";
+import { Promos } from "./Promo/Promos";
+import { PromoWrapper, PromoText, PromoTitle } from "./Promo/styles-promo";
 
-const PromoWrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.primaryDark};
-  color: ${({ theme }) => theme.colors.textPrimary};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: ${({ theme }) => theme.space[2]};
-  padding: ${({ theme }) => theme.space[4]};
-  font-size: ${({ theme }) => theme.fontSizes[4]};
-  line-height: 1.2;
+const defaultDelay = 400;
 
-  p {
-    margin-bottom: ${({ theme }) => theme.space[4]};
-  }
-`;
+export const Promo = ({ promos = [] }) => {
+  // const [flip, set] = useState(false);
+  const props = useSpring({
+    to: { opacity: 1 },
+    from: { opacity: 0 },
+    // reset: true,
+    // reverse: flip,
+    delay: defaultDelay,
+    config: config.molasses,
+    // onRest: () => set(!flip),
+  });
+  const fadeInPt1 = useSpring({
+    to: {
+      opacity: 1,
+      // transform: "translate3d(0,0,0)",
+    },
+    from: {
+      opacity: 0,
+      // transform: "translate3d(0,100px,0)",
+    },
+    config: config.molasses,
+    delay: defaultDelay * 3,
+    reset: true,
+    // reverse: flip,
+    // onRest: () => set(!flip),
+  });
 
-const PromoPics = styled.div`
-  flex: 1;
-  width: 100%;
-`;
+  // const fadeInPt2 = useSpring({
+  //   to: {
+  //     opacity: 1,
+  //     // transform: "translate3d(0,0,0)",
+  //   },
+  //   from: {
+  //     opacity: 0,
+  //     // transform: "translate3d(0,100px,0)",
+  //   },
+  //   config: config.molasses,
+  //   delay: defaultDelay * 4,
+  //   reset: true,
+  //   // reverse: flip,
+  //   // onRest: () => set(!flip),
+  // });
 
-const PromoText = styled.div`
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  p {
-    width: 100%;
-    text-align: center;
-    @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-      width: ${({ size }) => (size ? size : "100%")};
-    }
-  }
-`;
-
-const PromoTitle = styled.span`
-  font-family: ${({ theme }) => theme.fonts.heading};
-  font-size: ${({ theme }) => theme.fontSizes[6]};
-  letter-spacing: 1px;
-  line-height: 1;
-`;
-
-export const Promo = () => {
   return (
     <PromoWrapper>
       <PromoText size="70vw">
-        <p>
-          At <PromoTitle>Gillette Kennels</PromoTitle>, we offer a comfortable
-          and safe place for your pets to stay while your are away!
-        </p>
-        <p>
-          Each of our runs provide your dog with spacious, private, indoor and
-          outdoor areas.
-        </p>
+        <animated.div style={props}>
+          <p>
+            <span>
+              At <PromoTitle>Gillette Kennels</PromoTitle>,
+            </span>{" "}
+            <animated.span style={fadeInPt1}>
+              we offer a comfortable and safe place for your pets to stay while
+              your are away!
+            </animated.span>
+          </p>
+          <animated.p style={fadeInPt1}>
+            Each of our runs provide your dog with spacious, private, indoor and
+            outdoor areas.
+          </animated.p>
+        </animated.div>
       </PromoText>
-      <PromoPics>
-        <GridItems>
-          <GridItem
-            size="25vw"
-            img="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg"
-          ></GridItem>
-          <GridItem
-            size="25vw"
-            img="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg"
-          ></GridItem>
-          <GridItem
-            size="25vw"
-            img="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg"
-          ></GridItem>
-        </GridItems>
-      </PromoPics>
+      <Promos delay={defaultDelay * 6} promos={promos} />
     </PromoWrapper>
   );
 };
