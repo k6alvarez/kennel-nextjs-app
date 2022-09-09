@@ -40,7 +40,7 @@ export const GridItems = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.space[4]};
-  margin: ${({ theme }) => theme.space[6]} 0;
+  margin: ${({ theme }) => theme.space[5]} 0;
   justify-content: space-evenly;
   overflow-x: auto;
 
@@ -69,7 +69,7 @@ export const GridItem = styled.div`
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-    min-width: ${({ size }) => (size ? size : "15vw")};
+    min-width: ${({ size }) => (size ? size : "20vw")};
     height: ${({ size }) => (size ? size : "15vw")};
   }
 

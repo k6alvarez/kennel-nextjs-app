@@ -6,6 +6,7 @@ import Layout from "../components/Layout";
 import Post, { PostProps } from "../components/Post";
 import { Promo } from "../components/ui-kit/Promo";
 import { Content, GridItem, GridItems } from "../components/ui-kit/Base";
+import { PromoTitle } from "../components/ui-kit/Promo/styles-promo";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
@@ -76,7 +77,13 @@ const Boarding: React.FC<Props> = (props) => {
             description: "",
           },
         ]}
-      />
+        title="to keep your dog warm in the winter."
+        description="Our facility also has two spacious exercise and play areas."
+      >
+        <span>
+          Inside runs include <PromoTitle>Radient Heat</PromoTitle>,
+        </span>{" "}
+      </Promo>
       <Content>
         <h2>C-Wing: Our Original Kennel (Updated 2020)</h2>
         <p>

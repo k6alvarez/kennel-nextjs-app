@@ -12,23 +12,17 @@ const Blog: React.FC = () => {
           {
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg",
-            title: "",
-            description: "",
-            size: "28vw",
+            size: "24vw",
           },
           {
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
-            title: "",
-            description: "",
-            size: "28vw",
+            size: "24vw",
           },
           {
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg",
-            title: "",
-            description: "",
-            size: "28vw",
+            size: "24vw",
           },
         ]}
       />
@@ -52,8 +46,30 @@ const Blog: React.FC = () => {
           entire room, complete with rocking chairs, cozy baskets, and wide
           window sills, is available on a first come first serve basis.
         </p>
-        <Callouts />
-
+      </Content>
+      <Callouts
+        callouts={[
+          {
+            title: "Vaccinations",
+            link: "/boarding",
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
+          },
+          {
+            title: "We board cats!",
+            link: "/grooming",
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg",
+          },
+          {
+            title: "Before you board",
+            link: "/training",
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg",
+          },
+        ]}
+      />
+      <Content>
         <h2>Gillette Kennels is also proud to offer Obedience Training!</h2>
         <p>
           Kirk L. Gillette formally began professionally training dogs in
