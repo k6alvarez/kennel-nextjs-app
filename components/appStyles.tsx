@@ -67,4 +67,12 @@ export const GlobalStyle = createGlobalStyle`
   .ant-message {
     font-family: ${({ theme }) => theme.fonts.body};
   }
+
+  .ant-tabs-content-holder article {
+    max-width: 100%;
+  }
+
+  .ant-collapse {
+    font-size: inherit;
+  }
 `;

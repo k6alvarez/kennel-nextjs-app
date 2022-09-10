@@ -27,7 +27,7 @@ export const PromoText = styled.div`
   flex-direction: column;
   align-items: center;
   max-width: 800px;
-  margin-top: ${({ theme }) => theme.space[5]};
+  margin-top: ${({ theme }) => theme.space[2]};
   p {
     width: 100%;
     text-align: center;

@@ -5,7 +5,10 @@ import { GridItems, GridItem, GridItemTitle } from "./Base";
 
 const StyledGridItems = styled(GridItems)`
   background-color: ${({ theme }) => theme.colors.secondaryDark};
-  padding: ${({ theme }) => theme.space[6]};
+  padding: ${({ theme }) => `${theme.space[5]} ${theme.space[4]}`};
+  @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
+    padding: ${({ theme }) => `${theme.space[6]} ${theme.space[2]}`};
+  }
 `;
 
 export const Callouts = ({ callouts = [] }) => {

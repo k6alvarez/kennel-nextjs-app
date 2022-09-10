@@ -57,13 +57,13 @@ const Blog: React.FC = () => {
           },
           {
             title: "We board cats!",
-            link: "/grooming",
+            link: "/boarding",
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg",
           },
           {
             title: "Before you board",
-            link: "/training",
+            link: "/boarding",
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg",
           },
@@ -83,7 +83,7 @@ const Blog: React.FC = () => {
           Our training courses range from puppy head start classes to basic,
           intermediate, and advanced levels!
         </p>
-        <h2>Our Mission</h2>
+        <h3>Our Mission</h3>
         <p>
           This website was created with you, our clients, in mind. Our goal is
           to become the premier boarding kennel in Kalamazoo, Portage, and
