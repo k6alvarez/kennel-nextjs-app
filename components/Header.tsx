@@ -45,7 +45,7 @@ const NavWrapper = styled.div`
 
   a,
   button {
-    font-size: ${({ theme }) => theme.fontSizes[0]};
+    font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/1.8)`};
     @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
       font-size: ${({ theme }) => theme.fontSizes[1]};
     }
@@ -115,6 +115,12 @@ const Header: React.FC = () => {
       </Link> */}
         <Link href="/training">
           <a data-active={isActive("/training")}>Training</a>
+        </Link>
+        <Link href="/policies">
+          <a data-active={isActive("/policies")}>Policies</a>
+        </Link>
+        <Link href="/rates">
+          <a data-active={isActive("/rates")}>Rates</a>
         </Link>
         <Link href="/create-reservation">
           <a data-active={isActive("/create-reservation")}>Book Reservation</a>
