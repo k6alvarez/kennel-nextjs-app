@@ -14,8 +14,10 @@ export const Promos = ({ delay = 0, promos = [] }) => {
             delay: delay + i * 200,
             config: config.slow,
           });
+          const urlArray = promo.image.split("/");
+          const key = urlArray[urlArray.length - 1].split(".")[0] + "-" + i;
           return (
-            <animated.div style={props}>
+            <animated.div key={key} style={props}>
               <GridItem size={promo.size} img={promo.image}></GridItem>
             </animated.div>
           );

@@ -83,7 +83,7 @@ const Blog: React.FC = () => {
           Our training courses range from puppy head start classes to basic,
           intermediate, and advanced levels!
         </p>
-        <h2>Our Mission</h2>
+        <h3>Our Mission</h3>
         <p>
           This website was created with you, our clients, in mind. Our goal is
           to become the premier boarding kennel in Kalamazoo, Portage, and

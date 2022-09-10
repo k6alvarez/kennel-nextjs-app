@@ -23,7 +23,7 @@ const StyledNav = styled.nav`
   }
 
   button {
-    background-color: ${({ theme }) => theme.colors.nav};
+    background-color: ${({ theme }) => theme.colors.secondaryDark};
     color: ${({ theme }) => theme.colors.primary};
     border: none;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);

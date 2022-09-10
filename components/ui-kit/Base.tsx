@@ -4,6 +4,7 @@ export const Content = styled.article`
   padding: ${({ theme }) => theme.space[4]};
   max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "95vw")};
   margin: 0 auto;
+  position: relative;
   background-color: ${({ theme, cardWrapper }) =>
     cardWrapper ? theme.colors.secondaryDark : "inherit"};
 
@@ -18,6 +19,11 @@ export const Content = styled.article`
   }
 
   h2 {
+    font-weight: bold;
+    font-size: ${({ theme }) => theme.fontSizes[2]};
+  }
+
+  h3 {
     font-family: ${({ theme }) => theme.fonts.heading};
     font-size: ${({ theme }) => theme.fontSizes[4]};
     margin: 2.5rem 0 0.8rem;
@@ -40,7 +46,7 @@ export const GridItems = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.space[4]};
-  margin: ${({ theme }) => theme.space[5]} 0;
+  margin: ${({ theme }) => theme.space[4]} 0;
   justify-content: space-evenly;
   overflow-x: auto;
 

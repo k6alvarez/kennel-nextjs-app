@@ -3,9 +3,17 @@ import { GetStaticProps } from "next";
 import prisma from "../lib/prisma";
 
 import Layout from "../components/Layout";
-import Post, { PostProps } from "../components/Post";
+import { PostProps } from "../components/Post";
 import { Promo } from "../components/ui-kit/Promo";
-import { Content, GridItem, GridItems } from "../components/ui-kit/Base";
+import { Content } from "../components/ui-kit/Base";
+import { PromoTitle } from "../components/ui-kit/Promo/styles-promo";
+import { Tabs } from "antd";
+import { headerHt } from "./boarding";
+import { TrainingHome } from "../components/Training/TrainingHome";
+import { GroupLessons } from "../components/Training/GroupLessons";
+import { PrivateLessons } from "../components/Training/PrivateLessons";
+import { AgilityLessons } from "../components/Training/AgilityLessons";
+import { Consultations } from "../components/Training/Consultations";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
@@ -28,18 +36,56 @@ type Props = {
 };
 
 const Training: React.FC<Props> = (props) => {
+  const items = [
+    { label: "Training", key: "item-1", children: <TrainingHome /> },
+    { label: "Group Lessons", key: "item-2", children: <GroupLessons /> },
+    { label: "Private Lessons", key: "item-3", children: <PrivateLessons /> },
+    { label: "Agility", key: "item-4", children: <AgilityLessons /> },
+    { label: "Consultations", key: "item-5", children: <Consultations /> },
+  ];
   return (
     <Layout>
+      <Promo
+        promos={[
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg",
+            title: "",
+            description: "",
+          },
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
+            title: "",
+            description: "",
+          },
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg",
+            title: "",
+            description: "",
+          },
+        ]}
+        title="the way in conscientious dog training and client education."
+        description="Our classes range from puppy head start classes to basic, intermediate, and advanced levels!"
+      >
+        <span>
+          <PromoTitle>Kirk L. Gillette</PromoTitle> continues to lead,
+        </span>{" "}
+      </Promo>
       <Content>
-        <h1>Gillette Obedience Training</h1>
-        <p>
-          Kirk L. Gillette holds a M.A. in Behavioral Psychology from Western
-          Michigan University, a diploma from West Virginia Canine College, and
-          two certifications from Cornell University Canine Study Program. Mr.
-          Gillette, who is a member of the Association for Behavioral Analysis
-          and the International Association of Canine Professionals, continues
-          to lead the way in conscientious dog training and client education.
-        </p>
+        <Tabs
+          defaultActiveKey="1"
+          tabPosition="left"
+          size="large"
+          style={{
+            height: `calc(100vh - ${headerHt})`,
+            position: "sticky",
+            top: headerHt,
+            fontSize: "inherit",
+          }}
+          items={items}
+        />
       </Content>
     </Layout>
   );
