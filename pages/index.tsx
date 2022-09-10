@@ -57,13 +57,13 @@ const Blog: React.FC = () => {
           },
           {
             title: "We board cats!",
-            link: "/grooming",
+            link: "/boarding",
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg",
           },
           {
             title: "Before you board",
-            link: "/training",
+            link: "/boarding",
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg",
           },

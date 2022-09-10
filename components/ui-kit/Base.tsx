@@ -53,11 +53,11 @@ export const GridItem = styled.div`
   position: relative;
   min-width: 100px;
   width: 100%;
-  height: 300px;
+  height: 30vh;
   background-image: url(${({ img }) => (img ? img : "")});
   background-color: ${({ theme }) => theme.colors.nav};
   background-size: cover;
-  background-position: center;
+  background-position: top center;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 
   &:first-child {
@@ -69,8 +69,8 @@ export const GridItem = styled.div`
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-    min-width: ${({ size }) => (size ? size : "20vw")};
-    height: ${({ size }) => (size ? size : "15vw")};
+    min-width: ${({ size }) => (size ? size : "28vw")};
+    height: ${({ size }) => (size ? size : "20vw")};
   }
 
   /* &:hover {
