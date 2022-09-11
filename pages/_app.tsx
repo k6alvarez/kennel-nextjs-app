@@ -35,7 +35,11 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <SessionProvider session={pageProps.session}>
       <ThemePreferenceContext.Provider
-        value={{ currentTheme, setCurrentTheme }}
+        value={{
+          currentTheme,
+          setCurrentTheme,
+          breakpoints: theme.breakpoints,
+        }}
       >
         <ThemeProvider theme={theme}>
           <ClientFormProvider

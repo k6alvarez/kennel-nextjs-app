@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { GetStaticProps } from "next";
 import prisma from "../lib/prisma";
 import { Tabs } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 
 import Layout from "../components/Layout";
-import Post, { PostProps } from "../components/Post";
+import { PostProps } from "../components/Post";
 import { Promo } from "../components/ui-kit/Promo";
 import { Content } from "../components/ui-kit/Base";
 import { PromoTitle } from "../components/ui-kit/Promo/styles-promo";
@@ -14,6 +15,8 @@ import { BeforeBoarding } from "../components/Boarding/BeforeBoarding";
 import { BoardingCheckin } from "../components/Boarding/BoardingCheckin";
 import { BoardingVaccinations } from "../components/Boarding/BoardingVaccinations";
 import { MedicalIssues } from "../components/Boarding/MedicalIssues";
+import { Size, useWindowSize } from "../components/ui-kit/hooks/useWindowSize";
+import { ThemePreferenceContext } from "./_app";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
@@ -37,7 +40,10 @@ type Props = {
 
 export const headerHt = "47px";
 
-const Boarding: React.FC<Props> = (props) => {
+const Boarding: React.FC<Props> = () => {
+  const { breakpoints } = useContext(ThemePreferenceContext);
+  const size: Size = useWindowSize();
+  const mobileScreen = size.width < parseInt(breakpoints[0]);
   const items = [
     { label: "Boarding", key: "item-1", children: <BoardingHome /> },
     { label: "We Board Cats", key: "item-2", children: <BoardingCats /> },
@@ -88,8 +94,9 @@ const Boarding: React.FC<Props> = (props) => {
       <Content>
         <Tabs
           defaultActiveKey="1"
-          tabPosition="left"
-          size="large"
+          tabPosition={mobileScreen ? "top" : "left"}
+          size={mobileScreen ? "small" : "large"}
+          moreIcon={<DownOutlined />}
           style={{
             height: `calc(100vh - ${headerHt})`,
             position: "sticky",

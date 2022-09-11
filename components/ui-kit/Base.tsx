@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Content = styled.article`
-  padding: ${({ theme }) => theme.space[4]};
+  padding: ${({ theme }) => theme.space[0]};
   max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "95vw")};
   margin: 0 auto;
   position: relative;
@@ -9,6 +9,7 @@ export const Content = styled.article`
     cardWrapper ? theme.colors.secondaryDark : "inherit"};
 
   @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
+    padding: ${({ theme }) => theme.space[4]};
     width: ${({ maxWidth }) => (maxWidth ? maxWidth : "80vw")};
     max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "1200px")};
   }
@@ -39,6 +40,24 @@ export const Content = styled.article`
 
   .ant-card-head {
     padding: 0 ${({ theme }) => theme.space[4]};
+  }
+
+  .ant-tabs-tab .ant-tabs-tab-btn {
+    font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/1.4)`};
+
+    @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
+      font-size: ${({ theme }) => theme.fontSizes[0]};
+    }
+  }
+
+  .ant-tabs-tab + .ant-tabs-tab {
+    margin: 0 0 0 22px;
+  }
+
+  .ant-tabs > .ant-tabs-nav .ant-tabs-nav-more,
+  .ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-more {
+    font-size: ${({ theme }) => `calc(${theme.fontSizes[0]})`};
+    padding: 8px 16px;
   }
 `;
 
