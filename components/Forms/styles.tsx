@@ -15,7 +15,7 @@ export const Field = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: calc(100% - 1rem);
+  width: ${({ setWidth }) => (setWidth ? setWidth : "calc(100% - 1rem)")};
   grid-column: ${({ grow }) => (grow ? "span 2" : "auto")};
 `;
 
