@@ -47,7 +47,7 @@ const Policies: React.FC<Props> = (props) => {
             our policies.
           </p>
         </BlockQuote>
-        <Collapse accordion defaultActiveKey={["1"]}>
+        <Collapse defaultActiveKey={["1"]}>
           <Panel key={1} header="Abandoned Dog Policy">
             <p>
               <BoldText>

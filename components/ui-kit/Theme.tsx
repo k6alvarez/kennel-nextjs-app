@@ -19,6 +19,7 @@ export const base = {
 export const light = {
   primary: "#8c0b3e",
   primaryDark: "#740833",
+  secondaryLight: "#fff1e6",
   secondary: "#d9e5e8",
   secondaryDark: "#ececec",
   nav: "#f8f8f8",

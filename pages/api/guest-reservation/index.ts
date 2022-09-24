@@ -12,17 +12,17 @@ type Errors = {
 
 const validateFields = async (fields: GuestReservation) => {
   const errors: Partial<Errors> = undefined;
-  Object.entries(INITIAL_STATE).filter(([key, _value]) => {
-    const fieldIsRequired = INITIAL_STATE[key].required;
-    const fieldIsEmpty = fields[key].length === 0;
-    if (fieldIsRequired && fieldIsEmpty) {
-      errors[key] = `${INITIAL_STATE[key].label} is required`;
-    }
+  // Object.entries(INITIAL_STATE).filter(([key, _value]) => {
+  //   const fieldIsRequired = INITIAL_STATE[key].required;
+  //   const fieldIsEmpty = fields[key].length === 0;
+  //   if (fieldIsRequired && fieldIsEmpty) {
+  //     errors[key] = `${INITIAL_STATE[key].label} is required`;
+  //   }
 
-    if (key === 'email' && !/^[^@]+@[^@]+\.[^@]+$/.test(fields[key])) {
-      errors[key] = `${INITIAL_STATE[key].label} is not a valid email address`;
-    }
-  });
+  //   if (key === 'email' && !/^[^@]+@[^@]+\.[^@]+$/.test(fields[key])) {
+  //     errors[key] = `${INITIAL_STATE[key].label} is not a valid email address`;
+  //   }
+  // });
   return errors;
 }
 

@@ -16,7 +16,7 @@ export const Accordion = styled.div`
 export const MedicalIssues = () => {
   return (
     <>
-      <Collapse accordion defaultActiveKey={["1"]}>
+      <Collapse defaultActiveKey={["1"]}>
         <Panel key={1} header="Administering Medications">
           <p>
             We will administer veterinarian prescribed medications to your dog

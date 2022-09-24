@@ -7,10 +7,18 @@ import { GuestReservation } from "@prisma/client";
 import Card from "antd/lib/card/Card";
 import styled from "styled-components";
 import {
-  INITIAL_PETS_STATE,
   INITIAL_RESERVATION_STATE,
   INITIAL_USER_STATE,
 } from "../../components/Reservations/NewClients/formInitialState";
+import {
+  INITIAL_PETS_STATE,
+  PET_FIVE_INITIAL_STATE,
+  PET_FOUR_INITIAL_STATE,
+  PET_ONE_INITIAL_STATE,
+  PET_THREE_INITIAL_STATE,
+  PET_TWO_INITIAL_STATE,
+} from "../../components/Reservations/NewClients/formInitialStatePets";
+import { StyledGridItems } from "../../components/ui-kit/Callouts";
 
 const Flex = styled.div`
   display: flex;
@@ -57,114 +65,6 @@ const ResGuest: React.FC<GuestReservationProps> = ({ reservation }) => {
   const getFieldGroupValues = (
     fieldGroup: {
       [x: string]: any;
-      petOneName?: {
-        value: string;
-        error: any;
-        type: string;
-        label: string;
-        required: boolean;
-      };
-      petOneType?: {
-        value: string;
-        error: any;
-        type: string;
-        options: string[];
-        label: string;
-        required: boolean;
-      };
-      petOneBreed?: {
-        value: string;
-        error: any;
-        type: string;
-        label: string;
-        required: boolean;
-      };
-      petOneGender?: {
-        value: string;
-        error: any;
-        type: string;
-        options: string[];
-        label: string;
-        required: boolean;
-      };
-      petOneFixed?: {
-        value: string;
-        error: any;
-        type: string;
-        options: string[];
-        label: string;
-        required: boolean;
-      };
-      petOneColor?: {
-        value: string;
-        error: any;
-        type: string;
-        label: string;
-        required: boolean;
-      };
-      petOneImage?: { value: string; error: any; type: string; label: string };
-      petOneLargeImage?: {
-        value: string;
-        error: any;
-        type: string;
-        label: string;
-      };
-      petOneVaccinations?: {
-        value: string;
-        error: any;
-        type: string;
-        label: string;
-        required: boolean;
-      };
-      petOneVaccinationsLargeImage?: {
-        value: string;
-        error: any;
-        type: string;
-        label: string;
-      };
-      petOneAge?: {
-        value: string;
-        error: any;
-        type: string;
-        label: string;
-        required: boolean;
-      };
-      petOneWeight?: {
-        value: string;
-        error: any;
-        type: string;
-        label: string;
-        required: boolean;
-      };
-      petOneVet?: {
-        value: string;
-        error: any;
-        type: string;
-        label: string;
-        required: boolean;
-      };
-      petOnePreferredRunSize?: {
-        value: string;
-        error: any;
-        type: string;
-        options: string[];
-        label: string;
-        required: boolean;
-      };
-      petOneFeeding?: {
-        value: string;
-        error: any;
-        type: string;
-        label: string;
-        required: boolean;
-      };
-      petOneFeedingCount?: {
-        value: string;
-        error: any;
-        type: string;
-        label: string;
-        required: boolean;
-      };
     },
     key: string,
     value: string | boolean | Date
@@ -194,11 +94,42 @@ const ResGuest: React.FC<GuestReservationProps> = ({ reservation }) => {
         <Card
           title={
             <Flex>
-              <span>Reservation for {reservation.petOneName}</span>
+              <span>Boarding Dates</span>
               <ResId>
                 Reservation ID: <br />
                 {reservation.id}
               </ResId>
+            </Flex>
+          }
+        >
+          <Grid>
+            {Object.entries(reservation).map(([key, value]) =>
+              getFieldGroupValues(INITIAL_RESERVATION_STATE, key, value)
+            )}
+          </Grid>
+        </Card>
+        <h2>Pets</h2>
+        <StyledGridItems>
+          <Card>
+            <Grid>
+              {reservation.petOneName &&
+                Object.entries(PET_ONE_INITIAL_STATE).map(
+                  ([key, _value], i) => {
+                    return getFieldGroupValues(
+                      PET_ONE_INITIAL_STATE,
+                      key,
+                      reservation[key]
+                    );
+                  }
+                )}
+            </Grid>
+          </Card>
+        </StyledGridItems>
+        {/* <Card
+          title={
+            <Flex>
+
+              <span>Pets</span>
             </Flex>
           }
           cover={
@@ -211,20 +142,132 @@ const ResGuest: React.FC<GuestReservationProps> = ({ reservation }) => {
           }
         >
           <Grid>
-            {Object.entries(reservation).map(([key, value]) => {
-              if (!key.includes("Image")) {
-                return getFieldGroupValues(INITIAL_PETS_STATE, key, value);
-              }
-            })}
+            {reservation.petOneName &&
+              Object.entries(PET_ONE_INITIAL_STATE).map(([key, _value], i) => {
+                return getFieldGroupValues(
+                  PET_ONE_INITIAL_STATE,
+                  key,
+                  reservation[key]
+                );
+              })}
           </Grid>
         </Card>
-        <Card title={"Boarding Dates"}>
+        <Card
+          title={
+            <Flex>
+              <span>Reservation for {reservation.petTwoName}</span>
+            </Flex>
+          }
+          cover={
+            (reservation.petOneLargeImage || reservation.petOneImage) && (
+              <img
+                alt={`Photo of ${reservation.petOneName}`}
+                src={reservation.petOneLargeImage || reservation.petOneImage}
+              />
+            )
+          }
+        >
           <Grid>
-            {Object.entries(reservation).map(([key, value]) =>
-              getFieldGroupValues(INITIAL_RESERVATION_STATE, key, value)
-            )}
+            {reservation.petTwoName &&
+              Object.entries(PET_TWO_INITIAL_STATE).map(([key, value], i) => {
+                return getFieldGroupValues(
+                  PET_TWO_INITIAL_STATE,
+                  key,
+                  reservation[key]
+                );
+              })}
           </Grid>
         </Card>
+        <Card
+        // title={
+        //   <Flex>
+        //     <span>Reservation for {reservation.arrivalDate}</span>
+        //     <ResId>
+        //       Reservation ID: <br />
+        //       {reservation.id}
+        //     </ResId>
+        //   </Flex>
+        // }
+        // cover={
+        //   (reservation.petOneLargeImage || reservation.petOneImage) && (
+        //     <img
+        //       alt={`Photo of ${reservation.petOneName}`}
+        //       src={reservation.petOneLargeImage || reservation.petOneImage}
+        //     />
+        //   )
+        // }
+        >
+          <Grid>
+            {reservation.petThreeName &&
+              Object.entries(PET_THREE_INITIAL_STATE).map(([key, value], i) => {
+                return getFieldGroupValues(
+                  PET_THREE_INITIAL_STATE,
+                  key,
+                  reservation[key]
+                );
+              })}
+          </Grid>
+        </Card>
+        <Card
+        // title={
+        //   <Flex>
+        //     <span>Reservation for {reservation.arrivalDate}</span>
+        //     <ResId>
+        //       Reservation ID: <br />
+        //       {reservation.id}
+        //     </ResId>
+        //   </Flex>
+        // }
+        // cover={
+        //   (reservation.petOneLargeImage || reservation.petOneImage) && (
+        //     <img
+        //       alt={`Photo of ${reservation.petOneName}`}
+        //       src={reservation.petOneLargeImage || reservation.petOneImage}
+        //     />
+        //   )
+        // }
+        >
+          <Grid>
+            {reservation.petFourName &&
+              Object.entries(PET_FOUR_INITIAL_STATE).map(([key, value], i) => {
+                return getFieldGroupValues(
+                  PET_FOUR_INITIAL_STATE,
+                  key,
+                  reservation[key]
+                );
+              })}
+          </Grid>
+        </Card>
+        <Card
+        // title={
+        //   <Flex>
+        //     <span>Reservation for {reservation.arrivalDate}</span>
+        //     <ResId>
+        //       Reservation ID: <br />
+        //       {reservation.id}
+        //     </ResId>
+        //   </Flex>
+        // }
+        // cover={
+        //   (reservation.petOneLargeImage || reservation.petOneImage) && (
+        //     <img
+        //       alt={`Photo of ${reservation.petOneName}`}
+        //       src={reservation.petOneLargeImage || reservation.petOneImage}
+        //     />
+        //   )
+        // }
+        >
+          <Grid>
+            {reservation.petFiveName &&
+              Object.entries(PET_FIVE_INITIAL_STATE).map(([key, value], i) => {
+                return getFieldGroupValues(
+                  PET_FIVE_INITIAL_STATE,
+                  key,
+                  reservation[key]
+                );
+              })}
+          </Grid>
+        </Card> */}
 
         <Card title={"Owner Details"}>
           <Grid>

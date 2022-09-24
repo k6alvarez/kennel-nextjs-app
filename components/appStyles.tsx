@@ -20,6 +20,10 @@ export const GlobalStyle = createGlobalStyle`
       max-width: 40vw;
     }
 
+    .ant-collapse {
+      margin-top: ${({ theme }) => theme.space[4]};
+    }
+
   }
 
   main, section, article {
