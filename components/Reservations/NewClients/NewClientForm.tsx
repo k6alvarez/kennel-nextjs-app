@@ -16,6 +16,7 @@ const { Step } = Steps;
 export const NewClientForm = () => {
   const { guestFormState, guestFormDispatch, setFormError } =
     useGuestFormContext();
+  const [pets, setPets] = useState(1);
   const [current, setCurrent] = useState(0);
 
   const formSteps = [
@@ -29,7 +30,7 @@ export const NewClientForm = () => {
     },
     {
       title: "Pets",
-      content: <FieldsetPetsInfo />,
+      content: <FieldsetPetsInfo pets={pets} setPets={setPets} />,
     },
     {
       title: "Deposit",
@@ -62,16 +63,33 @@ export const NewClientForm = () => {
               Previous
             </Button>
           )}
+          {current === 2 && (
+            <Button
+              type="button"
+              disabled={pets >= 5}
+              onClick={() => {
+                setPets(pets + 1);
+              }}
+              primary
+            >
+              Add Pet
+            </Button>
+          )}
           {current < formSteps.length - 1 && (
             <Button
-              primary
               type="button"
               onClick={() => {
                 if (
-                  guestFormFieldsValid(current, {
-                    state: guestFormState,
-                    dispatch: guestFormDispatch,
-                  })
+                  guestFormFieldsValid(
+                    {
+                      currentFormSection: current,
+                      petCount: pets,
+                    },
+                    {
+                      state: guestFormState,
+                      dispatch: guestFormDispatch,
+                    }
+                  )
                 ) {
                   next({ current, setCurrent });
                 }

@@ -133,4 +133,8 @@ export const Button = styled.button`
   border: none;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   min-width: 100px;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;

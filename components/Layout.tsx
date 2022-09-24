@@ -1,9 +1,12 @@
 import React, { ReactNode } from "react";
 import Header from "./Header";
 import styled from "styled-components";
+import { Footer } from "./Footer";
 
 const PageWrapper = styled.div`
   font-family: ${({ theme }) => theme.fonts.body};
+  position: relative;
+  min-height: 100vh;
 
   h1 {
     font-size: ${({ theme }) => theme.fontSizes[4]};
@@ -23,6 +26,7 @@ const Layout: React.FC<Props> = ({ children }) => (
   <PageWrapper>
     <Header />
     <>{children}</>
+    <Footer />
   </PageWrapper>
 );
 

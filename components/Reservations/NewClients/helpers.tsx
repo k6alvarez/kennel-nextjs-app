@@ -1,8 +1,8 @@
 import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,
-  INITIAL_PETS_STATE,
 } from "./formInitialState";
+import { INITIAL_PETS_STATE } from "./formInitialStatePets";
 
 export const next = ({ current, setCurrent }) => {
   setCurrent(current + 1);
@@ -12,8 +12,45 @@ export const prev = ({ current, setCurrent }) => {
   setCurrent(current - 1);
 };
 
+export const requiredFieldsCheck = (
+  field: string | string[],
+  petCount: any
+) => {
+  console.log("🚀 ~ file: helpers.tsx ~ line 19 ~ petCount", petCount);
+  let x: any;
+  switch (petCount) {
+    case 1:
+      x = field.includes("One");
+      return x;
+    case 2:
+      x = field.includes("One") || field.includes("Two");
+      return x;
+    case 3:
+      x =
+        field.includes("One") ||
+        field.includes("Two") ||
+        field.includes("Three");
+      return x;
+    case 4:
+      x =
+        field.includes("One") ||
+        field.includes("Two") ||
+        field.includes("Three") ||
+        field.includes("Four");
+      return x;
+    case 5:
+      x =
+        field.includes("One") ||
+        field.includes("Two") ||
+        field.includes("Three") ||
+        field.includes("Four") ||
+        field.includes("Five");
+      return x;
+  }
+};
+
 export const guestFormFieldsValid = (
-  currentFormSection,
+  { currentFormSection, petCount },
   { state, dispatch }
 ) => {
   let sectionInputs = [
@@ -23,7 +60,14 @@ export const guestFormFieldsValid = (
   ];
   for (const field of Object.entries(sectionInputs[currentFormSection])) {
     const fieldFromState = state[field[0]];
-    if (fieldFromState.required && !fieldFromState.value) {
+
+    const requiredFieldsExist = requiredFieldsCheck(field[0], petCount);
+
+    if (
+      requiredFieldsExist &&
+      fieldFromState.required &&
+      !fieldFromState.value
+    ) {
       const error = `${fieldFromState.label} is required`;
       dispatch({
         key: field[0],
@@ -44,14 +88,18 @@ export const guestFormFieldsValid = (
       return false;
     }
 
-    if (field[0] === "arrivalDate") {
-      const error = `We are closed Saturdays. Please choose a new ${fieldFromState.label}`;
-      dispatch({
-        key: field[0],
-        payload: { newValue: fieldFromState.value, error },
-      });
-      return false;
-    }
+    // if (petCount === 2) {
+
+    // }
+
+    // if (field[0] === "arrivalDate") {
+    //   const error = `We are closed Saturdays. Please choose a new ${fieldFromState.label}`;
+    //   dispatch({
+    //     key: field[0],
+    //     payload: { newValue: fieldFromState.value, error },
+    //   });
+    //   return false;
+    // }
   }
 
   return true;
