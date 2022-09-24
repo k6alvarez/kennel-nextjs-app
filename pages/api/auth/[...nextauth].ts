@@ -50,6 +50,11 @@ const options = {
      },
     }),
   ],
+  pages: {
+    signIn: '/auth/signin',
+    // error: '/auth/error', // Error code passed in query string as ?error=
+    // verifyRequest: '/auth/verify-request', // (used for check email message)
+  },
   adapter: PrismaAdapter(prisma),
   secret: process.env.SECRET,
 };
