@@ -5,7 +5,8 @@ const FooterWrapper = styled.footer`
   background-color: ${({ theme }) => theme.colors.secondary};
   padding: ${({ theme }) => `${theme.space[4]}`};
   position: absolute;
-  bottom: 0;
+  margin-top: ${({ theme }) => theme.space[4]};
+  top: 100%;
   width: 100%;
 `;
 
