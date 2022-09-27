@@ -3,10 +3,16 @@ export const clientFormReducer = (
   { type = "inputChange", key = undefined, payload = undefined }: any
 ) => {
   switch (type) {
-    // case "depositConfirmed":
-    //   return { ...guestFormState, ...payload };
-    // case "resetForm":
-    //   return { ...INITIAL_STATE };
+    case "setUpClientForm":
+      const { user } = payload;
+      let updatedFormState = guestFormState;
+
+      Object.keys(user).forEach((key) => {
+        if (guestFormState[key]) {
+          updatedFormState[key].value = user[key];
+        }
+      });
+      return { ...updatedFormState };
     case "inputChange":
       const inputState = {
         ...guestFormState[key],

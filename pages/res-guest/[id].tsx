@@ -9,7 +9,7 @@ import styled from "styled-components";
 import {
   INITIAL_RESERVATION_STATE,
   INITIAL_USER_STATE,
-} from "../../components/Reservations/NewClients/formInitialState";
+} from "../../components/Reservations/formInitialState";
 import {
   INITIAL_PETS_STATE,
   PET_FIVE_INITIAL_STATE,
@@ -17,7 +17,7 @@ import {
   PET_ONE_INITIAL_STATE,
   PET_THREE_INITIAL_STATE,
   PET_TWO_INITIAL_STATE,
-} from "../../components/Reservations/NewClients/formInitialStatePets";
+} from "../../components/Reservations/formInitialStatePets";
 import { StyledGridItems } from "../../components/ui-kit/Callouts";
 
 const Flex = styled.div`

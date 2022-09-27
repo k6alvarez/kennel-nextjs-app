@@ -1,17 +1,33 @@
 import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,
-} from "./formInitialState";
+} from "../formInitialState";
 import {
   INITIAL_PETS_STATE,
   PET_FIVE_INITIAL_STATE,
   PET_FOUR_INITIAL_STATE,
   PET_THREE_INITIAL_STATE,
   PET_TWO_INITIAL_STATE,
-} from "./formInitialStatePets";
+} from "../formInitialStatePets";
 
 export const INITIAL_STATE = {
   ...INITIAL_USER_STATE,
+  ...INITIAL_RESERVATION_STATE,
+  ...INITIAL_PETS_STATE,
+};
+
+export const INITIAL_CLIENT_STATE = {
+  ...INITIAL_USER_STATE,
+  email: {
+    value: "",
+    error: null,
+    type: "text",
+    inputMode: "email",
+    label: "Email",
+    required: true,
+    grow: true,
+    disabled: true,
+  },
   ...INITIAL_RESERVATION_STATE,
   ...INITIAL_PETS_STATE,
 };

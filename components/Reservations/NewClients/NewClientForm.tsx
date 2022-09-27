@@ -1,32 +1,49 @@
 import React, { useState } from "react";
 import { Steps } from "antd";
+
 import { FormIntroGuest } from "./FormIntro";
-import { useGuestFormContext } from "./formContext";
-import { FieldsetBoardingInfo } from "./FieldsetBoardingInfo";
-import { FieldsetClientInfo } from "./FieldsetClientInfo";
+import { useGuestFormContext } from "../formContext";
+import { FieldsetClientInfo } from "../FieldsetFromState";
 import { FieldsetPetsInfo } from "./FieldsetPetsInfo";
 import { Button } from "../../ui-kit/Base";
-import { StepsContent, StepsAction } from "./styles";
+import { StepsContent, StepsAction } from "../styles";
 import { FieldSetPaymentInfo } from "./FieldSetPaymentInfo";
-import { next, prev, guestFormFieldsValid } from "./helpers";
+import { next, prev, guestFormFieldsValid } from "../helpers";
 import { guestFormSubmit } from "./services";
+import {
+  INITIAL_USER_STATE,
+  INITIAL_RESERVATION_STATE,
+} from "../formInitialState";
 
 const { Step } = Steps;
 
 export const NewClientForm = () => {
-  const { guestFormState, guestFormDispatch, setFormError } =
+  const { guestFormState, guestFormDispatch, setFormError, handleChange } =
     useGuestFormContext();
+
   const [pets, setPets] = useState(1);
   const [current, setCurrent] = useState(0);
 
   const formSteps = [
     {
       title: "Owner",
-      content: <FieldsetClientInfo />,
+      content: (
+        <FieldsetClientInfo
+          initialState={INITIAL_USER_STATE}
+          state={guestFormState}
+          handleChange={handleChange}
+        />
+      ),
     },
     {
       title: "Boarding",
-      content: <FieldsetBoardingInfo />,
+      content: (
+        <FieldsetClientInfo
+          initialState={INITIAL_RESERVATION_STATE}
+          state={guestFormState}
+          handleChange={handleChange}
+        />
+      ),
     },
     {
       title: "Pets",

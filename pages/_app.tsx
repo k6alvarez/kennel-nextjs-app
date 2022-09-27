@@ -10,9 +10,12 @@ import { base } from "../components/ui-kit/Theme";
 import {
   guestFormReducer,
   INITIAL_STATE,
+  INITIAL_CLIENT_STATE,
 } from "../components/Reservations/NewClients/guestFormReducer";
-import { GuestFormProvider } from "../components/Reservations/NewClients/formContext";
-import { ClientFormProvider } from "../components/Reservations/Clients/clientFormContext";
+import {
+  ClientFormProvider,
+  GuestFormProvider,
+} from "../components/Reservations/formContext";
 import { clientFormReducer } from "../components/Reservations/Clients/clientFormReducer";
 
 export const ThemePreferenceContext = createContext(null);
@@ -25,7 +28,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
   const [clientFormState, clientFormDispatch] = useReducer(
     clientFormReducer,
-    {}
+    INITIAL_CLIENT_STATE
   );
   const [guestFormError, setFormError] = useState(undefined);
   const [clientFormError, setClientFormError] = useState(undefined);
@@ -47,7 +50,7 @@ const App = ({ Component, pageProps }: AppProps) => {
               clientFormState,
               handleChange: (name: string, newValue: any) => {
                 const error = null;
-                guestFormDispatch({
+                clientFormDispatch({
                   key: name,
                   payload: { newValue, error },
                 });

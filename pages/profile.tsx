@@ -13,7 +13,7 @@ import { profileFormReducer } from "../components/Profile/profileFormReducer";
 import { profileFormSubmit } from "../components/Profile/services";
 import { Error, Fields, Fieldset } from "../components/Forms/styles";
 import { renderFormFields } from "../components/Forms/renderFormFields";
-import { statesArray } from "../components/Reservations/NewClients/formInitialState";
+import { statesArray } from "../components/Reservations/formInitialState";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });

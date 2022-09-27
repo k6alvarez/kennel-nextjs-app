@@ -4,14 +4,14 @@ import React, { useEffect, useState } from "react";
 import { renderFormFields } from "../../Forms/renderFormFields";
 import { Fields } from "../../Forms/styles";
 import { Button } from "../../ui-kit/Base";
-import { useGuestFormContext } from "./formContext";
+import { useGuestFormContext } from "../formContext";
 import {
   PET_FIVE_INITIAL_STATE,
   PET_FOUR_INITIAL_STATE,
   PET_ONE_INITIAL_STATE,
   PET_THREE_INITIAL_STATE,
   PET_TWO_INITIAL_STATE,
-} from "./formInitialStatePets";
+} from "../formInitialStatePets";
 
 export const FieldsetPetsInfo = ({ pets, setPets }) => {
   const { guestFormState, handleChange, guestFormDispatch } =

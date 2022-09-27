@@ -66,18 +66,6 @@ const Header: React.FC = () => {
   if (status === "loading") {
     leftNav = (
       <div>
-        <Link href="/boarding">
-          <a data-active={isActive("/boarding")}>Boarding</a>
-        </Link>
-        <Link href="/training">
-          <a data-active={isActive("/training")}>Training</a>
-        </Link>
-        <Link href="/policies">
-          <a data-active={isActive("/policies")}>Policies</a>
-        </Link>
-        <Link href="/rates">
-          <a data-active={isActive("/rates")}>Rates</a>
-        </Link>
         <ShieldLogo />
       </div>
     );

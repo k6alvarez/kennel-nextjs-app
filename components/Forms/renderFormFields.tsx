@@ -36,7 +36,7 @@ export const renderFormFields = ({
 }: renderFormFieldProps) => {
   return Object.entries(initialState).map(([key, _value], i) => {
     const {
-      inputMode = "text",
+      inputMode,
       value,
       error,
       type,
