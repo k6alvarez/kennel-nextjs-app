@@ -1,5 +1,5 @@
 import React from "react";
-import { Error, Fields } from "../Forms/styles";
+import { Error, Fields, Fieldset } from "../Forms/styles";
 import { renderFormFields } from "../Forms/renderFormFields";
 import { petFormSubmit } from "./services";
 import { usePetFormContext } from "./formContext";
@@ -27,7 +27,7 @@ export const PetForm = ({ formSuccessCallback = undefined }) => {
         }}
       >
         <Error>{petFormError}</Error>
-        <fieldset>
+        <Fieldset>
           <Fields>
             {renderFormFields({
               initialState: PET_INITIAL_STATE,
@@ -35,7 +35,7 @@ export const PetForm = ({ formSuccessCallback = undefined }) => {
               handleChange,
             })}
           </Fields>
-        </fieldset>
+        </Fieldset>
         <input type="submit" value="Add Pet" />
       </form>
     </>

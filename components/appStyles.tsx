@@ -78,5 +78,14 @@ export const GlobalStyle = createGlobalStyle`
 
   .ant-collapse, .ant-empty {
     font-size: inherit;
+    font-family: inherit;
+  }
+
+  .ant-card-meta-title {
+    text-transform: capitalize;
+  }
+
+  .ant-avatar-string {
+    text-transform: uppercase;
   }
 `;
