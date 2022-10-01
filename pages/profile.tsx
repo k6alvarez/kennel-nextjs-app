@@ -1,6 +1,6 @@
-import React, { useReducer, useState } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import { GetServerSideProps } from "next";
-import { message, Collapse } from "antd";
+import { message, Collapse, Tabs } from "antd";
 import prisma from "../lib/prisma";
 
 import Layout from "../components/Layout";
@@ -14,6 +14,12 @@ import { profileFormSubmit } from "../components/Profile/services";
 import { Error, Fields, Fieldset } from "../components/Forms/styles";
 import { renderFormFields } from "../components/Forms/renderFormFields";
 import { statesArray } from "../components/Reservations/formInitialState";
+import { DownOutlined } from "@ant-design/icons";
+import { headerHt } from "./boarding";
+import { Size, useWindowSize } from "../components/ui-kit/hooks/useWindowSize";
+import { ThemePreferenceContext } from "./_app";
+import { ProfileForm } from "../components/Profile/ProfileForm";
+import { PetsForm } from "../components/Pets/PetsForm";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -49,6 +55,9 @@ type Props = {
 };
 
 const Profile: React.FC<Props> = ({ user }) => {
+  const { breakpoints } = useContext(ThemePreferenceContext);
+  const size: Size = useWindowSize();
+  const mobileScreen = size.width < parseInt(breakpoints[0]);
   const { data: session } = useSession();
   const INITIAL_PROFILE_STATE = {
     email: {
@@ -157,45 +166,41 @@ const Profile: React.FC<Props> = ({ user }) => {
     );
   }
 
+  const items = [
+    {
+      label: "Profile",
+      key: "item-1",
+      children: (
+        <ProfileForm
+          user={user}
+          profileFormState={profileFormState}
+          setFormError={setFormError}
+          profileFormDispatch={profileFormDispatch}
+          formError={formError}
+          initialState={INITIAL_PROFILE_STATE}
+        />
+      ),
+    },
+    {
+      label: "Pets",
+      key: "item-2",
+      children: <PetsForm />,
+    },
+  ];
+
   return (
     <Layout>
       <Content>
-        <h1>{getProfileHeader(user?.permissions || [])}</h1>
-        <p>{getUserName(user)}</p>
-        <Collapse defaultActiveKey={["1"]}>
-          <Collapse.Panel header="Profile Details" key="1">
-            <form
-              onSubmit={async (e) => {
-                await profileFormSubmit(e, {
-                  state: profileFormState,
-                  setFormError,
-                  dispatch: profileFormDispatch,
-                  userId: user.id,
-                }).then(() => {
-                  message.success("Profile updated successfully");
-                });
-              }}
-            >
-              {formError && <Error>{formError}</Error>}
-              <Fieldset>
-                <Fields>
-                  {renderFormFields({
-                    initialState: INITIAL_PROFILE_STATE,
-                    state: profileFormState,
-                    handleChange: (name: string, newValue: any) => {
-                      const error = null;
-                      profileFormDispatch({
-                        key: name,
-                        payload: { newValue, error },
-                      });
-                    },
-                  })}
-                </Fields>
-                <input type="submit" value="Update Profile" />
-              </Fieldset>
-            </form>
-          </Collapse.Panel>
-        </Collapse>
+        <Tabs
+          defaultActiveKey="1"
+          tabPosition={mobileScreen ? "top" : "left"}
+          size={mobileScreen ? "small" : "large"}
+          moreIcon={<DownOutlined />}
+          style={{
+            fontSize: "inherit",
+          }}
+          items={items}
+        />
       </Content>
     </Layout>
   );

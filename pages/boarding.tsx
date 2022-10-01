@@ -98,9 +98,6 @@ const Boarding: React.FC<Props> = () => {
           size={mobileScreen ? "small" : "large"}
           moreIcon={<DownOutlined />}
           style={{
-            height: `calc(100vh - ${headerHt})`,
-            position: "sticky",
-            top: headerHt,
             fontSize: "inherit",
           }}
           items={items}

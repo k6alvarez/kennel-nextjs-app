@@ -17,23 +17,35 @@ import {
   GuestFormProvider,
 } from "../components/Reservations/formContext";
 import { clientFormReducer } from "../components/Reservations/Clients/clientFormReducer";
+import {
+  petFormReducer,
+  PET_INITIAL_STATE,
+} from "../components/Pets/petFormReducer";
+import { PetFormProvider } from "../components/Pets/formContext";
 
 export const ThemePreferenceContext = createContext(null);
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [currentTheme, setCurrentTheme] = useState("light");
+  const theme = { ...base, colors: themesMap[currentTheme] };
+
+  const [guestFormError, setFormError] = useState(undefined);
   const [guestFormState, guestFormDispatch] = useReducer(
     guestFormReducer,
     INITIAL_STATE
   );
+
+  const [clientFormError, setClientFormError] = useState(undefined);
   const [clientFormState, clientFormDispatch] = useReducer(
     clientFormReducer,
     INITIAL_CLIENT_STATE
   );
-  const [guestFormError, setFormError] = useState(undefined);
-  const [clientFormError, setClientFormError] = useState(undefined);
 
-  const theme = { ...base, colors: themesMap[currentTheme] };
+  const [petFormError, setPetFormError] = useState(undefined);
+  const [petFormState, petFormDispatch] = useReducer(
+    petFormReducer,
+    PET_INITIAL_STATE
+  );
 
   return (
     <SessionProvider session={pageProps.session}>
@@ -75,8 +87,24 @@ const App = ({ Component, pageProps }: AppProps) => {
                 setFormError,
               }}
             >
-              <GlobalStyle />
-              <Component {...pageProps} />
+              <PetFormProvider
+                value={{
+                  petFormState,
+                  handleChange: (name: string, newValue: any) => {
+                    const error = null;
+                    petFormDispatch({
+                      key: name,
+                      payload: { newValue, error },
+                    });
+                  },
+                  petFormDispatch,
+                  petFormError,
+                  setPetFormError,
+                }}
+              >
+                <GlobalStyle />
+                <Component {...pageProps} />
+              </PetFormProvider>
             </GuestFormProvider>
           </ClientFormProvider>
         </ThemeProvider>

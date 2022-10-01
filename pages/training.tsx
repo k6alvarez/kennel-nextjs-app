@@ -79,9 +79,6 @@ const Training: React.FC<Props> = (props) => {
           tabPosition="left"
           size="large"
           style={{
-            height: `calc(100vh - ${headerHt})`,
-            position: "sticky",
-            top: headerHt,
             fontSize: "inherit",
           }}
           items={items}

@@ -16,6 +16,30 @@ enum Permission {
   EMPLOYEE
 }
 
+model Pet {
+  id                     String   @id @default(cuid())
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  type                   String
+  name                   String
+  breed                  String
+  gender                 String
+  fixed                  String
+  color                  String
+  image                  String?
+  largeImage             String?
+  vaccinations           String
+  vaccinationsLargeImage String?
+  age                    String
+  weight                 String
+  vet                    String
+  preferredRunSize       String
+  feeding                String
+  feedingCount           String
+  owner                  User     @relation(fields: [ownerId], references: [id])
+  ownerId                String
+}
+
 model Post {
   id        String  @id @default(cuid())
   title     String
@@ -76,6 +100,7 @@ model User {
   createdAt             DateTime      @default(now()) @map(name: "created_at")
   updatedAt             DateTime      @updatedAt @map(name: "updated_at")
   posts                 Post[]
+  pets                  Pet[]
   accounts              Account[]
   sessions              Session[]
   permissions           Permission[]  @default(value: [USER])
