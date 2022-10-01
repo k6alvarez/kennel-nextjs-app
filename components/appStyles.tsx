@@ -76,7 +76,7 @@ export const GlobalStyle = createGlobalStyle`
     max-width: 100%;
   }
 
-  .ant-collapse {
+  .ant-collapse, .ant-empty {
     font-size: inherit;
   }
 `;

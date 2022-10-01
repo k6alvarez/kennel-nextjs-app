@@ -5,7 +5,7 @@ import { petFormSubmit } from "./services";
 import { usePetFormContext } from "./formContext";
 import { PET_INITIAL_STATE } from "./petFormReducer";
 
-export const PetForm = () => {
+export const PetForm = ({ formSuccessCallback = undefined }) => {
   const {
     petFormState,
     petFormDispatch,
@@ -22,10 +22,10 @@ export const PetForm = () => {
             state: petFormState,
             setPetFormError,
             dispatch: petFormDispatch,
+            formSuccessCallback,
           });
         }}
       >
-        <h1>Add New Pet</h1>
         <Error>{petFormError}</Error>
         <fieldset>
           <Fields>

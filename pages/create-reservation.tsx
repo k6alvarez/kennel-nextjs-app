@@ -5,6 +5,9 @@ import { getSession, useSession } from "next-auth/react";
 import { Content } from "../components/ui-kit/Base";
 import { NewClientForm } from "../components/Reservations/NewClients/NewClientForm";
 import { ClientForm } from "../components/Reservations/Clients/ClientForm";
+import { GetServerSideProps } from "next";
+import { User } from "next-auth";
+import { PetProps } from "./profile";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -17,14 +20,24 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     where: { email: session.user.email },
   });
 
+  const pets = await prisma.pet.findMany({
+    where: { ownerId: user.id },
+  });
+
   return {
     props: {
+      pets: JSON.parse(JSON.stringify(pets)),
       user: JSON.parse(JSON.stringify(user)),
     },
   };
 };
 
-const Reservation: React.FC = ({ user }) => {
+type Props = {
+  pets: PetProps[];
+  user: User | null;
+};
+
+const Reservation: React.FC<Props> = ({ user, pets }) => {
   const { data: session, status } = useSession();
 
   if (status === "loading") {

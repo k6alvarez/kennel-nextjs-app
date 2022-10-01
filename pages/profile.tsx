@@ -1,23 +1,17 @@
 import React, { useContext, useReducer, useState } from "react";
 import { GetServerSideProps } from "next";
-import { message, Collapse, Tabs } from "antd";
-import prisma from "../lib/prisma";
-
-import Layout from "../components/Layout";
-import { Content } from "../components/ui-kit/Base";
-import { PostProps } from "../components/Post";
+import { useRouter } from "next/router";
+import { Tabs } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 import { getSession, useSession } from "next-auth/react";
 import { User } from "@prisma/client";
-import { getProfileHeader, getUserName } from "../components/Profile/helpers";
-import { profileFormReducer } from "../components/Profile/profileFormReducer";
-import { profileFormSubmit } from "../components/Profile/services";
-import { Error, Fields, Fieldset } from "../components/Forms/styles";
-import { renderFormFields } from "../components/Forms/renderFormFields";
-import { statesArray } from "../components/Reservations/formInitialState";
-import { DownOutlined } from "@ant-design/icons";
-import { headerHt } from "./boarding";
-import { Size, useWindowSize } from "../components/ui-kit/hooks/useWindowSize";
+import prisma from "../lib/prisma";
 import { ThemePreferenceContext } from "./_app";
+import Layout from "../components/Layout";
+import { Content } from "../components/ui-kit/Base";
+import { profileFormReducer } from "../components/Profile/profileFormReducer";
+import { statesArray } from "../components/Reservations/formInitialState";
+import { Size, useWindowSize } from "../components/ui-kit/hooks/useWindowSize";
 import { ProfileForm } from "../components/Profile/ProfileForm";
 import { PetsTab } from "../components/Pets/PetsTab";
 
@@ -31,34 +25,51 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const user = await prisma.user.findUnique({
     where: { email: session.user.email },
   });
-  const feed = await prisma.post.findMany({
-    where: { published: true },
-    include: {
-      author: {
-        select: { name: true },
-      },
-    },
-  });
 
   return {
     props: {
-      feed,
       user: JSON.parse(JSON.stringify(user)),
       revalidate: 10,
     },
   };
 };
 
+export type PetProps = {
+  id: string;
+  name: string;
+  type: string;
+  breed: string;
+  weight: number;
+  ownerId: string;
+  owner: User;
+  createdAt: string;
+  updatedAt: string;
+  gender: string;
+  fixed: string;
+  color: string;
+  image?: string;
+  largeImage?: string;
+  vaccinations: string;
+  vaccinationsLargeImage?: string;
+  age: string;
+  vet: string;
+  preferredRunSize: string;
+  feeding: string;
+  feedingCount: string;
+};
+
 type Props = {
-  feed: PostProps[];
   user: User | null;
 };
 
 const Profile: React.FC<Props> = ({ user }) => {
+  const router = useRouter();
+  const { tab } = router.query;
+
   const { breakpoints } = useContext(ThemePreferenceContext);
   const size: Size = useWindowSize();
   const mobileScreen = size.width < parseInt(breakpoints[0]);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const INITIAL_PROFILE_STATE = {
     email: {
       value: user?.email || "",
@@ -155,6 +166,10 @@ const Profile: React.FC<Props> = ({ user }) => {
   );
   const [formError, setFormError] = useState(undefined);
 
+  if (status === "loading") {
+    return <Layout>Loading ...</Layout>;
+  }
+
   if (!session) {
     return (
       <Layout>
@@ -169,7 +184,7 @@ const Profile: React.FC<Props> = ({ user }) => {
   const items = [
     {
       label: "Profile",
-      key: "item-1",
+      key: "profile",
       children: (
         <ProfileForm
           user={user}
@@ -183,7 +198,7 @@ const Profile: React.FC<Props> = ({ user }) => {
     },
     {
       label: "Pets",
-      key: "item-2",
+      key: "pets",
       children: <PetsTab />,
     },
   ];
@@ -192,7 +207,7 @@ const Profile: React.FC<Props> = ({ user }) => {
     <Layout>
       <Content>
         <Tabs
-          defaultActiveKey="1"
+          defaultActiveKey={typeof tab === "string" ? tab : "item-1"}
           tabPosition={mobileScreen ? "top" : "left"}
           size={mobileScreen ? "small" : "large"}
           moreIcon={<DownOutlined />}
@@ -200,6 +215,9 @@ const Profile: React.FC<Props> = ({ user }) => {
             fontSize: "inherit",
           }}
           items={items}
+          onChange={(key) => {
+            router.push(`/profile?tab=${key}`, undefined, { shallow: true });
+          }}
         />
       </Content>
     </Layout>

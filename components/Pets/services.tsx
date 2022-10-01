@@ -1,9 +1,15 @@
 import { message } from "antd";
-import Router from "next/router";
+
+interface PetFormProps {
+  state: any;
+  setPetFormError: any;
+  dispatch: any;
+  formSuccessCallback?: any;
+}
 
 export const petFormSubmit = async (
   e: React.SyntheticEvent,
-  { state, setPetFormError, dispatch }
+  { state, setPetFormError, dispatch, formSuccessCallback }: PetFormProps
 ) => {
   e?.preventDefault();
   const data = Object.entries(state).map(([key, _value]) => {
@@ -41,10 +47,16 @@ export const petFormSubmit = async (
           type: "resetForm",
         });
         message.success("Pet added successfully");
-        // await Router.push("/res-guest/[id]", `/res-guest/${res.id}`);
+        formSuccessCallback && formSuccessCallback();
       });
   } catch (error) {
     setPetFormError("We're sorry, something went wrong. Please try again.");
     console.error(error);
   }
+};
+
+export const getPets = async () => {
+  const res = await fetch("/api/pets");
+  const pets = await res.json();
+  return pets;
 };

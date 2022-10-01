@@ -11,8 +11,8 @@ import {
   INITIAL_RESERVATION_STATE,
   INITIAL_USER_STATE,
 } from "../formInitialState";
-import { INITIAL_PETS_STATE } from "../formInitialStatePets";
 import { FieldsetClientInfo } from "../FieldsetFromState";
+import { ClientPets } from "../../Pets/ClientPets";
 
 const { Step } = Steps;
 
@@ -58,11 +58,7 @@ export const ClientForm = ({ session, user }) => {
       content: (
         <fieldset>
           <Fields>
-            {renderFormFields({
-              initialState: INITIAL_PETS_STATE,
-              state: clientFormState,
-              handleChange,
-            })}
+            <ClientPets />
           </Fields>
         </fieldset>
       ),

@@ -18,7 +18,6 @@ import {
   PET_THREE_INITIAL_STATE,
   PET_TWO_INITIAL_STATE,
 } from "../../components/Reservations/formInitialStatePets";
-import { StyledGridItems } from "../../components/ui-kit/Callouts";
 
 const Flex = styled.div`
   display: flex;

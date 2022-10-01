@@ -3,7 +3,6 @@ import prisma from '../../../lib/prisma';
 
 // POST /api/pet
 export default async function handle(req, res) {
-
   const session = await getSession({ req });
   const result = await prisma.pet.create({
     data: {
