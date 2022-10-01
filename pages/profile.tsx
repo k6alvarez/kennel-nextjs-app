@@ -19,7 +19,7 @@ import { headerHt } from "./boarding";
 import { Size, useWindowSize } from "../components/ui-kit/hooks/useWindowSize";
 import { ThemePreferenceContext } from "./_app";
 import { ProfileForm } from "../components/Profile/ProfileForm";
-import { PetsForm } from "../components/Pets/PetsForm";
+import { PetsTab } from "../components/Pets/PetsTab";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -184,7 +184,7 @@ const Profile: React.FC<Props> = ({ user }) => {
     {
       label: "Pets",
       key: "item-2",
-      children: <PetsForm />,
+      children: <PetsTab />,
     },
   ];
 
