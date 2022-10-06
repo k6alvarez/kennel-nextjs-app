@@ -61,6 +61,12 @@ export const getPets = async () => {
   return pets;
 };
 
+export const getUser = async () => {
+  const res = await fetch("/api/user");
+  const user = await res.json();
+  return user;
+};
+
 export const isValidHttpUrl = (string) => {
   let url;
 

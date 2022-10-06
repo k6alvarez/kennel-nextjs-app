@@ -17,9 +17,9 @@ enum Permission {
 }
 
 model Pet {
-  id                     String   @id @default(cuid())
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+  id                     String       @id @default(cuid())
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime     @updatedAt
   type                   String
   name                   String
   breed                  String
@@ -36,8 +36,38 @@ model Pet {
   preferredRunSize       String
   feeding                String
   feedingCount           String
-  owner                  User     @relation(fields: [ownerId], references: [id])
+  owner                  User         @relation(fields: [ownerId], references: [id])
   ownerId                String
+  Reservation            Reservation? @relation(fields: [reservationId], references: [id])
+  reservationId          String?
+
+  @@map("pets")
+}
+
+model GuestPet {
+  id                     String           @id @default(cuid())
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+  type                   String
+  name                   String
+  breed                  String
+  gender                 String
+  fixed                  String
+  color                  String
+  image                  String?
+  largeImage             String?
+  vaccinations           String
+  vaccinationsLargeImage String?
+  age                    String
+  weight                 String
+  vet                    String
+  preferredRunSize       String
+  feeding                String
+  feedingCount           String
+  GuestReservation       GuestReservation @relation(fields: [guestReservationId], references: [id])
+  guestReservationId     String
+
+  @@map("guest_pets")
 }
 
 model Post {
@@ -134,118 +164,44 @@ model Reservation {
   departureTime       String
   dateConfirmed       String
   specialInstructions String
+  pets                Pet[]
+
+  @@map(name: "reservations")
 }
 
 model GuestReservation {
-  id                             String   @id @default(cuid())
-  createdAt                      DateTime @default(now()) @map(name: "created_at")
-  updatedAt                      DateTime @updatedAt @map(name: "updated_at")
-  submitted                      Boolean  @default(false)
-  confirmed                      Boolean  @default(false)
-  author                         User?    @relation(fields: [authorId], references: [id])
-  authorId                       String?
-  name                           String
-  lastName                       String
-  email                          String
-  address                        String
-  addressUnit                    String?
-  city                           String
-  state                          String
-  zip                            String
-  phone                          String
-  altPhone                       String?
-  emergencyContactName           String
-  emergencyContactPhone          String
-  arrivalDate                    String
-  arrivalTime                    String
-  departureDate                  String
-  departureTime                  String
-  dateConfirmed                  String?
-  specialInstructions            String?
-  howHear                        String?
-  petOneType                     String
-  petOneName                     String
-  petOneBreed                    String
-  petOneGender                   String
-  petOneFixed                    String
-  petOneColor                    String
-  petOneImage                    String?
-  petOneLargeImage               String?
-  petOneVaccinations             String
-  petOneVaccinationsLargeImage   String?
-  petOneAge                      String
-  petOneWeight                   String
-  petOneVet                      String
-  petOnePreferredRunSize         String
-  petOneFeeding                  String
-  petOneFeedingCount             String
-  petTwoType                     String
-  petTwoName                     String
-  petTwoBreed                    String
-  petTwoGender                   String
-  petTwoFixed                    String
-  petTwoColor                    String
-  petTwoImage                    String?
-  petTwoLargeImage               String?
-  petTwoVaccinations             String
-  petTwoVaccinationsLargeImage   String?
-  petTwoAge                      String
-  petTwoWeight                   String
-  petTwoVet                      String
-  petTwoPreferredRunSize         String
-  petTwoFeeding                  String
-  petTwoFeedingCount             String
-  petThreeType                   String
-  petThreeName                   String
-  petThreeBreed                  String
-  petThreeGender                 String
-  petThreeFixed                  String
-  petThreeColor                  String
-  petThreeImage                  String?
-  petThreeLargeImage             String?
-  petThreeVaccinations           String
-  petThreeVaccinationsLargeImage String?
-  petThreeAge                    String
-  petThreeWeight                 String
-  petThreeVet                    String
-  petThreePreferredRunSize       String
-  petThreeFeeding                String
-  petThreeFeedingCount           String
-  petFourType                    String
-  petFourName                    String
-  petFourBreed                   String
-  petFourGender                  String
-  petFourFixed                   String
-  petFourColor                   String
-  petFourImage                   String?
-  petFourLargeImage              String?
-  petFourVaccinations            String
-  petFourVaccinationsLargeImage  String?
-  petFourAge                     String
-  petFourWeight                  String
-  petFourVet                     String
-  petFourPreferredRunSize        String
-  petFourFeeding                 String
-  petFourFeedingCount            String
-  petFiveType                    String
-  petFiveName                    String
-  petFiveBreed                   String
-  petFiveGender                  String
-  petFiveFixed                   String
-  petFiveColor                   String
-  petFiveImage                   String?
-  petFiveLargeImage              String?
-  petFiveVaccinations            String
-  petFiveVaccinationsLargeImage  String?
-  petFiveAge                     String
-  petFiveWeight                  String
-  petFiveVet                     String
-  petFivePreferredRunSize        String
-  petFiveFeeding                 String
-  petFiveFeedingCount            String
-  depositStatus                  String
-  depositAmount                  String
-  depositDate                    String
-  depositId                      String
-  depositLink                    String
+  id                    String     @id @default(cuid())
+  createdAt             DateTime   @default(now()) @map(name: "created_at")
+  updatedAt             DateTime   @updatedAt @map(name: "updated_at")
+  submitted             Boolean    @default(false)
+  confirmed             Boolean    @default(false)
+  author                User?      @relation(fields: [authorId], references: [id])
+  authorId              String?
+  name                  String
+  lastName              String
+  email                 String
+  address               String
+  addressUnit           String?
+  city                  String
+  state                 String
+  zip                   String
+  phone                 String
+  altPhone              String?
+  emergencyContactName  String
+  emergencyContactPhone String
+  arrivalDate           String
+  arrivalTime           String
+  departureDate         String
+  departureTime         String
+  dateConfirmed         String?
+  specialInstructions   String?
+  howHear               String?
+  depositStatus         String
+  depositAmount         String
+  depositDate           String
+  depositId             String
+  depositLink           String
+  pets                  GuestPet[]
+
+  @@map(name: "guest_reservations")
 }

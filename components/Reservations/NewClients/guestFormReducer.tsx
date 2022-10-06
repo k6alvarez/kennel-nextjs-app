@@ -29,7 +29,7 @@ export const INITIAL_CLIENT_STATE = {
     disabled: true,
   },
   ...INITIAL_RESERVATION_STATE,
-  ...INITIAL_PETS_STATE,
+  pets: [],
 };
 
 export const guestFormReducer = (

@@ -3,9 +3,10 @@ import {
   EditOutlined,
   EllipsisOutlined,
 } from "@ant-design/icons";
-import { Avatar, Card, Empty } from "antd";
+import { Card, Empty } from "antd";
 import React, { useEffect, useState } from "react";
 import { GridItems } from "../ui-kit/Base";
+import { PetInfo } from "./PetInfo";
 import { getPets, isValidHttpUrl } from "./services";
 
 export const ClientPets = () => {
@@ -30,23 +31,13 @@ export const ClientPets = () => {
                 <img alt="example" src={pet.largeImage} />
               )
             }
-            // actions={[
-            //   <SettingOutlined key="setting" />,
-            //   <EditOutlined key="edit" />,
-            //   <EllipsisOutlined key="ellipsis" />,
-            // ]}
+            actions={[
+              <SettingOutlined key="setting" />,
+              <EditOutlined key="edit" />,
+              <EllipsisOutlined key="ellipsis" />,
+            ]}
           >
-            <Card.Meta
-              // avatar={
-              //   isValidHttpUrl(pet.image) ? (
-              //     <Avatar src={pet.image} />
-              //   ) : (
-              //     <Avatar>{pet.name[0]}</Avatar>
-              //   )
-              // }
-              title={pet.name}
-              description={`${pet.age} year old ${pet.breed} `}
-            />
+            <Card.Meta title={pet.name} description={<PetInfo pet={pet} />} />
           </Card>
         ))}
       </GridItems>

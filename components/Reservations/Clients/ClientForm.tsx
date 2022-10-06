@@ -12,23 +12,33 @@ import {
   INITIAL_USER_STATE,
 } from "../formInitialState";
 import { FieldsetClientInfo } from "../FieldsetFromState";
-import { ClientPets } from "../../Pets/ClientPets";
+import { getPets, getUser } from "../../Pets/services";
 
 const { Step } = Steps;
 
-export const ClientForm = ({ session, user }) => {
+export const ClientForm = ({ session }) => {
   const { clientFormState, handleChange, clientFormDispatch } =
     useClientFormContext();
   const [current, setCurrent] = useState(0);
 
+  const [pets, setPets] = useState([]);
+
   useEffect(() => {
     if (session) {
-      clientFormDispatch({
-        type: "setUpClientForm",
-        payload: {
-          user,
-        },
-      });
+      getUser()
+        .then((user) => {
+          clientFormDispatch({
+            type: "setUpClientForm",
+            payload: {
+              user,
+            },
+          });
+        })
+        .then(() => {
+          getPets().then((pets) => {
+            setPets(pets);
+          });
+        });
     }
   }, []);
 
@@ -58,9 +68,48 @@ export const ClientForm = ({ session, user }) => {
       content: (
         <fieldset>
           <Fields>
-            <ClientPets />
+            {pets.map((pet, i) => (
+              <div key={pet + "-" + i}>
+                <label>{pet.name}</label>
+                <input
+                  type="checkbox"
+                  name="pets"
+                  value={pet.id}
+                  checked={clientFormState.pets.includes(pet.id)}
+                  onChange={(e) => {
+                    clientFormDispatch({
+                      type: "togglePet",
+                      payload: {
+                        petId: pet.id,
+                      },
+                    });
+                  }}
+                />
+              </div>
+            ))}
           </Fields>
         </fieldset>
+      ),
+    },
+    {
+      title: "Summary",
+      content: (
+        <>
+          {Object.keys(clientFormState).map((key, i) => (
+            <div key={key + "-" + i}>
+              <label>{key}</label>
+              {key === "pets" ? (
+                <ul>
+                  {clientFormState[key].map((petId, i) => (
+                    <li key={petId + "-" + i}>{petId}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>{clientFormState[key].value}</p>
+              )}
+            </div>
+          ))}
+        </>
       ),
     },
   ];
