@@ -1,4 +1,3 @@
-import { Pet } from "@prisma/client";
 import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,

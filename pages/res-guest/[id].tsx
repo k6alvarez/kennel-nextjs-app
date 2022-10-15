@@ -112,17 +112,24 @@ const ResGuest = ({ reservation }) => {
           </Grid>
         </Card>
 
-        {reservation.pets.map((pet) => {
-          return (
-            <Card title={pet.name} key={pet.id}>
-              <Grid>
-                {Object.entries(pet).map(([key, value]: any) =>
-                  getFieldGroupValues(PET_INITIAL_STATE, key, value)
-                )}
-              </Grid>
-            </Card>
-          );
-        })}
+        <Grid
+          style={{
+            gridTemplateColumns: "1fr 1fr",
+            gridGap: "1rem",
+          }}
+        >
+          {reservation.pets.map((pet) => {
+            return (
+              <Card title={pet.name} key={pet.id}>
+                <Grid>
+                  {Object.entries(pet).map(([key, value]: any) =>
+                    getFieldGroupValues(PET_INITIAL_STATE, key, value)
+                  )}
+                </Grid>
+              </Card>
+            );
+          })}
+        </Grid>
 
         <Card title={"Owner Details"}>
           <Grid>
