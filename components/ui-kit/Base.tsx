@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
 export const Content = styled.article`
-  padding: ${({ theme }) => theme.space[0]};
-  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "95vw")};
+  padding: ${({ theme }) => theme.space[5]};
+  max-width: 100%;
   margin: 0 auto;
   position: relative;
   background-color: ${({ theme, cardWrapper }) =>
     cardWrapper ? theme.colors.secondaryDark : "inherit"};
 
-  @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
+  @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
     padding: ${({ theme }) => theme.space[4]};
     width: ${({ maxWidth }) => (maxWidth ? maxWidth : "80vw")};
     max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "1200px")};

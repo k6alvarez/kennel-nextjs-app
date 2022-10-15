@@ -33,7 +33,7 @@ export const FormIntroGuest = () => {
       <p>
         Furthermore, when you submit the deposit payment you atest that you have
         read, understand, and agree to our{" "}
-        <Link href="/">
+        <Link href="/policies">
           <a>policies</a>
         </Link>
         .
@@ -42,7 +42,7 @@ export const FormIntroGuest = () => {
         <Link href="/api/auth/signin">
           <a>Login to your account</a>
         </Link>
-        <span> or you may continue to book a reservation as a guest.</span>
+        <span> or continue to book your reservation as a new client.</span>
       </p>
     </div>
   );

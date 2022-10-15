@@ -38,16 +38,16 @@ model Pet {
   feedingCount           String
   owner                  User         @relation(fields: [ownerId], references: [id])
   ownerId                String
-  Reservation            Reservation? @relation(fields: [reservationId], references: [id])
+  reservation            Reservation? @relation(fields: [reservationId], references: [id])
   reservationId          String?
 
   @@map("pets")
 }
 
 model GuestPet {
-  id                     String           @id @default(cuid())
-  createdAt              DateTime         @default(now())
-  updatedAt              DateTime         @updatedAt
+  id                     String            @id @default(cuid())
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
   type                   String
   name                   String
   breed                  String
@@ -64,8 +64,8 @@ model GuestPet {
   preferredRunSize       String
   feeding                String
   feedingCount           String
-  GuestReservation       GuestReservation @relation(fields: [guestReservationId], references: [id])
-  guestReservationId     String
+  guestReservation       GuestReservation? @relation(fields: [guestReservationId], references: [id])
+  guestReservationId     String?
 
   @@map("guest_pets")
 }
@@ -112,11 +112,11 @@ model Session {
 }
 
 model User {
-  id                    String        @id @default(cuid())
+  id                    String             @id @default(cuid())
   name                  String?
   lastName              String?
-  email                 String?       @unique
-  emailVerified         DateTime?     @map("email_verified")
+  email                 String?            @unique
+  emailVerified         DateTime?          @map("email_verified")
   image                 String?
   address               String?
   addressUnit           String?
@@ -127,16 +127,15 @@ model User {
   altPhone              String?
   emergencyContactName  String?
   emergencyContactPhone String?
-  createdAt             DateTime      @default(now()) @map(name: "created_at")
-  updatedAt             DateTime      @updatedAt @map(name: "updated_at")
+  createdAt             DateTime           @default(now()) @map(name: "created_at")
+  updatedAt             DateTime           @updatedAt @map(name: "updated_at")
   posts                 Post[]
   pets                  Pet[]
   accounts              Account[]
   sessions              Session[]
-  permissions           Permission[]  @default(value: [USER])
+  permissions           Permission[]       @default(value: [USER])
   reservation           Reservation[]
-
-  GuestReservation GuestReservation[]
+  guestReservation      GuestReservation[]
 
   @@map(name: "users")
 }
@@ -196,11 +195,11 @@ model GuestReservation {
   dateConfirmed         String?
   specialInstructions   String?
   howHear               String?
-  depositStatus         String
-  depositAmount         String
-  depositDate           String
-  depositId             String
-  depositLink           String
+  depositStatus         String?
+  depositAmount         String?
+  depositDate           String?
+  depositId             String?
+  depositLink           String?
   pets                  GuestPet[]
 
   @@map(name: "guest_reservations")

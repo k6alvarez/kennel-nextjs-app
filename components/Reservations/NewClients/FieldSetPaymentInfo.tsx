@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { PayPalCheckout } from "../Checkout";
 import { useGuestFormContext } from "../formContext";
 import { BlockQuote } from "./FormIntro";
-import { guestFormSubmit } from "./services";
+import { guestFormUpdate } from "./services";
 import { TotalDeposit } from "../styles";
 import { Error } from "../../Forms/styles";
 
@@ -13,7 +13,7 @@ export const FieldSetPaymentInfo = () => {
 
   useEffect(() => {
     if (depositConfirmed && guestFormState.depositStatus === "COMPLETED") {
-      guestFormSubmit(undefined, {
+      guestFormUpdate(undefined, {
         state: guestFormState,
         setFormError,
         dispatch: guestFormDispatch,

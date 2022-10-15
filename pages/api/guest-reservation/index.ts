@@ -29,7 +29,7 @@ const validateFields = async (fields: GuestReservation) => {
 // POST /api/guest-reservation
 export default async function handle(req, res) {
   let apiOptions
-
+  delete req.body.reservationId
   const session = await getSession({ req });
   const sessionUserEmail = session?.user?.email
   if (sessionUserEmail) {

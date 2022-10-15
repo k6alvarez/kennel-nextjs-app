@@ -1,8 +1,8 @@
+import { PET_INITIAL_STATE } from "../Pets/petFormReducer";
 import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,
 } from "./formInitialState";
-import { INITIAL_PETS_STATE } from "./formInitialStatePets";
 
 export const next = ({ current, setCurrent }) => {
   setCurrent(current + 1);
@@ -16,7 +16,6 @@ export const requiredFieldsCheck = (
   field: string | string[],
   petCount: any
 ) => {
-  console.log("🚀 ~ file: helpers.tsx ~ line 19 ~ petCount", petCount);
   let x: any;
   switch (petCount) {
     case 1:
@@ -56,7 +55,7 @@ export const guestFormFieldsValid = (
   let sectionInputs = [
     INITIAL_USER_STATE,
     INITIAL_RESERVATION_STATE,
-    INITIAL_PETS_STATE,
+    PET_INITIAL_STATE,
   ];
   for (const field of Object.entries(sectionInputs[currentFormSection])) {
     const fieldFromState = state[field[0]];

@@ -1,6 +1,6 @@
 import { message } from "antd";
 
-interface PetFormProps {
+export interface PetFormProps {
   state: any;
   setPetFormError: any;
   dispatch: any;
@@ -48,6 +48,71 @@ export const petFormSubmit = async (
         });
         message.success("Pet added successfully");
         formSuccessCallback && formSuccessCallback();
+      });
+  } catch (error) {
+    setPetFormError("We're sorry, something went wrong. Please try again.");
+    console.error(error);
+  }
+};
+
+export interface GuestPetFormProps {
+  state: any;
+  setPetFormError: any;
+  dispatch: any;
+  formSuccessCallback?: any;
+  reservationId?: string;
+}
+
+export const guestPetFormSubmit = async (
+  e: React.SyntheticEvent,
+  {
+    state,
+    setPetFormError,
+    dispatch,
+    formSuccessCallback,
+    reservationId,
+  }: GuestPetFormProps
+) => {
+  e?.preventDefault();
+  let data: { [x: string]: any }[] & { reservationId?: string } =
+    Object.entries(state).map(([key, _value]) => {
+      return {
+        [key]: state[key].value !== undefined ? state[key].value : state[key],
+        reservationId,
+      };
+    });
+
+  setPetFormError(undefined);
+  try {
+    await fetch("/api/guest-pet", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Object.assign({}, ...data)),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then(async (res) => {
+        if (res.errors) {
+          const validationError =
+            "Adding pet failed. Please verify all required fields are filled out.";
+          Object.entries(res.errors).forEach(([key, value]) => {
+            dispatch({
+              key: key,
+              payload: {
+                newValue: state[key].value,
+                error: value,
+              },
+            });
+          });
+          setPetFormError(validationError);
+          throw new Error(validationError);
+        }
+        dispatch({
+          type: "resetForm",
+        });
+        message.success("Pet added successfully");
+        formSuccessCallback && formSuccessCallback(res);
       });
   } catch (error) {
     setPetFormError("We're sorry, something went wrong. Please try again.");

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Steps } from "antd";
 
 import { FormIntroGuest } from "./FormIntro";
@@ -9,7 +9,7 @@ import { Button } from "../../ui-kit/Base";
 import { StepsContent, StepsAction } from "../styles";
 import { FieldSetPaymentInfo } from "./FieldSetPaymentInfo";
 import { next, prev, guestFormFieldsValid } from "../helpers";
-import { guestFormSubmit } from "./services";
+import { guestFormCreateDraft, guestFormSubmit } from "./services";
 import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,
@@ -21,7 +21,7 @@ export const NewClientForm = () => {
   const { guestFormState, guestFormDispatch, setFormError, handleChange } =
     useGuestFormContext();
 
-  const [pets, setPets] = useState(1);
+  const [pets, setPets] = useState([]);
   const [current, setCurrent] = useState(0);
 
   const formSteps = [
@@ -80,27 +80,23 @@ export const NewClientForm = () => {
               Previous
             </Button>
           )}
-          {current === 2 && (
-            <Button
-              type="button"
-              disabled={pets >= 5}
-              onClick={() => {
-                setPets(pets + 1);
-              }}
-              primary
-            >
-              Add Pet
-            </Button>
-          )}
+
           {current < formSteps.length - 1 && (
             <Button
               type="button"
               onClick={() => {
+                if (!guestFormState.id && current === 0) {
+                  guestFormCreateDraft(undefined, {
+                    state: guestFormState,
+                    setFormError,
+                    dispatch: guestFormDispatch,
+                  });
+                }
                 if (
                   guestFormFieldsValid(
                     {
                       currentFormSection: current,
-                      petCount: pets,
+                      petCount: pets.length,
                     },
                     {
                       state: guestFormState,

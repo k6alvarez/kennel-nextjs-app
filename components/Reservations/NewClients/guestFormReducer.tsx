@@ -2,22 +2,15 @@ import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,
 } from "../formInitialState";
-import {
-  INITIAL_PETS_STATE,
-  PET_FIVE_INITIAL_STATE,
-  PET_FOUR_INITIAL_STATE,
-  PET_THREE_INITIAL_STATE,
-  PET_TWO_INITIAL_STATE,
-} from "../formInitialStatePets";
 
 export const INITIAL_STATE = {
   ...INITIAL_USER_STATE,
   ...INITIAL_RESERVATION_STATE,
-  ...INITIAL_PETS_STATE,
+  pets: {},
 };
 
 export const INITIAL_CLIENT_STATE = {
-  ...INITIAL_USER_STATE,
+  ...INITIAL_STATE,
   email: {
     value: "",
     error: null,
@@ -28,8 +21,6 @@ export const INITIAL_CLIENT_STATE = {
     grow: true,
     disabled: true,
   },
-  ...INITIAL_RESERVATION_STATE,
-  pets: [],
 };
 
 export const guestFormReducer = (
@@ -37,28 +28,36 @@ export const guestFormReducer = (
   { type = "inputChange", key = undefined, payload = undefined }: any
 ) => {
   switch (type) {
-    case "clearPet":
-      let petInitialState;
-      if (payload.petNumber === 2) {
-        petInitialState = PET_TWO_INITIAL_STATE;
-      }
-      if (payload.petNumber === 3) {
-        petInitialState = PET_THREE_INITIAL_STATE;
-      }
-      if (payload.petNumber === 4) {
-        petInitialState = PET_FOUR_INITIAL_STATE;
-      }
-      if (payload.petNumber === 5) {
-        petInitialState = PET_FIVE_INITIAL_STATE;
-      }
+    case "formDraftCreated":
       return {
         ...guestFormState,
-        ...petInitialState,
+        ...payload,
       };
     case "depositConfirmed":
       return { ...guestFormState, ...payload };
     case "resetForm":
       return { ...INITIAL_STATE };
+    case "toggleGuestPet":
+      const petToggled = payload.pet;
+      let pets = guestFormState.pets;
+      const petCheck = Object.entries(pets).filter((pet) => {
+        return petToggled.id === pet.id;
+      });
+      if (petCheck.length > 0) {
+        pets = pets.filter((pet) => {
+          return pet.id !== petToggled.id;
+        });
+        return {
+          ...guestFormState,
+          pets,
+        };
+      } else {
+        return {
+          ...guestFormState,
+          pets,
+        };
+      }
+
     case "inputChange":
       const inputState = {
         ...guestFormState[key],
