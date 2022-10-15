@@ -1,3 +1,4 @@
+import { Pet } from "@prisma/client";
 import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,
@@ -24,8 +25,8 @@ export const INITIAL_CLIENT_STATE = {
 };
 
 export const guestFormReducer = (
-  guestFormState: { [x: string]: any },
-  { type = "inputChange", key = undefined, payload = undefined }: any
+  guestFormState,
+  { type = "inputChange", key = undefined, payload = undefined }
 ) => {
   switch (type) {
     case "formDraftCreated":
@@ -40,7 +41,7 @@ export const guestFormReducer = (
     case "toggleGuestPet":
       const petToggled = payload.pet;
       let pets = guestFormState.pets;
-      const petCheck = Object.entries(pets).filter((pet) => {
+      const petCheck = Object.entries(pets).filter((pet: any) => {
         return petToggled.id === pet.id;
       });
       if (petCheck.length > 0) {
