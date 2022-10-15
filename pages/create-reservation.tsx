@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../components/Layout";
 import { useSession } from "next-auth/react";
 import { Content } from "../components/ui-kit/Base";
-import { NewClientForm } from "../components/Reservations/NewClients/NewClientForm";
+import { GuestClientForm } from "../components/Reservations/GuestClients/GuestClientForm";
 import { ClientForm } from "../components/Reservations/Clients/ClientForm";
 
 const Reservation: React.FC = () => {
@@ -15,8 +15,8 @@ const Reservation: React.FC = () => {
   return (
     <Layout>
       <Content>
-        <h1>Client Reservation</h1>
-        {!session?.user ? <NewClientForm /> : <ClientForm session={session} />}
+        <h1>Client Reservations</h1>
+        {!session ? <GuestClientForm /> : <ClientForm session={session} />}
       </Content>
     </Layout>
   );

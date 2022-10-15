@@ -12,10 +12,7 @@ export const prev = ({ current, setCurrent }) => {
   setCurrent(current - 1);
 };
 
-export const requiredFieldsCheck = (
-  field: string | string[],
-  petCount: any
-) => {
+export const requiredFieldsCheck = (field, petCount = 0) => {
   let x: any;
   switch (petCount) {
     case 1:
@@ -60,14 +57,9 @@ export const guestFormFieldsValid = (
   for (const field of Object.entries(sectionInputs[currentFormSection])) {
     const fieldFromState = state[field[0]];
 
-    const requiredFieldsExist = requiredFieldsCheck(field[0], petCount);
-
-    if (
-      requiredFieldsExist &&
-      fieldFromState.required &&
-      !fieldFromState.value
-    ) {
+    if (fieldFromState.required && !fieldFromState.value) {
       const error = `${fieldFromState.label} is required`;
+
       dispatch({
         key: field[0],
         payload: { newValue: fieldFromState.value, error },

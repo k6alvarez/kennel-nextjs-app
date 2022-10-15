@@ -2,7 +2,7 @@ import { GuestReservation } from '@prisma/client';
 import { getSession } from 'next-auth/react';
 import prisma from '../../../lib/prisma';
 import { createTransport } from "nodemailer"
-import { INITIAL_STATE } from '../../../components/Reservations/NewClients/guestFormReducer';
+import { INITIAL_STATE } from '../../../components/Reservations/GuestClients/guestFormReducer';
 
 
 type Errors = {

@@ -17,7 +17,7 @@ import {
 
 const { Step } = Steps;
 
-export const NewClientForm = () => {
+export const GuestClientForm = () => {
   const { guestFormState, guestFormDispatch, setFormError, handleChange } =
     useGuestFormContext();
 
@@ -85,13 +85,6 @@ export const NewClientForm = () => {
             <Button
               type="button"
               onClick={() => {
-                if (!guestFormState.id && current === 0) {
-                  guestFormCreateDraft(undefined, {
-                    state: guestFormState,
-                    setFormError,
-                    dispatch: guestFormDispatch,
-                  });
-                }
                 if (
                   guestFormFieldsValid(
                     {
@@ -104,7 +97,14 @@ export const NewClientForm = () => {
                     }
                   )
                 ) {
-                  next({ current, setCurrent });
+                  if (!guestFormState.id && current === 0) {
+                    guestFormCreateDraft(undefined, {
+                      state: guestFormState,
+                      setFormError,
+                      dispatch: guestFormDispatch,
+                    });
+                    next({ current, setCurrent });
+                  }
                 }
               }}
             >

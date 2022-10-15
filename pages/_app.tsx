@@ -11,7 +11,7 @@ import {
   guestFormReducer,
   INITIAL_STATE,
   INITIAL_CLIENT_STATE,
-} from "../components/Reservations/NewClients/guestFormReducer";
+} from "../components/Reservations/GuestClients/guestFormReducer";
 import {
   ClientFormProvider,
   GuestFormProvider,

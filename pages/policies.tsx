@@ -6,7 +6,7 @@ import { Collapse } from "antd";
 import Layout from "../components/Layout";
 import { PostProps } from "../components/Post";
 import { Content } from "../components/ui-kit/Base";
-import { BlockQuote } from "../components/Reservations/NewClients/FormIntro";
+import { BlockQuote } from "../components/Reservations/GuestClients/FormIntro";
 import { BoldText } from "../components/Boarding/MedicalIssues";
 
 const { Panel } = Collapse;

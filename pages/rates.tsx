@@ -5,7 +5,7 @@ import prisma from "../lib/prisma";
 import Layout from "../components/Layout";
 import { PostProps } from "../components/Post";
 import { Content } from "../components/ui-kit/Base";
-import { BlockQuote } from "../components/Reservations/NewClients/FormIntro";
+import { BlockQuote } from "../components/Reservations/GuestClients/FormIntro";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({

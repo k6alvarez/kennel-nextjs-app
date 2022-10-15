@@ -1,5 +1,5 @@
 import React from "react";
-import { BlockQuote } from "../Reservations/NewClients/FormIntro";
+import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 
 export const GroupLessons = () => {
   return (

@@ -37,10 +37,11 @@ export const FormIntroGuest = () => {
           <a>policies</a>
         </Link>
         .
-      </p>{" "}
+      </p>
+
       <p>
         <Link href="/api/auth/signin">
-          <a>Login to your account</a>
+          <a>Create an online profile</a>
         </Link>
         <span> or continue to book your reservation as a new client.</span>
       </p>
