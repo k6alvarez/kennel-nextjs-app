@@ -24,6 +24,9 @@ export interface renderFormFieldProps {
       grow: any;
       options: any;
       disabled: boolean;
+      placeholder?: string;
+      rows?: string;
+      maxWidth?: string;
     };
   };
   handleChange: (arg0: string, arg1: any) => any;
@@ -52,6 +55,9 @@ export const renderFormFields = ({
             autoFocus={autoFocus}
             error={field.error}
             disabled={field.disabled}
+            placeholder={field.placeholder}
+            rows={field.rows}
+            maxWidth={field.maxWidth}
           />
         )}
 

@@ -119,10 +119,6 @@ model User {
   emailVerified         DateTime?          @map("email_verified")
   image                 String?
   address               String?
-  addressUnit           String?
-  city                  String?
-  state                 String?
-  zip                   String?
   phone                 String?
   altPhone              String?
   emergencyContactName  String?
@@ -180,10 +176,6 @@ model GuestReservation {
   lastName              String
   email                 String
   address               String
-  addressUnit           String?
-  city                  String
-  state                 String
-  zip                   String
   phone                 String
   altPhone              String?
   emergencyContactName  String

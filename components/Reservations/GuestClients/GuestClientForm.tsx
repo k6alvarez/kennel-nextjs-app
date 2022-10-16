@@ -103,8 +103,8 @@ export const GuestClientForm = () => {
                       setFormError,
                       dispatch: guestFormDispatch,
                     });
-                    next({ current, setCurrent });
                   }
+                  next({ current, setCurrent });
                 }
               }}
             >

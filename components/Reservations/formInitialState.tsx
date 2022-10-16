@@ -54,107 +54,6 @@ export const statesArray = [
   "WY",
 ];
 
-// export const INITIAL_USER_STATE = {
-//   name: {
-//     value: "Kenny",
-//     error: null,
-//     type: "text",
-//     label: "First Name",
-//     required: true,
-//   },
-//   lastName: {
-//     value: "Alvarez",
-//     error: null,
-//     type: "text",
-//     label: "Last Name",
-//     required: true,
-//   },
-//   email: {
-//     value: "kenny@kenny.com",
-//     error: null,
-//     type: "text",
-//     inputMode: "email",
-//     label: "Email",
-//     required: true,
-//     grow: true,
-//   },
-//   address: {
-//     value: "788 W 7th St",
-//     error: null,
-//     type: "text",
-//     label: "Address",
-//     required: true,
-//     grow: true,
-//   },
-//   addressUnit: {
-//     value: "Apt 2",
-//     error: null,
-//     type: "text",
-//     label: "Apt/Unit/Ste",
-//   },
-//   city: {
-//     value: "Los Angeles",
-//     error: null,
-//     type: "text",
-//     label: "City",
-//     required: true,
-//   },
-//   state: {
-//     value: "CA",
-//     error: null,
-//     type: "select",
-//     options: statesArray,
-//     label: "State",
-//     required: true,
-//   },
-//   zip: {
-//     value: "90017",
-//     error: null,
-//     type: "text",
-//     inputMode: "numeric",
-//     minLength: 5,
-//     maxLength: 5,
-//     label: "Zip",
-//     required: true,
-//   },
-//   phone: {
-//     value: "323-555-5555",
-//     error: null,
-//     type: "text",
-//     inputMode: "numeric",
-//     minLength: 10,
-//     maxLength: 11,
-//     label: "Phone",
-//     required: true,
-//   },
-//   altPhone: {
-//     value: "323-555-5555",
-//     error: null,
-//     type: "text",
-//     inputMode: "numeric",
-//     minLength: 10,
-//     maxLength: 11,
-//     label: "Alt Phone",
-//     required: true,
-//   },
-//   emergencyContactName: {
-//     value: "Aisha Alvarez",
-//     error: null,
-//     label: "Emergency Contact Name",
-//     required: true,
-//   },
-//   emergencyContactPhone: {
-//     value: "323-555-5555",
-//     error: null,
-//     type: "text",
-//     inputMode: "numeric",
-//     minLength: 10,
-//     maxLength: 11,
-//     label: "Emergency Contact Phone",
-//     required: true,
-//   },
-// };
-
 export const INITIAL_USER_STATE = {
   name: {
     value: "",
@@ -179,52 +78,11 @@ export const INITIAL_USER_STATE = {
     required: true,
     grow: true,
   },
-  address: {
-    value: "",
-    error: null,
-    type: "text",
-    label: "Address",
-    required: true,
-    grow: true,
-  },
-  addressUnit: {
-    value: "",
-    error: null,
-    type: "text",
-    label: "Apt/Unit/Ste",
-  },
-  city: {
-    value: "",
-    error: null,
-    type: "text",
-    label: "City",
-    required: true,
-  },
-  state: {
-    value: "MI",
-    error: null,
-    type: "select",
-    options: statesArray,
-    label: "State",
-    required: true,
-  },
-  zip: {
-    value: "",
-    error: null,
-    type: "text",
-    inputMode: "numeric",
-    minLength: 5,
-    maxLength: 5,
-    label: "Zip",
-    required: true,
-  },
   phone: {
     value: "",
     error: null,
     type: "text",
-    inputMode: "numeric",
-    minLength: 10,
-    maxLength: 11,
+    inputMode: "tel",
     label: "Phone",
     required: true,
   },
@@ -232,11 +90,22 @@ export const INITIAL_USER_STATE = {
     value: "",
     error: null,
     type: "text",
-    inputMode: "numeric",
-    minLength: 10,
-    maxLength: 11,
+    inputMode: "tel",
     label: "Alt Phone",
     required: true,
+  },
+  address: {
+    value: "",
+    error: null,
+    type: "textarea",
+    label: "Address",
+    required: true,
+    rows: 3,
+    grow: true,
+    maxWidth: "calc(51% - 1rem)",
+    placeholder: `123 Main St
+Apt 2
+Kalamazoo, MI 49009`,
   },
   emergencyContactName: {
     value: "",
@@ -248,30 +117,43 @@ export const INITIAL_USER_STATE = {
     value: "",
     error: null,
     type: "text",
-    inputMode: "numeric",
-    minLength: 10,
-    maxLength: 11,
+    inputMode: "tel",
     label: "Emergency Contact Phone",
     required: true,
   },
 };
 
-const dateTimeNow = DateTime.local().toISODate();
-const timeOpen = DateTime.fromObject({
+export const timeFormat = DateTime.TIME_24_SIMPLE;
+
+export const dateTimeNow = DateTime.local().toISODate();
+export const timeOpen = DateTime.fromObject({
   hour: 9,
   minute: 0,
   second: 0,
-}).toLocaleString(DateTime.TIME_24_SIMPLE);
+}).toLocaleString(timeFormat);
 
-const timeClose = DateTime.fromObject({
+export const timeBreakClose = DateTime.fromObject({
+  hour: 14,
+  minute: 0,
+  second: 0,
+}).toLocaleString(timeFormat);
+
+export const timeBreakOpen = DateTime.fromObject({
+  hour: 16,
+  minute: 0,
+  second: 0,
+}).toLocaleString(timeFormat);
+
+export const timeClose = DateTime.fromObject({
   hour: 19,
   minute: 0,
   second: 0,
-}).toLocaleString(DateTime.TIME_24_SIMPLE);
+}).toLocaleString(timeFormat);
 
 export const INITIAL_RESERVATION_STATE = {
   arrivalDate: {
     value: dateTimeNow,
+    min: dateTimeNow,
     error: null,
     label: "Arrival Date",
     type: "date",
@@ -286,6 +168,7 @@ export const INITIAL_RESERVATION_STATE = {
   },
   departureDate: {
     value: dateTimeNow,
+    min: dateTimeNow,
     error: null,
     label: "Departure Date",
     type: "date",

@@ -28,6 +28,7 @@ export const light = {
   textSecondary: "#212121",
   inputFocus: "#1890ff",
   inputDisabled: "#dcd9d9",
+  inputPlaceholder: "#a9a9a9",
 };
 export const dark = {
   primary: "#8c0b3e",
@@ -40,4 +41,5 @@ export const dark = {
   textSecondary: "#212121",
   inputFocus: "#1890ff",
   inputDisabled: "#dcd9d9",
+  inputPlaceholder: "#a9a9a9",
 };

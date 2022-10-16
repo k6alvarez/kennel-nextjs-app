@@ -44,9 +44,13 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   textarea {
-    max-width: 80vw;
-    max-height:20vh;
+    /* max-width: 80vw; */
+    /* max-height:20vh; */
     resize: vertical;
+
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.inputPlaceholder};
+    }
   }
 
   label {
