@@ -67,7 +67,7 @@ export const GridItems = styled.div`
   gap: ${({ theme }) => theme.space[4]};
   margin: ${({ theme }) => theme.space[4]} 0;
   justify-content: space-evenly;
-  overflow-x: auto;
+  overflow: hidden;
 
   @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
     flex-direction: row;

@@ -310,57 +310,9 @@ export const LogoGrid = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* position: relative;
-  margin-top: 0;
-  position: absolute;
-  top: -45%;
-  left: 10%;
-  transform: translate(-30%, -45%);
-  color: ${({ theme }) => theme.colors.primary};
-  height: 35px; */
-
-  /* @media (min-width: 450px) {
-    top: -45%;
-    left: 20%;
-    transform: translate(-30%, -45%);
-  }
-
-  @media (min-width: 550px) {
-    top: -45%;
-    left: 27%;
-    transform: translate(-30%, -45%);
-  }
-
-  @media (min-width: 650px) {
-    top: -45%;
-    left: 20%;
-    transform: translate(-10%, -45%);
-  }
-
-  @media (min-width: 750px) {
-    top: -45%;
-    left: 22%;
-    transform: translate(0%, -45%);
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-    top: 0%;
-    left: 50%;
-    transform: translate(-50%, 8%);
-    height: 100px;
-  } */
 `;
 
 export const LogoName = styled.h2`
-  /* position: absolute;
-  top: -2px; */
-  /* font-size: 2rem; */
-  /* left: 120px;
-  text-align: center;
-  width: 100%;
-  line-height: 1.2;
-  z-index: 2;
-  letter-spacing: 1px; */
   font-family: "Dancing_Script", sans-serif;
   font-size: ${({ theme }) => theme.fontSizes[2]};
   font-weight: bold;
@@ -368,27 +320,9 @@ export const LogoName = styled.h2`
   @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
     font-size: ${({ theme }) => theme.fontSizes[3]};
   }
-
-  /* .space {
-    display: none;
-  } */
-
   a {
     text-decoration: none;
   }
-
-  /* @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-    font-size: 3rem;
-    top: 0;
-    left: -30px;
-    .space {
-      display: inline;
-    }
-
-    a {
-      color: ${({ theme }) => theme.colors.primary};
-    }
-  } */
 `;
 export const LogoDesc = styled.div`
   position: absolute;
@@ -541,7 +475,7 @@ export const BadgeStyles = `
     z-index: 2222;
     width: 248px;
     height: 140px;
-    animation:rectBox 3s 1 linear;
+    animation:rectBox 1s 1 ease-in-out;
     transform-origin: 50% 50%;
 }
 
@@ -561,150 +495,6 @@ export const BadgeStyles = `
         -o-transform: rotateZ(-44deg);
         transform: rotateZ(-44deg);
 
-}
-
-.rect {
-    height: 34px;
-    width: 98px;
-    background: #10ACC5;
-    border-radius: 4px;
-    top: 30px;
-    position: absolute;
-    left: 50px;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.72);
-    -webkit-transform: rotateZ(-44deg);
-    -moz-transform: rotateZ(-44deg);
-    -ms-transform: rotateZ(-44deg);
-    -o-transform: rotateZ(-44deg);
-    transform: rotateZ(-44deg);
-}
-
-.rect:first-child {
-    z-index: 2;
-}
-
-.rect:nth-child(2){
-    -webkit-transform: rotateZ(-136deg);
-        -moz-transform: rotateZ(-136deg);
-        -ms-transform: rotateZ(-136deg);
-        -o-transform: rotateZ(-136deg);
-        transform: rotateZ(-136deg);
-    box-shadow: none;
-    top: 76px;
-    left: 50px;
-    z-index: 3;
-}
-
-.rect:nth-child(3){
-    box-shadow: none;
-    top: 76px;
-    background: #007086;
-    left: 96px;
-    z-index: 4;
-}
-
-.rect:nth-child(4){
-    -webkit-transform: rotateZ(-136deg);
-        -moz-transform: rotateZ(-136deg);
-        -ms-transform: rotateZ(-136deg);
-        -o-transform: rotateZ(-136deg);
-        transform: rotateZ(-136deg);
-    box-shadow: none;
-    background: #007086;
-    top: 30px;
-    left: 97px;
-    z-index: 1;
-}
-
-.risc {
-    width: 84px;
-    height: 1px;
-    background: #31B7CD;
-    position: absolute;
-    left: 50%;
-    top: -3px;
-    z-index: 2222;
-    margin-left: -42px;
-    opacity: 1;
-}
-
-.risc:before {
-    content: "";
-    width: 1px;
-    height: 1px;
-    border-radius: 50%;
-    position: absolute;
-    left: 50%;
-    top: -1.8px;
-    margin-left: -2px;
-    background: #fff;
-    border: solid 2px #31B7CD;
-    -webkit-animation:moveRiscCircle 1s infinite alternate linear;
-        -moz-animation:moveRiscCircle 1s infinite alternate linear;
-        -ms-animation:moveRiscCircle 1s infinite alternate linear;
-        -o-animation:moveRiscCircle 1s infinite alternate linear;
-        animation:moveRiscCircle 1s infinite alternate linear;
-}
-
-.risc:first-child {
-    -webkit-animation:risc-1 3s 1 linear;
-        -moz-animation:risc-1 3s 1 linear;
-        -ms-animation:risc-1 3s 1 linear;
-        -o-animation:risc-1 3s 1 linear;
-        animation:risc-1 3s 1 linear;
-}
-
-.risc:nth-child(2){
-    -webkit-animation:risc-2 3s 1 linear;
-        -moz-animation:risc-2 3s 1 linear;
-        -ms-animation:risc-2 3s 1 linear;
-        -o-animation:risc-2 3s 1 linear;
-        animation:risc-2 3s 1 linear;
-
-    -webkit-transform: rotateZ(-90deg);
-        -moz-transform: rotateZ(-90deg);
-        -ms-transform: rotateZ(-90deg);
-        -o-transform: rotateZ(-90deg);
-        transform: rotateZ(-90deg);
-
-    top: 81px;
-    left: 52px;
-}
-
-.risc:nth-child(3){
-    -webkit-animation:risc-3 3s 1 linear;
-        -moz-animation:risc-3 3s 1 linear;
-        -ms-animation:risc-3 3s 1 linear;
-        -o-animation:risc-3 3s 1 linear;
-        animation:risc-3 3s 1 linear;
-
-    -webkit-transform: rotateZ(90deg);
-        -moz-transform: rotateZ(90deg);
-        -ms-transform: rotateZ(90deg);
-        -o-transform: rotateZ(90deg);
-        transform: rotateZ(90deg);
-
-    top: 81px;
-    right: 50px;
-    margin-left: 0;
-    margin-right: -39px;
-    left: inherit;
-}
-
-.risc:nth-child(4){
-    top: 100%;
-    margin-top: -40px;
-    -webkit-animation:risc-4 3s 1 linear;
-        -moz-animation:risc-4 3s 1 linear;
-        -ms-animation:risc-4 3s 1 linear;
-        -o-animation:risc-4 3s 1 linear;
-        animation:risc-4 3s 1 linear;
-
-    -webkit-transform:rotateZ(180deg);
-        -moz-transform:rotateZ(180deg);
-        -ms-transform:rotateZ(180deg);
-        -o-transform:rotateZ(180deg);
-        transform:rotateZ(180deg);
 }
 
 @-webkit-keyframes rectBox {

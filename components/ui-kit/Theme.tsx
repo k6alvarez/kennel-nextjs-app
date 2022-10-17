@@ -1,5 +1,5 @@
 export const base = {
-  breakpoints: ["768px", "1024px", "1280px"],
+  breakpoints: ["420px", "768px", "1024px", "1280px"],
   space: ["0px", "2px", "4px", "8px", "16px", "32px", "64px"],
   fonts: {
     heading: '"Dancing_Script", cursive',
