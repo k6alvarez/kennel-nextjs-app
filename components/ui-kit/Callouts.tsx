@@ -44,9 +44,9 @@ export const StyledGridItems = styled(GridItems)`
 export const Callouts = ({ callouts = [] }) => {
   return (
     <StyledGridItems as="div">
-      {callouts.map((callout) => (
+      {callouts.map((callout, i) => (
         <StyledCard
-          // style={{ width: 300 }}
+          key={callout + "-" + i}
           hoverable
           cover={<img alt={callout.title} src={callout.image} />}
         >
