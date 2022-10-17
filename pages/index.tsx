@@ -57,18 +57,18 @@ const Blog: React.FC = () => {
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006782/gk-app/catsgk.jpg",
           },
           {
-            title: "Before you board",
-            link: "/boarding",
-            description: "Learn more about our boarding services.",
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006544/gk-app/gktwopups.jpg",
-          },
-          {
             title: "Vaccinations",
             description: "Read about our Vaccinations requirements.",
             link: "/boarding",
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1547342058/samples/animals/three-dogs.jpg",
+          },
+          {
+            title: "Before you board",
+            link: "/boarding",
+            description: "Learn more about our boarding services.",
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006544/gk-app/gktwopups.jpg",
           },
         ]}
       />
