@@ -1,5 +1,6 @@
 import React from "react";
 import { animated, config, useSpring } from "react-spring";
+import { Crest } from "../Navigation/LogoLinks";
 import { Promos } from "./Promo/Promos";
 import { PromoWrapper, PromoText, PromoTitle } from "./Promo/styles-promo";
 
@@ -32,6 +33,9 @@ export const Promo = ({
   return (
     <PromoWrapper>
       <PromoText size="70vw">
+        <animated.div style={{ ...props }}>
+          <Crest />
+        </animated.div>
         <animated.div style={props}>
           <p>
             {children ? (
@@ -52,7 +56,7 @@ export const Promo = ({
           <animated.p style={fadeInPt1}>
             {description
               ? description
-              : "Each of our runs provide your dog with spacious, private, indoor and outdoor areas"}
+              : "Each of our runs provide your dog with spacious, private, indoor and outdoor areas."}
           </animated.p>
         </animated.div>
       </PromoText>

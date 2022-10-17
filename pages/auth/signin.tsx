@@ -5,12 +5,7 @@ import {
   getProviders,
   getSession,
 } from "next-auth/react";
-import {
-  Field,
-  Fields,
-  StyledInput,
-  StyledLabel,
-} from "../../components/Forms/styles";
+import { Field, StyledInput, StyledLabel } from "../../components/Forms/styles";
 import Layout from "../../components/Layout";
 import { Button, Content } from "../../components/ui-kit/Base";
 

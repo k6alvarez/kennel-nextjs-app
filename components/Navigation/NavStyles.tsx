@@ -405,10 +405,7 @@ export const BadgeStyles = `
     position: relative;
     width: 280px;
     height: 280px;
-    transform: scale(0.18);
-    @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-      transform: scale(0.28);
-    }
+
 }
 
 .shield-off, .shield-light {
@@ -424,11 +421,7 @@ export const BadgeStyles = `
     background: #fff;
     border-top: solid 1px #fff;
     z-index: 2;
-    -webkit-transform:scale(0.9);
-        -moz-transform:scale(0.9);
-        -ms-transform:scale(0.9);
-        -o-transform:scale(0.9);
-        transform:scale(0.9);
+    transform:scale(0.9);
  }
 
  .shield-light:before {
@@ -476,10 +469,6 @@ export const BadgeStyles = `
 }
 
 .shield .circles:nth-child(2){
-    -webkit-transform: scale(0.9) rotate(25deg);
-    -moz-transform: scale(0.9) rotate(25deg);
-    -ms-transform: scale(0.9) rotate(25deg);
-    -o-transform: scale(0.9) rotate(25deg);
     transform: scale(0.9) rotate(25deg);
     left: 120px;
     top: -65px;
@@ -512,11 +501,7 @@ export const BadgeStyles = `
     bottom: 30px;
 
     font-size: 40px;
-    -webkit-animation:shieldCaption 5s 1 linear;
-        -moz-animation:shieldCaption 5s 1 linear;
-        -ms-animation:shieldCaption 5s 1 linear;
-        -o-animation:shieldCaption 5s 1 linear;
-        animation:shieldCaption 5s 1 linear;
+    animation:shieldCaption 3s 1 linear;
 }
 
 .shield-caption:before,.shield-caption:after {
@@ -529,11 +514,7 @@ export const BadgeStyles = `
     border-bottom-width: 0;
     border-bottom-width: 12px;
     top: -31px;
-    -webkit-animation:shieldBorder 5s 1 linear;
-        -moz-animation:shieldBorder 5s 1 linear;
-        -ms-animation:shieldBorder 5s 1 linear;
-        -o-animation:shieldBorder 5s 1 linear;
-        animation:shieldBorder 5s 1 linear;
+    animation:shieldBorder 3s 1 linear;
 }
 
 .shield-caption:before {
@@ -548,9 +529,9 @@ export const BadgeStyles = `
 
 .shield-caption p {
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 
-    animation:shieldText 5s 1 linear;
+    animation:shieldText 3s 1 linear;
 }
 
 .rect-box {
@@ -560,7 +541,7 @@ export const BadgeStyles = `
     z-index: 2222;
     width: 248px;
     height: 140px;
-    animation:rectBox 5s 1 linear;
+    animation:rectBox 3s 1 linear;
     transform-origin: 50% 50%;
 }
 
@@ -579,7 +560,7 @@ export const BadgeStyles = `
         -ms-transform: rotateZ(-44deg);
         -o-transform: rotateZ(-44deg);
         transform: rotateZ(-44deg);
-        s
+
 }
 
 .rect {
@@ -666,19 +647,19 @@ export const BadgeStyles = `
 }
 
 .risc:first-child {
-    -webkit-animation:risc-1 5s 1 linear;
-        -moz-animation:risc-1 5s 1 linear;
-        -ms-animation:risc-1 5s 1 linear;
-        -o-animation:risc-1 5s 1 linear;
-        animation:risc-1 5s 1 linear;
+    -webkit-animation:risc-1 3s 1 linear;
+        -moz-animation:risc-1 3s 1 linear;
+        -ms-animation:risc-1 3s 1 linear;
+        -o-animation:risc-1 3s 1 linear;
+        animation:risc-1 3s 1 linear;
 }
 
 .risc:nth-child(2){
-    -webkit-animation:risc-2 5s 1 linear;
-        -moz-animation:risc-2 5s 1 linear;
-        -ms-animation:risc-2 5s 1 linear;
-        -o-animation:risc-2 5s 1 linear;
-        animation:risc-2 5s 1 linear;
+    -webkit-animation:risc-2 3s 1 linear;
+        -moz-animation:risc-2 3s 1 linear;
+        -ms-animation:risc-2 3s 1 linear;
+        -o-animation:risc-2 3s 1 linear;
+        animation:risc-2 3s 1 linear;
 
     -webkit-transform: rotateZ(-90deg);
         -moz-transform: rotateZ(-90deg);
@@ -691,11 +672,11 @@ export const BadgeStyles = `
 }
 
 .risc:nth-child(3){
-    -webkit-animation:risc-3 5s 1 linear;
-        -moz-animation:risc-3 5s 1 linear;
-        -ms-animation:risc-3 5s 1 linear;
-        -o-animation:risc-3 5s 1 linear;
-        animation:risc-3 5s 1 linear;
+    -webkit-animation:risc-3 3s 1 linear;
+        -moz-animation:risc-3 3s 1 linear;
+        -ms-animation:risc-3 3s 1 linear;
+        -o-animation:risc-3 3s 1 linear;
+        animation:risc-3 3s 1 linear;
 
     -webkit-transform: rotateZ(90deg);
         -moz-transform: rotateZ(90deg);
@@ -713,11 +694,11 @@ export const BadgeStyles = `
 .risc:nth-child(4){
     top: 100%;
     margin-top: -40px;
-    -webkit-animation:risc-4 5s 1 linear;
-        -moz-animation:risc-4 5s 1 linear;
-        -ms-animation:risc-4 5s 1 linear;
-        -o-animation:risc-4 5s 1 linear;
-        animation:risc-4 5s 1 linear;
+    -webkit-animation:risc-4 3s 1 linear;
+        -moz-animation:risc-4 3s 1 linear;
+        -ms-animation:risc-4 3s 1 linear;
+        -o-animation:risc-4 3s 1 linear;
+        animation:risc-4 3s 1 linear;
 
     -webkit-transform:rotateZ(180deg);
         -moz-transform:rotateZ(180deg);

@@ -2,7 +2,7 @@ import { GuestReservation } from '@prisma/client';
 import { getSession } from 'next-auth/react';
 import prisma from '../../../lib/prisma';
 import { createTransport } from "nodemailer"
-import { INITIAL_STATE } from '../../../components/Reservations/NewClients/guestFormReducer';
+import { INITIAL_STATE } from '../../../components/Reservations/GuestClients/guestFormReducer';
 
 
 type Errors = {
@@ -29,7 +29,7 @@ const validateFields = async (fields: GuestReservation) => {
 // POST /api/guest-reservation
 export default async function handle(req, res) {
   let apiOptions
-
+  delete req.body.reservationId
   const session = await getSession({ req });
   const sessionUserEmail = session?.user?.email
   if (sessionUserEmail) {

@@ -3,22 +3,13 @@ import { GetServerSideProps } from "next";
 import Layout from "../../components/Layout";
 import prisma from "../../lib/prisma";
 import { Content } from "../../components/ui-kit/Base";
-import { GuestReservation } from "@prisma/client";
 import Card from "antd/lib/card/Card";
 import styled from "styled-components";
 import {
   INITIAL_RESERVATION_STATE,
   INITIAL_USER_STATE,
-} from "../../components/Reservations/NewClients/formInitialState";
-import {
-  INITIAL_PETS_STATE,
-  PET_FIVE_INITIAL_STATE,
-  PET_FOUR_INITIAL_STATE,
-  PET_ONE_INITIAL_STATE,
-  PET_THREE_INITIAL_STATE,
-  PET_TWO_INITIAL_STATE,
-} from "../../components/Reservations/NewClients/formInitialStatePets";
-import { StyledGridItems } from "../../components/ui-kit/Callouts";
+} from "../../components/Reservations/formInitialState";
+import { PET_INITIAL_STATE } from "../../components/Pets/petFormReducer";
 
 const Flex = styled.div`
   display: flex;
@@ -47,6 +38,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       author: {
         select: { name: true, email: true },
       },
+      pets: true,
     },
   });
   return {
@@ -56,12 +48,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   };
 };
 
-export type GuestReservationProps = {
-  id: string;
-  reservation: Partial<GuestReservation>;
-};
-
-const ResGuest: React.FC<GuestReservationProps> = ({ reservation }) => {
+const ResGuest = ({ reservation }) => {
   const getFieldGroupValues = (
     fieldGroup: {
       [x: string]: any;
@@ -70,6 +57,7 @@ const ResGuest: React.FC<GuestReservationProps> = ({ reservation }) => {
     value: string | boolean | Date
   ) => {
     const fieldInGroup = fieldGroup[key];
+
     if (fieldInGroup && value) {
       return (
         <div key={key}>
@@ -81,6 +69,21 @@ const ResGuest: React.FC<GuestReservationProps> = ({ reservation }) => {
       );
     }
   };
+
+  if (!reservation) {
+    return (
+      <Layout>
+        <Content>
+          <h1>Reservation not found</h1>
+          <p>
+            It looks like this reservation does not exist. Check the link sent
+            to the email address provided when the reservation was submitted.
+          </p>
+        </Content>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <Content maxWidth="900px">
@@ -103,86 +106,34 @@ const ResGuest: React.FC<GuestReservationProps> = ({ reservation }) => {
           }
         >
           <Grid>
-            {Object.entries(reservation).map(([key, value]) =>
+            {Object.entries(reservation).map(([key, value]: any) =>
               getFieldGroupValues(INITIAL_RESERVATION_STATE, key, value)
             )}
           </Grid>
         </Card>
-        {reservation.petOneName && (
-          <Card title={reservation.petOneName}>
-            <Grid>
-              {Object.entries(PET_ONE_INITIAL_STATE).map(([key, _value], i) => {
-                return getFieldGroupValues(
-                  PET_ONE_INITIAL_STATE,
-                  key,
-                  reservation[key]
-                );
-              })}
-            </Grid>
-          </Card>
-        )}
-        {reservation.petTwoName && (
-          <Card title={reservation.petTwoName}>
-            <Grid>
-              {Object.entries(PET_TWO_INITIAL_STATE).map(([key, _value], i) => {
-                return getFieldGroupValues(
-                  PET_TWO_INITIAL_STATE,
-                  key,
-                  reservation[key]
-                );
-              })}
-            </Grid>
-          </Card>
-        )}
-        {reservation.petThreeName && (
-          <Card title={reservation.petThreeName}>
-            <Grid>
-              {Object.entries(PET_THREE_INITIAL_STATE).map(
-                ([key, _value], i) => {
-                  return getFieldGroupValues(
-                    PET_THREE_INITIAL_STATE,
-                    key,
-                    reservation[key]
-                  );
-                }
-              )}
-            </Grid>
-          </Card>
-        )}
-        {reservation.petFourName && (
-          <Card title={reservation.petFourName}>
-            <Grid>
-              {Object.entries(PET_FOUR_INITIAL_STATE).map(
-                ([key, _value], i) => {
-                  return getFieldGroupValues(
-                    PET_FOUR_INITIAL_STATE,
-                    key,
-                    reservation[key]
-                  );
-                }
-              )}
-            </Grid>
-          </Card>
-        )}
-        {reservation.petFiveName && (
-          <Card title={reservation.petFiveName}>
-            <Grid>
-              {Object.entries(PET_FIVE_INITIAL_STATE).map(
-                ([key, _value], i) => {
-                  return getFieldGroupValues(
-                    PET_FIVE_INITIAL_STATE,
-                    key,
-                    reservation[key]
-                  );
-                }
-              )}
-            </Grid>
-          </Card>
-        )}
+
+        <Grid
+          style={{
+            gridTemplateColumns: "1fr 1fr",
+            gridGap: "1rem",
+          }}
+        >
+          {reservation.pets.map((pet) => {
+            return (
+              <Card title={pet.name} key={pet.id}>
+                <Grid>
+                  {Object.entries(pet).map(([key, value]: any) =>
+                    getFieldGroupValues(PET_INITIAL_STATE, key, value)
+                  )}
+                </Grid>
+              </Card>
+            );
+          })}
+        </Grid>
 
         <Card title={"Owner Details"}>
           <Grid>
-            {Object.entries(reservation).map(([key, value]) =>
+            {Object.entries(reservation).map(([key, value]: any) =>
               getFieldGroupValues(INITIAL_USER_STATE, key, value)
             )}
           </Grid>

@@ -51,6 +51,8 @@ export const Error = styled.span`
 `;
 
 export const StyledTextarea = styled.textarea`
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "100%")};
+  align-self: flex-start;
   border: 1px solid
     ${({ theme, error }) =>
       error ? theme.colors.primary : theme.colors.textSecondary};

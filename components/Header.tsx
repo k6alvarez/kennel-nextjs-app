@@ -1,11 +1,11 @@
 import React from "react";
 import Link from "next/link";
+import styled from "styled-components";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
-import styled from "styled-components";
 import { ShieldLogo } from "./Navigation/LogoLinks";
 
-const StyledNav = styled.nav`
+export const StyledNav = styled.nav`
   display: flex;
   position: sticky;
   top: 0;
@@ -13,7 +13,7 @@ const StyledNav = styled.nav`
   background-color: ${({ theme }) => theme.colors.primary};
   padding: ${({ theme }) => theme.space[2]};
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1;
+  z-index: 5000;
   a {
     color: ${({ theme }) => theme.colors.textPrimary};
 
@@ -29,7 +29,8 @@ const StyledNav = styled.nav`
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   }
 `;
-const NavWrapper = styled.div`
+
+export const NavWrapper = styled.div`
   display: flex;
   align-items: center;
   flex: 1;
@@ -52,6 +53,26 @@ const NavWrapper = styled.div`
   }
 `;
 
+const getMainLinks = (isActive) => (
+  <>
+    <Link href="/boarding">
+      <a data-active={isActive("/boarding")}>Boarding</a>
+    </Link>
+    <Link href="/training">
+      <a data-active={isActive("/training")}>Training</a>
+    </Link>
+    <Link href="/policies">
+      <a data-active={isActive("/policies")}>Policies</a>
+    </Link>
+    <Link href="/rates">
+      <a data-active={isActive("/rates")}>Rates</a>
+    </Link>
+    <Link href="/create-reservation">
+      <a data-active={isActive("/create-reservation")}>Book Reservation</a>
+    </Link>
+  </>
+);
+
 const Header: React.FC = () => {
   const router = useRouter();
   const isActive: (pathname: string) => boolean = (pathname) =>
@@ -66,18 +87,6 @@ const Header: React.FC = () => {
   if (status === "loading") {
     leftNav = (
       <div>
-        <Link href="/boarding">
-          <a data-active={isActive("/boarding")}>Boarding</a>
-        </Link>
-        <Link href="/training">
-          <a data-active={isActive("/training")}>Training</a>
-        </Link>
-        <Link href="/policies">
-          <a data-active={isActive("/policies")}>Policies</a>
-        </Link>
-        <Link href="/rates">
-          <a data-active={isActive("/rates")}>Rates</a>
-        </Link>
         <ShieldLogo />
       </div>
     );
@@ -91,24 +100,7 @@ const Header: React.FC = () => {
   if (!session) {
     rightNav = (
       <NavWrapper>
-        <Link href="/boarding">
-          <a data-active={isActive("/boarding")}>Boarding</a>
-        </Link>
-        {/* <Link href="/">
-        <a data-active={isActive("/")}>Feed</a>
-      </Link> */}
-        <Link href="/training">
-          <a data-active={isActive("/training")}>Training</a>
-        </Link>
-        <Link href="/policies">
-          <a data-active={isActive("/policies")}>Policies</a>
-        </Link>
-        <Link href="/rates">
-          <a data-active={isActive("/rates")}>Rates</a>
-        </Link>
-        <Link href="/create-reservation">
-          <a data-active={isActive("/create-reservation")}>Book Reservation</a>
-        </Link>
+        {getMainLinks(isActive)}
         <Link href="/api/auth/signin">
           <a data-active={isActive("/signup")}>Log In</a>
         </Link>
@@ -119,32 +111,10 @@ const Header: React.FC = () => {
   if (session) {
     rightNav = (
       <NavWrapper>
-        <Link href="/boarding">
-          <a data-active={isActive("/boarding")}>Boarding</a>
-        </Link>
-        {/* <Link href="/">
-        <a data-active={isActive("/")}>Feed</a>
-      </Link> */}
-        <Link href="/training">
-          <a data-active={isActive("/training")}>Training</a>
-        </Link>
-        <Link href="/policies">
-          <a data-active={isActive("/policies")}>Policies</a>
-        </Link>
-        <Link href="/rates">
-          <a data-active={isActive("/rates")}>Rates</a>
-        </Link>
-        <Link href="/create-reservation">
-          <a data-active={isActive("/create-reservation")}>Book Reservation</a>
-        </Link>
+        {getMainLinks(isActive)}
         <Link href="/profile">
           <a data-active={isActive("/profile")}>My Profile</a>
         </Link>
-        {/* <Link href="/create">
-          <button>
-            <a>New post</a>
-          </button>
-        </Link> */}
         <button onClick={() => signOut()}>Log Out</button>
       </NavWrapper>
     );

@@ -24,6 +24,9 @@ export interface renderFormFieldProps {
       grow: any;
       options: any;
       disabled: boolean;
+      placeholder?: string;
+      rows?: string;
+      maxWidth?: string;
     };
   };
   handleChange: (arg0: string, arg1: any) => any;
@@ -35,51 +38,40 @@ export const renderFormFields = ({
   handleChange,
 }: renderFormFieldProps) => {
   return Object.entries(initialState).map(([key, _value], i) => {
-    const {
-      inputMode = "text",
-      value,
-      error,
-      type,
-      min,
-      minLength,
-      maxLength,
-      pattern,
-      label,
-      required,
-      grow,
-      options,
-      disabled = false,
-    } = state[key];
+    const field = state[key];
     const onChange = (e) => handleChange(key, e.target.value);
     const autoFocus = i === 0;
-    const requiredField = required || false;
+    const requiredField = field.required || false;
     return (
-      <Field key={key} grow={grow}>
-        <StyledLabel htmlFor={key} error={error || false}>
-          {`${label}${required ? "*" : ""}`}
+      <Field key={key} grow={field.grow}>
+        <StyledLabel htmlFor={key} error={field.error || false}>
+          {`${field.label}${field.required ? "*" : ""}`}
         </StyledLabel>
-        {type === "textarea" && (
+        {field.type === "textarea" && (
           <StyledTextarea
             onChange={onChange}
-            value={value}
+            value={field.value}
             id={key}
             autoFocus={autoFocus}
-            error={error}
-            disabled={disabled}
+            error={field.error}
+            disabled={field.disabled}
+            placeholder={field.placeholder}
+            rows={field.rows}
+            maxWidth={field.maxWidth}
           />
         )}
 
-        {type === "select" && (
+        {field.type === "select" && (
           <StyledSelect
             autoFocus={autoFocus}
             id={key}
             name={key}
             onChange={onChange}
-            error={error}
-            defaultValue={value}
-            disabled={disabled}
+            error={field.error}
+            defaultValue={field.value}
+            disabled={field.disabled}
           >
-            {options.map((option, i) => (
+            {field.options.map((option, i) => (
               <option key={i} value={option}>
                 {option}
               </option>
@@ -87,25 +79,25 @@ export const renderFormFields = ({
           </StyledSelect>
         )}
 
-        {type !== "textarea" && type !== "select" && (
+        {field.type !== "textarea" && field.type !== "select" && (
           <StyledInput
             autoFocus={autoFocus}
             onChange={onChange}
-            type={type || "text"}
-            inputMode={inputMode || "text"}
-            minLength={minLength}
-            maxLength={maxLength}
-            min={min}
-            pattern={pattern}
+            type={field.type || "text"}
+            inputMode={field.inputMode || "text"}
+            minLength={field.minLength}
+            maxLength={field.maxLength}
+            min={field.min}
+            pattern={field.pattern}
             required={requiredField}
             id={key}
-            value={value}
-            error={error}
-            disabled={disabled}
+            value={field.value}
+            error={field.error}
+            disabled={field.disabled}
           />
         )}
 
-        {error && <Hint>{error}</Hint>}
+        {field.error && <Hint>{field.error}</Hint>}
       </Field>
     );
   });

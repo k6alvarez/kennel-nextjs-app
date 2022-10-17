@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { BoldText } from "../Boarding/MedicalIssues";
-import { BlockQuote } from "../Reservations/NewClients/FormIntro";
+import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 
 export const PrivateLessons = () => {
   return (

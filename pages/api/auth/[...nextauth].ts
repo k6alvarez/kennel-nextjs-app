@@ -47,13 +47,27 @@ const options = {
           // we can pass in 'theme' to access default theme as a new parameter
           html: html({ url, host, email }),
         });
-     },
+      },
+
     }),
   ],
+  // callbacks: {
+  //   async signIn({ user, account, profile, email, credentials }) {
+  //     const isAllowedToSignIn = false
+  //     if (isAllowedToSignIn) {
+  //       return true
+  //     } else {
+  //       // Return false to display a default error message
+  //       return false
+  //       // Or you can return a URL to redirect to:
+  //       // return '/unauthorized'
+  //     }
+  //   }
+  // },
   pages: {
     signIn: '/auth/signin',
-    // error: '/auth/error', // Error code passed in query string as ?error=
-    // verifyRequest: '/auth/verify-request', // (used for check email message)
+    error: '/auth/error', // Error code passed in query string as ?error=
+    verifyRequest: '/auth/verify-request', // (used for check email message)
   },
   adapter: PrismaAdapter(prisma),
   secret: process.env.SECRET,

@@ -1,13 +1,7 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 import { RouteLink } from "./RouteLink";
-import {
-  SubText,
-  CrestLogo,
-  LogoGrid,
-  LogoName,
-  BadgeStyles,
-} from "./NavStyles";
+import { SubText, CrestLogo, LogoName, BadgeStyles } from "./NavStyles";
 const GlobalStyle = createGlobalStyle`
   ${BadgeStyles}
 `;
@@ -15,21 +9,11 @@ export const ShieldLogo = () => {
   return (
     <>
       <GlobalStyle />
-      {/* <LogoGrid>
-        <Crest />
-      </LogoGrid> */}
       <LogoName>
         <RouteLink activeClassName="active" href="/">
           <a>Gillette Kennels</a>
         </RouteLink>
       </LogoName>
-      {/* <RouteLink activeClassName="active" href="/">
-        <a
-
-        >
-          Gillette Kennels
-        </a>
-      </RouteLink> */}
     </>
   );
 };

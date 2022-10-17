@@ -44,9 +44,13 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   textarea {
-    max-width: 80vw;
-    max-height:20vh;
+    /* max-width: 80vw; */
+    /* max-height:20vh; */
     resize: vertical;
+
+    &::placeholder {
+      color: ${({ theme }) => theme.colors.inputPlaceholder};
+    }
   }
 
   label {
@@ -76,7 +80,16 @@ export const GlobalStyle = createGlobalStyle`
     max-width: 100%;
   }
 
-  .ant-collapse {
+  .ant-collapse, .ant-empty {
     font-size: inherit;
+    font-family: inherit;
+  }
+
+  .ant-card-meta-title {
+    text-transform: capitalize;
+  }
+
+  .ant-avatar-string {
+    text-transform: uppercase;
   }
 `;
