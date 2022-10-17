@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Steps } from "antd";
 
-import { FormIntroGuest } from "./FormIntro";
+import { BlockQuote, FormIntroGuest } from "./FormIntro";
 import { useGuestFormContext } from "../formContext";
 import { FieldsetClientInfo } from "../FieldsetFromState";
 import { FieldsetPetsInfo } from "./FieldsetPetsInfo";
@@ -14,12 +14,18 @@ import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,
 } from "../formInitialState";
+import { Error } from "../../Forms/styles";
 
 const { Step } = Steps;
 
 export const GuestClientForm = () => {
-  const { guestFormState, guestFormDispatch, setFormError, handleChange } =
-    useGuestFormContext();
+  const {
+    guestFormState,
+    guestFormDispatch,
+    setFormError,
+    handleChange,
+    guestFormError,
+  } = useGuestFormContext();
 
   const [pets, setPets] = useState([]);
   const [current, setCurrent] = useState(0);
@@ -74,6 +80,7 @@ export const GuestClientForm = () => {
         </Steps>
 
         <StepsContent>{formSteps[current].content}</StepsContent>
+        <BlockQuote>{guestFormError}</BlockQuote>
         <StepsAction>
           {current > 0 && (
             <Button type="button" onClick={() => prev({ current, setCurrent })}>
@@ -85,25 +92,37 @@ export const GuestClientForm = () => {
             <Button
               type="button"
               onClick={() => {
-                if (
-                  guestFormFieldsValid(
+                if (pets.length === 0 && current === 2) {
+                  setFormError("Please add a pet to continue.");
+                  return;
+                } else {
+                  setFormError("");
+                }
+
+                if (current < 2) {
+                  const fieldsValid = guestFormFieldsValid(
                     {
                       currentFormSection: current,
-                      petCount: pets.length,
                     },
                     {
                       state: guestFormState,
                       dispatch: guestFormDispatch,
                     }
-                  )
-                ) {
-                  if (!guestFormState.id && current === 0) {
-                    guestFormCreateDraft(undefined, {
-                      state: guestFormState,
-                      setFormError,
-                      dispatch: guestFormDispatch,
-                    });
+                  );
+
+                  if (fieldsValid) {
+                    const draftRequired = !guestFormState.id && current === 0;
+
+                    if (draftRequired) {
+                      guestFormCreateDraft(undefined, {
+                        state: guestFormState,
+                        setFormError,
+                        dispatch: guestFormDispatch,
+                      });
+                    }
+                    next({ current, setCurrent });
                   }
+                } else {
                   next({ current, setCurrent });
                 }
               }}

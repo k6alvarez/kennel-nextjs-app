@@ -18,49 +18,8 @@ export const prev = ({ current, setCurrent }) => {
   setCurrent(current - 1);
 };
 
-export const requiredFieldsCheck = (field, petCount = 0) => {
-  let x: any;
-  switch (petCount) {
-    case 1:
-      x = field.includes("One");
-      return x;
-    case 2:
-      x = field.includes("One") || field.includes("Two");
-      return x;
-    case 3:
-      x =
-        field.includes("One") ||
-        field.includes("Two") ||
-        field.includes("Three");
-      return x;
-    case 4:
-      x =
-        field.includes("One") ||
-        field.includes("Two") ||
-        field.includes("Three") ||
-        field.includes("Four");
-      return x;
-    case 5:
-      x =
-        field.includes("One") ||
-        field.includes("Two") ||
-        field.includes("Three") ||
-        field.includes("Four") ||
-        field.includes("Five");
-      return x;
-  }
-};
-
-export const guestFormFieldsValid = (
-  { currentFormSection, petCount },
-  { state, dispatch }
-) => {
-  let sectionInputs = [
-    INITIAL_USER_STATE,
-    INITIAL_RESERVATION_STATE,
-    PET_INITIAL_STATE,
-  ];
-  for (const field of Object.entries(sectionInputs[currentFormSection])) {
+export const fieldValidator = ({ fields, state, dispatch }) => {
+  for (const field of fields) {
     const fieldFromState = state[field[0]];
     const requiredFieldMissing =
       fieldFromState.required && !fieldFromState.value;
@@ -102,7 +61,6 @@ export const guestFormFieldsValid = (
       });
       return false;
     }
-
     if (field[0] === "arrivalDate" || field[0] === "departureDate") {
       const weekday = DateTime.fromISO(fieldFromState.value).weekday;
 
@@ -163,6 +121,23 @@ export const guestFormFieldsValid = (
       }
     }
   }
-
   return true;
+};
+
+export const guestFormFieldsValid = (
+  { currentFormSection },
+  { state, dispatch }
+) => {
+  let sectionInputs = [
+    INITIAL_USER_STATE,
+    INITIAL_RESERVATION_STATE,
+    PET_INITIAL_STATE,
+  ];
+  const currentSection = Object.entries(sectionInputs[currentFormSection]);
+  console.log(
+    "🚀 ~ file: helpers.tsx ~ line 137 ~ currentSection",
+    currentSection
+  );
+
+  return fieldValidator({ fields: currentSection, state, dispatch });
 };

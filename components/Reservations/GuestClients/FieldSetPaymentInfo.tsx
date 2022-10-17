@@ -7,7 +7,7 @@ import { TotalDeposit } from "../styles";
 import { Error } from "../../Forms/styles";
 
 export const FieldSetPaymentInfo = () => {
-  const { guestFormError, guestFormDispatch, guestFormState, setFormError } =
+  const { guestFormDispatch, guestFormState, setFormError } =
     useGuestFormContext();
   const [depositConfirmed, setDepositConfirmed] = useState(false);
 
@@ -24,7 +24,6 @@ export const FieldSetPaymentInfo = () => {
 
   return (
     <fieldset>
-      <Error>{guestFormError}</Error>
       <>
         <BlockQuote>
           A $25.00 per run deposit is required for new client reservations. Your
