@@ -2,19 +2,21 @@ import React from "react";
 import { createGlobalStyle } from "styled-components";
 import { RouteLink } from "./RouteLink";
 import { SubText, CrestLogo, LogoName, BadgeStyles } from "./NavStyles";
+import { MenuOutlined } from "@ant-design/icons";
 const GlobalStyle = createGlobalStyle`
   ${BadgeStyles}
 `;
 export const ShieldLogo = () => {
   return (
-    <>
+    <div className="leftNav">
       <GlobalStyle />
+      <MenuOutlined className="mobileNav" />
       <LogoName>
         <RouteLink activeClassName="active" href="/">
           <a>Gillette Kennels</a>
         </RouteLink>
       </LogoName>
-    </>
+    </div>
   );
 };
 
