@@ -8,7 +8,7 @@ export const PromoWrapper = styled.div`
   align-items: center;
   gap: ${({ theme }) => theme.space[2]};
   padding: ${({ theme }) => theme.space[4]};
-  font-size: ${({ theme }) => theme.fontSizes[2]};
+  font-size: ${({ theme }) => theme.fontSizes[1]};
   line-height: 1.2;
 
   p {
@@ -25,33 +25,44 @@ export const PromoPics = styled.div`
   width: 100%;
 `;
 
+export const PromoTitleWrapper = styled.div`
+  width: calc(100% - 100px);
+  float: right;
+  text-align: center;
+  flex: 1;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
+    width: 100%;
+  }
+`;
+
 export const PromoText = styled.div`
   flex-grow: 1;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: row;
   align-items: center;
   max-width: 80vw;
   margin-top: ${({ theme }) => theme.space[2]};
-  p {
-    width: 100%;
-    text-align: center;
-  }
 
   .shield {
-    transform: scale(0.6);
+    position: absolute;
+    top: -15px;
+    left: -55px;
+    transform: scale(0.35);
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-    flex-direction: row;
+  @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
     .shield {
-      transform: scale(0.7);
+      position: relative;
+      top: 5px;
+      transform: scale(0.65);
     }
   }
 `;
 
 export const PromoTitle = styled.span`
   font-family: ${({ theme }) => theme.fonts.heading};
-  font-size: ${({ theme }) => theme.fontSizes[4]};
+  font-size: ${({ theme }) => theme.fontSizes[3]};
   letter-spacing: 1px;
   line-height: 1;
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {

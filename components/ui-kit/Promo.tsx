@@ -2,7 +2,12 @@ import React from "react";
 import { animated, config, useSpring } from "react-spring";
 import { Crest } from "../Navigation/LogoLinks";
 import { Promos } from "./Promo/Promos";
-import { PromoWrapper, PromoText, PromoTitle } from "./Promo/styles-promo";
+import {
+  PromoWrapper,
+  PromoText,
+  PromoTitle,
+  PromoTitleWrapper,
+} from "./Promo/styles-promo";
 
 const defaultDelay = 400;
 
@@ -37,7 +42,7 @@ export const Promo = ({
           <Crest />
         </animated.div>
         <animated.div style={props}>
-          <p>
+          <PromoTitleWrapper>
             {children ? (
               children
             ) : (
@@ -51,13 +56,15 @@ export const Promo = ({
                 ? title
                 : "we are committed to providing the best care for your pet."}
             </animated.span>
-          </p>
+          </PromoTitleWrapper>
 
-          <animated.p style={fadeInPt1}>
-            {description
-              ? description
-              : "Each of our runs provide your dog with spacious, private, indoor and outdoor areas."}
-          </animated.p>
+          <animated.div style={fadeInPt1}>
+            <PromoTitleWrapper>
+              {description
+                ? description
+                : "Each of our runs provide your dog with spacious, private, indoor and outdoor areas."}
+            </PromoTitleWrapper>
+          </animated.div>
         </animated.div>
       </PromoText>
       <Promos delay={defaultDelay * 6} promos={promos} />
