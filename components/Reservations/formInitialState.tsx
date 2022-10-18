@@ -102,7 +102,6 @@ export const INITIAL_USER_STATE = {
     required: true,
     rows: 3,
     grow: true,
-    maxWidth: "calc(51% - 1rem)",
     placeholder: `123 Main St
 Apt 2
 Kalamazoo, MI 49009`,

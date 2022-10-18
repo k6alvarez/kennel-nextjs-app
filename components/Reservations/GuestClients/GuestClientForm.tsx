@@ -111,9 +111,9 @@ export const GuestClientForm = () => {
                   );
 
                   if (fieldsValid) {
-                    const draftRequired = !guestFormState.id && current === 0;
+                    const draftCreated = guestFormState.reservationId;
 
-                    if (draftRequired) {
+                    if (!draftCreated) {
                       guestFormCreateDraft(undefined, {
                         state: guestFormState,
                         setFormError,

@@ -134,10 +134,6 @@ export const guestFormFieldsValid = (
     PET_INITIAL_STATE,
   ];
   const currentSection = Object.entries(sectionInputs[currentFormSection]);
-  console.log(
-    "🚀 ~ file: helpers.tsx ~ line 137 ~ currentSection",
-    currentSection
-  );
 
   return fieldValidator({ fields: currentSection, state, dispatch });
 };

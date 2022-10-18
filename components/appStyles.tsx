@@ -17,7 +17,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0 auto;
 
     @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-      max-width: 40vw;
+      max-width: 50vw;
     }
 
     .ant-collapse {
