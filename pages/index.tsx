@@ -12,17 +12,22 @@ const Blog: React.FC = () => {
           {
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg",
-            size: "24vw",
+            size: "20vw",
           },
           {
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
-            size: "24vw",
+            size: "20vw",
           },
           {
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg",
-            size: "24vw",
+            size: "20vw",
+          },
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005331/gk-app/gk_home_02.jpg",
+            size: "20vw",
           },
         ]}
       />

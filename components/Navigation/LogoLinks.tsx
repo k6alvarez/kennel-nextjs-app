@@ -6,11 +6,13 @@ import { MenuOutlined } from "@ant-design/icons";
 const GlobalStyle = createGlobalStyle`
   ${BadgeStyles}
 `;
-export const ShieldLogo = () => {
+export const LeftNav = ({ toggleDrawer }) => {
   return (
     <div className="leftNav">
       <GlobalStyle />
-      <MenuOutlined className="mobileNav" />
+
+      <MenuOutlined className="mobileNav" onClick={toggleDrawer} />
+
       <LogoName>
         <RouteLink activeClassName="active" href="/">
           <a>Gillette Kennels</a>

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
-import { ShieldLogo } from "./Navigation/LogoLinks";
+import { LeftNav } from "./Navigation/LogoLinks";
+import { Drawer } from "antd";
+import { LogoName } from "./Navigation/NavStyles";
 
 export const StyledNav = styled.nav`
   display: flex;
@@ -97,20 +99,29 @@ const getMainLinks = (isActive) => (
 );
 
 const Header: React.FC = () => {
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
 
   const { data: session, status } = useSession();
 
-  let leftNav = <ShieldLogo />;
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  let leftNav = <LeftNav toggleDrawer={toggleDrawer} />;
 
   let rightNav = null;
 
   if (status === "loading") {
     leftNav = (
       <div>
-        <ShieldLogo />
+        <LeftNav toggleDrawer={toggleDrawer} />
       </div>
     );
     rightNav = (
@@ -147,6 +158,14 @@ const Header: React.FC = () => {
     <StyledNav>
       {leftNav}
       {rightNav}
+      <Drawer
+        title={<LogoName>Gillette Kennels</LogoName>}
+        placement="left"
+        onClose={onClose}
+        open={open}
+      >
+        {rightNav}
+      </Drawer>
     </StyledNav>
   );
 };

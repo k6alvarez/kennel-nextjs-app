@@ -92,4 +92,14 @@ export const GlobalStyle = createGlobalStyle`
   .ant-avatar-string {
     text-transform: uppercase;
   }
+
+  .ant-drawer {
+    z-index: 5001
+  }
+
+  .ant-drawer .rightNav {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+  }
 `;

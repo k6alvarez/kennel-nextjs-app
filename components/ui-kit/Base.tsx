@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Content = styled.article`
-  padding: ${({ theme }) => theme.space[5]};
+  padding: ${({ theme }) => theme.space[4]};
   max-width: 100%;
   margin: 0 auto;
   position: relative;
@@ -9,7 +9,7 @@ export const Content = styled.article`
     cardWrapper ? theme.colors.secondaryDark : "inherit"};
 
   @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
-    padding: ${({ theme }) => theme.space[4]};
+    padding: ${({ theme }) => theme.space[6]} ${({ theme }) => theme.space[4]};
     width: ${({ maxWidth }) => (maxWidth ? maxWidth : "80vw")};
     max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "1200px")};
   }
