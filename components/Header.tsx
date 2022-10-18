@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
-import { ShieldLogo } from "./Navigation/LogoLinks";
+import { LeftNav } from "./Navigation/LogoLinks";
+import { Drawer } from "antd";
+import { LogoName } from "./Navigation/NavStyles";
 
 export const StyledNav = styled.nav`
   display: flex;
@@ -28,6 +30,32 @@ export const StyledNav = styled.nav`
     border: none;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   }
+
+  .leftNav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    color: ${({ theme }) => theme.colors.textPrimary};
+
+    .mobileNav {
+      @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+        display: none;
+      }
+    }
+
+    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+      width: auto;
+    }
+  }
+
+  .rightNav {
+    display: none;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+      display: flex;
+    }
+  }
 `;
 
 export const NavWrapper = styled.div`
@@ -46,10 +74,7 @@ export const NavWrapper = styled.div`
 
   a,
   button {
-    font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/1.8)`};
-    @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-      font-size: ${({ theme }) => theme.fontSizes[1]};
-    }
+    font-size: ${({ theme }) => theme.fontSizes[1]};
   }
 `;
 
@@ -74,24 +99,33 @@ const getMainLinks = (isActive) => (
 );
 
 const Header: React.FC = () => {
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
 
   const { data: session, status } = useSession();
 
-  let leftNav = <ShieldLogo />;
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  let leftNav = <LeftNav toggleDrawer={toggleDrawer} />;
 
   let rightNav = null;
 
   if (status === "loading") {
     leftNav = (
       <div>
-        <ShieldLogo />
+        <LeftNav toggleDrawer={toggleDrawer} />
       </div>
     );
     rightNav = (
-      <div>
+      <div className="rightNav">
         <p>Validating session ...</p>
       </div>
     );
@@ -99,7 +133,7 @@ const Header: React.FC = () => {
 
   if (!session) {
     rightNav = (
-      <NavWrapper>
+      <NavWrapper className="rightNav">
         {getMainLinks(isActive)}
         <Link href="/api/auth/signin">
           <a data-active={isActive("/signup")}>Log In</a>
@@ -110,7 +144,7 @@ const Header: React.FC = () => {
 
   if (session) {
     rightNav = (
-      <NavWrapper>
+      <NavWrapper className="rightNav">
         {getMainLinks(isActive)}
         <Link href="/profile">
           <a data-active={isActive("/profile")}>My Profile</a>
@@ -124,6 +158,14 @@ const Header: React.FC = () => {
     <StyledNav>
       {leftNav}
       {rightNav}
+      <Drawer
+        title={<LogoName>Gillette Kennels</LogoName>}
+        placement="left"
+        onClose={onClose}
+        open={open}
+      >
+        {rightNav}
+      </Drawer>
     </StyledNav>
   );
 };

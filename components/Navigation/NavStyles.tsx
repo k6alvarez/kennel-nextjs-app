@@ -317,6 +317,9 @@ export const LogoName = styled.h2`
   font-size: ${({ theme }) => theme.fontSizes[2]};
   font-weight: bold;
 
+  flex: 1;
+  text-align: center;
+
   @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
     font-size: ${({ theme }) => theme.fontSizes[3]};
   }

@@ -31,6 +31,8 @@ export const StyledMeta = styled(Meta)`
 
 export const StyledCard = styled(Card)`
   background-color: ${({ theme }) => theme.colors.primary};
+  min-width: 30%;
+  overflow: hidden;
 `;
 
 export const Wrapper = styled.div`
@@ -45,6 +47,11 @@ export const StyledGridItems = styled(GridItems)`
   max-width: 1200px;
   margin: 0 auto;
   justify-content: center;
+  flex-direction: column;
+
+  @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
+    flex-direction: row;
+  }
 `;
 
 export const Callouts = ({ callouts = [] }) => {

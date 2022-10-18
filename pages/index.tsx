@@ -12,17 +12,22 @@ const Blog: React.FC = () => {
           {
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg",
-            size: "24vw",
+            size: "20vw",
           },
           {
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
-            size: "24vw",
+            size: "20vw",
           },
           {
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg",
-            size: "24vw",
+            size: "20vw",
+          },
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005331/gk-app/gk_home_02.jpg",
+            size: "20vw",
           },
         ]}
       />
@@ -54,21 +59,21 @@ const Blog: React.FC = () => {
             description: "We have a cattery for your cat's stay.",
             link: "/boarding",
             image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg",
-          },
-          {
-            title: "Before you board",
-            link: "/boarding",
-            description: "Learn more about our boarding services.",
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg",
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006782/gk-app/catsgk.jpg",
           },
           {
             title: "Vaccinations",
             description: "Read about our Vaccinations requirements.",
             link: "/boarding",
             image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1547342058/samples/animals/three-dogs.jpg",
+          },
+          {
+            title: "Before you board",
+            link: "/boarding",
+            description: "Learn more about our boarding services.",
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006544/gk-app/gktwopups.jpg",
           },
         ]}
       />
