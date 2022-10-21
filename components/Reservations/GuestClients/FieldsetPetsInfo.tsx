@@ -65,6 +65,26 @@ const petBoardingOnly = (pet) => {
   return petInfo;
 };
 
+const calculateDeposit = (pets) => {
+  let deposit = 0;
+  pets.map((pet) => {
+    if (pet.preferredRunSize === "Small") {
+      return (deposit += 25);
+    } else if (pet.preferredRunSize === "Large") {
+      return (deposit += 25);
+    } else if (pet.preferredRunSize === "Extra Large") {
+      return (deposit += 25);
+    }
+  }, 0);
+  return "$" + deposit.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+};
+
+async function deleteGuestPet(id: string): Promise<void> {
+  await fetch(`/api/guest-pet/${id}`, {
+    method: "DELETE",
+  });
+}
+
 export const FieldsetPetsInfo = ({ pets, setPets }) => {
   const { guestFormState, guestFormDispatch } = useGuestFormContext();
   const {
@@ -74,17 +94,6 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
     handleChange,
     petFormError,
   } = usePetFormContext();
-
-  const tabList = [
-    {
-      key: "tab1",
-      tab: "Pet Info",
-    },
-    {
-      key: "tab2",
-      tab: "Pet Boarding",
-    },
-  ];
 
   const [activeTabKey1, setActiveTabKey1] = useState<string>("tab1");
 
@@ -100,32 +109,17 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
           Pets boarding on{" "}
           {DateTime.fromISO(guestFormState.arrivalDate.value).toFormat("DDDD")}
         </h2>
-        {pets.length === 0 && (
-          <p>
-            You have not added any pets. Please add a pet to continue with your
-            reservation.
-          </p>
-        )}
+        <p>Deposit amount due: {calculateDeposit(pets)}</p>
         <Fields>
           {pets?.map((pet, i) => {
-            const contentList: Record<string, React.ReactNode> = {
-              tab1: (
-                <Card.Meta
-                  title={pet.name}
-                  description={<PetInfo pet={petInfoOnly(pet)} />}
-                />
-              ),
-              tab2: (
-                <Card.Meta
-                  title={pet.name}
-                  description={<PetInfo pet={petBoardingOnly(pet)} />}
-                />
-              ),
-            };
             return (
               <Card
                 key={pet + "-" + i}
-                style={{ width: 300 }}
+                style={{
+                  width: 300,
+                  margin: "0 10px 10px 0",
+                  boxShadow: "0 0 10px 0 rgba(0,0,0,0.1)",
+                }}
                 title={pet.name}
                 cover={
                   isValidHttpUrl(pet.largeImage) && (
@@ -134,66 +128,77 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
                 }
                 extra={
                   <SmallButton
-                    onClick={() => {
-                      const newPets = pets.filter((p, index) => index !== i);
-                      setPets(newPets);
+                    onClick={(e) => {
+                      e.preventDefault();
+                      deleteGuestPet(pet.id);
                     }}
                   >
                     <DeleteOutlined /> Remove Pet
                   </SmallButton>
                 }
-                tabList={tabList}
                 activeTabKey={activeTabKey1}
                 onTabChange={(key) => {
                   onTab1Change(key);
                 }}
               >
-                {contentList[activeTabKey1]}
+                <PetInfo pet={petInfoOnly(pet)} />
+                <hr />
+                <PetInfo pet={petBoardingOnly(pet)} />
               </Card>
             );
           })}
         </Fields>
-        <h4>Add a pet to your reservation:</h4>
-        <Fields>
-          {renderFormFields({
-            initialState: PET_INITIAL_STATE,
-            state: petFormState,
-            handleChange,
-          })}
-          <Field grow>
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                const petFieldsValid = fieldValidator({
-                  fields: Object.entries(PET_INITIAL_STATE),
-                  state: petFormState,
-                  dispatch: petFormDispatch,
-                });
 
-                if (petFieldsValid) {
-                  guestPetFormSubmit(e, {
-                    state: petFormState,
-                    setPetFormError,
-                    dispatch: petFormDispatch,
-                    formSuccessCallback: (data) => {
-                      guestFormDispatch({
-                        type: "toggleGuestPet",
-                        payload: {
-                          pet: data,
+        {pets.length < 5 ? (
+          <>
+            <h4>Add a pet to your reservation:</h4>
+            <Fields>
+              {renderFormFields({
+                initialState: PET_INITIAL_STATE,
+                state: petFormState,
+                handleChange,
+              })}
+              <Field grow>
+                <Button
+                  disabled={pets.length >= 5}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const petFieldsValid = fieldValidator({
+                      fields: Object.entries(PET_INITIAL_STATE),
+                      state: petFormState,
+                      dispatch: petFormDispatch,
+                    });
+
+                    if (petFieldsValid) {
+                      guestPetFormSubmit(e, {
+                        state: petFormState,
+                        setPetFormError,
+                        dispatch: petFormDispatch,
+                        formSuccessCallback: (data) => {
+                          guestFormDispatch({
+                            type: "toggleGuestPet",
+                            payload: {
+                              pet: data,
+                            },
+                          });
+                          setPets([...pets, data]);
                         },
+                        reservationId: guestFormState.reservationId,
                       });
-                      setPets([...pets, data]);
-                    },
-                    reservationId: guestFormState.reservationId,
-                  });
-                }
-              }}
-              primary
-            >
-              Add Pet
-            </Button>
-          </Field>
-        </Fields>
+                    }
+                  }}
+                  primary
+                >
+                  Add Pet
+                </Button>
+              </Field>
+            </Fields>
+          </>
+        ) : (
+          <p>
+            You have reached the maximum number of pets allowed for boarding.
+          </p>
+        )}
       </Fieldset>
     </fieldset>
   );

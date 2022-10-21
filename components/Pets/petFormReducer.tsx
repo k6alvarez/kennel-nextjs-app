@@ -98,7 +98,7 @@ export const PET_INITIAL_STATE = {
     value: "Small",
     error: null,
     type: "select",
-    options: ["Small", "Large", "Extra Large"],
+    options: ["Small", "Large", "Extra Large", "Shared"],
     label: "Preferred Run Size",
     required: true,
   },
