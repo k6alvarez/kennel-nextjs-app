@@ -26,6 +26,10 @@ export const base = {
     "2.4rem",
     "3rem",
   ],
+  shadows: {
+    default: "0px 2px 4px rgba(0, 0, 0, 0.5)",
+    hover: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+  },
 };
 export const light = {
   primary: "#8c0b3e",

@@ -80,10 +80,11 @@ export const GridItem = styled.div`
   width: 100%;
   height: 30vh;
   background-image: url(${({ img }) => (img ? img : "")});
-  background-color: ${({ theme }) => theme.colors.nav};
+  background-color: ${({ theme, bg }) => theme.colors[bg] || theme.colors.nav};
   background-size: cover;
   background-position: top center;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: ${({ theme }) => theme.shadows.default};
+  color: ${({ theme, color }) => theme.colors[color] || theme.colors.text};
 
   &:first-child {
     margin-left: 0;
@@ -94,7 +95,7 @@ export const GridItem = styled.div`
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-    min-width: ${({ size }) => (size ? size : "28vw")};
+    width: ${({ size }) => (size ? size : "28vw")};
     height: ${({ size }) => (size ? size : "20vw")};
   }
 
@@ -107,6 +108,10 @@ export const GridItem = styled.div`
       transition: all 0.1s ease-in-out;
     }
   } */
+`;
+
+export const GridItemTextOnly = styled(GridItem)`
+  height: auto;
 `;
 
 export const GridItemTitle = styled.p`

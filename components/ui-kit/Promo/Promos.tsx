@@ -1,9 +1,21 @@
 import React from "react";
 import { useSpring, config, animated } from "react-spring";
-import { GridItems, GridItem } from "../Base";
-import { PromoPics } from "./styles-promo";
+import { GridItems, GridItem, GridItemTextOnly } from "../Base";
+import { PromoPics, PromoTextWrapper, ImageZoomWrapper } from "./styles-promo";
+import Link from "next/link";
 
-export const Promos = ({ delay = 0, promos = [] }) => {
+interface PromosProps {
+  promos: {
+    size: string;
+    image: string;
+    title?: string;
+    description?: string;
+    link?: string;
+  }[];
+  delay?: number;
+}
+
+export const Promos = ({ delay = 0, promos = [] }: PromosProps) => {
   return (
     <PromoPics>
       <GridItems>
@@ -17,8 +29,34 @@ export const Promos = ({ delay = 0, promos = [] }) => {
           const urlArray = promo.image.split("/");
           const key = urlArray[urlArray.length - 1].split(".")[0] + "-" + i;
           return (
-            <animated.div key={key} style={props}>
-              <GridItem size={promo.size} img={promo.image}></GridItem>
+            <animated.div
+              key={key}
+              style={{
+                ...props,
+                margin: "1rem 0 1rem 0",
+              }}
+            >
+              {promo.link ? (
+                <PromoTextWrapper hasLink={!!promo.link}>
+                  <Link href={promo.link}>
+                    <a>
+                      <ImageZoomWrapper>
+                        <GridItem size={promo.size} img={promo.image} />
+                      </ImageZoomWrapper>
+                      {promo.title ? <h2>{promo.title}</h2> : null}
+                      {promo.description ? (
+                        <span>{promo.description}</span>
+                      ) : null}
+                    </a>
+                  </Link>
+                </PromoTextWrapper>
+              ) : (
+                <>
+                  <GridItem size={promo.size} img={promo.image} />
+                  {promo.title ? <h2>{promo.title}</h2> : null}
+                  {promo.description ? <span>{promo.description}</span> : null}
+                </>
+              )}
             </animated.div>
           );
         })}
