@@ -1,6 +1,6 @@
 import React from "react";
 import { useSpring, config, animated } from "react-spring";
-import { GridItems, GridItem, GridItemTextOnly } from "../Base";
+import { GridItems, GridItem } from "../Base";
 import { PromoPics, PromoTextWrapper, ImageZoomWrapper } from "./styles-promo";
 import Link from "next/link";
 
@@ -18,7 +18,7 @@ interface PromosProps {
 export const Promos = ({ delay = 0, promos = [] }: PromosProps) => {
   return (
     <PromoPics>
-      <GridItems>
+      <GridItems breakMobile={!!promos[0].link}>
         {promos.map((promo, i) => {
           const props = useSpring({
             to: { opacity: 1, transform: "translate3d(0,0,0)" },

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { GridItem } from "../Base";
 
 export const PromoWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.primaryDark};
@@ -61,6 +62,12 @@ export const PromoTextWrapper = styled.div`
       transform: scale(1);
       transition: all 0.5s ease-in-out;
       transform-origin: center;
+      width: ${({ hasLink }) => (hasLink ? "100%" : "unset")};
+
+      @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
+        height: 25vh;
+        background-position: center;
+      }
     }
 
     > div {

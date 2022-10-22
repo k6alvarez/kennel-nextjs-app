@@ -1,9 +1,14 @@
 import React from "react";
+import styled from "styled-components";
 import { Content } from "../ui-kit/Base";
+
+export const TabContent = styled(Content)`
+  padding-top: 0;
+`;
 
 export const BoardingHome = () => {
   return (
-    <Content>
+    <TabContent>
       <h1>Boarding</h1>
       <p>
         We constructed our modern boarding facility in 1998 to fill a need made
@@ -67,6 +72,6 @@ export const BoardingHome = () => {
         respect. We are proud of the excellent reputation that our kennel has
         gained and invite you to call for a tour today.
       </p>
-    </Content>
+    </TabContent>
   );
 };

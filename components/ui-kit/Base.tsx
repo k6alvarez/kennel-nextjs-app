@@ -70,6 +70,12 @@ export const GridItems = styled.div`
   overflow: hidden;
 
   @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
+    flex-direction: ${({ breakMobile }) => (breakMobile ? "column" : "row")};
+    padding: ${({ breakMobile, theme }) =>
+      breakMobile ? theme.space[4] : "0"};
+  }
+
+  @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
     flex-direction: row;
   }
 `;
