@@ -1,9 +1,10 @@
 import Link from "next/link";
 import React from "react";
+import { TabContent } from "../Boarding/BoardingHome";
 
 export const AgilityLessons = () => {
   return (
-    <>
+    <TabContent>
       <p>
         Agility Training Fun for owners and dogs. Your dog will learn how to
         negotiate jumps, tunnels, and obstacles. Unlimited practice time during
@@ -20,6 +21,6 @@ export const AgilityLessons = () => {
         emailSubject={"Gillette Kennels Agility Training Contact"}
         formHint="Learn more about Agility Training using the form below."
       /> */}
-    </>
+    </TabContent>
   );
 };

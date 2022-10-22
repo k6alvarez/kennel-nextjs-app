@@ -8,7 +8,7 @@ import { Promo } from "../components/ui-kit/Promo";
 import { Content } from "../components/ui-kit/Base";
 import { PromoTitle } from "../components/ui-kit/Promo/styles-promo";
 import { Tabs } from "antd";
-import { headerHt } from "./boarding";
+import { headerHt, TabsListWrapper } from "./boarding";
 import { TrainingHome } from "../components/Training/TrainingHome";
 import { GroupLessons } from "../components/Training/GroupLessons";
 import { PrivateLessons } from "../components/Training/PrivateLessons";
@@ -73,7 +73,7 @@ const Training: React.FC<Props> = (props) => {
           <PromoTitle>Kirk L. Gillette</PromoTitle> continues to lead,
         </span>{" "}
       </Promo>
-      <Content>
+      <TabsListWrapper>
         <Tabs
           defaultActiveKey="1"
           tabPosition="top"
@@ -83,7 +83,7 @@ const Training: React.FC<Props> = (props) => {
           }}
           items={items}
         />
-      </Content>
+      </TabsListWrapper>
     </Layout>
   );
 };

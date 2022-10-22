@@ -36,7 +36,7 @@ const Policies: React.FC<Props> = (props) => {
     <Layout>
       <Content>
         <h1>Policies</h1>
-        <BlockQuote>
+        <BlockQuote large>
           <p>
             We strive to establish a friendly professional relationship with all
             of our clients. This relationship can only be built through

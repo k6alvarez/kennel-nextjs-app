@@ -42,7 +42,7 @@ type Props = {
 
 export const headerHt = "47px";
 
-const TabsListWrapper = styled.div`
+export const TabsListWrapper = styled.div`
   position: relative;
 
   .ant-tabs-nav {
