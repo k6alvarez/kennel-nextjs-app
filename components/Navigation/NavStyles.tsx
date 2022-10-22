@@ -319,12 +319,17 @@ export const LogoName = styled.h2`
 
   flex: 1;
   text-align: center;
+  padding-right: 20px;
 
   @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
     font-size: ${({ theme }) => theme.fontSizes[3]};
   }
   a {
     text-decoration: none;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+    padding-right: 0;
   }
 `;
 export const LogoDesc = styled.div`
