@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { GetStaticProps } from "next";
 import prisma from "../lib/prisma";
+import { useRouter } from "next/router";
 import { Tabs } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
@@ -41,22 +42,32 @@ type Props = {
 export const headerHt = "47px";
 
 const Boarding: React.FC<Props> = () => {
+  const router = useRouter();
+  const { tab } = router.query;
   const { breakpoints } = useContext(ThemePreferenceContext);
   const size: Size = useWindowSize();
   const mobileScreen = size.width < parseInt(breakpoints[0]);
   const items = [
-    { label: "Boarding", key: "item-1", children: <BoardingHome /> },
-    { label: "We Board Cats", key: "item-2", children: <BoardingCats /> },
-    { label: "Before Boarding", key: "item-3", children: <BeforeBoarding /> },
-    { label: "Checking In", key: "item-4", children: <BoardingCheckin /> },
+    { label: "Boarding", key: "boarding", children: <BoardingHome /> },
+    {
+      label: "We Board Cats",
+      key: "boarding-cats",
+      children: <BoardingCats />,
+    },
+    {
+      label: "Before Boarding",
+      key: "before-boarding",
+      children: <BeforeBoarding />,
+    },
+    { label: "Checking In", key: "checking-in", children: <BoardingCheckin /> },
     {
       label: "Vaccinations",
-      key: "item-5",
+      key: "vaccinations",
       children: <BoardingVaccinations />,
     },
     {
       label: "Medical Issues",
-      key: "item-6",
+      key: "medical-issues",
       children: <MedicalIssues />,
     },
   ];
@@ -93,7 +104,7 @@ const Boarding: React.FC<Props> = () => {
       </Promo>
       <Content>
         <Tabs
-          defaultActiveKey="1"
+          defaultActiveKey={typeof tab === "string" ? tab : "boarding"}
           tabPosition={mobileScreen ? "top" : "left"}
           size={mobileScreen ? "small" : "large"}
           moreIcon={<DownOutlined />}

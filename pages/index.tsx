@@ -58,7 +58,7 @@ const MyApp: React.FC = () => {
           {
             title: "We board cats!",
             description: "We have a cattery for your cat's stay.",
-            link: "/boarding",
+            link: "/boarding?tab=boarding-cats",
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419343/gk-app/Kitty_window.jpg",
             size: "28vw",
@@ -66,14 +66,14 @@ const MyApp: React.FC = () => {
           {
             title: "Vaccinations",
             description: "Read about our Vaccinations requirements.",
-            link: "/boarding",
+            link: "/boarding?tab=vaccinations",
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419325/gk-app/Addie3.jpg",
             size: "28vw",
           },
           {
             title: "Before you board",
-            link: "/boarding",
+            link: "/boarding?tab=before-boarding",
             description: "Learn more about our boarding services.",
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",

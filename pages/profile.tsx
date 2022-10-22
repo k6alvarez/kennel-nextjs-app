@@ -179,7 +179,7 @@ const Profile: React.FC<Props> = ({ user }) => {
     <Layout>
       <Content>
         <Tabs
-          defaultActiveKey={typeof tab === "string" ? tab : "item-1"}
+          defaultActiveKey={typeof tab === "string" ? tab : "profile"}
           tabPosition={mobileScreen ? "top" : "left"}
           size={mobileScreen ? "small" : "large"}
           moreIcon={<DownOutlined />}
