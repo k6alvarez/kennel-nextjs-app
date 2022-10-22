@@ -102,4 +102,9 @@ export const GlobalStyle = createGlobalStyle`
     flex-direction: column;
     align-items: baseline;
   }
+
+  .ant-card,
+  .ant-card-head-title {
+    font-size: unset;
+  }
 `;

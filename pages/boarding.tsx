@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { GetStaticProps } from "next";
 import prisma from "../lib/prisma";
+import styled from "styled-components";
 import { useRouter } from "next/router";
 import { Tabs } from "antd";
 import { DownOutlined } from "@ant-design/icons";
@@ -10,7 +11,7 @@ import { PostProps } from "../components/Post";
 import { Promo } from "../components/ui-kit/Promo";
 import { Content } from "../components/ui-kit/Base";
 import { PromoTitle } from "../components/ui-kit/Promo/styles-promo";
-import { BoardingHome } from "../components/Boarding/BoardingHome";
+import { BoardingHome, TabContent } from "../components/Boarding/BoardingHome";
 import BoardingCats from "../components/Boarding/BoardingCats";
 import { BeforeBoarding } from "../components/Boarding/BeforeBoarding";
 import { BoardingCheckin } from "../components/Boarding/BoardingCheckin";
@@ -40,6 +41,24 @@ type Props = {
 };
 
 export const headerHt = "47px";
+
+const TabsListWrapper = styled.div`
+  position: relative;
+
+  .ant-tabs-nav {
+    position: sticky;
+
+    top: 46px;
+    background: ${({ theme }) => theme.colors.white};
+    width: 100%;
+    z-index: 1;
+    box-shadow: ${({ theme }) => theme.shadows.light};
+  }
+
+  .ant-tabs-nav-wrap {
+    justify-content: space-around;
+  }
+`;
 
 const Boarding: React.FC<Props> = () => {
   const router = useRouter();
@@ -102,10 +121,10 @@ const Boarding: React.FC<Props> = () => {
           Inside runs include <PromoTitle>Radient Heat</PromoTitle>,
         </span>{" "}
       </Promo>
-      <Content>
+      <TabsListWrapper>
         <Tabs
           defaultActiveKey={typeof tab === "string" ? tab : "boarding"}
-          tabPosition={mobileScreen ? "top" : "left"}
+          tabPosition={"top"}
           size={mobileScreen ? "small" : "large"}
           moreIcon={<DownOutlined />}
           style={{
@@ -113,7 +132,7 @@ const Boarding: React.FC<Props> = () => {
           }}
           items={items}
         />
-      </Content>
+      </TabsListWrapper>
     </Layout>
   );
 };

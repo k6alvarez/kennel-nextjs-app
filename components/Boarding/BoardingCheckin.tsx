@@ -1,42 +1,49 @@
+import { Card } from "antd";
 import Link from "next/link";
 import React from "react";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
+import { FlexCards, TabContent } from "./BoardingHome";
 
 export const BoardingCheckin = () => {
   return (
-    <>
-      {" "}
-      <BlockQuote>
+    <TabContent>
+      <h1>Checking-In</h1>
+      <BlockQuote large>
         When arriving to check-in please park in the large asphalt parking lot
         located at 9172 East K Ave. Please enter the kennel reception room
-        through the OFFICE ENTRANCE and follow the Check-In Procedure outlined
+        through the office entrance and follow the Check-In Procedure outlined
         below.
       </BlockQuote>
-      <h2>Check-In Procedure</h2>
-      <ol>
-        <li>Please leave your pet in your vehicle while you check-in.</li>
-        <li>
-          Bring in your pet’s bedding, food, and/or toys.{" "}
-          <b>(Limit: 3 items per pet, label all items)</b>
-        </li>
-        <li>Complete paperwork for check-in.</li>
-        <li>
-          Leash-walk your dog to the dog-walk area to eliminate (area located on
-          right side of building next to fire hydrant). Please DO NOT allow your
-          dog to urinate on our plants or building.
-        </li>
-        <li>
-          An employee will meet you at the gate by the dog walk area and add the{" "}
-          <Link href="/policies?name=Pet Detect">
-            <a>Pet Detect</a>
-          </Link>{" "}
-          tag onto your pet.
-        </li>
-        <li>
-          Your dog must be leashed at all times. If you forget your leash, we
-          will loan one to you.
-        </li>
-      </ol>
+      <FlexCards>
+        <Card title={<h2>Check-In Procedure</h2>}>
+          <ul>
+            <li>Please leave your pet in your vehicle while you check-in.</li>
+            <li>
+              Bring in your pet’s bedding, food, and/or toys.{" "}
+              <b>(Limit: 3 items per pet, label all items)</b>
+            </li>
+            <li>Complete paperwork for check-in.</li>
+            <li>
+              Leash-walk your dog to the dog-walk area to eliminate (area
+              located on right side of building next to fire hydrant). Please DO
+              NOT allow your dog to urinate on our plants or building.
+            </li>
+            <li>
+              An employee will meet you at the gate by the dog walk area and add
+              the{" "}
+              <Link href="/policies?name=Pet Detect">
+                <a>Pet Detect</a>
+              </Link>{" "}
+              tag onto your pet.
+            </li>
+            <li>
+              Your dog must be leashed at all times. If you forget your leash,
+              we will loan one to you.
+            </li>
+          </ul>
+        </Card>
+      </FlexCards>
+
       <p>
         Because our kennel is very open, clients that arrive to drop-off or
         pick-up boarding dogs will frequently see staff members engaging in
@@ -85,6 +92,6 @@ export const BoardingCheckin = () => {
         with our clients. This relationship must be built on mutual respect and
         consideration.
       </p>
-    </>
+    </TabContent>
   );
 };

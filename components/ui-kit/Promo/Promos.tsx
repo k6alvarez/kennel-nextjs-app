@@ -13,12 +13,13 @@ interface PromosProps {
     link?: string;
   }[];
   delay?: number;
+  breakMoble?: boolean;
 }
 
-export const Promos = ({ delay = 0, promos = [] }: PromosProps) => {
+export const Promos = ({ breakMoble, delay = 0, promos = [] }: PromosProps) => {
   return (
     <PromoPics>
-      <GridItems breakMobile={!!promos[0].link}>
+      <GridItems breakMobile={breakMoble || !!promos[0].link}>
         {promos.map((promo, i) => {
           const props = useSpring({
             to: { opacity: 1, transform: "translate3d(0,0,0)" },

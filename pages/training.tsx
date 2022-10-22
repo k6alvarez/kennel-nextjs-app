@@ -76,7 +76,7 @@ const Training: React.FC<Props> = (props) => {
       <Content>
         <Tabs
           defaultActiveKey="1"
-          tabPosition="left"
+          tabPosition="top"
           size="large"
           style={{
             fontSize: "inherit",

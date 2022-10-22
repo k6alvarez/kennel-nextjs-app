@@ -104,16 +104,6 @@ export const GridItem = styled.div`
     width: ${({ size }) => (size ? size : "28vw")};
     height: ${({ size }) => (size ? size : "20vw")};
   }
-
-  /* &:hover {
-    cursor: pointer;
-
-    p {
-      background-color: ${({ theme }) => theme.colors.primary};
-      color: ${({ theme }) => theme.colors.textPrimary};
-      transition: all 0.1s ease-in-out;
-    }
-  } */
 `;
 
 export const GridItemTextOnly = styled(GridItem)`

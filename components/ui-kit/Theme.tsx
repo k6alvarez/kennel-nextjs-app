@@ -28,7 +28,7 @@ export const base = {
   ],
   shadows: {
     default: "0px 2px 4px rgba(0, 0, 0, 0.5)",
-    hover: "0px 4px 8px rgba(0, 0, 0, 0.5)",
+    light: "0px 2px 4px rgba(0, 0, 0, 0.2)",
   },
 };
 export const light = {
@@ -36,6 +36,7 @@ export const light = {
   primaryDark: "#740833",
   secondaryLight: "#fff1e6",
   secondary: "#d9e5e8",
+  white: "#fff",
   secondaryDark: "#ececec",
   nav: "#f8f8f8",
   border: "#212121",

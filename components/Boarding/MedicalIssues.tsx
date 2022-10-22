@@ -1,6 +1,7 @@
 import { Collapse } from "antd";
 import React from "react";
 import styled from "styled-components";
+import { TabContent } from "./BoardingHome";
 
 const { Panel } = Collapse;
 
@@ -15,7 +16,9 @@ export const Accordion = styled.div`
 
 export const MedicalIssues = () => {
   return (
-    <>
+    <TabContent>
+      <h1>Medical Issues</h1>
+      <p>Select a topic to learn about each of our medical policies.</p>
       <Collapse defaultActiveKey={["1"]}>
         <Panel key={1} header="Administering Medications">
           <p>
@@ -201,6 +204,6 @@ export const MedicalIssues = () => {
           </p>
         </Panel>
       </Collapse>
-    </>
+    </TabContent>
   );
 };

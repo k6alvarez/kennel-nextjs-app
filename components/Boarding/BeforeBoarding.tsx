@@ -1,25 +1,31 @@
 import Link from "next/link";
 import React from "react";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
+import { TabContent } from "./BoardingHome";
 
 export const BeforeBoarding = () => {
   return (
-    <div>
-      <BlockQuote>
+    <TabContent>
+      <h1>Before Boarding</h1>
+      <p>
+        Our experience has shown us that dogs that frequently visit our boarding
+        kennel from puppy hood absolutely love coming here. It is like their
+        home away from home. Many older dogs (five years or older) that have
+        never before been boarded have a hard time adjusting to the kennel
+        atmosphere.
+      </p>
+      <BlockQuote large>
         It is extremely important to socialize your dog to a boarding kennel at
         a young age.
       </BlockQuote>
       <p>
-        Our experience has shown us that dogs that frequently visit our boarding
-        kennel from puppy hood ABSOLUTELY LOVE coming here. It is like their
-        home away from home. Many older dogs (five years or older) that have
-        never before been boarded have a hard time adjusting to the kennel
-        atmosphere. We suggest that individuals who have older dogs that have
-        not been socialized to a kennel begin with a very short stay (a day or
-        two) to let them get used to the kennel environment. We also suggest
-        that individuals who have geriatric dogs (10 years or older) that have
-        never been boarded before consider using an in home pet sitting service.
+        We suggest that individuals who have older dogs that have not been
+        socialized to a kennel begin with a very short stay (a day or two) to
+        let them get used to the kennel environment. We also suggest that
+        individuals who have geriatric dogs (10 years or older) that have never
+        been boarded before consider using an in home pet sitting service.
       </p>
+
       <p>
         We encourage you to take a tour of our facility before you board with
         us. We prefer to provide tours on Sundays during our regular Business
@@ -63,6 +69,6 @@ export const BeforeBoarding = () => {
         you borrow a leash from us. Please read our{" "}
         <a>procedures for checking in</a> prior to your arrival.
       </p>
-    </div>
+    </TabContent>
   );
 };

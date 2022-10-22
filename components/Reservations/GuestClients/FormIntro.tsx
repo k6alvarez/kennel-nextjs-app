@@ -3,7 +3,8 @@ import React from "react";
 import styled from "styled-components";
 
 export const BlockQuote = styled.blockquote`
-  font-size: ${(props) => props.theme.fontSizes[0]};
+  font-size: ${({ theme, large }) =>
+    large ? theme.fontSizes[1] : theme.fontSizes[0]};
   margin-left: 1rem;
   margin-top: ${(props) => props.theme.space[4]};
   margin-bottom: ${(props) => props.theme.space[4]};
