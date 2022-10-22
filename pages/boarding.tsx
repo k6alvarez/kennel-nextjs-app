@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import { GetStaticProps } from "next";
 import prisma from "../lib/prisma";
+import styled from "styled-components";
+import { useRouter } from "next/router";
 import { Tabs } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
 import Layout from "../components/Layout";
 import { PostProps } from "../components/Post";
 import { Promo } from "../components/ui-kit/Promo";
-import { Content } from "../components/ui-kit/Base";
 import { PromoTitle } from "../components/ui-kit/Promo/styles-promo";
 import { BoardingHome } from "../components/Boarding/BoardingHome";
 import BoardingCats from "../components/Boarding/BoardingCats";
@@ -17,6 +18,7 @@ import { BoardingVaccinations } from "../components/Boarding/BoardingVaccination
 import { MedicalIssues } from "../components/Boarding/MedicalIssues";
 import { Size, useWindowSize } from "../components/ui-kit/hooks/useWindowSize";
 import { ThemePreferenceContext } from "./_app";
+import { BoardingServices } from "../components/Boarding/BoardingServices";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
@@ -40,24 +42,57 @@ type Props = {
 
 export const headerHt = "47px";
 
+export const TabsListWrapper = styled.div`
+  position: relative;
+
+  .ant-tabs-nav {
+    position: sticky;
+
+    top: 46px;
+    background: ${({ theme }) => theme.colors.white};
+    width: 100%;
+    z-index: 1;
+    box-shadow: ${({ theme }) => theme.shadows.light};
+  }
+
+  .ant-tabs-nav-wrap {
+    justify-content: space-around;
+  }
+`;
+
 const Boarding: React.FC<Props> = () => {
+  const router = useRouter();
+  const { tab } = router.query;
   const { breakpoints } = useContext(ThemePreferenceContext);
   const size: Size = useWindowSize();
   const mobileScreen = size.width < parseInt(breakpoints[0]);
   const items = [
-    { label: "Boarding", key: "item-1", children: <BoardingHome /> },
-    { label: "We Board Cats", key: "item-2", children: <BoardingCats /> },
-    { label: "Before Boarding", key: "item-3", children: <BeforeBoarding /> },
-    { label: "Checking In", key: "item-4", children: <BoardingCheckin /> },
+    { label: "Boarding", key: "boarding", children: <BoardingHome /> },
+    {
+      label: "We Board Cats",
+      key: "boarding-cats",
+      children: <BoardingCats />,
+    },
+    {
+      label: "Before Boarding",
+      key: "before-boarding",
+      children: <BeforeBoarding />,
+    },
+    { label: "Checking In", key: "checking-in", children: <BoardingCheckin /> },
     {
       label: "Vaccinations",
-      key: "item-5",
+      key: "vaccinations",
       children: <BoardingVaccinations />,
     },
     {
       label: "Medical Issues",
-      key: "item-6",
+      key: "medical-issues",
       children: <MedicalIssues />,
+    },
+    {
+      label: "Special Services",
+      key: "special-services",
+      children: <BoardingServices />,
     },
   ];
 
@@ -91,18 +126,23 @@ const Boarding: React.FC<Props> = () => {
           Inside runs include <PromoTitle>Radient Heat</PromoTitle>,
         </span>{" "}
       </Promo>
-      <Content>
+      <TabsListWrapper>
         <Tabs
-          defaultActiveKey="1"
-          tabPosition={mobileScreen ? "top" : "left"}
+          defaultActiveKey={typeof tab === "string" ? tab : "boarding"}
+          tabPosition={"top"}
           size={mobileScreen ? "small" : "large"}
           moreIcon={<DownOutlined />}
           style={{
             fontSize: "inherit",
           }}
           items={items}
+          onTabClick={(key) => {
+            router.replace(`/boarding?tab=${key}`, undefined, {
+              shallow: true,
+            });
+          }}
         />
-      </Content>
+      </TabsListWrapper>
     </Layout>
   );
 };

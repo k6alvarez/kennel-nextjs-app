@@ -18,6 +18,8 @@ export const SmallButton = styled.button`
   font-size: ${(props) => `calc(${props.theme.fontSizes[1]} / 1.6)`};
 `;
 
+export const defaultShadow = "0 0 10px 0 rgba(0,0,0,0.1)";
+
 const petInfoOnly = (pet) => {
   const petInfo = structuredClone(pet);
   delete petInfo.largeImage;
@@ -118,7 +120,6 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
                 style={{
                   width: 300,
                   margin: "0 10px 10px 0",
-                  boxShadow: "0 0 10px 0 rgba(0,0,0,0.1)",
                 }}
                 title={pet.name}
                 cover={

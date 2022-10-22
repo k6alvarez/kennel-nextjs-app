@@ -9,7 +9,7 @@ import {
   PromoTitleWrapper,
 } from "./Promo/styles-promo";
 
-const defaultDelay = 400;
+export const defaultDelay = 400;
 
 export const Promo = ({
   promos = [],

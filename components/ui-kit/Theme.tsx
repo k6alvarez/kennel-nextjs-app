@@ -26,12 +26,17 @@ export const base = {
     "2.4rem",
     "3rem",
   ],
+  shadows: {
+    default: "0px 2px 4px rgba(0, 0, 0, 0.5)",
+    light: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+  },
 };
 export const light = {
   primary: "#8c0b3e",
   primaryDark: "#740833",
   secondaryLight: "#fff1e6",
   secondary: "#d9e5e8",
+  white: "#fff",
   secondaryDark: "#ececec",
   nav: "#f8f8f8",
   border: "#212121",

@@ -1,9 +1,10 @@
 import React from "react";
+import { TabContent } from "../Boarding/BoardingHome";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 
 export const GroupLessons = () => {
   return (
-    <>
+    <TabContent>
       <p>
         Group training is ideal for individuals who want to save money and
         socialize their pets. Our small group size (12 dogs) enables us to give
@@ -76,6 +77,6 @@ export const GroupLessons = () => {
         control. E-collar optional.
       </p>
       <BlockQuote>Please bring dog to first class.</BlockQuote>
-    </>
+    </TabContent>
   );
 };

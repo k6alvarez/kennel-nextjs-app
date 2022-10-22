@@ -1,6 +1,4 @@
-import React from "react";
-import { GetStaticProps } from "next";
-import prisma from "../lib/prisma";
+import React, { useEffect, useState } from "react";
 import { Collapse } from "antd";
 
 import Layout from "../components/Layout";
@@ -8,35 +6,40 @@ import { PostProps } from "../components/Post";
 import { Content } from "../components/ui-kit/Base";
 import { BlockQuote } from "../components/Reservations/GuestClients/FormIntro";
 import { BoldText } from "../components/Boarding/MedicalIssues";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const { Panel } = Collapse;
-
-export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.post.findMany({
-    where: { published: true },
-    include: {
-      author: {
-        select: { name: true },
-      },
-    },
-  });
-
-  return {
-    props: { feed },
-    revalidate: 10,
-  };
-};
 
 type Props = {
   feed: PostProps[];
 };
 
-const Policies: React.FC<Props> = (props) => {
+const Policies: React.FC<Props> = () => {
+  const router = useRouter();
+  const { tab } = router.query;
+  const [activeKey, setActiveKey] = useState("abandoned");
+
+  useEffect(() => {
+    if (tab) {
+      const el = document.getElementById(tab as string);
+      if (el) {
+        el.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+          inline: "nearest",
+        });
+      }
+      setActiveKey(tab as string);
+    }
+  }, [tab]);
+
   return (
     <Layout>
       <Content>
         <h1>Policies</h1>
-        <BlockQuote>
+        <BlockQuote large>
           <p>
             We strive to establish a friendly professional relationship with all
             of our clients. This relationship can only be built through
@@ -47,8 +50,21 @@ const Policies: React.FC<Props> = (props) => {
             our policies.
           </p>
         </BlockQuote>
-        <Collapse defaultActiveKey={["1"]}>
-          <Panel key={1} header="Abandoned Dog Policy">
+        <Collapse
+          activeKey={activeKey}
+          onChange={(key) => {
+            router.replace(
+              {
+                pathname: "/policies",
+                query: { tab: key },
+              },
+              undefined,
+              { shallow: true }
+            );
+          }}
+          accordion
+        >
+          <Panel id="abandoned" key="abandoned" header="Abandoned Dog Policy">
             <p>
               <BoldText>
                 IT IS UNFORTUNATE THAT THIS POLICY IS NECESSARY
@@ -70,7 +86,11 @@ const Policies: React.FC<Props> = (props) => {
               rights to the contrary.
             </p>
           </Panel>
-          <Panel header="After Hours Service Policy" key={2}>
+          <Panel
+            header="After Hours Service Policy"
+            key="after-hours"
+            id="after-hours"
+          >
             <p>
               Our regular business hours are from 9:00 AM to 7:00 PM Sunday
               through Friday. We are closed on Saturday and Holidays. Special
@@ -81,10 +101,14 @@ const Policies: React.FC<Props> = (props) => {
               service will be provided on Holidays. Also, no service will be
               provided before 8:00 AM or after 9:00 PM. Please understand that
               while we do appreciate your business, we also have a family life,
-              so please don’t ask us to make exceptions to this policy.
+              so please don't ask us to make exceptions to this policy.
             </p>
           </Panel>
-          <Panel header="Agressive Dog Policy" key={3}>
+          <Panel
+            header="Agressive Dog Policy"
+            key="aggressive-dog"
+            id="aggressive-dog"
+          >
             <p>
               An aggressive dog is defined as a dog that has bitten or injured a
               human or another dog, and/or growls, bares teeth, lunges or snaps
@@ -92,30 +116,33 @@ const Policies: React.FC<Props> = (props) => {
               boarded in our kennel, however, the owner of said dog must inform
               us of the potential for injury prior to making reservations. Under
               no circumstances will an aggressive dog be provided with Special
-              Services other than bedding rental. The owner of an aggressive
-              will be held liable for any injury sustained to himself, another
-              dog, an employee, representative, or clients of Gillette Kennels,
-              and for any damage to our facility caused by said dog. Should an
-              aggressive dog injure itself and be unapproachable by our staff,
-              we will contact Kalamazoo Animal Control and have the dog removed
-              from the premises so that it may be properly cared for.
+              Services other than bedding rental.
+            </p>
+            <p>
+              The owner of an aggressive will be held liable for any injury
+              sustained to himself, another dog, an employee, representative, or
+              clients of Gillette Kennels, and for any damage to our facility
+              caused by said dog. Should an aggressive dog injure itself and be
+              unapproachable by our staff, we will contact Kalamazoo Animal
+              Control and have the dog removed from the premises so that it may
+              be properly cared for.
             </p>
           </Panel>
-          <Panel header="Bedding" key={4}>
+          <Panel header="Bedding" key="bedding" id="bedding">
             <p>
               We feel that it is an absolute must that dog(s) in our care be
               provided with clean comfortable bedding. However, this is a much
-              more difficult and time consuming task than you’d suspect,
+              more difficult and time consuming task than you'd suspect,
               especially when caring for multiple dogs. For example, it is not
               uncommon for a dog to soil its bedding. When this happens we must
               temporarily remove the bedding and launder it. Also, dogs
               frequently damage their beds, which necessitates mending. Worse
               yet, some dogs completely destroy their bedding. This is sometimes
-              followed by the owner’s bewilderment and compliant, “my dog never
+              followed by the owner's bewilderment and compliant, “my dog never
               destroyed his bedding at home.” In addition, clients sometimes
               bring bedding that is inappropriate for the kennel environment.
               Sometimes client provided bedding is too heavy and bulky to easily
-              be moved while the dog’s run is being disinfected. Some client
+              be moved while the dog's run is being disinfected. Some client
               provided bedding is stuffed with material that is unsafe for the
               dog that may chew and ingest it. Finally, occasionally client
               provided bedding is filthy dirty, or so old and nasty that it
@@ -159,11 +186,15 @@ const Policies: React.FC<Props> = (props) => {
             </p>
             <p>
               Clients that do not own bedding appropriate for the kennel
-              environment or forget to bring their dog’s bed can rent quality
+              environment or forget to bring their dog's bed can rent quality
               bedding from us at a nominal fee.
             </p>
           </Panel>
-          <Panel header="Destructive Dog Policy" key={5}>
+          <Panel
+            header="Destructive Dog Policy"
+            key="destructive-dog"
+            id="destructive-dog"
+          >
             <p>
               Clients who board dogs with us that are destructive will be held
               liable for all damage caused to our kennel and any injury that the
@@ -180,22 +211,22 @@ const Policies: React.FC<Props> = (props) => {
               policy and BOARD AT THEIR OWN RISK!
             </p>
           </Panel>
-          <Panel header="Dirty Dog Policy" key={6}>
+          <Panel header="Dirty Dog Policy" key="dirty-dog" id="dirty-dog">
             <p>
               A dirty dog is a dog that runs through his feces immediately after
               he defecates, or defecates and urinates in the inside run or on
               his bedding. When we are aware that a dog is a “dirty dog” we will
               do our best to keep him clean by limiting his freedom to the
               outside run. However, should a dirty dog begin to stink up the
-              kennel we will bathe the dog at the owner’s expense. Also, should
+              kennel we will bathe the dog at the owner's expense. Also, should
               a dirty dog soil client provided bedding we will launder it at the
-              owner’s expense. We make every effort to keep our kennel clean and
+              owner's expense. We make every effort to keep our kennel clean and
               odor free, therefore, should a client drop off a dog that is
               overdue for a bath, and should said dog cause an unpleasant odor
-              in our kennel, we will bathe the dog at the owner’s expense.
+              in our kennel, we will bathe the dog at the owner's expense.
             </p>
           </Panel>
-          <Panel header="Feeding" key={7}>
+          <Panel header="Feeding" key="feeding" id="feeding">
             <p>
               Our guests are routinely fed at 9:00 AM. Additional evening
               feedings ($.75 per meal) are available upon request. The evening
@@ -203,23 +234,43 @@ const Policies: React.FC<Props> = (props) => {
               dishes, so please do not bring dishes.
             </p>
             <p>
-              We serve quality Iam’s and Iam’s Eukanuba products. You have a
+              We serve quality Iam's and Iam's Eukanuba products. You have a
               choice of Adult Eukanuba Lamb and Rice, Puppy food, or Large Breed
               Puppy food. Clients who feed a different brand are encouraged to
               provide us with food, as a sudden change in diet can result in
-              diarrhea. Please see our Medical Issues page for more information.
+              diarrhea. Please see our{" "}
+              <Link href="/boarding?tab=medical-issues">
+                <a>medical issues</a>
+              </Link>{" "}
+              page for more information.
+            </p>
+            <p>
               If you provide food please package EACH MEAL in a *Ziploc® (type)
               plastic bag (no fold-over sandwich baggies, please) with each meal
-              clearly labeled with your pet’s name. See below. Please do not
-              label days/dates or AM/PM unless the meals are different. Please
-              DO NOT put medications in the food bags, and please do not bag
-              canned food. If you board for an extended period (14 days or more)
-              you can provide food in a clean, airtight container labeled with
-              your pet’s name. An unopened bag of dog food does not constitute a
-              sealed container.
+              clearly labeled with your pet's name. See example below.
+            </p>
+            <Image
+              alt="Ziplock back of dog food"
+              src={
+                "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666440932/gk-app/food_picture.jpg"
+              }
+              width={500}
+              height={300}
+            />
+            <p>
+              Please do not label days/dates or AM/PM unless the meals are
+              different. Please DO NOT put medications in the food bags, and
+              please do not bag canned food. If you board for an extended period
+              (14 days or more) you can provide food in a clean, airtight
+              container labeled with your pet's name. An unopened bag of dog
+              food does not constitute a sealed container.
             </p>
           </Panel>
-          <Panel header="Fence Fighters" key={8}>
+          <Panel
+            header="Fence Fighters"
+            key="fence-fighting"
+            id="fence-fighting"
+          >
             <p>
               A fence fighter is a dog that lunges, jumps, and barks at the dogs
               housed in the adjacent kennels. Fence fighters also grab the
@@ -227,7 +278,7 @@ const Policies: React.FC<Props> = (props) => {
               links. Sometimes this behavior is playful and sometimes it is
               aggressive. When we encounter fence fighters we do the best that
               we can to control this behavior. For example, we may limit the
-              dog’s freedom or move the dog to another kennel. It is generally
+              dog's freedom or move the dog to another kennel. It is generally
               not possible to completely eliminate the behavior; therefore,
               should a fence fighter break a tooth, scratch its nose, or in any
               way injure itself, Gillette Kennels will not be held liable.
@@ -237,7 +288,11 @@ const Policies: React.FC<Props> = (props) => {
               in this behavior.
             </p>
           </Panel>
-          <Panel header="Fence Jumpers And Climbers" key={9}>
+          <Panel
+            header="Fence Jumpers And Climbers"
+            key="fence-jumping"
+            id="fence-jumping"
+          >
             <p>
               Clients who board dogs that jump or climb fences must inform us at
               the time that reservations are made, and again when the dog is
@@ -249,7 +304,11 @@ const Policies: React.FC<Props> = (props) => {
               exercise entails limited supervision.
             </p>
           </Panel>
-          <Panel header="General Cancellation Policy" key={10}>
+          <Panel
+            header="General Cancellation Policy"
+            key="cancellation-policy"
+            id="cancellation-policy"
+          >
             <p>ALL RESERVATIONS MUST BE SECURED BY A VALID CREDIT CARD</p>
             <p>
               We require at least 48 hours notice for cancellations or
@@ -261,18 +320,18 @@ const Policies: React.FC<Props> = (props) => {
               scheduled reservation.
             </p>
           </Panel>
-          <Panel header="Leashes And Tags" key={11}>
+          <Panel header="Leashes And Tags" key="leashes-tags" id="leashes-tags">
             <p>
-              <BoldText>IT’S THE LAW AND OUR POLICY</BoldText>
+              <BoldText>IT'S THE LAW AND OUR POLICY</BoldText>
             </p>
             <p>
               All dogs on the premises must be leashed at all times. NO
               EXCEPTIONS. It is also important that the leash be attached to a
               properly fitted collar. A flat collar must fit snug around the
-              dog’s neck. You should be able to place only two fingers between
-              your dog’s neck and collar. The collar must not be so loose that
-              it pulls over your dog’s head. It is also important that the
-              collar contain your dog’s tags.
+              dog's neck. You should be able to place only two fingers between
+              your dog's neck and collar. The collar must not be so loose that
+              it pulls over your dog's head. It is also important that the
+              collar contain your dog's tags.
             </p>
             <p>
               Michigan State Law requires that your dog be licensed and that his
@@ -282,7 +341,7 @@ const Policies: React.FC<Props> = (props) => {
               its owner or custodian.”
             </p>
             <p>
-              Under no circumstances shall your dog’s tags be attached to a
+              Under no circumstances shall your dog's tags be attached to a
               training collar (i.e., a choke chain or a pinch collar) while
               being boarded. For safety reasons, training collars are routinely
               removed from all dogs when they are placed into the kennel run. It
@@ -290,7 +349,7 @@ const Policies: React.FC<Props> = (props) => {
               securely attached to a properly fitted flat collar.
             </p>
           </Panel>
-          <Panel header="Pet Detect" key={12}>
+          <Panel header="Pet Detect" key="pet-detect" id="pet-detect">
             <p>
               Printed identification collar bands for pets and their personal
               possessions. Allows for immediate and positive identification of
@@ -300,11 +359,15 @@ const Policies: React.FC<Props> = (props) => {
             </p>
           </Panel>
 
-          <Panel header="Lost Or Damaged Items" key={13}>
+          <Panel
+            header="Lost Or Damaged Items"
+            key="lost-items"
+            id="lost-items"
+          >
             <p>
               While we do allow you to bring toys and bedding for your dog, we
               suggest that you bring not more than three toys that are clearly
-              labeled with your dog’s name. Cloth toys that your dog tears up or
+              labeled with your dog's name. Cloth toys that your dog tears up or
               shreds will be removed from the run. In addition, many clients
               prefer to leave their leashes with us when they check in. This is
               usually not a problem as the leash is clipped and hung on the
@@ -315,7 +378,11 @@ const Policies: React.FC<Props> = (props) => {
               at our kennel should they become damaged or lost.
             </p>
           </Panel>
-          <Panel header="Premium Date and Holiday Cancellation Policy" key={14}>
+          <Panel
+            header="Premium Date and Holiday Cancellation Policy"
+            key="premium-cancellation"
+            id="premium-cancellation"
+          >
             <p>
               <BoldText>
                 ALL RESERVATIONS MUST BE SECURED BY A VALID CREDIT CARD
@@ -335,20 +402,27 @@ const Policies: React.FC<Props> = (props) => {
           </Panel>
           <Panel
             header="Premium Date and Holiday Early Pick-ups or Reservation Changes"
-            key={15}
+            key="premium-early-pickup"
+            id="premium-early-pickup"
           >
-            <p></p>Clients who reserve space for holidays that fail to provide
-            us with at least 48 hours notice for early pick-ups will be charged
-            for the entire scheduled reservation. In addition, clients who make
-            changes to reservations without providing us with at least 48 hours
-            notice will be charged our regular daily rate for any days that the
-            space reserved remains vacant. We are sorry that it has become
-            necessary to implement such a strict cancellation policy; however,
-            we cannot continue to incur the tremendous loss of revenue do to
-            untimely cancellations, early pick-ups, and reservation schedule
-            changes.
+            <p>
+              Clients who reserve space for holidays that fail to provide us
+              with at least 48 hours notice for early pick-ups will be charged
+              for the entire scheduled reservation. In addition, clients who
+              make changes to reservations without providing us with at least 48
+              hours notice will be charged our regular daily rate for any days
+              that the space reserved remains vacant. We are sorry that it has
+              become necessary to implement such a strict cancellation policy;
+              however, we cannot continue to incur the tremendous loss of
+              revenue do to untimely cancellations, early pick-ups, and
+              reservation schedule changes.
+            </p>
           </Panel>
-          <Panel header="Reservation Cancellation Policy" key={16}>
+          <Panel
+            header="Reservation Cancellation Policy"
+            key="reservation-cancellation"
+            id="reservation-cancellation"
+          >
             <p>
               Our boarding facility has limited space and is frequently at 100%
               occupancy. This forces us to turn potential boarders away. When
@@ -362,10 +436,10 @@ const Policies: React.FC<Props> = (props) => {
               have implemented the following cancellation policies.
             </p>
           </Panel>
-          <Panel header="Sick And Injured Dogs" key={17}>
+          <Panel header="Sick And Injured Dogs" key="sick-dog" id="sick-dog">
             <p>
               Should any dog become ill or injured while being boarded with us,
-              we will, at our sole discretion, engage the services of client’s
+              we will, at our sole discretion, engage the services of client's
               veterinarian. Any expenses incurred as a result of veterinarian
               services must be paid to our kennel at the time of pickup. Please
               carefully read our Destructive Dog Policy.
@@ -381,7 +455,7 @@ const Policies: React.FC<Props> = (props) => {
               and care having been exercised. Owner/agent agrees to pay all
               costs for any property damage or personal injury caused by his/her
               dog during its stay. All charges are due the day the dog is picked
-              up. It is expressly agreed by owner and kennel that kennel’s
+              up. It is expressly agreed by owner and kennel that kennel's
               liability shall in no event exceed the lesser of current chattel
               value of a dog of the same breed and quality, or the sum of
               $200.00 per dog boarded. The owner further agrees to be solely

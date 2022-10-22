@@ -1,10 +1,10 @@
 import React from "react";
 import Layout from "../components/Layout";
-import { Promo } from "../components/ui-kit/Promo";
+import { defaultDelay, Promo } from "../components/ui-kit/Promo";
 import { Content } from "../components/ui-kit/Base";
-import { Callouts } from "../components/ui-kit/Callouts";
+import { Promos } from "../components/ui-kit/Promo/Promos";
 
-const Blog: React.FC = () => {
+const MyApp: React.FC = () => {
   return (
     <Layout>
       <Promo
@@ -16,7 +16,7 @@ const Blog: React.FC = () => {
           },
           {
             image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006544/gk-app/gktwopups.jpg",
             size: "20vw",
           },
           {
@@ -26,7 +26,7 @@ const Blog: React.FC = () => {
           },
           {
             image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005331/gk-app/gk_home_02.jpg",
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419325/gk-app/Aggie2_playtime.jpg",
             size: "20vw",
           },
         ]}
@@ -52,31 +52,36 @@ const Blog: React.FC = () => {
           window sills, is available on a first come first serve basis.
         </p>
       </Content>
-      <Callouts
-        callouts={[
+      <Promos
+        delay={defaultDelay * 6}
+        promos={[
           {
             title: "We board cats!",
             description: "We have a cattery for your cat's stay.",
-            link: "/boarding",
+            link: "/boarding?tab=boarding-cats",
             image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006782/gk-app/catsgk.jpg",
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419343/gk-app/Kitty_window.jpg",
+            size: "28vw",
           },
           {
             title: "Vaccinations",
             description: "Read about our Vaccinations requirements.",
-            link: "/boarding",
+            link: "/boarding?tab=vaccinations",
             image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1547342058/samples/animals/three-dogs.jpg",
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419325/gk-app/Addie3.jpg",
+            size: "28vw",
           },
           {
             title: "Before you board",
-            link: "/boarding",
+            link: "/boarding?tab=before-boarding",
             description: "Learn more about our boarding services.",
             image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006544/gk-app/gktwopups.jpg",
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
+            size: "28vw",
           },
         ]}
       />
+
       <Content>
         <h2>Gillette Kennels is also proud to offer Obedience Training!</h2>
         <p>
@@ -105,4 +110,4 @@ const Blog: React.FC = () => {
   );
 };
 
-export default Blog;
+export default MyApp;
