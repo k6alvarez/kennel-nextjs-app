@@ -20,8 +20,9 @@ export const FlexCards = styled.div`
 
   .ant-card {
     flex: 1;
-    white-space: nowrap;
     margin-bottom: 0;
+    min-width: 25%;
+    width: max-content;
   }
 `;
 

@@ -9,9 +9,8 @@ import { DownOutlined } from "@ant-design/icons";
 import Layout from "../components/Layout";
 import { PostProps } from "../components/Post";
 import { Promo } from "../components/ui-kit/Promo";
-import { Content } from "../components/ui-kit/Base";
 import { PromoTitle } from "../components/ui-kit/Promo/styles-promo";
-import { BoardingHome, TabContent } from "../components/Boarding/BoardingHome";
+import { BoardingHome } from "../components/Boarding/BoardingHome";
 import BoardingCats from "../components/Boarding/BoardingCats";
 import { BeforeBoarding } from "../components/Boarding/BeforeBoarding";
 import { BoardingCheckin } from "../components/Boarding/BoardingCheckin";
@@ -19,6 +18,7 @@ import { BoardingVaccinations } from "../components/Boarding/BoardingVaccination
 import { MedicalIssues } from "../components/Boarding/MedicalIssues";
 import { Size, useWindowSize } from "../components/ui-kit/hooks/useWindowSize";
 import { ThemePreferenceContext } from "./_app";
+import { BoardingServices } from "../components/Boarding/BoardingServices";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
@@ -89,6 +89,11 @@ const Boarding: React.FC<Props> = () => {
       key: "medical-issues",
       children: <MedicalIssues />,
     },
+    {
+      label: "Special Services",
+      key: "special-services",
+      children: <BoardingServices />,
+    },
   ];
 
   return (
@@ -131,6 +136,11 @@ const Boarding: React.FC<Props> = () => {
             fontSize: "inherit",
           }}
           items={items}
+          onTabClick={(key) => {
+            router.replace(`/boarding?tab=${key}`, undefined, {
+              shallow: true,
+            });
+          }}
         />
       </TabsListWrapper>
     </Layout>

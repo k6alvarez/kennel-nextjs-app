@@ -1,6 +1,7 @@
 import React from "react";
 import { GetStaticProps } from "next";
 import prisma from "../lib/prisma";
+import Link from "next/link";
 
 import Layout from "../components/Layout";
 import { PostProps } from "../components/Post";
@@ -13,8 +14,6 @@ import BoardingRates, {
   rateLglRun,
   rateSmRun,
 } from "../components/Boarding/BoardingRates";
-import { FlexCards } from "../components/Boarding/BoardingHome";
-import { Card } from "antd";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
@@ -64,7 +63,7 @@ const Rates: React.FC<Props> = (props) => {
           Other per day or per incident charges may apply. For example, holiday
           rates are ${rateHoliday} per day more than the normal daily rate.
         </p>
-        <BlockQuote>
+        <BlockQuote large>
           <p>
             Clients who check out by or before 11:00 AM on normal business days
             will not be charged for that day
@@ -74,24 +73,20 @@ const Rates: React.FC<Props> = (props) => {
         <h2>You may also be charged for:</h2>
         <ul>
           <li>
-            <a href="http://gillettekennels.com/gk-staging/medical-issues/administering-medications/">
-              special medical attention
-            </a>
+            <Link href="/boarding?tab=medical-issues">
+              <a>Special medical attention</a>
+            </Link>
           </li>
           <li>
-            <a href="http://gillettekennels.com/gk-staging/policies/feeding/">
-              special food preparation
-            </a>
+            <Link href="/policies?tab=feeding">
+              <a>Special food preparation or additional feedings</a>
+            </Link>
           </li>
+
           <li>
-            <a href="http://gillettekennels.com/gk-staging/policies/feeding/">
-              additional feedings
-            </a>
-          </li>
-          <li>
-            <a href="http://gillettekennels.com/gk-staging/boarding/special-services/">
-              special services
-            </a>
+            <Link href="/boarding?tab=special-services">
+              <a>Special services</a>
+            </Link>
           </li>
           <li>
             <a href="http://gillettekennels.com/gk-staging/policies/bedding/">
