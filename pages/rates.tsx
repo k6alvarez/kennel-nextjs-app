@@ -14,6 +14,8 @@ import BoardingRates, {
   rateLglRun,
   rateSmRun,
 } from "../components/Boarding/BoardingRates";
+import { FlexCards } from "../components/Boarding/BoardingHome";
+import { Card } from "antd";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
@@ -89,56 +91,70 @@ const Rates: React.FC<Props> = (props) => {
             </Link>
           </li>
           <li>
-            <a href="http://gillettekennels.com/gk-staging/policies/bedding/">
-              laundry service fee
-            </a>
+            <Link href="/policies?tab=bedding">
+              <a>Laundry service fee</a>
+            </Link>
           </li>
           <li>
-            <a href="http://gillettekennels.com/gk-staging/policies/after-hours-service-policy/">
-              after hours service
-            </a>
+            <Link href="/policies?tab=after-hours">
+              <a>After hours service</a>
+            </Link>
           </li>
           <li>
-            <a href="http://gillettekennels.com/gk-staging/holiday-and-premium-dates/">
-              holiday rates
-            </a>
+            <Link href="/rates">
+              <a>Holiday Rates</a>
+            </Link>
           </li>
         </ul>
         {/* <HolidayRates /> */}
 
         <h1>Discounts</h1>
-        <BlockQuote large>
-          <p>
-            We offer discounts for multiple pets belonging to the same family
-            when the dogs stay in the same run.
-          </p>
-        </BlockQuote>
+
         <p>
-          We charge the daily rate for the run plus ${rateDogRoommate} extra per
-          roommate. For example, the charge for a large run used to house three
-          small dogs will be $
-          {(
-            parseInt(rateLglRun) +
-            parseInt(rateDogRoommate) +
-            parseInt(rateDogRoommate)
-          ).toFixed(2)}{" "}
-          per day ($
-          {rateLglRun} + ${rateDogRoommate} + ${rateDogRoommate}). A small run
-          used to house three small dogs will be $
-          {(
-            parseInt(rateSmRun) +
-            parseInt(rateDogRoommate) +
-            parseInt(rateDogRoommate)
-          ).toFixed(2)}{" "}
-          per day ($
-          {rateSmRun} + ${rateDogRoommate} + ${rateDogRoommate}). A large run
-          used to house two large dogs will be ${" "}
-          {(parseInt(rateSmRun) + parseInt(rateDogRoommate)).toFixed(2)} per day
-          ($
-          {rateLglRun} + ${rateDogRoommate}). Premium and holiday rates will be
-          applied to discounted dogs should the dog occupy a run during these
-          dates.
+          We offer discounts for multiple pets belonging to the same family when
+          the dogs stay in the same run. We charge the daily rate for the run
+          plus ${rateDogRoommate} extra per roommate.
         </p>
+        <p>See a few boarding examples below:</p>
+        <FlexCards>
+          <Card>
+            <p>Large run used to house three small dogs</p>
+            <p>
+              $
+              {(
+                parseInt(rateLglRun) +
+                parseInt(rateDogRoommate) +
+                parseInt(rateDogRoommate)
+              ).toFixed(2)}{" "}
+              per day <br />${rateLglRun} + ${rateDogRoommate} + $
+              {rateDogRoommate}
+            </p>
+          </Card>
+          <Card>
+            <p>A small run used to house three small dogs</p>
+            <p>
+              $
+              {(
+                parseInt(rateSmRun) +
+                parseInt(rateDogRoommate) +
+                parseInt(rateDogRoommate)
+              ).toFixed(2)}{" "}
+              per day <br />${rateSmRun} + ${rateDogRoommate} + $
+              {rateDogRoommate}
+            </p>
+          </Card>
+          <Card>
+            <p>A large run used to house two large dogs</p>
+            <p>
+              $ {(parseInt(rateSmRun) + parseInt(rateDogRoommate)).toFixed(2)}{" "}
+              per day <br /> ${rateLglRun} + ${rateDogRoommate}
+            </p>
+          </Card>
+        </FlexCards>
+        <BlockQuote large>
+          Premium and holiday rates will be applied to discounted dogs should
+          the dog occupy a run during these dates.
+        </BlockQuote>
         <p>
           Gillette Kennels reserves the right to determine if dogs housed in the
           same run are suited for multi-pet accommodations. When pets are
@@ -150,17 +166,21 @@ const Rates: React.FC<Props> = (props) => {
           more that three small dogs or two large dogs (over 40 LBS) in a single
           run.
         </p>
+        <BlockQuote large>
+          <p>
+            We also offer a 10% discount to clients who board a dog for an
+            extended stay.
+          </p>
+        </BlockQuote>
         <p>
-          We also offer a 10% discount to clients who board a dog for an
-          extended stay. An extended stay is defined as 30 consecutive days or
-          more. The 10% discount applies to boarding rates ONLY, and does not
-          extend to “special services.” Clients who contract for an extended
-          stay must prepay 50% of the boarding charge. Any client that contracts
-          for an extended stay and picks-up early will be charged the lesser of
-          the entire discounted booked reservation, or the present daily rate
-          for entire period that the dog was boarded. We will also charge our
-          daily rate for any additional days that a discounted dog is boarded
-          after the scheduled departure date. Premium and holiday rates will be
+          The 10% discount applies to boarding rates ONLY, and does not extend
+          to “special services.” Clients who contract for an extended stay must
+          prepay 50% of the boarding charge. Any client that contracts for an
+          extended stay and picks-up early will be charged the lesser of the
+          entire discounted booked reservation, or the present daily rate for
+          entire period that the dog was boarded. We will also charge our daily
+          rate for any additional days that a discounted dog is boarded after
+          the scheduled departure date. Premium and holiday rates will be
           applied to discounted dogs should the dog occupy a run during these
           dates.
         </p>

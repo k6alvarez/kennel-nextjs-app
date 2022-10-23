@@ -18,7 +18,7 @@ export const BoardingServices = () => {
         </Link>
         .
       </p>
-      <Collapse accordion>
+      <Collapse>
         <Collapse.Panel header="Exercise" key="1">
           <p>
             Exercise sessions are offered for clients who wish their dog(s) to

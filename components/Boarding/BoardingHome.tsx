@@ -22,7 +22,11 @@ export const FlexCards = styled.div`
     flex: 1;
     margin-bottom: 0;
     min-width: 25%;
-    width: max-content;
+    width: 100%;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+      width: max-content;
+    }
   }
 `;
 

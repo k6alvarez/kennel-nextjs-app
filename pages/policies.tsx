@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Collapse } from "antd";
+import { Card, Collapse } from "antd";
 
 import Layout from "../components/Layout";
 import { PostProps } from "../components/Post";
@@ -23,33 +23,31 @@ const Policies: React.FC<Props> = () => {
 
   useEffect(() => {
     if (tab) {
-      const el = document.getElementById(tab as string);
+      const el = document.getElementById(tab[tab.length - 1] as string);
       if (el) {
         el.scrollIntoView({
           behavior: "smooth",
-          block: "end",
+          block: "center",
           inline: "nearest",
         });
       }
       setActiveKey(tab as string);
     }
-  }, [tab]);
+  }, []);
 
   return (
     <Layout>
       <Content>
         <h1>Policies</h1>
-        <BlockQuote large>
-          <p>
-            We strive to establish a friendly professional relationship with all
-            of our clients. This relationship can only be built through
-            effective communication and mutual respect. Many of these policies
-            were implemented only after numerous serious discussions, debates,
-            and research into how other kennels around the country handle these
-            issues. Please help us to build a positive relationship by knowing
-            our policies.
-          </p>
-        </BlockQuote>
+        <p>
+          We strive to establish a friendly professional relationship with all
+          of our clients. This relationship can only be built through effective
+          communication and mutual respect. Many of these policies were
+          implemented only after numerous serious discussions, debates, and
+          research into how other kennels around the country handle these
+          issues. Please help us to build a positive relationship by knowing our
+          policies.
+        </p>
         <Collapse
           activeKey={activeKey}
           onChange={(key) => {
@@ -62,14 +60,11 @@ const Policies: React.FC<Props> = () => {
               { shallow: true }
             );
           }}
-          accordion
         >
           <Panel id="abandoned" key="abandoned" header="Abandoned Dog Policy">
-            <p>
-              <BoldText>
-                IT IS UNFORTUNATE THAT THIS POLICY IS NECESSARY
-              </BoldText>
-            </p>
+            <BlockQuote large>
+              <p>It is unfortunate that this policy is necessary.</p>
+            </BlockQuote>
             <p>
               Any dog that is not called for within ten (10) days of the
               scheduled pickup time, and the owner/agent does not notify our
@@ -115,8 +110,11 @@ const Policies: React.FC<Props> = () => {
               at a person or dog. An aggressive dog will be allowed to be
               boarded in our kennel, however, the owner of said dog must inform
               us of the potential for injury prior to making reservations. Under
-              no circumstances will an aggressive dog be provided with Special
-              Services other than bedding rental.
+              no circumstances will an aggressive dog be provided with{" "}
+              <Link href={"/boarding?tab=special-services"}>
+                <a>special services</a>
+              </Link>{" "}
+              other than bedding rental.
             </p>
             <p>
               The owner of an aggressive will be held liable for any injury
@@ -154,29 +152,40 @@ const Policies: React.FC<Props> = () => {
               upsetting to many clients if we no longer allowed bedding.
               However,
             </p>
+            <BlockQuote large>
+              <Card>
+                <p>All client provided bedding must:</p>
+                <p>
+                  <ul>
+                    <li>Be clean, safe, easily laundered or cleaned.</li>
+                    <li>Lightweight and managable.</li>
+                    <li>Labled with the dogs name.</li>
+                    <li>Made of a snag free material.</li>
+                  </ul>
+                </p>
+                <p>
+                  The bedding must fit into the dogs run while allowing him room
+                  to eat, drink and move around. large oversized heavy bedding
+                  will not be accepted. knited or crochayed beds and carpeting
+                  will also not be accepted.
+                </p>
+                <p>
+                  Clients who choose to provide their own bedding will be
+                  charged a laundry service fee of $1.50 per incident should
+                  their dogs soil their bedding.{" "}
+                </p>
+              </Card>
+            </BlockQuote>
             <p>
-              <BoldText>
-                ALL CLIENT PROVIDED BEDDING MUST: BE CLEAN, SAFE, EASILY
-                LAUNDERED OR CLEANED, LIGHTWEIGHT AND MANAGABLE, LABLED WITH THE
-                DOGS NAME, AND MADE OF A SNAG FREE MATERIAL. THE BEDDING MUST
-                FIT INTO THE DOGS RUN WHILE ALLOWING HIM ROOM TO EAT, DRINK AND
-                MOVE AROUND. LARGE OVERSIZED HEAVY BEDDING WILL NOT BE ACCEPTED.
-                KNITED OR CROCHAYED BEDS AND CARPETING WILL ALSO NOT BE
-                ACCEPTED.
-              </BoldText>
-            </p>
-            <p>
-              Clients who choose to provide their own bedding will be charged a
-              LAUNDRY SERVICE FEE of $1.50 PER INCIDENT should their dogs soil
-              their bedding. The laundry service is required for owner provided
-              bedding. We will not allow soiled bedding to remain in the kennel.
-              When dogs soil client provided bedding we will launder it. We also
-              do not feel comfortable returning soiled bedding to clients.
-              However, when a dog soils bedding immediately before departure and
-              we are forced to return it soiled, we will place it in a plastic
-              bag. Clients who receive soiled bedding at departure will be
-              charged the laundry service fee for each incident that the bedding
-              was laundered during the dogs stay. When clients check out early
+              The laundry service is required for owner provided bedding. We
+              will not allow soiled bedding to remain in the kennel. When dogs
+              soil client provided bedding we will launder it. We also do not
+              feel comfortable returning soiled bedding to clients. However,
+              when a dog soils bedding immediately before departure and we are
+              forced to return it soiled, we will place it in a plastic bag.
+              Clients who receive soiled bedding at departure will be charged
+              the laundry service fee for each incident that the bedding was
+              laundered during the dogs stay. When clients check out early
               without notification there is a possibility that the dogs bed will
               be in the laundry or returned soiled. It may seem like it is a
               small matter, but when caring for multiple dogs, laundering
@@ -202,14 +211,21 @@ const Policies: React.FC<Props> = () => {
               behaviors. This policy is applied to any and all destructive dogs
               regardless of the reason for destruction. That is, whether the dog
               has Separation Anxiety, Fear of Thunderstorms, or any phobia or
-              generalized escape behavior. In addition, when clients provide us
-              with a veterinarian prescribed sedative for their dogs to help to
-              prevent escape behaviors, we will not be held responsible or
-              liable should the sedative not be given in time to prevent
-              destruction or injury! Although we will allow dogs with these
-              problems to be boarded at our kennel, clients must agree to this
-              policy and BOARD AT THEIR OWN RISK!
+              generalized escape behavior.
             </p>
+            <p>
+              In addition, when clients provide us with a veterinarian
+              prescribed sedative for their dogs to help to prevent escape
+              behaviors, we will not be held responsible or liable should the
+              sedative not be given in time to prevent destruction or injury!
+            </p>
+            <BlockQuote large>
+              <p>
+                Although we will allow dogs with these problems to be boarded at
+                our kennel, clients must agree to this policy and board at their
+                own risk!
+              </p>
+            </BlockQuote>
           </Panel>
           <Panel header="Dirty Dog Policy" key="dirty-dog" id="dirty-dog">
             <p>
@@ -220,10 +236,13 @@ const Policies: React.FC<Props> = () => {
               outside run. However, should a dirty dog begin to stink up the
               kennel we will bathe the dog at the owner's expense. Also, should
               a dirty dog soil client provided bedding we will launder it at the
-              owner's expense. We make every effort to keep our kennel clean and
-              odor free, therefore, should a client drop off a dog that is
-              overdue for a bath, and should said dog cause an unpleasant odor
-              in our kennel, we will bathe the dog at the owner's expense.
+              owner's expense.
+            </p>
+            <p>
+              We make every effort to keep our kennel clean and odor free,
+              therefore, should a client drop off a dog that is overdue for a
+              bath, and should said dog cause an unpleasant odor in our kennel,
+              we will bathe the dog at the owner's expense.
             </p>
           </Panel>
           <Panel header="Feeding" key="feeding" id="feeding">
@@ -309,7 +328,9 @@ const Policies: React.FC<Props> = () => {
             key="cancellation-policy"
             id="cancellation-policy"
           >
-            <p>ALL RESERVATIONS MUST BE SECURED BY A VALID CREDIT CARD</p>
+            <BlockQuote large>
+              <p>All reservations must be secured by a valid credit card</p>
+            </BlockQuote>
             <p>
               We require at least 48 hours notice for cancellations or
               reservation schedule changes. When we are unable to re-book the
@@ -321,17 +342,19 @@ const Policies: React.FC<Props> = () => {
             </p>
           </Panel>
           <Panel header="Leashes And Tags" key="leashes-tags" id="leashes-tags">
+            <BlockQuote large>
+              <p>
+                All dogs on the premises must be leashed at all times. <br />
+                NO EXCEPTIONS. It's the law and our policy
+              </p>
+            </BlockQuote>
             <p>
-              <BoldText>IT'S THE LAW AND OUR POLICY</BoldText>
-            </p>
-            <p>
-              All dogs on the premises must be leashed at all times. NO
-              EXCEPTIONS. It is also important that the leash be attached to a
-              properly fitted collar. A flat collar must fit snug around the
-              dog's neck. You should be able to place only two fingers between
-              your dog's neck and collar. The collar must not be so loose that
-              it pulls over your dog's head. It is also important that the
-              collar contain your dog's tags.
+              It is also important that the leash be attached to a properly
+              fitted collar. A flat collar must fit snug around the dog's neck.
+              You should be able to place only two fingers between your dog's
+              neck and collar. The collar must not be so loose that it pulls
+              over your dog's head. It is also important that the collar contain
+              your dog's tags.
             </p>
             <p>
               Michigan State Law requires that your dog be licensed and that his
@@ -383,11 +406,12 @@ const Policies: React.FC<Props> = () => {
             key="premium-cancellation"
             id="premium-cancellation"
           >
-            <p>
-              <BoldText>
-                ALL RESERVATIONS MUST BE SECURED BY A VALID CREDIT CARD
-              </BoldText>
-            </p>
+            <BlockQuote large>
+              <p>
+                All reservations must be secured by a valid credit card. NO
+                EXCEPTIONS.
+              </p>
+            </BlockQuote>
             <p>
               All reservations made for any holiday, holiday weekend, or premium
               date require a per run $25.00 non-refundable deposit Clients that
@@ -395,9 +419,6 @@ const Policies: React.FC<Props> = () => {
               automatically forfeit the deposit Clients that cancel holiday
               reservations or premium date reservatiions with less than 24 hours
               notice will be charged for the entire booked reservation.
-            </p>
-            <p>
-              <BoldText>NO EXCEPTIONS</BoldText>
             </p>
           </Panel>
           <Panel
@@ -452,15 +473,17 @@ const Policies: React.FC<Props> = () => {
               liability on our part for loss or damage from disease, death,
               running away, theft, fire, injury to persons, other animals or
               property by said dog, or other unavoidable causes, due diligence
-              and care having been exercised. Owner/agent agrees to pay all
-              costs for any property damage or personal injury caused by his/her
-              dog during its stay. All charges are due the day the dog is picked
-              up. It is expressly agreed by owner and kennel that kennel's
-              liability shall in no event exceed the lesser of current chattel
-              value of a dog of the same breed and quality, or the sum of
-              $200.00 per dog boarded. The owner further agrees to be solely
-              responsible for any and all acts or behavior of said dog while it
-              is in the care of the kennel.
+              and care having been exercised.
+            </p>
+            <p>
+              Owner/agent agrees to pay all costs for any property damage or
+              personal injury caused by his/her dog during its stay. All charges
+              are due the day the dog is picked up. It is expressly agreed by
+              owner and kennel that kennel's liability shall in no event exceed
+              the lesser of current chattel value of a dog of the same breed and
+              quality, or the sum of $200.00 per dog boarded. The owner further
+              agrees to be solely responsible for any and all acts or behavior
+              of said dog while it is in the care of the kennel.
             </p>
           </Panel>
         </Collapse>
