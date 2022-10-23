@@ -33,7 +33,7 @@ const Policies: React.FC<Props> = () => {
       }
       setActiveKey(tab as string);
     }
-  }, []);
+  }, [tab]);
 
   return (
     <Layout>
