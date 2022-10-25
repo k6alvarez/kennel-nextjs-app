@@ -64,9 +64,9 @@ export const Content = styled.article`
 export const GridItems = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.space[4]};
+  gap: ${({ theme }) => theme.space[6]};
   margin: ${({ theme }) => theme.space[4]} 0;
-  justify-content: space-evenly;
+  justify-content: center;
   overflow: hidden;
 
   @media (min-width: ${(props) => props.theme.breakpoints[0]}) {

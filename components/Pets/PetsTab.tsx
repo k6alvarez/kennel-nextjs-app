@@ -1,5 +1,4 @@
-import { Empty } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ClientPets } from "./ClientPets";
 import { PetForm } from "./PetForm";
 import { getPets } from "./services";

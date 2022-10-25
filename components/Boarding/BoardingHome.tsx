@@ -11,7 +11,7 @@ export const FlexCards = styled.div`
   gap: ${({ theme }) => theme.space[4]};
   padding: ${({ theme }) => theme.space[4]};
   margin-bottom: ${({ theme }) => theme.space[4]};
-  flex-wrap: wrap;
+  flex-wrap: ${({ nowrap }) => (nowrap ? "nowrap" : "wrap")};
   background-color: ${({ theme }) => theme.colors.secondary};
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {

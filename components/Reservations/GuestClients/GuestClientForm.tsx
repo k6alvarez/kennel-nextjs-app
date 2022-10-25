@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Steps } from "antd";
 
 import { BlockQuote, FormIntroGuest } from "./FormIntro";
@@ -14,7 +14,6 @@ import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,
 } from "../formInitialState";
-import { Error } from "../../Forms/styles";
 
 const { Step } = Steps;
 
@@ -28,7 +27,7 @@ export const GuestClientForm = () => {
   } = useGuestFormContext();
 
   const [pets, setPets] = useState([]);
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(2);
 
   const formSteps = [
     {

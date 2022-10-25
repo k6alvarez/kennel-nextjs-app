@@ -27,11 +27,16 @@ export const Hint = styled.span`
 `;
 
 export const StyledInput = styled.input`
+  font-size: ${({ theme }) => theme.fontSizes[1]};
   border: 1px solid
     ${({ theme, error }) =>
       error ? theme.colors.primary : theme.colors.textSecondary};
   &:focus {
     border-color: ${({ theme }) => theme.colors.inputFocus};
+  }
+
+  ::-webkit-file-upload-button {
+    font-size: ${({ theme }) => theme.fontSizes[0]};
   }
 `;
 

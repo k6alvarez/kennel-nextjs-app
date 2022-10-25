@@ -17,7 +17,7 @@ export const ClientPets = () => {
   }, []);
   return (
     <>
-      {!pets.length && (
+      {pets.length === 0 && (
         <Empty description="You don't have any pets yet. Add one below." />
       )}
 

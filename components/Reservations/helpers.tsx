@@ -120,6 +120,38 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
         return false;
       }
     }
+
+    if (field[0] === "departureTime" && state.arrivalTime.value) {
+      const arrivalTime = DateTime.fromISO(state.arrivalTime.value);
+      const departureTime = DateTime.fromISO(state.departureTime.value);
+      const sameTimeCheck = arrivalTime.equals(departureTime);
+      const arrivalDate = DateTime.fromISO(state.arrivalDate.value);
+      const sameDayPickup = DateTime.fromISO(state.departureDate.value).equals(
+        arrivalDate
+      );
+
+      if (sameTimeCheck && sameDayPickup) {
+        const error = `Arrival and departure times cannot be the same.`;
+        dispatch({
+          key: field[0],
+          payload: { newValue: fieldFromState.value, error },
+        });
+        return false;
+      }
+
+      if (sameDayPickup && arrivalTime > departureTime) {
+        const error = `Departure time cannot be before arrival time. Please select a new departure time.`;
+        dispatch({
+          key: field[0],
+          payload: { newValue: fieldFromState.value, error },
+        });
+        return false;
+      } else
+        dispatch({
+          key: field[0],
+          payload: { newValue: fieldFromState.value, error: null },
+        });
+    }
   }
   return true;
 };

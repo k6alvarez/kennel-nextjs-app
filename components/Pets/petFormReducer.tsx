@@ -47,27 +47,15 @@ export const PET_INITIAL_STATE = {
   image: {
     value: "",
     error: null,
-    type: "text",
+    type: "file",
     label: "Image",
-  },
-  largeImage: {
-    value: "",
-    error: null,
-    type: "text",
-    label: "Large Image",
   },
   vaccinations: {
     value: "",
     error: null,
-    type: "text",
+    type: "file",
     label: "Vaccinations",
     required: true,
-  },
-  vaccinationsLargeImage: {
-    value: "",
-    error: null,
-    type: "text",
-    label: "Vaccinations Large Image",
   },
   age: {
     value: "1",

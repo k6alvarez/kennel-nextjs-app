@@ -18,6 +18,33 @@ export const SmallButton = styled.button`
   font-size: ${(props) => `calc(${props.theme.fontSizes[1]} / 1.6)`};
 `;
 
+const Flex = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: ${(props) => props.theme.space[2]};
+  font-size: ${(props) => props.theme.fontSizes[0]};
+
+  p {
+    display: flex;
+    flex-direction: column;
+
+    span:last-child {
+      font-weight: 600;
+    }
+  }
+`;
+
+const PetCards = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  background-color: ${(props) => props.theme.colors.secondary};
+
+  gap: ${(props) => props.theme.space[3]};
+  padding: ${(props) => props.theme.space[4]};
+  padding-bottom: 0;
+  margin-bottom: ${(props) => props.theme.space[4]};
+`;
+
 export const defaultShadow = "0 0 10px 0 rgba(0,0,0,0.1)";
 
 const petInfoOnly = (pet) => {
@@ -94,6 +121,7 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
     petFormDispatch,
     setPetFormError,
     handleChange,
+
     petFormError,
   } = usePetFormContext();
 
@@ -107,20 +135,37 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
     <fieldset>
       <Error>{petFormError}</Error>
       <Fieldset>
-        <h2>
-          Pets boarding on{" "}
-          {DateTime.fromISO(guestFormState.arrivalDate.value).toFormat("DDDD")}
-        </h2>
-        <p>Deposit amount due: {calculateDeposit(pets)}</p>
-        <Fields>
+        <Flex>
+          <p>
+            <span>Boarding Dates:</span>
+            <span>
+              {DateTime.fromISO(guestFormState.arrivalDate.value).toFormat(
+                "DD"
+              )}{" "}
+              to{" "}
+              {DateTime.fromISO(guestFormState.departureDate.value).toFormat(
+                "DD"
+              )}
+            </span>
+          </p>
+          <p>
+            <span>Deposit amount due:</span>
+            <span>{calculateDeposit(pets)}</span>
+          </p>
+        </Flex>
+        <PetCards>
+          {!pets.length && (
+            <Card>
+              <span>
+                Pets being boarded will be shown here. Add a pet using the form
+                below.
+              </span>
+            </Card>
+          )}
           {pets?.map((pet, i) => {
             return (
               <Card
                 key={pet + "-" + i}
-                style={{
-                  width: 300,
-                  margin: "0 10px 10px 0",
-                }}
                 title={pet.name}
                 cover={
                   isValidHttpUrl(pet.largeImage) && (
@@ -143,12 +188,11 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
                 }}
               >
                 <PetInfo pet={petInfoOnly(pet)} />
-                <hr />
                 <PetInfo pet={petBoardingOnly(pet)} />
               </Card>
             );
           })}
-        </Fields>
+        </PetCards>
 
         {pets.length < 5 ? (
           <>
