@@ -27,7 +27,7 @@ export const GuestClientForm = () => {
   } = useGuestFormContext();
 
   const [pets, setPets] = useState([]);
-  const [current, setCurrent] = useState(2);
+  const [current, setCurrent] = useState(0);
 
   const formSteps = [
     {

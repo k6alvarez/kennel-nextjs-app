@@ -6,6 +6,7 @@ import {
   Hint,
   StyledTextarea,
   StyledSelect,
+  PreviewWrapper,
 } from "./styles";
 
 interface InputProps
@@ -62,14 +63,21 @@ export const renderFormFields = ({
               type={field.type}
               name={key}
               id={key}
-              value={""}
               onChange={async (e) => {
-                const selectedImage = e.target.files[0];
-                console.log(
-                  "🚀 ~ file: renderFormFields.tsx ~ line 68 ~ onChange={ ~ selectedImage",
-                  selectedImage
-                );
-                handleChange(key, e.target.files[0]);
+                e.preventDefault();
+                const file = e.target.files[0];
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("upload_preset", "gk-app");
+
+                const data = await fetch(
+                  "https://api.cloudinary.com/v1_1/dhcv2fdfq/image/upload",
+                  {
+                    method: "POST",
+                    body: formData,
+                  }
+                ).then((res) => res.json());
+                handleChange(key, data.secure_url);
               }}
               error={field.error || false}
               required={requiredField}
@@ -77,14 +85,21 @@ export const renderFormFields = ({
               accept="image/* , .pdf"
             />
 
-            {field.value && (
-              <Image
-                src={field.value}
-                alt="Picture of the author"
-                width={500}
-                height={500}
-              />
-            )}
+            <PreviewWrapper>
+              {field.value && !field.value.endsWith("pdf") && (
+                <Image
+                  src={field.value}
+                  alt="Picture of the author"
+                  width={200}
+                  height={200}
+                />
+              )}
+              {field.value && field.value.endsWith("pdf") && (
+                <a href={field.value} target="_blank">
+                  PDF Uploaded - Click to View
+                </a>
+              )}
+            </PreviewWrapper>
           </>
         )}
 

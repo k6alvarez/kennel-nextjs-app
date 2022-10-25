@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { DeleteOutlined } from "@ant-design/icons";
-import { Card } from "antd";
+import { Card, Image } from "antd";
 import styled from "styled-components";
 import { DateTime } from "luxon";
 import { renderFormFields } from "../../Forms/renderFormFields";
@@ -168,8 +168,13 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
                 key={pet + "-" + i}
                 title={pet.name}
                 cover={
-                  isValidHttpUrl(pet.largeImage) && (
-                    <img alt={`Picture of ${pet.name}`} src={pet.largeImage} />
+                  isValidHttpUrl(pet.image) && (
+                    <Image
+                      src={pet.image}
+                      alt={`Picture of ${pet.name}`}
+                      width={200}
+                      height={200}
+                    />
                   )
                 }
                 extra={

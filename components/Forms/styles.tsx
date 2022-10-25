@@ -11,6 +11,11 @@ export const Fieldset = styled.fieldset`
   max-width: 100%;
 `;
 
+export const PreviewWrapper = styled.div`
+  margin: ${({ theme }) => theme.space[4]} 0;
+  font-size: ${({ theme }) => theme.fontSizes[0]};
+`;
+
 export const Field = styled.div`
   display: flex;
   flex-direction: column;

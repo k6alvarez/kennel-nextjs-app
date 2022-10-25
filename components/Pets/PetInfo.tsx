@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
 import { PET_INITIAL_STATE } from "./petFormReducer";
@@ -29,7 +30,14 @@ export const PetInfo = ({ pet }) => {
       {Object.keys(pet).map((key, i) => (
         <Pair key={key + "-" + i}>
           <Key>{PET_INITIAL_STATE[key].label}</Key>: <br />
-          <Value>{pet[key]}</Value>
+          {console.log(key, pet[key])}
+          {key === "vaccinations" ? (
+            <a href={pet[key]} target="_blank">
+              View Vaccinations
+            </a>
+          ) : (
+            <Value>{pet[key]}</Value>
+          )}
         </Pair>
       ))}
     </Wrapper>
