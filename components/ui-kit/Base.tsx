@@ -9,7 +9,10 @@ export const Content = styled.article`
     cardWrapper ? theme.colors.secondaryDark : "inherit"};
 
   @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
-    padding: ${({ theme }) => theme.space[6]} ${({ theme }) => theme.space[4]};
+    padding: ${({ theme, cardWrapper }) =>
+      cardWrapper
+        ? `${theme.space[4]}`
+        : `${theme.space[6]} ${theme.space[4]}`};
     width: ${({ maxWidth }) => (maxWidth ? maxWidth : "80vw")};
     max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "1200px")};
   }
@@ -32,6 +35,8 @@ export const Content = styled.article`
 
   .ant-card {
     margin-bottom: ${({ theme }) => theme.space[4]};
+    font-size: ${({ theme, fs }) =>
+      fs ? theme.fontSizes[fs] : theme.fontSizes[1]};
   }
 
   .ant-card-head-title {

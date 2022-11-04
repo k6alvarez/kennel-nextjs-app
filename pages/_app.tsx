@@ -30,6 +30,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const theme = { ...base, colors: themesMap[currentTheme] };
 
   const [guestFormError, setFormError] = useState(undefined);
+  const [guestFormLoading, setGuestFormLoading] = useState(false);
   const [guestFormState, guestFormDispatch] = useReducer(
     guestFormReducer,
     INITIAL_STATE
@@ -42,6 +43,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 
   const [petFormError, setPetFormError] = useState(undefined);
+  const [petFormLoading, setPetFormLoading] = useState(false);
   const [petFormState, petFormDispatch] = useReducer(
     petFormReducer,
     PET_INITIAL_STATE
@@ -85,6 +87,8 @@ const App = ({ Component, pageProps }: AppProps) => {
                 guestFormDispatch,
                 guestFormError,
                 setFormError,
+                guestFormLoading,
+                setGuestFormLoading,
               }}
             >
               <PetFormProvider
@@ -100,6 +104,8 @@ const App = ({ Component, pageProps }: AppProps) => {
                   petFormDispatch,
                   petFormError,
                   setPetFormError,
+                  petFormLoading,
+                  setPetFormLoading,
                 }}
               >
                 <GlobalStyle />

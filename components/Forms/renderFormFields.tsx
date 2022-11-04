@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useState } from "react";
 import {
   Field,
   StyledLabel,
@@ -37,12 +38,14 @@ export interface renderFormFieldProps {
     [x: string]: InputProps;
   };
   handleChange: (arg0: string, arg1: any) => any;
+  setFormLoading?: (arg0: boolean) => any;
 }
 
 export const renderFormFields = ({
   initialState,
   state,
   handleChange,
+  setFormLoading,
 }: renderFormFieldProps) => {
   return Object.entries(initialState).map(([key, _value], i) => {
     const field = state[key];
@@ -50,6 +53,8 @@ export const renderFormFields = ({
 
     const autoFocus = i === 0;
     const requiredField = field.required || false;
+
+    let imgLoading = false;
 
     return (
       <Field key={key} grow={field.grow}>
@@ -69,7 +74,8 @@ export const renderFormFields = ({
                 const formData = new FormData();
                 formData.append("file", file);
                 formData.append("upload_preset", "gk-app");
-
+                !!setFormLoading(true);
+                imgLoading = true;
                 const data = await fetch(
                   "https://api.cloudinary.com/v1_1/dhcv2fdfq/image/upload",
                   {
@@ -78,6 +84,8 @@ export const renderFormFields = ({
                   }
                 ).then((res) => res.json());
                 handleChange(key, data.secure_url);
+                !!setFormLoading(false);
+                imgLoading = false;
               }}
               error={field.error || false}
               required={requiredField}
@@ -86,6 +94,14 @@ export const renderFormFields = ({
             />
 
             <PreviewWrapper>
+              {imgLoading && (
+                <Image
+                  src="/images/loading.gif"
+                  alt="loading"
+                  width={50}
+                  height={50}
+                />
+              )}
               {field.value && !field.value.endsWith("pdf") && (
                 <Image
                   src={field.value}

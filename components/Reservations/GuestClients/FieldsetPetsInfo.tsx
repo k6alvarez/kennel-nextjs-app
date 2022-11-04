@@ -43,6 +43,10 @@ const PetCards = styled.div`
   padding: ${(props) => props.theme.space[4]};
   padding-bottom: 0;
   margin-bottom: ${(props) => props.theme.space[4]};
+
+  .ant-card {
+    font-size: ${(props) => props.theme.fontSizes[0]};
+  }
 `;
 
 export const defaultShadow = "0 0 10px 0 rgba(0,0,0,0.1)";
@@ -121,7 +125,8 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
     petFormDispatch,
     setPetFormError,
     handleChange,
-
+    petFormLoading,
+    setPetFormLoading,
     petFormError,
   } = usePetFormContext();
 
@@ -132,7 +137,7 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
   };
 
   return (
-    <fieldset>
+    <fieldset disabled={petFormLoading}>
       <Error>{petFormError}</Error>
       <Fieldset>
         <Flex>
@@ -207,12 +212,14 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
                 initialState: PET_INITIAL_STATE,
                 state: petFormState,
                 handleChange,
+                setFormLoading: setPetFormLoading,
               })}
               <Field grow>
                 <Button
                   disabled={pets.length >= 5}
                   onClick={(e) => {
                     e.preventDefault();
+                    setPetFormLoading(true);
                     const petFieldsValid = fieldValidator({
                       fields: Object.entries(PET_INITIAL_STATE),
                       state: petFormState,
@@ -234,6 +241,8 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
                           setPets([...pets, data]);
                         },
                         reservationId: guestFormState.reservationId,
+                      }).then(() => {
+                        setPetFormLoading(false);
                       });
                     }
                   }}

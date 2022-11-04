@@ -30,7 +30,6 @@ export const PetInfo = ({ pet }) => {
       {Object.keys(pet).map((key, i) => (
         <Pair key={key + "-" + i}>
           <Key>{PET_INITIAL_STATE[key].label}</Key>: <br />
-          {console.log(key, pet[key])}
           {key === "vaccinations" ? (
             <a href={pet[key]} target="_blank">
               View Vaccinations

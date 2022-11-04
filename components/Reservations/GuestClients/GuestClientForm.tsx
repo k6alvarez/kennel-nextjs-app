@@ -24,6 +24,8 @@ export const GuestClientForm = () => {
     setFormError,
     handleChange,
     guestFormError,
+    setGuestFormLoading,
+    guestFormLoading,
   } = useGuestFormContext();
 
   const [pets, setPets] = useState([]);
@@ -37,6 +39,7 @@ export const GuestClientForm = () => {
           initialState={INITIAL_USER_STATE}
           state={guestFormState}
           handleChange={handleChange}
+          formLoading={guestFormLoading}
         />
       ),
     },
@@ -47,6 +50,7 @@ export const GuestClientForm = () => {
           initialState={INITIAL_RESERVATION_STATE}
           state={guestFormState}
           handleChange={handleChange}
+          formLoading={guestFormLoading}
         />
       ),
     },
@@ -111,20 +115,25 @@ export const GuestClientForm = () => {
 
                   if (fieldsValid) {
                     const draftCreated = guestFormState.reservationId;
-
                     if (!draftCreated) {
+                      setGuestFormLoading(true);
                       guestFormCreateDraft(undefined, {
                         state: guestFormState,
                         setFormError,
                         dispatch: guestFormDispatch,
+                      }).then(() => {
+                        setGuestFormLoading(false);
+                        next({ current, setCurrent });
                       });
+                    } else {
+                      next({ current, setCurrent });
                     }
-                    next({ current, setCurrent });
                   }
                 } else {
                   next({ current, setCurrent });
                 }
               }}
+              disabled={guestFormLoading}
             >
               Next
             </Button>

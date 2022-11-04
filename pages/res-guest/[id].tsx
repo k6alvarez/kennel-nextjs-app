@@ -10,6 +10,10 @@ import {
   INITIAL_USER_STATE,
 } from "../../components/Reservations/formInitialState";
 import { PET_INITIAL_STATE } from "../../components/Pets/petFormReducer";
+import { isValidHttpUrl } from "../../components/Pets/services";
+import { FileOutlined } from "@ant-design/icons";
+import { Avatar } from "antd";
+import Image from "next/image";
 
 const Flex = styled.div`
   display: flex;
@@ -18,7 +22,7 @@ const Flex = styled.div`
 `;
 
 const ResId = styled.span`
-  font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/1.8)`};
+  font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/1.4)`};
 `;
 
 const Grid = styled.div`
@@ -58,12 +62,23 @@ const ResGuest = ({ reservation }) => {
   ) => {
     const fieldInGroup = fieldGroup[key];
 
+    if (key === "image" || key === "name") {
+      return;
+    }
+
     if (fieldInGroup && value) {
+      const isUrl = isValidHttpUrl(value);
       return (
         <div key={key}>
           <p>
-            {fieldInGroup.label}:<br />
-            {value}
+            {fieldInGroup.label}: <br />
+            {isUrl ? (
+              <a href={value as string} target="_blank" rel="noreferrer">
+                <FileOutlined /> {fieldInGroup.label}
+              </a>
+            ) : (
+              <span>{value}</span>
+            )}
           </p>
         </div>
       );
@@ -93,15 +108,12 @@ const ResGuest = ({ reservation }) => {
           this page.
         </p>
       </Content>
-      <Content maxWidth="900px" cardWrapper>
+      <Content maxWidth="900px" cardWrapper fs="0">
         <Card
           title={
             <Flex>
               <span>Boarding Dates</span>
-              <ResId>
-                Reservation ID: <br />
-                {reservation.id}
-              </ResId>
+              <ResId>Reservation ID: {reservation.id}</ResId>
             </Flex>
           }
         >
@@ -111,25 +123,23 @@ const ResGuest = ({ reservation }) => {
             )}
           </Grid>
         </Card>
-
-        <Grid
-          style={{
-            gridTemplateColumns: "1fr 1fr",
-            gridGap: "1rem",
-          }}
-        >
-          {reservation.pets.map((pet) => {
-            return (
-              <Card title={pet.name} key={pet.id}>
-                <Grid>
-                  {Object.entries(pet).map(([key, value]: any) =>
-                    getFieldGroupValues(PET_INITIAL_STATE, key, value)
-                  )}
-                </Grid>
-              </Card>
-            );
-          })}
-        </Grid>
+        {reservation.pets.map((pet) => {
+          return (
+            <Card title={pet.name} key={pet.id}>
+              <Image
+                src={pet.image}
+                alt={`Picture of ${pet.name}`}
+                width={200}
+                height={200}
+              />
+              <Grid>
+                {Object.entries(pet).map(([key, value]: any) =>
+                  getFieldGroupValues(PET_INITIAL_STATE, key, value)
+                )}
+              </Grid>
+            </Card>
+          );
+        })}
 
         <Card title={"Owner Details"}>
           <Grid>
