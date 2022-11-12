@@ -38,9 +38,9 @@ export const Promo = ({
   return (
     <PromoWrapper>
       <PromoText size="70vw">
-        <animated.div style={{ ...props }}>
+        {/* <animated.div style={{ ...props }}>
           <Crest />
-        </animated.div>
+        </animated.div> */}
         <animated.div style={props}>
           <PromoTitleWrapper>
             {children ? (

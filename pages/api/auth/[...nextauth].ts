@@ -40,6 +40,7 @@ const options = {
         provider: { server, from },
      }) {
         const { host } = new URL(url);
+        console.log("🚀 ~ file: [...nextauth].ts ~ line 43 ~ host", host)
         const transport = createTransport(server);
         await transport.sendMail({
           to: email,
@@ -53,19 +54,6 @@ const options = {
 
     }),
   ],
-  // callbacks: {
-  //   async signIn({ user, account, profile, email, credentials }) {
-  //     const isAllowedToSignIn = false
-  //     if (isAllowedToSignIn) {
-  //       return true
-  //     } else {
-  //       // Return false to display a default error message
-  //       return false
-  //       // Or you can return a URL to redirect to:
-  //       // return '/unauthorized'
-  //     }
-  //   }
-  // },
   pages: {
     signIn: '/auth/signin',
     error: '/auth/error', // Error code passed in query string as ?error=
@@ -105,9 +93,8 @@ const options = {
   <table width="100%" border="0" cellspacing="20" cellpadding="0"
     style="background: ${color.mainBackground}; max-width: 600px; margin: 10px auto; ">
     <tr>
-      <td align="center"
-        style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-        Profile created at Gillette Kennels. Please verify your email address using the link below.
+      <td align="center" style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
+        Please verify your email address using the link below.
       </td>
     </tr>
     <tr>
@@ -141,7 +128,7 @@ function text({ url, host }: { url: string; host: string }) {
 export function getFooter() {
   return `
   <tr>
-    <td style="text-align: left; padding-right: 10px; font-size: 12px;">
+    <td style="text-align: left; padding-right: 10px; font-size: 12px; font-weight: bold;">
       <p>&copy; ${getYear()} Gillette Kennels. All Rights Reserved</p>
     </td>
   </tr>
