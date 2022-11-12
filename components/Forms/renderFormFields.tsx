@@ -52,20 +52,20 @@ export const renderFormFields = ({
     const onChange = (e) => handleChange(key, e.target.value);
 
     const autoFocus = i === 0;
-    const requiredField = field.required || false;
+    const requiredField = field?.required || false;
 
     let imgLoading = false;
 
     return (
-      <Field key={key} grow={field.grow}>
-        <StyledLabel htmlFor={key} error={field.error || false}>
-          {`${field.label}${field.required ? "*" : ""}`}
+      <Field key={key} grow={field?.grow}>
+        <StyledLabel htmlFor={key} error={field?.error || false}>
+          {`${field?.label}${field?.required ? "*" : ""}`}
         </StyledLabel>
 
-        {field.type === "file" && (
+        {field?.type === "file" && (
           <>
             <StyledInput
-              type={field.type}
+              type={field?.type}
               name={key}
               id={key}
               onChange={async (e) => {
@@ -74,7 +74,7 @@ export const renderFormFields = ({
                 const formData = new FormData();
                 formData.append("file", file);
                 formData.append("upload_preset", "gk-app");
-                !!setFormLoading(true);
+                setFormLoading && setFormLoading(true);
                 imgLoading = true;
                 const data = await fetch(
                   "https://api.cloudinary.com/v1_1/dhcv2fdfq/image/upload",
@@ -84,12 +84,12 @@ export const renderFormFields = ({
                   }
                 ).then((res) => res.json());
                 handleChange(key, data.secure_url);
-                !!setFormLoading(false);
+                setFormLoading && setFormLoading(false);
                 imgLoading = false;
               }}
-              error={field.error || false}
+              error={field?.error || false}
               required={requiredField}
-              disabled={field.disabled}
+              disabled={field?.disabled}
               accept="image/* , .pdf"
             />
 
@@ -102,16 +102,16 @@ export const renderFormFields = ({
                   height={50}
                 />
               )}
-              {field.value && !field.value.endsWith("pdf") && (
+              {field?.value && !field?.value.endsWith("pdf") && (
                 <Image
-                  src={field.value}
+                  src={field?.value}
                   alt="Picture of the author"
                   width={200}
                   height={200}
                 />
               )}
-              {field.value && field.value.endsWith("pdf") && (
-                <a href={field.value} target="_blank">
+              {field?.value && field?.value.endsWith("pdf") && (
+                <a href={field?.value} target="_blank">
                   PDF Uploaded - Click to View
                 </a>
               )}
@@ -119,31 +119,31 @@ export const renderFormFields = ({
           </>
         )}
 
-        {field.type === "textarea" && (
+        {field?.type === "textarea" && (
           <StyledTextarea
             onChange={onChange}
-            value={field.value}
+            value={field?.value}
             id={key}
             autoFocus={autoFocus}
-            error={field.error}
-            disabled={field.disabled}
-            placeholder={field.placeholder}
-            rows={field.rows}
-            maxWidth={field.maxWidth}
+            error={field?.error}
+            disabled={field?.disabled}
+            placeholder={field?.placeholder}
+            rows={field?.rows}
+            maxWidth={field?.maxWidth}
           />
         )}
 
-        {field.type === "select" && (
+        {field?.type === "select" && (
           <StyledSelect
             autoFocus={autoFocus}
             id={key}
             name={key}
             onChange={onChange}
-            error={field.error}
-            defaultValue={field.value}
-            disabled={field.disabled}
+            error={field?.error}
+            defaultValue={field?.value}
+            disabled={field?.disabled}
           >
-            {field.options.map((option, i) => (
+            {field?.options.map((option, i) => (
               <option key={i} value={option}>
                 {option}
               </option>
@@ -151,27 +151,27 @@ export const renderFormFields = ({
           </StyledSelect>
         )}
 
-        {field.type !== "textarea" &&
-          field.type !== "select" &&
-          field.type !== "file" && (
+        {field?.type !== "textarea" &&
+          field?.type !== "select" &&
+          field?.type !== "file" && (
             <StyledInput
               autoFocus={autoFocus}
               onChange={onChange}
-              type={field.type || "text"}
-              inputMode={field.inputMode || "text"}
-              minLength={field.minLength}
-              maxLength={field.maxLength}
-              min={field.min}
-              pattern={field.pattern}
+              type={field?.type || "text"}
+              inputMode={field?.inputMode || "text"}
+              minLength={field?.minLength}
+              maxLength={field?.maxLength}
+              min={field?.min}
+              pattern={field?.pattern}
               required={requiredField}
               id={key}
-              value={field.value}
-              error={field.error}
-              disabled={field.disabled}
+              value={field?.value}
+              error={field?.error}
+              disabled={field?.disabled}
             />
           )}
 
-        {field.error && <Hint>{field.error}</Hint>}
+        {field?.error && <Hint>{field?.error}</Hint>}
       </Field>
     );
   });

@@ -11,7 +11,6 @@ import { PET_INITIAL_STATE } from "../../Pets/petFormReducer";
 import { PetInfo } from "../../Pets/PetInfo";
 import { guestPetFormSubmit, isValidHttpUrl } from "../../Pets/services";
 import { Button } from "../../ui-kit/Base";
-import { useGuestFormContext } from "../formContext";
 import { fieldValidator } from "../helpers";
 
 export const SmallButton = styled.button`
@@ -65,6 +64,7 @@ const petInfoOnly = (pet) => {
   delete petInfo.vaccinations;
   delete petInfo.image;
   delete petInfo.guestReservationId;
+  delete petInfo.reservationId;
   delete petInfo.name;
   delete petInfo.vet;
   delete petInfo.preferredRunSize;
@@ -86,6 +86,7 @@ const petBoardingOnly = (pet) => {
   delete petInfo.vaccinationsLargeImage;
   delete petInfo.image;
   delete petInfo.guestReservationId;
+  delete petInfo.reservationId;
   delete petInfo.fixed;
   delete petInfo.name;
   delete petInfo.type;
@@ -118,8 +119,13 @@ async function deleteGuestPet(id: string): Promise<void> {
   });
 }
 
-export const FieldsetPetsInfo = ({ pets, setPets }) => {
-  const { guestFormState, guestFormDispatch } = useGuestFormContext();
+export const FieldsetPetsInfo = ({
+  pets,
+  setPets,
+  formState,
+  formDispatch,
+  apiPath,
+}) => {
   const {
     petFormState,
     petFormDispatch,
@@ -144,13 +150,8 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
           <p>
             <span>Boarding Dates:</span>
             <span>
-              {DateTime.fromISO(guestFormState.arrivalDate.value).toFormat(
-                "DD"
-              )}{" "}
-              to{" "}
-              {DateTime.fromISO(guestFormState.departureDate.value).toFormat(
-                "DD"
-              )}
+              {DateTime.fromISO(formState.arrivalDate.value).toFormat("DD")} to{" "}
+              {DateTime.fromISO(formState.departureDate.value).toFormat("DD")}
             </span>
           </p>
           <p>
@@ -167,6 +168,7 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
               </span>
             </Card>
           )}
+          {console.log(pets)}
           {pets?.map((pet, i) => {
             return (
               <Card
@@ -197,7 +199,9 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
                   onTab1Change(key);
                 }}
               >
+                <h4>Pet Info:</h4>
                 <PetInfo pet={petInfoOnly(pet)} />
+                <h4>Boarding Info</h4>
                 <PetInfo pet={petBoardingOnly(pet)} />
               </Card>
             );
@@ -232,19 +236,25 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
                         setPetFormError,
                         dispatch: petFormDispatch,
                         formSuccessCallback: (data) => {
-                          guestFormDispatch({
-                            type: "toggleGuestPet",
+                          formDispatch({
+                            type: "togglePet",
                             payload: {
                               pet: data,
                             },
                           });
                           setPets([...pets, data]);
+                          console.log(
+                            "🚀 ~ file: FieldsetPetsInfo.tsx ~ line 241 ~ data",
+                            data
+                          );
                         },
-                        reservationId: guestFormState.reservationId,
+                        reservationId: formState.reservationId,
+                        apiPath,
                       }).then(() => {
                         setPetFormLoading(false);
                       });
                     }
+                    setPetFormLoading(false);
                   }}
                   primary
                 >

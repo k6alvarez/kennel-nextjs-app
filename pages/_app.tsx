@@ -29,7 +29,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const [currentTheme, setCurrentTheme] = useState("light");
   const theme = { ...base, colors: themesMap[currentTheme] };
 
-  const [guestFormError, setFormError] = useState(undefined);
+  const [guestFormError, setGuestFormError] = useState(undefined);
   const [guestFormLoading, setGuestFormLoading] = useState(false);
   const [guestFormState, guestFormDispatch] = useReducer(
     guestFormReducer,
@@ -37,6 +37,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 
   const [clientFormError, setClientFormError] = useState(undefined);
+  const [clientFormLoading, setClientFormLoading] = useState(false);
   const [clientFormState, clientFormDispatch] = useReducer(
     clientFormReducer,
     INITIAL_CLIENT_STATE
@@ -72,6 +73,8 @@ const App = ({ Component, pageProps }: AppProps) => {
               clientFormDispatch,
               clientFormError,
               setClientFormError,
+              clientFormLoading,
+              setClientFormLoading,
             }}
           >
             <GuestFormProvider
@@ -86,7 +89,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 },
                 guestFormDispatch,
                 guestFormError,
-                setFormError,
+                setGuestFormError,
                 guestFormLoading,
                 setGuestFormLoading,
               }}

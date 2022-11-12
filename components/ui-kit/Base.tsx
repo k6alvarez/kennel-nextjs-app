@@ -33,6 +33,13 @@ export const Content = styled.article`
     margin: 2.5rem 0 0.8rem;
   }
 
+  h4 {
+    font-weight: bold;
+    font-size: ${({ theme }) => theme.fontSizes[1]};
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
   .ant-card {
     margin-bottom: ${({ theme }) => theme.space[4]};
     font-size: ${({ theme, fs }) =>

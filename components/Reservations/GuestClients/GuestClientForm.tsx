@@ -9,7 +9,7 @@ import { Button } from "../../ui-kit/Base";
 import { StepsContent, StepsAction } from "../styles";
 import { FieldSetPaymentInfo } from "./FieldSetPaymentInfo";
 import { next, prev, guestFormFieldsValid } from "../helpers";
-import { guestFormCreateDraft, guestFormSubmit } from "./services";
+import { createReservationDraft, guestFormSubmit } from "./services";
 import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,
@@ -21,7 +21,7 @@ export const GuestClientForm = () => {
   const {
     guestFormState,
     guestFormDispatch,
-    setFormError,
+    setGuestFormError,
     handleChange,
     guestFormError,
     setGuestFormLoading,
@@ -56,7 +56,15 @@ export const GuestClientForm = () => {
     },
     {
       title: "Pets",
-      content: <FieldsetPetsInfo pets={pets} setPets={setPets} />,
+      content: (
+        <FieldsetPetsInfo
+          pets={pets}
+          setPets={setPets}
+          formState={guestFormState}
+          formDispatch={guestFormDispatch}
+          apiPath="/api/guest-pet"
+        />
+      ),
     },
     {
       title: "Deposit",
@@ -71,7 +79,7 @@ export const GuestClientForm = () => {
         onSubmit={(e) => {
           guestFormSubmit(e, {
             state: guestFormState,
-            setFormError,
+            setFormError: setGuestFormError,
             dispatch: guestFormDispatch,
           });
         }}
@@ -96,10 +104,10 @@ export const GuestClientForm = () => {
               type="button"
               onClick={() => {
                 if (pets.length === 0 && current === 2) {
-                  setFormError("Please add a pet to continue.");
+                  setGuestFormError("Please add a pet to continue.");
                   return;
                 } else {
-                  setFormError("");
+                  setGuestFormError("");
                 }
 
                 if (current < 2) {
@@ -117,10 +125,11 @@ export const GuestClientForm = () => {
                     const draftCreated = guestFormState.reservationId;
                     if (!draftCreated) {
                       setGuestFormLoading(true);
-                      guestFormCreateDraft(undefined, {
+                      createReservationDraft(undefined, {
                         state: guestFormState,
-                        setFormError,
+                        setFormError: setGuestFormError,
                         dispatch: guestFormDispatch,
+                        apiPath: "/api/guest-reservation",
                       }).then(() => {
                         setGuestFormLoading(false);
                         next({ current, setCurrent });

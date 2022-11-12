@@ -37,7 +37,7 @@ export const guestFormReducer = (
       return { ...guestFormState, ...payload };
     case "resetForm":
       return { ...INITIAL_STATE };
-    case "toggleGuestPet":
+    case "togglePet":
       const petToggled = payload.pet;
       let pets = guestFormState.pets;
       const petCheck = Object.entries(pets).filter((pet: any) => {
@@ -54,7 +54,7 @@ export const guestFormReducer = (
       } else {
         return {
           ...guestFormState,
-          pets,
+          pets: { ...pets, ...petToggled },
         };
       }
 

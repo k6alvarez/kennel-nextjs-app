@@ -7,7 +7,7 @@ import { TotalDeposit } from "../styles";
 import { Error } from "../../Forms/styles";
 
 export const FieldSetPaymentInfo = () => {
-  const { guestFormDispatch, guestFormState, setFormError } =
+  const { guestFormDispatch, guestFormState, setGuestFormError } =
     useGuestFormContext();
   const [depositConfirmed, setDepositConfirmed] = useState(false);
 
@@ -15,7 +15,7 @@ export const FieldSetPaymentInfo = () => {
     if (depositConfirmed && guestFormState.depositStatus === "COMPLETED") {
       guestFormUpdate(undefined, {
         state: guestFormState,
-        setFormError,
+        setFormError: setGuestFormError,
         dispatch: guestFormDispatch,
       });
     }

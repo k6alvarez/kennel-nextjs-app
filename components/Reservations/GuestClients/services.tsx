@@ -84,9 +84,9 @@ export const guestFormSubmit = async (
   }
 };
 
-export const guestFormCreateDraft = async (
+export const createReservationDraft = async (
   e: React.SyntheticEvent,
-  { state, setFormError, dispatch }
+  { state, setFormError, dispatch, apiPath }
 ) => {
   e?.preventDefault();
   const data = Object.entries(state).map(([key, _value]) => {
@@ -96,7 +96,7 @@ export const guestFormCreateDraft = async (
   });
   setFormError(undefined);
   try {
-    await fetch("/api/guest-reservation", {
+    await fetch(apiPath, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(Object.assign({}, ...data)),

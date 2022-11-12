@@ -1,9 +1,5 @@
-import { InputProps } from "antd";
 import React from "react";
-import {
-  renderFormFieldProps,
-  renderFormFields,
-} from "../Forms/renderFormFields";
+import { renderFormFields } from "../Forms/renderFormFields";
 import { Fields } from "../Forms/styles";
 
 interface FieldsetClientInfoProps {

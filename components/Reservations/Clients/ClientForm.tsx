@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Router from "next/router";
 import { Steps } from "antd";
 import { StepsContent, StepsAction } from "../styles";
 import { Button } from "../../ui-kit/Base";
-import { next, prev } from "../helpers";
-import { Fields } from "../../Forms/styles";
-import { renderFormFields } from "../../Forms/renderFormFields";
+import { guestFormFieldsValid, next, prev } from "../helpers";
 import { useClientFormContext } from "../formContext";
 import {
   INITIAL_RESERVATION_STATE,
@@ -13,12 +10,23 @@ import {
 } from "../formInitialState";
 import { FieldsetClientInfo } from "../FieldsetFromState";
 import { getPets, getUser } from "../../Pets/services";
+import { FieldsetPetsInfo } from "../GuestClients/FieldsetPetsInfo";
+import { BlockQuote } from "../GuestClients/FormIntro";
+import { createReservationDraft } from "../GuestClients/services";
 
 const { Step } = Steps;
 
 export const ClientForm = ({ session }) => {
-  const { clientFormState, handleChange, clientFormDispatch } =
-    useClientFormContext();
+  const {
+    clientFormState,
+    handleChange,
+    clientFormDispatch,
+    clientFormError,
+    setClientFormError,
+    clientFormLoading,
+    setClientFormLoading,
+  } = useClientFormContext();
+
   const [current, setCurrent] = useState(0);
 
   const [pets, setPets] = useState([]);
@@ -66,29 +74,13 @@ export const ClientForm = ({ session }) => {
     {
       title: "Pets",
       content: (
-        <fieldset>
-          <Fields>
-            {pets.map((pet, i) => (
-              <div key={pet + "-" + i}>
-                <label>{pet.name}</label>
-                <input
-                  type="checkbox"
-                  name="pets"
-                  value={pet.id}
-                  checked={clientFormState.pets.includes(pet.id)}
-                  onChange={(e) => {
-                    clientFormDispatch({
-                      type: "togglePet",
-                      payload: {
-                        petId: pet.id,
-                      },
-                    });
-                  }}
-                />
-              </div>
-            ))}
-          </Fields>
-        </fieldset>
+        <FieldsetPetsInfo
+          pets={pets}
+          setPets={setPets}
+          formState={clientFormState}
+          formDispatch={clientFormDispatch}
+          apiPath="/api/pet"
+        />
       ),
     },
     {
@@ -100,9 +92,9 @@ export const ClientForm = ({ session }) => {
               <label>{key}</label>
               {key === "pets" ? (
                 <ul>
-                  {clientFormState[key].map((petId, i) => (
+                  {/* {clientFormState[key].map((petId, i) => (
                     <li key={petId + "-" + i}>{petId}</li>
-                  ))}
+                  ))} */}
                 </ul>
               ) : (
                 <p>{clientFormState[key].value}</p>
@@ -141,6 +133,7 @@ export const ClientForm = ({ session }) => {
           ))}
         </Steps>
         <StepsContent>{formSteps[current].content}</StepsContent>
+        <BlockQuote>{clientFormError}</BlockQuote>
         <StepsAction>
           {current > 0 && (
             <Button type="button" onClick={() => prev({ current, setCurrent })}>
@@ -152,8 +145,46 @@ export const ClientForm = ({ session }) => {
             <Button
               type="button"
               onClick={() => {
-                next({ current, setCurrent });
+                if (pets.length === 0 && current === 2) {
+                  setClientFormError("Please add a pet to continue.");
+                  return;
+                } else {
+                  setClientFormError("");
+                }
+
+                if (current < 2) {
+                  const fieldsValid = guestFormFieldsValid(
+                    {
+                      currentFormSection: current,
+                    },
+                    {
+                      state: clientFormState,
+                      dispatch: clientFormDispatch,
+                    }
+                  );
+
+                  if (fieldsValid) {
+                    const draftCreated = clientFormState.reservationId;
+                    if (!draftCreated) {
+                      setClientFormLoading(true);
+                      createReservationDraft(undefined, {
+                        state: clientFormState,
+                        setFormError: setClientFormError,
+                        dispatch: clientFormDispatch,
+                        apiPath: "/api/reservation",
+                      }).then(() => {
+                        setClientFormLoading(false);
+                        next({ current, setCurrent });
+                      });
+                    } else {
+                      next({ current, setCurrent });
+                    }
+                  }
+                } else {
+                  next({ current, setCurrent });
+                }
               }}
+              disabled={clientFormLoading}
             >
               Next
             </Button>

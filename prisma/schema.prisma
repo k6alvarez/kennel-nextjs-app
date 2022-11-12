@@ -157,7 +157,7 @@ model Reservation {
   arrivalTime         String
   departureDate       String
   departureTime       String
-  dateConfirmed       String
+  dateConfirmed       String?
   specialInstructions String
   pets                Pet[]
 

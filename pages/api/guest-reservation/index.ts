@@ -4,6 +4,7 @@ import prisma from '../../../lib/prisma';
 import { createTransport } from "nodemailer"
 import { INITIAL_STATE } from '../../../components/Reservations/GuestClients/guestFormReducer';
 import { themesMap } from '../../../components/appStyles';
+import { getFooter, getHeader } from '../auth/[...nextauth]';
 
 
 type Errors = {
@@ -81,46 +82,28 @@ export default async function handle(req, res) {
  * @note We don't add the email address to avoid needing to escape it, if you do, remember to sanitize it!
  */
  function html(params?: { url?: string; host?: string; email?: string, theme?: any }) {
+  const { url, host, theme } = params
+  const escapedHost = host?.replace(/\./g, "&#8203;.")
 
-
-  const escapedHost = params?.host?.replace(/\./g, "&#8203;.")
-
-  const brandColor = params?.theme?.primary || "#22d172"
+  const brandColor = theme?.primary || "#22d172"
   const color = {
     background: brandColor || "#f9f9f9",
-    text: params?.theme?.textSecondary || "#444",
-    mainBackground: params?.theme?.white || "#fff",
+    text: theme?.textSecondary || "#444",
+    mainBackground: theme?.white || "#fff",
     buttonBackground: brandColor,
     buttonBorder: brandColor,
-    buttonText: params?.theme?.buttonText || "#fff",
+    buttonText: theme?.buttonText || "#fff",
   }
 
   return `
 <body style="background: ${color.background};">
 
 
-  <table width="100%" border="0" cellspacing="20" cellpadding="0"
-    style="background: ${color.mainBackground}; max-width: 600px; margin: 10px auto; border-radius: 10px;">
-    <tr>
-      <td align="center" style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-        <ul style="list-style:none; margin: 0; padding: 0; display: flex; justify-content: space-between;gap: 14px;">
-          <li style="flex: 1; display: flex; justify-content: flex-start;">
-            <a href="${escapedHost}" style="color: ${color.text}; text-decoration: none;">Gillette Kennels</a>
-          </li>
-          <li>
-            <a href="${escapedHost}/boarding" style="color: ${color.text}; text-decoration: none;">Boarding</a>
-          </li>
-          <li>
-            <a href="${escapedHost}/training" style="color: ${color.text}; text-decoration: none;">Training</a>
-          </li>
-        </ul>
-      </td>
-    </tr>
-  </table>
+  ${getHeader({color, escapedHost})}
 
 
   <table width="100%" border="0" cellspacing="20" cellpadding="0"
-    style="background: ${color.mainBackground}; max-width: 600px; margin: 10px auto; border-radius: 10px;">
+    style="background: ${color.mainBackground}; max-width: 600px; margin: 10px auto; ">
     <tr>
       <td align="center"
         style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
@@ -131,7 +114,7 @@ export default async function handle(req, res) {
       <td align="center" style="padding: 20px 0;">
         <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}"><a href="${params.url}"
+            <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}"><a href="${url}"
                 target="_blank"
                 style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;"> View your reservation details </a></td>
           </tr>
@@ -145,11 +128,7 @@ export default async function handle(req, res) {
       </td>
 
     </tr>
-    <tr>
-      <td style="text-align: left; padding-right: 10px;">
-        <p>&copy; ${getYear()} Gillette Kennels. All Rights Reserved</p>
-      </td>
-    </tr>
+    ${getFooter()}
   </table>
 </body>
 `
@@ -160,7 +139,7 @@ function text({url}) {
   return ` Thank you for your reservation at ${process.env.HOSTNAME}. Your reservation is pending approval. We will contact you via email for confirmation. View your reservation details: ${url} `
 }
 
-const getYear = () => {
+export const getYear = () => {
   const date = new Date();
   return date.getFullYear();
 };

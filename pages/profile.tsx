@@ -10,7 +10,6 @@ import { ThemePreferenceContext } from "./_app";
 import Layout from "../components/Layout";
 import { Content } from "../components/ui-kit/Base";
 import { profileFormReducer } from "../components/Profile/profileFormReducer";
-import { statesArray } from "../components/Reservations/formInitialState";
 import { Size, useWindowSize } from "../components/ui-kit/hooks/useWindowSize";
 import { ProfileForm } from "../components/Profile/ProfileForm";
 import { PetsTab } from "../components/Pets/PetsTab";
@@ -95,9 +94,14 @@ const Profile: React.FC<Props> = ({ user }) => {
     address: {
       value: user?.address || "",
       error: null,
-      type: "text",
+      type: "textarea",
       label: "Address",
+      required: true,
+      rows: 3,
       grow: true,
+      placeholder: `123 Main St
+Apt 2
+Kalamazoo, MI 49009`,
     },
     phone: {
       value: user?.phone || "",

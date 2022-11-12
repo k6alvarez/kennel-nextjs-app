@@ -22,6 +22,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: ${(props) => props.theme.space[5]};
+  margin-bottom: ${(props) => props.theme.space[5]};
 `;
 
 export const PetInfo = ({ pet }) => {
@@ -29,7 +30,7 @@ export const PetInfo = ({ pet }) => {
     <Wrapper>
       {Object.keys(pet).map((key, i) => (
         <Pair key={key + "-" + i}>
-          <Key>{PET_INITIAL_STATE[key].label}</Key>: <br />
+          <Key>{PET_INITIAL_STATE[key]?.label}</Key>: <br />
           {key === "vaccinations" ? (
             <a href={pet[key]} target="_blank">
               View Vaccinations
