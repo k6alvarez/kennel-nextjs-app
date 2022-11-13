@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Card, Collapse } from "antd";
+import { Card, Collapse, Image } from "antd";
 
 import Layout from "../components/Layout";
 import { PostProps } from "../components/Post";
 import { Content } from "../components/ui-kit/Base";
 import { BlockQuote } from "../components/Reservations/GuestClients/FormIntro";
 import { BoldText } from "../components/Boarding/MedicalIssues";
-import Image from "next/image";
+
 import { useRouter } from "next/router";
 import Link from "next/link";
 

@@ -145,3 +145,7 @@ export const isValidHttpUrl = (string) => {
 
   return url.protocol === "http:" || url.protocol === "https:";
 };
+
+export const isImageURL = (url) => {
+  return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+};

@@ -91,7 +91,7 @@ export const GuestClientForm = () => {
         </Steps>
 
         <StepsContent>{formSteps[current].content}</StepsContent>
-        <BlockQuote>{guestFormError}</BlockQuote>
+        {guestFormError && <BlockQuote>{guestFormError}</BlockQuote>}
         <StepsAction>
           {current > 0 && (
             <Button type="button" onClick={() => prev({ current, setCurrent })}>

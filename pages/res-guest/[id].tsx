@@ -1,19 +1,17 @@
 import React from "react";
 import { GetServerSideProps } from "next";
-import Layout from "../../components/Layout";
+import styled from "styled-components";
 import prisma from "../../lib/prisma";
 import { Content } from "../../components/ui-kit/Base";
-import Card from "antd/lib/card/Card";
-import styled from "styled-components";
+import { Image, Card } from "antd";
+import { FileOutlined } from "@ant-design/icons";
+import Layout from "../../components/Layout";
 import {
   INITIAL_RESERVATION_STATE,
   INITIAL_USER_STATE,
 } from "../../components/Reservations/formInitialState";
 import { PET_INITIAL_STATE } from "../../components/Pets/petFormReducer";
 import { isValidHttpUrl } from "../../components/Pets/services";
-import { FileOutlined } from "@ant-design/icons";
-import { Avatar } from "antd";
-import Image from "next/image";
 
 const Flex = styled.div`
   display: flex;

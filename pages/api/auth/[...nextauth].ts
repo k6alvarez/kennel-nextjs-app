@@ -136,7 +136,7 @@ export function getFooter() {
   `
 }
 
-export function getHeader({color, host, origin}) {
+export function getHeader({color, origin}) {
   return `
     <table width="100%" border="0" cellspacing="20" cellpadding="0"
     style="background: ${color.mainBackground}; max-width: 600px; margin: 10px auto; ">

@@ -67,7 +67,7 @@ export default async function handle(req, res) {
       from: process.env.EMAIL_FROM,
       subject: `Your reservation at ${process.env.HOSTNAME}`,
       text: text({url: `${process.env.HOSTNAME}/res-guest/${result.id}`}),
-      html: html({ url: `${process.env.HOSTNAME}/res-guest/${result.id}`, host: process.env.HOSTNAME, email: req.body.email, theme: themesMap.light}),
+      html: html({ url: `${process.env.HOSTNAME}/res-guest/${result.id}`, host: process.env.HOSTNAME, origin: process.env.HOSTNAME, email: req.body.email, theme: themesMap.light}),
     });
     res.json(result);
   }
@@ -81,7 +81,7 @@ export default async function handle(req, res) {
  *
  * @note We don't add the email address to avoid needing to escape it, if you do, remember to sanitize it!
  */
- function html(params?: { url?: string; host?: string; email?: string, theme?: any }) {
+ function html(params?: { url?: string; host?: string; origin?:string; email?: string, theme?: any }) {
   const { url, host, theme } = params
   const escapedHost = host?.replace(/\./g, "&#8203;.")
 
@@ -99,7 +99,7 @@ export default async function handle(req, res) {
 <body style="background: ${color.background};">
 
 
-  ${getHeader({color, escapedHost})}
+  ${getHeader({color, origin})}
 
 
   <table width="100%" border="0" cellspacing="20" cellpadding="0"

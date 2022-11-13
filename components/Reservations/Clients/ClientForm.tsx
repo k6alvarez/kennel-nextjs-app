@@ -47,7 +47,6 @@ export const createReservationDraft = async (
         return res.json();
       })
       .then(async (res) => {
-        console.log("🚀 ~ file: services.tsx ~ line 108 ~ .then ~ res", res);
         if (res.errors) {
           const validationError =
             "Please verify all required fields are filled out.";

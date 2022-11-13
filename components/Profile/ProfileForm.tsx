@@ -93,7 +93,7 @@ export const ProfileForm = ({
                 router.push(`/profile?tab=pets`, undefined, { shallow: false });
               }}
             >
-              Add Pets
+              View Pets
             </Button>
           </StepsAction>
         </Fieldset>

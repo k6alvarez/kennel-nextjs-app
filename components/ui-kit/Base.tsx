@@ -12,7 +12,7 @@ export const Content = styled.article`
     padding: ${({ theme, cardWrapper }) =>
       cardWrapper
         ? `${theme.space[4]}`
-        : `${theme.space[6]} ${theme.space[4]}`};
+        : `${theme.space[5]} ${theme.space[4]}`};
     width: ${({ maxWidth }) => (maxWidth ? maxWidth : "80vw")};
     max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "1200px")};
   }
@@ -38,6 +38,16 @@ export const Content = styled.article`
     font-size: ${({ theme }) => theme.fontSizes[1]};
     letter-spacing: 1px;
     margin: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    display: flex;
+    align-items: center;
+    gap: ${({ theme }) => theme.space[3]};
   }
 
   .ant-card {

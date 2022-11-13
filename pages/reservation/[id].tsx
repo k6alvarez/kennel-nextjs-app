@@ -10,19 +10,16 @@ import {
   INITIAL_USER_STATE,
 } from "../../components/Reservations/formInitialState";
 import { PET_INITIAL_STATE } from "../../components/Pets/petFormReducer";
-import { isValidHttpUrl } from "../../components/Pets/services";
+import { isImageURL, isValidHttpUrl } from "../../components/Pets/services";
 import { FileOutlined } from "@ant-design/icons";
-import { Avatar } from "antd";
-import Image from "next/image";
+import { Image, Tag } from "antd";
+
+import { DateTime } from "luxon";
 
 const Flex = styled.div`
   display: flex;
   justify-content: space-between;
   align-self: center;
-`;
-
-const ResId = styled.span`
-  font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/1.4)`};
 `;
 
 const Grid = styled.div`
@@ -40,7 +37,16 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     },
     include: {
       author: {
-        select: { name: true, email: true },
+        select: {
+          name: true,
+          lastName: true,
+          email: true,
+          address: true,
+          phone: true,
+          altPhone: true,
+          emergencyContactName: true,
+          emergencyContactPhone: true,
+        },
       },
       pets: true,
     },
@@ -62,22 +68,46 @@ const Reservation = ({ reservation }) => {
   ) => {
     const fieldInGroup = fieldGroup[key];
 
-    if (key === "image" || key === "name") {
+    if (key === "image" || key === "largeImage") {
       return;
     }
 
     if (fieldInGroup && value) {
       const isUrl = isValidHttpUrl(value);
+      const isImage = isImageURL(value);
       return (
         <div key={key}>
           <p>
             {fieldInGroup.label}: <br />
             {isUrl ? (
-              <a href={value as string} target="_blank" rel="noreferrer">
-                <FileOutlined /> {fieldInGroup.label}
-              </a>
+              <>
+                {isImage ? (
+                  <Image src={value as string} width={100} height={100} />
+                ) : (
+                  <a href={value as string} target="_blank" rel="noreferrer">
+                    <FileOutlined /> {fieldInGroup.label}
+                  </a>
+                )}
+              </>
             ) : (
-              <span>{value}</span>
+              <span>
+                {fieldInGroup.type === "date" ||
+                fieldInGroup.type === "time" ? (
+                  <>
+                    {fieldInGroup.type === "date" &&
+                      DateTime.fromISO(value as string).toLocaleString(
+                        DateTime.DATE_MED_WITH_WEEKDAY
+                      )}
+
+                    {fieldInGroup.type === "time" &&
+                      DateTime.fromISO(value as string).toLocaleString(
+                        DateTime.TIME_SIMPLE
+                      )}
+                  </>
+                ) : (
+                  <span>{value}</span>
+                )}
+              </span>
             )}
           </p>
         </div>
@@ -102,18 +132,37 @@ const Reservation = ({ reservation }) => {
   return (
     <Layout>
       <Content maxWidth="900px">
-        <h1>Boarding Reservation for {reservation.arrivalDate}</h1>
+        <h1>
+          <span>
+            Boarding Reservation for{" "}
+            {DateTime.fromISO(reservation.arrivalDate).toLocaleString({
+              month: "long",
+              day: "2-digit",
+              year: "numeric",
+            })}
+          </span>
+        </h1>
         <p>
-          Your reservation details are below. We have also emailed you a link to
-          this page.
+          {reservation.confirmed ? (
+            <>Your reservation has been confirmed.</>
+          ) : (
+            <>
+              Your reservation is not confirmed until you have received a
+              confirmation email from us.
+            </>
+          )}
         </p>
       </Content>
       <Content maxWidth="900px" cardWrapper fs="0">
         <Card
           title={
             <Flex>
-              <span>Boarding Dates</span>
-              <ResId>Reservation ID: {reservation.id}</ResId>
+              <span>Boarding Details</span>
+              {reservation.confirmed ? (
+                <Tag color="green">Confirmed</Tag>
+              ) : (
+                <Tag color="red">Not Confirmed</Tag>
+              )}
             </Flex>
           }
         >
@@ -123,16 +172,18 @@ const Reservation = ({ reservation }) => {
             )}
           </Grid>
         </Card>
-        {console.log(reservation)}
+
         {reservation.pets.map((pet) => {
           return (
             <Card title={pet.name} key={pet.id}>
-              <Image
-                src={pet.image}
-                alt={`Picture of ${pet.name}`}
-                width={200}
-                height={200}
-              />
+              {pet.image && (
+                <Image
+                  src={pet.image}
+                  alt={`Picture of ${pet.name}`}
+                  width={200}
+                  height={200}
+                />
+              )}
               <Grid>
                 {Object.entries(pet).map(([key, value]: any) =>
                   getFieldGroupValues(PET_INITIAL_STATE, key, value)
@@ -144,7 +195,7 @@ const Reservation = ({ reservation }) => {
 
         <Card title={"Owner Details"}>
           <Grid>
-            {Object.entries(reservation).map(([key, value]: any) =>
+            {Object.entries(reservation.author).map(([key, value]: any) =>
               getFieldGroupValues(INITIAL_USER_STATE, key, value)
             )}
           </Grid>
