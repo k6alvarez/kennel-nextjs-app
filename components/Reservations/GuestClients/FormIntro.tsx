@@ -3,21 +3,36 @@ import React from "react";
 import styled from "styled-components";
 
 export const BlockQuote = styled.blockquote`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   font-size: ${({ theme, large }) =>
     large ? theme.fontSizes[1] : theme.fontSizes[0]};
-  margin-left: 1rem;
+  line-height: 1.2;
   margin-top: ${(props) => props.theme.space[4]};
   margin-bottom: ${(props) => props.theme.space[4]};
   position: relative;
   font-weight: 600;
+  padding: 0.5rem 1rem;
+  background-color: ${(props) => props.theme.colors.secondaryDark};
 
   &::before {
     content: "";
     background: ${({ theme }) => theme.colors.primary};
     width: 3px;
     height: 100%;
-    left: -1rem;
+    left: 0;
     position: absolute;
+  }
+
+  p {
+    margin: ${(props) => props.theme.space[4]};
+  }
+
+  svg {
+    font-size: ${({ theme }) => theme.fontSizes[6]};
+    color: ${({ theme }) => theme.colors.primary};
   }
 `;
 

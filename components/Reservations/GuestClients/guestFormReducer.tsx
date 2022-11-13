@@ -21,6 +21,7 @@ export const INITIAL_CLIENT_STATE = {
     grow: true,
     disabled: true,
   },
+  pets: [],
 };
 
 export const guestFormReducer = (
@@ -64,6 +65,31 @@ export const guestFormReducer = (
         value: payload.newValue,
         error: payload.error,
       };
+
+      if (key === "arrivalDate") {
+        const keyDependentInput = "departureDate";
+        return {
+          ...guestFormState,
+          [key]: inputState,
+          [keyDependentInput]: {
+            ...guestFormState[keyDependentInput],
+            error: null,
+          },
+        };
+      }
+
+      if (key === "departureDate") {
+        const keyDependentInput = "arrivalDate";
+        return {
+          ...guestFormState,
+          [key]: inputState,
+          [keyDependentInput]: {
+            ...guestFormState[keyDependentInput],
+            error: null,
+          },
+        };
+      }
+
       return {
         ...guestFormState,
         [key]: inputState,

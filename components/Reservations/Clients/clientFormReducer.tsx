@@ -6,7 +6,7 @@ export const clientFormReducer = (
     case "togglePet":
       const petToggled = payload.pet;
       let pets = clientFormState.pets;
-      const petCheck = Object.entries(pets).filter((pet: any) => {
+      const petCheck = pets.filter((pet: any) => {
         return petToggled.id === pet.id;
       });
       if (petCheck.length > 0) {
@@ -20,9 +20,10 @@ export const clientFormReducer = (
       } else {
         return {
           ...clientFormState,
-          pets: { ...pets, ...petToggled },
+          pets: [...pets, petToggled],
         };
       }
+
     case "formDraftCreated":
       return {
         ...clientFormState,
@@ -45,6 +46,31 @@ export const clientFormReducer = (
         value: payload.newValue,
         error: payload.error,
       };
+
+      if (key === "arrivalDate") {
+        const keyDependentInput = "departureDate";
+        return {
+          ...clientFormState,
+          [key]: inputState,
+          [keyDependentInput]: {
+            ...clientFormState[keyDependentInput],
+            error: null,
+          },
+        };
+      }
+
+      if (key === "departureDate") {
+        const keyDependentInput = "arrivalDate";
+        return {
+          ...clientFormState,
+          [key]: inputState,
+          [keyDependentInput]: {
+            ...clientFormState[keyDependentInput],
+            error: null,
+          },
+        };
+      }
+
       return {
         ...clientFormState,
         [key]: inputState,

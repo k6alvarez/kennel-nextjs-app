@@ -1,7 +1,10 @@
+import { LinkOutlined } from "@ant-design/icons";
+import { Avatar } from "antd";
 import Image from "next/image";
 import React from "react";
 import styled from "styled-components";
 import { PET_INITIAL_STATE } from "./petFormReducer";
+import { isValidHttpUrl } from "./services";
 
 const Key = styled.span`
   font-size: ${(props) => props.theme.fontSizes[0]};
@@ -16,13 +19,15 @@ const Value = styled.span`
 
 const Pair = styled.div`
   white-space: nowrap;
+
+  a {
+    font-size: ${(props) => props.theme.fontSizes[0]};
+  }
 `;
 
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: ${(props) => props.theme.space[5]};
-  margin-bottom: ${(props) => props.theme.space[5]};
 `;
 
 export const PetInfo = ({ pet }) => {
@@ -30,10 +35,13 @@ export const PetInfo = ({ pet }) => {
     <Wrapper>
       {Object.keys(pet).map((key, i) => (
         <Pair key={key + "-" + i}>
+          {key === "image" && isValidHttpUrl(pet[key]) && (
+            <Avatar shape="square" size={100} alt="example" src={pet[key]} />
+          )}
           <Key>{PET_INITIAL_STATE[key]?.label}</Key>: <br />
           {key === "vaccinations" ? (
             <a href={pet[key]} target="_blank">
-              View Vaccinations
+              <LinkOutlined /> View Vaccinations
             </a>
           ) : (
             <Value>{pet[key]}</Value>

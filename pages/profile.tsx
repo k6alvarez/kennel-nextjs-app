@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { Tabs } from "antd";
@@ -64,12 +64,13 @@ type Props = {
 const Profile: React.FC<Props> = ({ user }) => {
   const router = useRouter();
   const { tab } = router.query;
+  const [profileTab, setProfileTab] = useState("profile");
 
   const { breakpoints } = useContext(ThemePreferenceContext);
   const size: Size = useWindowSize();
   const mobileScreen = size.width < parseInt(breakpoints[0]);
   const { data: session, status } = useSession();
-  const INITIAL_PROFILE_STATE = {
+  const INITIAL_PROFILE_FORM_STATE = {
     email: {
       value: user?.email || "",
       error: null,
@@ -84,12 +85,14 @@ const Profile: React.FC<Props> = ({ user }) => {
       error: null,
       type: "text",
       label: "First Name",
+      required: true,
     },
     lastName: {
       value: user?.lastName || "",
       error: null,
       type: "text",
       label: "Last Name",
+      required: true,
     },
     address: {
       value: user?.address || "",
@@ -111,6 +114,7 @@ Kalamazoo, MI 49009`,
       minLength: 10,
       maxLength: 11,
       label: "Phone",
+      required: true,
     },
     altPhone: {
       value: user?.altPhone || "",
@@ -120,11 +124,13 @@ Kalamazoo, MI 49009`,
       minLength: 10,
       maxLength: 11,
       label: "Alt Phone",
+      required: true,
     },
     emergencyContactName: {
       value: user?.emergencyContactName || "",
       error: null,
       label: "Emergency Contact Name",
+      required: true,
     },
     emergencyContactPhone: {
       value: user?.emergencyContactPhone || "",
@@ -134,13 +140,18 @@ Kalamazoo, MI 49009`,
       minLength: 10,
       maxLength: 11,
       label: "Emergency Contact Phone",
+      required: true,
     },
   };
   const [profileFormState, profileFormDispatch] = useReducer(
     profileFormReducer,
-    INITIAL_PROFILE_STATE
+    INITIAL_PROFILE_FORM_STATE
   );
   const [formError, setFormError] = useState(undefined);
+
+  useEffect(() => {
+    setProfileTab(tab as string);
+  }, [tab]);
 
   if (status === "loading") {
     return <Layout>Loading ...</Layout>;
@@ -168,7 +179,8 @@ Kalamazoo, MI 49009`,
           setFormError={setFormError}
           profileFormDispatch={profileFormDispatch}
           formError={formError}
-          initialState={INITIAL_PROFILE_STATE}
+          initialState={INITIAL_PROFILE_FORM_STATE}
+          router={router}
         />
       ),
     },
@@ -184,6 +196,7 @@ Kalamazoo, MI 49009`,
       <Content>
         <Tabs
           defaultActiveKey={typeof tab === "string" ? tab : "profile"}
+          activeKey={typeof tab === "string" ? tab : profileTab}
           tabPosition={mobileScreen ? "top" : "left"}
           size={mobileScreen ? "small" : "large"}
           moreIcon={<DownOutlined />}

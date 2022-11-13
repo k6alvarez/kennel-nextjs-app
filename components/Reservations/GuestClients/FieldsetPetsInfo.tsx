@@ -50,7 +50,7 @@ const PetCards = styled.div`
 
 export const defaultShadow = "0 0 10px 0 rgba(0,0,0,0.1)";
 
-const petInfoOnly = (pet) => {
+export const petInfoOnly = (pet) => {
   const petInfo = structuredClone(pet);
   delete petInfo.largeImage;
   delete petInfo.smallImage;
@@ -73,7 +73,7 @@ const petInfoOnly = (pet) => {
   return petInfo;
 };
 
-const petBoardingOnly = (pet) => {
+export const petBoardingOnly = (pet) => {
   const petInfo = structuredClone(pet);
   delete petInfo.largeImage;
   delete petInfo.smallImage;
@@ -168,12 +168,26 @@ export const FieldsetPetsInfo = ({
               </span>
             </Card>
           )}
-          {console.log(pets)}
+
           {pets?.map((pet, i) => {
             return (
               <Card
                 key={pet + "-" + i}
-                title={pet.name}
+                title={
+                  <button
+                    type="button"
+                    onClick={() => {
+                      formDispatch({
+                        type: "togglePet",
+                        payload: {
+                          pet,
+                        },
+                      });
+                    }}
+                  >
+                    {pet.name}
+                  </button>
+                }
                 cover={
                   isValidHttpUrl(pet.image) && (
                     <Image
@@ -243,10 +257,6 @@ export const FieldsetPetsInfo = ({
                             },
                           });
                           setPets([...pets, data]);
-                          console.log(
-                            "🚀 ~ file: FieldsetPetsInfo.tsx ~ line 241 ~ data",
-                            data
-                          );
                         },
                         reservationId: formState.reservationId,
                         apiPath,

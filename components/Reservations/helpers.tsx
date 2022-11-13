@@ -63,6 +63,17 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
     }
     if (field[0] === "arrivalDate" || field[0] === "departureDate") {
       const weekday = DateTime.fromISO(fieldFromState.value).weekday;
+      const arrivalDate = DateTime.fromISO(state.arrivalDate.value);
+      const departureDate = DateTime.fromISO(state.departureDate.value);
+
+      if (arrivalDate > departureDate) {
+        const error = `Arrival cannot be after departure. Please select a new date.`;
+        dispatch({
+          key: field[0],
+          payload: { newValue: fieldFromState.value, error },
+        });
+        return false;
+      }
 
       if (weekday === 6) {
         const error = `We are closed on Saturdays. Please select a new ${fieldFromState.label}.`;

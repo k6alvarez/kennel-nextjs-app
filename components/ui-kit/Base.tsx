@@ -57,8 +57,14 @@ export const Content = styled.article`
   .ant-tabs-tab .ant-tabs-tab-btn {
     font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/1.4)`};
 
-    @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
+    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
       font-size: ${({ theme }) => theme.fontSizes[0]};
+    }
+  }
+
+  &&&& .ant-tabs-tab {
+    @media (max-width: ${({ theme }) => theme.breakpoints[1]}) {
+      padding: 0;
     }
   }
 

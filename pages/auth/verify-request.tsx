@@ -22,7 +22,7 @@ export async function getServerSideProps(context) {
   if (session && res) {
     res.writeHead(302, { Location: "/profile" });
     res.end();
-    return;
+    return { props: {} };
   }
 
   return {

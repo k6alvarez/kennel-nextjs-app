@@ -9,7 +9,7 @@ import { Button } from "../../ui-kit/Base";
 import { StepsContent, StepsAction } from "../styles";
 import { FieldSetPaymentInfo } from "./FieldSetPaymentInfo";
 import { next, prev, guestFormFieldsValid } from "../helpers";
-import { createReservationDraft, guestFormSubmit } from "./services";
+import { createGuestReservationDraft, guestFormSubmit } from "./services";
 import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,
@@ -125,7 +125,7 @@ export const GuestClientForm = () => {
                     const draftCreated = guestFormState.reservationId;
                     if (!draftCreated) {
                       setGuestFormLoading(true);
-                      createReservationDraft(undefined, {
+                      createGuestReservationDraft(undefined, {
                         state: guestFormState,
                         setFormError: setGuestFormError,
                         dispatch: guestFormDispatch,

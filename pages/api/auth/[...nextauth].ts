@@ -39,28 +39,26 @@ const options = {
         url,
         provider: { server, from },
      }) {
-        const { host } = new URL(url);
-        console.log("🚀 ~ file: [...nextauth].ts ~ line 43 ~ host", host)
+        const { host, origin } = new URL(url);            
         const transport = createTransport(server);
         await transport.sendMail({
           to: email,
           from,
-          subject: `Sign in to ${host}`,
+          subject: `Complete your profile at ${host}`,
           text: text({ url, host }),
           // we can pass in 'theme' to access default theme as a new parameter
-          html: html({ url, host, email, theme: themesMap.light }),
+          html: html({ url, host, origin, email, theme: themesMap.light }),
         });
       },
-
     }),
-  ],
+  ],  
   pages: {
     signIn: '/auth/signin',
     error: '/auth/error', // Error code passed in query string as ?error=
     verifyRequest: '/auth/verify-request', // (used for check email message)
   },
   adapter: PrismaAdapter(prisma),
-  secret: process.env.SECRET,
+  secret: process.env.SECRET,  
 };
 
 /**
@@ -71,10 +69,11 @@ const options = {
  *
  * @note We don't add the email address to avoid needing to escape it, if you do, remember to sanitize it!
  */
- function html(params: { url: string; host: string; email: string, theme?: any }) {
-  const { url, host, theme } = params
-  const escapedHost = host.replace(/\./g, "&#8203;.")
-
+ function html(params: { url: string; host: string; origin: string, email: string, theme?: any }) {
+  const { url, host, theme, origin } = params
+  const newUrl = new URL(url)
+  newUrl.searchParams.delete('callbackUrl')
+  newUrl.searchParams.set('callbackUrl', "/profile")    
   const brandColor = theme?.primary || "#22d172"
   const color = {
     background: brandColor || "#f9f9f9",
@@ -87,14 +86,14 @@ const options = {
 
   return `
 <body style="background: ${color.background};">
-  ${getHeader({color, escapedHost})}
+  ${getHeader({color, host, origin})}
 
 
   <table width="100%" border="0" cellspacing="20" cellpadding="0"
     style="background: ${color.mainBackground}; max-width: 600px; margin: 10px auto; ">
     <tr>
       <td align="center" style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-        Please verify your email address using the link below.
+        Please verify your email address using the link below to access your profile.
       </td>
     </tr>
     <tr>
@@ -102,7 +101,9 @@ const options = {
         <table border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}">
-              <a href="${url}" target="_blank" style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;"> Log in</a>
+              <a href="${newUrl}" target="_blank" style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;">
+                Log in to finish creating your account.
+              </a>
             </td>
           </tr>
         </table>
@@ -110,7 +111,7 @@ const options = {
     </tr>
     <tr>
       <td align="center"
-        style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
+        style="padding: 0px 0px 10px 0px; font-size: 14px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
         If you did not request this email you can safely ignore it.
       </td>
     </tr>
@@ -135,21 +136,21 @@ export function getFooter() {
   `
 }
 
-export function getHeader({color, escapedHost}) {
+export function getHeader({color, host, origin}) {
   return `
     <table width="100%" border="0" cellspacing="20" cellpadding="0"
     style="background: ${color.mainBackground}; max-width: 600px; margin: 10px auto; ">
       <tr>
         <td align="center" style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
           <ul style="list-style:none; margin: 0; padding: 0; display: flex; justify-content: space-between;gap: 14px;">
-            <li style="flex: 1; display: flex; justify-content: flex-start;">
-              <a href="${escapedHost}" style="color: ${color.text}; text-decoration: none;">Gillette Kennels</a>
+            <lif style="flex: 1; display: flex; justify-content: flex-start;">
+              <a href="${origin}" style="color: ${color.text}; text-decoration: none;">Gillette Kennels</a>
+            </lif>
+            <li>
+              <a href="${origin}/boarding" style="color: ${color.text}; text-decoration: none;">Boarding</a>
             </li>
             <li>
-              <a href="${escapedHost}/boarding" style="color: ${color.text}; text-decoration: none;">Boarding</a>
-            </li>
-            <li>
-              <a href="${escapedHost}/training" style="color: ${color.text}; text-decoration: none;">Training</a>
+              <a href="${origin}/training" style="color: ${color.text}; text-decoration: none;">Training</a>
             </li>
           </ul>
         </td>

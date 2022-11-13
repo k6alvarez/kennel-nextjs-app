@@ -84,7 +84,7 @@ export const guestFormSubmit = async (
   }
 };
 
-export const createReservationDraft = async (
+export const createGuestReservationDraft = async (
   e: React.SyntheticEvent,
   { state, setFormError, dispatch, apiPath }
 ) => {
