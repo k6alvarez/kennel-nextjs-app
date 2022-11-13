@@ -5,7 +5,6 @@ import { defaultDelay, Promo } from "../components/ui-kit/Promo";
 import { Content } from "../components/ui-kit/Base";
 import { Promos } from "../components/ui-kit/Promo/Promos";
 
-
 const MyApp: React.FC = () => {
   return (
     <Layout>
@@ -63,7 +62,7 @@ const MyApp: React.FC = () => {
             link: "/boarding?tab=boarding-cats",
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419343/gk-app/Kitty_window.jpg",
-            size: "28vw",
+            size: "10vw",
           },
           {
             title: "Vaccinations",
@@ -71,7 +70,7 @@ const MyApp: React.FC = () => {
             link: "/boarding?tab=vaccinations",
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419325/gk-app/Addie3.jpg",
-            size: "28vw",
+            size: "10vw",
           },
           {
             title: "Before you board",
@@ -79,7 +78,7 @@ const MyApp: React.FC = () => {
             description: "Learn more about our boarding services.",
             image:
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
-            size: "28vw",
+            size: "10vw",
           },
         ]}
       />

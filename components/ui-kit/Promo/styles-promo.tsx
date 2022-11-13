@@ -89,6 +89,8 @@ export const PromoTextWrapper = styled.div`
 export const PromoPics = styled.div`
   flex: 1;
   width: 100%;
+  background-color: ${({ theme, transparent }) =>
+    !transparent ? theme.colors.secondary : "transparent"};
 `;
 
 export const PromoTitleWrapper = styled.div`

@@ -37,7 +37,7 @@ export const Promo = ({
 
   return (
     <PromoWrapper>
-      <PromoText size="70vw">
+      <PromoText>
         {/* <animated.div style={{ ...props }}>
           <Crest />
         </animated.div> */}
@@ -67,7 +67,7 @@ export const Promo = ({
           </animated.div>
         </animated.div>
       </PromoText>
-      <Promos delay={defaultDelay * 6} promos={promos} />
+      <Promos transparent delay={defaultDelay * 6} promos={promos} />
     </PromoWrapper>
   );
 };

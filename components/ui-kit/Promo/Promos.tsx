@@ -14,11 +14,17 @@ interface PromosProps {
   }[];
   delay?: number;
   breakMoble?: boolean;
+  transparent?: boolean;
 }
 
-export const Promos = ({ breakMoble, delay = 0, promos = [] }: PromosProps) => {
+export const Promos = ({
+  transparent,
+  breakMoble,
+  delay = 0,
+  promos = [],
+}: PromosProps) => {
   return (
-    <PromoPics>
+    <PromoPics transparent={transparent}>
       <GridItems breakMobile={breakMoble || !!promos[0].link}>
         {promos.map((promo, i) => {
           const props = useSpring({
