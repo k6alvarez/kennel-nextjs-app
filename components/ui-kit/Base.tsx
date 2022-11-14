@@ -48,6 +48,7 @@ export const Content = styled.article`
     display: flex;
     align-items: center;
     gap: ${({ theme }) => theme.space[3]};
+    letter-spacing: 1px;
   }
 
   .ant-card {

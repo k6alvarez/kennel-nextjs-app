@@ -145,9 +145,7 @@ export const BoardingHome = () => {
           when it rains while providing access to fresh air. This kennel is used
           as our overflow kennel.
         </p>
-        {/* <BoardingRates />
-      <HolidayPremiumDates /> */}
-        <h3>More Info</h3>
+        <h2>More Info</h2>
         <p>
           Our facility also has two spacious exercise and play areas surfaced
           with pea stones. Pea stones are an ideal surface for exercise areas
