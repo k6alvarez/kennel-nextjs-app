@@ -23,7 +23,7 @@ const Slogan = styled.span`
   letter-spacing: 1px;
 `;
 
-export const LogoOne = ({ size }) => {
+export const LogoOne = ({ size }: { size?: number }) => {
   return (
     <Wrapper size={size}>
       <span>Gillette Kennels</span>
