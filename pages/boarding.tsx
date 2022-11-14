@@ -48,7 +48,7 @@ export const TabsListWrapper = styled.div`
   .ant-tabs-nav {
     position: sticky;
 
-    top: 46px;
+    top: 62px;
     background: ${({ theme }) => theme.colors.white};
     width: 100%;
     z-index: 1;

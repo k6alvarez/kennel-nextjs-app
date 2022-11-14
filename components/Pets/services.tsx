@@ -7,53 +7,53 @@ export interface PetFormProps {
   formSuccessCallback?: any;
 }
 
-export const petFormSubmit = async (
-  e: React.SyntheticEvent,
-  { state, setPetFormError, dispatch, formSuccessCallback }: PetFormProps
-) => {
-  e?.preventDefault();
-  const data = Object.entries(state).map(([key, _value]) => {
-    return {
-      [key]: state[key].value !== undefined ? state[key].value : state[key],
-    };
-  });
-  setPetFormError(undefined);
-  try {
-    await fetch("/api/pet", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(Object.assign({}, ...data)),
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then(async (res) => {
-        if (res.errors) {
-          const validationError =
-            "Form submission failed. Please verify all required fields are filled out.";
-          Object.entries(res.errors).forEach(([key, value]) => {
-            dispatch({
-              key: key,
-              payload: {
-                newValue: state[key].value,
-                error: value,
-              },
-            });
-          });
-          setPetFormError(validationError);
-          throw new Error(validationError);
-        }
-        dispatch({
-          type: "resetForm",
-        });
-        message.success("Pet added successfully");
-        formSuccessCallback && formSuccessCallback();
-      });
-  } catch (error) {
-    setPetFormError("We're sorry, something went wrong. Please try again.");
-    console.error(error);
-  }
-};
+// export const petFormSubmit = async (
+//   e: React.SyntheticEvent,
+//   { state, setPetFormError, dispatch, formSuccessCallback }: PetFormProps
+// ) => {
+//   e?.preventDefault();
+//   const data = Object.entries(state).map(([key, _value]) => {
+//     return {
+//       [key]: state[key].value !== undefined ? state[key].value : state[key],
+//     };
+//   });
+//   setPetFormError(undefined);
+//   try {
+//     await fetch("/api/pet", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(Object.assign({}, ...data)),
+//     })
+//       .then((res) => {
+//         return res.json();
+//       })
+//       .then(async (res) => {
+//         if (res.errors) {
+//           const validationError =
+//             "Form submission failed. Please verify all required fields are filled out.";
+//           Object.entries(res.errors).forEach(([key, value]) => {
+//             dispatch({
+//               key: key,
+//               payload: {
+//                 newValue: state[key].value,
+//                 error: value,
+//               },
+//             });
+//           });
+//           setPetFormError(validationError);
+//           throw new Error(validationError);
+//         }
+//         dispatch({
+//           type: "resetForm",
+//         });
+//         message.success("Pet added successfully");
+//         formSuccessCallback && formSuccessCallback();
+//       });
+//   } catch (error) {
+//     setPetFormError("We're sorry, something went wrong. Please try again.");
+//     console.error(error);
+//   }
+// };
 
 export interface GuestPetFormProps {
   state: any;
@@ -61,6 +61,7 @@ export interface GuestPetFormProps {
   dispatch: any;
   formSuccessCallback?: any;
   reservationId?: string;
+  apiPath: string;
 }
 
 export const guestPetFormSubmit = async (
@@ -71,6 +72,7 @@ export const guestPetFormSubmit = async (
     dispatch,
     formSuccessCallback,
     reservationId,
+    apiPath,
   }: GuestPetFormProps
 ) => {
   e?.preventDefault();
@@ -84,7 +86,7 @@ export const guestPetFormSubmit = async (
 
   setPetFormError(undefined);
   try {
-    await fetch("/api/guest-pet", {
+    await fetch(apiPath, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(Object.assign({}, ...data)),
@@ -142,4 +144,8 @@ export const isValidHttpUrl = (string) => {
   }
 
   return url.protocol === "http:" || url.protocol === "https:";
+};
+
+export const isImageURL = (url) => {
+  return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
 };

@@ -13,7 +13,7 @@ const Signin = ({ csrfToken, providers }) => {
   return (
     <Layout>
       <Content>
-        <h1>Log In</h1>
+        <h1>Create Profile</h1>
         <p>Login to take advantage of our online boarding features.</p>
         <form method="post" action="/api/auth/signin/email">
           <fieldset>
@@ -23,7 +23,9 @@ const Signin = ({ csrfToken, providers }) => {
               <StyledInput name="email" type="text" id="email" />
             </Field>
           </fieldset>
-          <Button type="submit">Login</Button>
+          <Button type="submit" primary>
+            Log In
+          </Button>
         </form>
         {Object.values(providers).map((provider: Provider) => {
           if (provider.name === "Email") {

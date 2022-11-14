@@ -16,10 +16,6 @@ export const GlobalStyle = createGlobalStyle`
     max-width: 100%;
     margin: 0 auto;
 
-    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-      max-width: 50vw;
-    }
-
     .ant-collapse {
       margin-top: ${({ theme }) => theme.space[4]};
     }
@@ -44,8 +40,6 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   textarea {
-    /* max-width: 80vw; */
-    /* max-height:20vh; */
     resize: vertical;
 
     &::placeholder {
@@ -103,8 +97,17 @@ export const GlobalStyle = createGlobalStyle`
     align-items: baseline;
   }
 
-  .ant-card,
+  .ant-card,  
   .ant-card-head-title {
     font-size: unset;
   }
+
+  .ant-tag {
+    padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[3]};
+    font-family: "Lato", sans-serif;
+    text-transform: uppercase;
+  }
+
+  
+
 `;

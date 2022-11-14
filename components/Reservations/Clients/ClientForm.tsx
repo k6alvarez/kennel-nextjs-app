@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Router from "next/router";
+
 import { Steps } from "antd";
 import { StepsContent, StepsAction } from "../styles";
 import { Button } from "../../ui-kit/Base";
-import { next, prev } from "../helpers";
-import { Fields } from "../../Forms/styles";
-import { renderFormFields } from "../../Forms/renderFormFields";
+import { guestFormFieldsValid, next, prev } from "../helpers";
 import { useClientFormContext } from "../formContext";
 import {
   INITIAL_RESERVATION_STATE,
@@ -13,12 +12,82 @@ import {
 } from "../formInitialState";
 import { FieldsetClientInfo } from "../FieldsetFromState";
 import { getPets, getUser } from "../../Pets/services";
+import { FieldsetPetsInfo } from "../GuestClients/FieldsetPetsInfo";
+import { BlockQuote } from "../GuestClients/FormIntro";
+
+export const createReservationDraft = async (
+  e: React.SyntheticEvent,
+  { state, setFormError, dispatch, apiPath }
+) => {
+  e?.preventDefault();
+  const cloneState = { ...state };
+  delete cloneState["name"];
+  delete cloneState["lastName"];
+  delete cloneState["email"];
+  delete cloneState["phone"];
+  delete cloneState["address"];
+  delete cloneState["altPhone"];
+  delete cloneState["emergencyContactName"];
+  delete cloneState["emergencyContactPhone"];
+  delete cloneState["howHear"];
+
+  const data = Object.entries(cloneState).map(([key, _value]) => {
+    return {
+      [key]: state[key].value !== undefined ? state[key].value : state[key],
+    };
+  });
+  setFormError(undefined);
+  try {
+    await fetch(apiPath, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Object.assign({}, ...data)),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then(async (res) => {
+        if (res.errors) {
+          const validationError =
+            "Please verify all required fields are filled out.";
+          Object.entries(res.errors).forEach(([key, value]) => {
+            dispatch({
+              key: key,
+              payload: {
+                newValue: state[key].value,
+                error: value,
+              },
+            });
+          });
+          setFormError(validationError);
+          throw new Error(validationError);
+        }
+        dispatch({
+          type: "formDraftCreated",
+          payload: {
+            reservationId: res.id,
+          },
+        });
+        await Router.push("/reservation/[id]", `/reservation/${res.id}`);
+      });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const { Step } = Steps;
 
 export const ClientForm = ({ session }) => {
-  const { clientFormState, handleChange, clientFormDispatch } =
-    useClientFormContext();
+  const {
+    clientFormState,
+    handleChange,
+    clientFormDispatch,
+    clientFormError,
+    setClientFormError,
+    clientFormLoading,
+    setClientFormLoading,
+  } = useClientFormContext();
+
   const [current, setCurrent] = useState(0);
 
   const [pets, setPets] = useState([]);
@@ -66,29 +135,21 @@ export const ClientForm = ({ session }) => {
     {
       title: "Pets",
       content: (
-        <fieldset>
-          <Fields>
-            {pets.map((pet, i) => (
-              <div key={pet + "-" + i}>
-                <label>{pet.name}</label>
-                <input
-                  type="checkbox"
-                  name="pets"
-                  value={pet.id}
-                  checked={clientFormState.pets.includes(pet.id)}
-                  onChange={(e) => {
-                    clientFormDispatch({
-                      type: "togglePet",
-                      payload: {
-                        petId: pet.id,
-                      },
-                    });
-                  }}
-                />
-              </div>
-            ))}
-          </Fields>
-        </fieldset>
+        <FieldsetPetsInfo
+          pets={pets}
+          setPets={setPets}
+          formState={clientFormState}
+          formDispatch={clientFormDispatch}
+          apiPath="/api/pet"
+          toggle={(pet) => {
+            clientFormDispatch({
+              type: "togglePet",
+              payload: {
+                pet,
+              },
+            });
+          }}
+        />
       ),
     },
     {
@@ -100,7 +161,7 @@ export const ClientForm = ({ session }) => {
               <label>{key}</label>
               {key === "pets" ? (
                 <ul>
-                  {clientFormState[key].map((petId, i) => (
+                  {Object.keys(clientFormState[key]).map((petId, i) => (
                     <li key={petId + "-" + i}>{petId}</li>
                   ))}
                 </ul>
@@ -114,33 +175,17 @@ export const ClientForm = ({ session }) => {
     },
   ];
 
-  const clientFormSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-
-    // try {
-    //   await fetch("/api/reservation", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(fields),
-    //   }).then((res) => {
-    //     console.log(res);
-    //   });
-    //   // await Router.push("/draft-reservations");
-    // } catch (error) {
-    //   console.error(error);
-    // }
-  };
-
   return (
     <>
       <p>Let's get started with your boarding reservation.</p>
-      <form onSubmit={clientFormSubmit}>
+      <form>
         <Steps current={current}>
           {formSteps.map((item) => (
             <Step key={item.title} title={item.title} />
           ))}
         </Steps>
         <StepsContent>{formSteps[current].content}</StepsContent>
+        {clientFormError && <BlockQuote>{clientFormError}</BlockQuote>}
         <StepsAction>
           {current > 0 && (
             <Button type="button" onClick={() => prev({ current, setCurrent })}>
@@ -152,10 +197,55 @@ export const ClientForm = ({ session }) => {
             <Button
               type="button"
               onClick={() => {
-                next({ current, setCurrent });
+                if (pets.length === 0 && current === 2) {
+                  setClientFormError("Please add a pet to continue.");
+                  return;
+                } else {
+                  setClientFormError("");
+                }
+
+                if (current < 2) {
+                  const fieldsValid = guestFormFieldsValid(
+                    {
+                      currentFormSection: current,
+                    },
+                    {
+                      state: clientFormState,
+                      dispatch: clientFormDispatch,
+                    }
+                  );
+
+                  if (fieldsValid) {
+                    next({ current, setCurrent });
+                  }
+                } else {
+                  next({ current, setCurrent });
+                }
               }}
+              disabled={clientFormLoading}
             >
               Next
+            </Button>
+          )}
+
+          {current === 3 && (
+            <Button
+              type="button"
+              primary
+              onClick={() => {
+                setClientFormLoading(true);
+                createReservationDraft(undefined, {
+                  state: clientFormState,
+                  setFormError: setClientFormError,
+                  dispatch: clientFormDispatch,
+                  apiPath: "/api/reservation",
+                }).then(() => {
+                  setClientFormLoading(false);
+                });
+              }}
+              disabled={clientFormLoading}
+            >
+              Submit Reservation
             </Button>
           )}
         </StepsAction>

@@ -21,6 +21,7 @@ export const INITIAL_CLIENT_STATE = {
     grow: true,
     disabled: true,
   },
+  pets: [],
 };
 
 export const guestFormReducer = (
@@ -37,7 +38,7 @@ export const guestFormReducer = (
       return { ...guestFormState, ...payload };
     case "resetForm":
       return { ...INITIAL_STATE };
-    case "toggleGuestPet":
+    case "togglePet":
       const petToggled = payload.pet;
       let pets = guestFormState.pets;
       const petCheck = Object.entries(pets).filter((pet: any) => {
@@ -54,7 +55,7 @@ export const guestFormReducer = (
       } else {
         return {
           ...guestFormState,
-          pets,
+          pets: { ...pets, ...petToggled },
         };
       }
 
@@ -64,6 +65,31 @@ export const guestFormReducer = (
         value: payload.newValue,
         error: payload.error,
       };
+
+      if (key === "arrivalDate") {
+        const keyDependentInput = "departureDate";
+        return {
+          ...guestFormState,
+          [key]: inputState,
+          [keyDependentInput]: {
+            ...guestFormState[keyDependentInput],
+            error: null,
+          },
+        };
+      }
+
+      if (key === "departureDate") {
+        const keyDependentInput = "arrivalDate";
+        return {
+          ...guestFormState,
+          [key]: inputState,
+          [keyDependentInput]: {
+            ...guestFormState[keyDependentInput],
+            error: null,
+          },
+        };
+      }
+
       return {
         ...guestFormState,
         [key]: inputState,

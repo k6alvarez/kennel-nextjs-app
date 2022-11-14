@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { GridItem } from "../Base";
 
 export const PromoWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.primaryDark};
@@ -8,7 +7,7 @@ export const PromoWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: ${({ theme }) => theme.space[2]};
-  padding: ${({ theme }) => theme.space[4]};
+  padding-top: ${({ theme }) => theme.space[4]};
   font-size: ${({ theme }) => theme.fontSizes[1]};
   line-height: 1.2;
 
@@ -62,10 +61,12 @@ export const PromoTextWrapper = styled.div`
       transform: scale(1);
       transition: all 0.5s ease-in-out;
       transform-origin: center;
+      background-position: center;
+      background-size: cover;
       width: ${({ hasLink }) => (hasLink ? "100%" : "unset")};
 
       @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-        height: 25vh;
+        height: 30vh;
         background-position: center;
       }
     }
@@ -89,6 +90,9 @@ export const PromoTextWrapper = styled.div`
 export const PromoPics = styled.div`
   flex: 1;
   width: 100%;
+  background-color: ${({ theme, transparent }) =>
+    !transparent ? theme.colors.secondary : "transparent"};
+  padding: 0 ${({ theme }) => theme.space[4]};
 `;
 
 export const PromoTitleWrapper = styled.div`

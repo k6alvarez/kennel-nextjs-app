@@ -11,6 +11,11 @@ export const Fieldset = styled.fieldset`
   max-width: 100%;
 `;
 
+export const PreviewWrapper = styled.div`
+  margin: ${({ theme }) => theme.space[4]} 0;
+  font-size: ${({ theme }) => theme.fontSizes[0]};
+`;
+
 export const Field = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,11 +32,16 @@ export const Hint = styled.span`
 `;
 
 export const StyledInput = styled.input`
+  font-size: ${({ theme }) => theme.fontSizes[1]};
   border: 1px solid
     ${({ theme, error }) =>
       error ? theme.colors.primary : theme.colors.textSecondary};
   &:focus {
     border-color: ${({ theme }) => theme.colors.inputFocus};
+  }
+
+  ::-webkit-file-upload-button {
+    font-size: ${({ theme }) => theme.fontSizes[0]};
   }
 `;
 

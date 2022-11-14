@@ -51,38 +51,6 @@ const MyApp: React.FC = () => {
           entire room, complete with rocking chairs, cozy baskets, and wide
           window sills, is available on a first come first serve basis.
         </p>
-      </Content>
-      <Promos
-        delay={defaultDelay * 6}
-        promos={[
-          {
-            title: "We board cats!",
-            description: "We have a cattery for your cat's stay.",
-            link: "/boarding?tab=boarding-cats",
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419343/gk-app/Kitty_window.jpg",
-            size: "28vw",
-          },
-          {
-            title: "Vaccinations",
-            description: "Read about our Vaccinations requirements.",
-            link: "/boarding?tab=vaccinations",
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419325/gk-app/Addie3.jpg",
-            size: "28vw",
-          },
-          {
-            title: "Before you board",
-            link: "/boarding?tab=before-boarding",
-            description: "Learn more about our boarding services.",
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
-            size: "28vw",
-          },
-        ]}
-      />
-
-      <Content>
         <h2>Gillette Kennels is also proud to offer Obedience Training!</h2>
         <p>
           Kirk L. Gillette formally began professionally training dogs in
@@ -96,7 +64,7 @@ const MyApp: React.FC = () => {
           Our training courses range from puppy head start classes to basic,
           intermediate, and advanced levels!
         </p>
-        <h3>Our Mission</h3>
+        <h2>Our Mission</h2>
         <p>
           This website was created with you, our clients, in mind. Our goal is
           to become the premier boarding kennel in Kalamazoo, Portage, and
@@ -104,8 +72,40 @@ const MyApp: React.FC = () => {
           we would love to learn your suggestions to improve the site so that we
           can better serve you. Please Contact Us with your suggestions.
         </p>
-        <p>Thank you, Kirk L. Gillette, M.A.</p>
+        <p>
+          Thank you, <br />
+          Kirk L. Gillette, M.A.
+        </p>
       </Content>
+      <Promos
+        delay={defaultDelay * 6}
+        promos={[
+          {
+            title: "We board cats!",
+            description: "We have a cattery for your cat's stay.",
+            link: "/boarding?tab=boarding-cats",
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419343/gk-app/Kitty_window.jpg",
+            size: "10vw",
+          },
+          {
+            title: "Vaccinations",
+            description: "Read about our Vaccinations requirements.",
+            link: "/boarding?tab=vaccinations",
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419325/gk-app/Addie3.jpg",
+            size: "10vw",
+          },
+          {
+            title: "Before you board",
+            link: "/boarding?tab=before-boarding",
+            description: "Learn more about our boarding services.",
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
+            size: "10vw",
+          },
+        ]}
+      />
     </Layout>
   );
 };

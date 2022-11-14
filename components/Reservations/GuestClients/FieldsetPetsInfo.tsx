@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { DeleteOutlined } from "@ant-design/icons";
+import React from "react";
 import { Card } from "antd";
 import styled from "styled-components";
 import { DateTime } from "luxon";
@@ -8,147 +7,113 @@ import { Error, Field, Fields, Fieldset } from "../../Forms/styles";
 import { usePetFormContext } from "../../Pets/formContext";
 
 import { PET_INITIAL_STATE } from "../../Pets/petFormReducer";
-import { PetInfo } from "../../Pets/PetInfo";
-import { guestPetFormSubmit, isValidHttpUrl } from "../../Pets/services";
+import { guestPetFormSubmit } from "../../Pets/services";
 import { Button } from "../../ui-kit/Base";
-import { useGuestFormContext } from "../formContext";
 import { fieldValidator } from "../helpers";
+import { PetCard } from "../../Pets/PetCard";
+import { calculateDeposit } from "./services";
+import { PetCards } from "../styles";
+import { PetProps } from "../../../pages/profile";
 
 export const SmallButton = styled.button`
   font-size: ${(props) => `calc(${props.theme.fontSizes[1]} / 1.6)`};
 `;
 
-export const defaultShadow = "0 0 10px 0 rgba(0,0,0,0.1)";
+const Flex = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: ${(props) => props.theme.space[2]};
+  font-size: ${(props) => props.theme.fontSizes[0]};
 
-const petInfoOnly = (pet) => {
-  const petInfo = structuredClone(pet);
-  delete petInfo.largeImage;
-  delete petInfo.smallImage;
-  delete petInfo.id;
-  delete petInfo.__typename;
-  delete petInfo.createdAt;
-  delete petInfo.updatedAt;
-  delete petInfo.ownerId;
-  delete petInfo.owner;
-  delete petInfo.vaccinationsLargeImage;
-  delete petInfo.vaccinations;
-  delete petInfo.image;
-  delete petInfo.guestReservationId;
-  delete petInfo.name;
-  delete petInfo.vet;
-  delete petInfo.preferredRunSize;
-  delete petInfo.feeding;
-  delete petInfo.feedingCount;
-  return petInfo;
-};
+  p {
+    display: flex;
+    flex-direction: column;
 
-const petBoardingOnly = (pet) => {
-  const petInfo = structuredClone(pet);
-  delete petInfo.largeImage;
-  delete petInfo.smallImage;
-  delete petInfo.id;
-  delete petInfo.__typename;
-  delete petInfo.createdAt;
-  delete petInfo.updatedAt;
-  delete petInfo.ownerId;
-  delete petInfo.owner;
-  delete petInfo.vaccinationsLargeImage;
-  delete petInfo.image;
-  delete petInfo.guestReservationId;
-  delete petInfo.fixed;
-  delete petInfo.name;
-  delete petInfo.type;
-  delete petInfo.breed;
-  delete petInfo.gender;
-  delete petInfo.color;
-  delete petInfo.age;
-  delete petInfo.weight;
-  delete petInfo.type;
-  return petInfo;
-};
-
-const calculateDeposit = (pets) => {
-  let deposit = 0;
-  pets.map((pet) => {
-    if (pet.preferredRunSize === "Small") {
-      return (deposit += 25);
-    } else if (pet.preferredRunSize === "Large") {
-      return (deposit += 25);
-    } else if (pet.preferredRunSize === "Extra Large") {
-      return (deposit += 25);
+    span:last-child {
+      font-weight: 600;
     }
-  }, 0);
-  return "$" + deposit.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-};
+  }
+`;
 
-async function deleteGuestPet(id: string): Promise<void> {
-  await fetch(`/api/guest-pet/${id}`, {
-    method: "DELETE",
-  });
+interface FieldsetPetsInfoProps {
+  pets: PetProps[];
+  setPets: React.Dispatch<React.SetStateAction<PetProps[]>>;
+  formState: any;
+  formDispatch: any;
+  apiPath: any;
+  toggle?: (pet: PetProps) => void;
+  onDelete?: (petId: string) => void;
 }
 
-export const FieldsetPetsInfo = ({ pets, setPets }) => {
-  const { guestFormState, guestFormDispatch } = useGuestFormContext();
+export const FieldsetPetsInfo = ({
+  pets,
+  setPets,
+  formState,
+  formDispatch,
+  apiPath,
+  toggle,
+  onDelete,
+}: FieldsetPetsInfoProps) => {
   const {
     petFormState,
     petFormDispatch,
     setPetFormError,
     handleChange,
+    petFormLoading,
+    setPetFormLoading,
     petFormError,
   } = usePetFormContext();
 
-  const [activeTabKey1, setActiveTabKey1] = useState<string>("tab1");
-
-  const onTab1Change = (key: string) => {
-    setActiveTabKey1(key);
-  };
-
   return (
-    <fieldset>
+    <fieldset disabled={petFormLoading}>
       <Error>{petFormError}</Error>
       <Fieldset>
-        <h2>
-          Pets boarding on{" "}
-          {DateTime.fromISO(guestFormState.arrivalDate.value).toFormat("DDDD")}
-        </h2>
-        <p>Deposit amount due: {calculateDeposit(pets)}</p>
-        <Fields>
+        <Flex>
+          <p>
+            <span>Boarding Dates:</span>
+            <span>
+              {DateTime.fromISO(formState.arrivalDate.value).toFormat("DD")} to{" "}
+              {DateTime.fromISO(formState.departureDate.value).toFormat("DD")}
+            </span>
+          </p>
+          <p>
+            <span>Deposit amount due:</span>
+            <span>{calculateDeposit(pets)}</span>
+          </p>
+        </Flex>
+        <PetCards>
+          {!pets.length ? (
+            <Card>
+              <span>
+                Pets being boarded will be shown here. Add a pet using the form
+                below.
+              </span>
+            </Card>
+          ) : (
+            <Card>
+              <span>
+                Select the pets you would like to board. You can add more pets
+                using the form below.
+              </span>
+            </Card>
+          )}
+
           {pets?.map((pet, i) => {
             return (
-              <Card
+              <PetCard
+                toggle={toggle}
+                onDelete={onDelete}
                 key={pet + "-" + i}
-                style={{
-                  width: 300,
-                  margin: "0 10px 10px 0",
-                }}
-                title={pet.name}
-                cover={
-                  isValidHttpUrl(pet.largeImage) && (
-                    <img alt={`Picture of ${pet.name}`} src={pet.largeImage} />
-                  )
+                pet={pet}
+                petSelected={
+                  formState.pets instanceof Array
+                    ? formState.pets.includes(pet)
+                    : Object.keys(formState.pets).includes(pet.id)
                 }
-                extra={
-                  <SmallButton
-                    onClick={(e) => {
-                      e.preventDefault();
-                      deleteGuestPet(pet.id);
-                    }}
-                  >
-                    <DeleteOutlined /> Remove Pet
-                  </SmallButton>
-                }
-                activeTabKey={activeTabKey1}
-                onTabChange={(key) => {
-                  onTab1Change(key);
-                }}
-              >
-                <PetInfo pet={petInfoOnly(pet)} />
-                <hr />
-                <PetInfo pet={petBoardingOnly(pet)} />
-              </Card>
+              />
             );
           })}
-        </Fields>
+        </PetCards>
 
         {pets.length < 5 ? (
           <>
@@ -158,12 +123,14 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
                 initialState: PET_INITIAL_STATE,
                 state: petFormState,
                 handleChange,
+                setFormLoading: setPetFormLoading,
               })}
               <Field grow>
                 <Button
                   disabled={pets.length >= 5}
                   onClick={(e) => {
                     e.preventDefault();
+                    setPetFormLoading(true);
                     const petFieldsValid = fieldValidator({
                       fields: Object.entries(PET_INITIAL_STATE),
                       state: petFormState,
@@ -176,17 +143,21 @@ export const FieldsetPetsInfo = ({ pets, setPets }) => {
                         setPetFormError,
                         dispatch: petFormDispatch,
                         formSuccessCallback: (data) => {
-                          guestFormDispatch({
-                            type: "toggleGuestPet",
+                          formDispatch({
+                            type: "togglePet",
                             payload: {
                               pet: data,
                             },
                           });
                           setPets([...pets, data]);
                         },
-                        reservationId: guestFormState.reservationId,
+                        reservationId: formState.reservationId,
+                        apiPath,
+                      }).then(() => {
+                        setPetFormLoading(false);
                       });
                     }
+                    setPetFormLoading(false);
                   }}
                   primary
                 >

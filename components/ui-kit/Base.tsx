@@ -9,7 +9,10 @@ export const Content = styled.article`
     cardWrapper ? theme.colors.secondaryDark : "inherit"};
 
   @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
-    padding: ${({ theme }) => theme.space[6]} ${({ theme }) => theme.space[4]};
+    padding: ${({ theme, cardWrapper }) =>
+      cardWrapper
+        ? `${theme.space[4]}`
+        : `${theme.space[5]} ${theme.space[4]}`};
     width: ${({ maxWidth }) => (maxWidth ? maxWidth : "80vw")};
     max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "1200px")};
   }
@@ -30,8 +33,27 @@ export const Content = styled.article`
     margin: 2.5rem 0 0.8rem;
   }
 
+  h4 {
+    font-weight: bold;
+    font-size: ${({ theme }) => theme.fontSizes[1]};
+    letter-spacing: 1px;
+    margin: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    display: flex;
+    align-items: center;
+    gap: ${({ theme }) => theme.space[3]};
+  }
+
   .ant-card {
     margin-bottom: ${({ theme }) => theme.space[4]};
+    font-size: ${({ theme, fs }) =>
+      fs ? theme.fontSizes[fs] : theme.fontSizes[1]};
   }
 
   .ant-card-head-title {
@@ -45,8 +67,14 @@ export const Content = styled.article`
   .ant-tabs-tab .ant-tabs-tab-btn {
     font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/1.4)`};
 
-    @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
+    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
       font-size: ${({ theme }) => theme.fontSizes[0]};
+    }
+  }
+
+  &&&& .ant-tabs-tab {
+    @media (max-width: ${({ theme }) => theme.breakpoints[1]}) {
+      padding: 0;
     }
   }
 
@@ -64,27 +92,25 @@ export const Content = styled.article`
 export const GridItems = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.space[4]};
   margin: ${({ theme }) => theme.space[4]} 0;
-  justify-content: space-evenly;
+  justify-content: space-between;
   overflow: hidden;
 
-  @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
+  @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
     flex-direction: ${({ breakMobile }) => (breakMobile ? "column" : "row")};
     padding: ${({ breakMobile, theme }) =>
       breakMobile ? theme.space[4] : "0"};
   }
 
-  @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
+  @media (min-width: ${(props) => props.theme.breakpoints[2]}) {
     flex-direction: row;
   }
 `;
 
 export const GridItem = styled.div`
   position: relative;
-  min-width: 100px;
-  width: 100%;
-  height: 30vh;
+  width: 100vw;
+  height: 100vw;
   background-image: url(${({ img }) => (img ? img : "")});
   background-color: ${({ theme, bg }) => theme.colors[bg] || theme.colors.nav};
   background-size: cover;
@@ -100,9 +126,9 @@ export const GridItem = styled.div`
     margin-right: 0;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-    width: ${({ size }) => (size ? size : "28vw")};
-    height: ${({ size }) => (size ? size : "20vw")};
+  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+    width: ${({ size }) => (size ? size : "25vw")};
+    height: ${({ size }) => (size ? size : "25vw")};
   }
 `;
 

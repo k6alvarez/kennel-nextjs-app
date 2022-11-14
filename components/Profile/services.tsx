@@ -39,3 +39,12 @@ export const profileFormSubmit = async (
     console.error(error);
   }
 };
+
+export const requiredFieldsCheck = ({ profileFormState }) => {
+  return (
+    !profileFormState.name.value ||
+    !profileFormState.lastName.value ||
+    !profileFormState.phone.value ||
+    !profileFormState.address.value
+  );
+};

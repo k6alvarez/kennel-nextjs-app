@@ -37,10 +37,10 @@ export const Promo = ({
 
   return (
     <PromoWrapper>
-      <PromoText size="70vw">
-        <animated.div style={{ ...props }}>
+      <PromoText>
+        {/* <animated.div style={{ ...props }}>
           <Crest />
-        </animated.div>
+        </animated.div> */}
         <animated.div style={props}>
           <PromoTitleWrapper>
             {children ? (
@@ -67,7 +67,7 @@ export const Promo = ({
           </animated.div>
         </animated.div>
       </PromoText>
-      <Promos delay={defaultDelay * 6} promos={promos} />
+      <Promos transparent delay={defaultDelay * 6} promos={promos} />
     </PromoWrapper>
   );
 };

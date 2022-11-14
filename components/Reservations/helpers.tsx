@@ -63,6 +63,17 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
     }
     if (field[0] === "arrivalDate" || field[0] === "departureDate") {
       const weekday = DateTime.fromISO(fieldFromState.value).weekday;
+      const arrivalDate = DateTime.fromISO(state.arrivalDate.value);
+      const departureDate = DateTime.fromISO(state.departureDate.value);
+
+      if (arrivalDate > departureDate) {
+        const error = `Arrival cannot be after departure. Please select a new date.`;
+        dispatch({
+          key: field[0],
+          payload: { newValue: fieldFromState.value, error },
+        });
+        return false;
+      }
 
       if (weekday === 6) {
         const error = `We are closed on Saturdays. Please select a new ${fieldFromState.label}.`;
@@ -119,6 +130,38 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
         });
         return false;
       }
+    }
+
+    if (field[0] === "departureTime" && state.arrivalTime.value) {
+      const arrivalTime = DateTime.fromISO(state.arrivalTime.value);
+      const departureTime = DateTime.fromISO(state.departureTime.value);
+      const sameTimeCheck = arrivalTime.equals(departureTime);
+      const arrivalDate = DateTime.fromISO(state.arrivalDate.value);
+      const sameDayPickup = DateTime.fromISO(state.departureDate.value).equals(
+        arrivalDate
+      );
+
+      if (sameTimeCheck && sameDayPickup) {
+        const error = `Arrival and departure times cannot be the same.`;
+        dispatch({
+          key: field[0],
+          payload: { newValue: fieldFromState.value, error },
+        });
+        return false;
+      }
+
+      if (sameDayPickup && arrivalTime > departureTime) {
+        const error = `Departure time cannot be before arrival time. Please select a new departure time.`;
+        dispatch({
+          key: field[0],
+          payload: { newValue: fieldFromState.value, error },
+        });
+        return false;
+      } else
+        dispatch({
+          key: field[0],
+          payload: { newValue: fieldFromState.value, error: null },
+        });
     }
   }
   return true;

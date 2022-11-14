@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Card, Collapse } from "antd";
+import { Card, Collapse, Image } from "antd";
 
 import Layout from "../components/Layout";
 import { PostProps } from "../components/Post";
 import { Content } from "../components/ui-kit/Base";
 import { BlockQuote } from "../components/Reservations/GuestClients/FormIntro";
 import { BoldText } from "../components/Boarding/MedicalIssues";
-import Image from "next/image";
+
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -155,14 +155,12 @@ const Policies: React.FC<Props> = () => {
             <BlockQuote large>
               <Card>
                 <p>All client provided bedding must:</p>
-                <p>
-                  <ul>
-                    <li>Be clean, safe, easily laundered or cleaned.</li>
-                    <li>Lightweight and managable.</li>
-                    <li>Labled with the dogs name.</li>
-                    <li>Made of a snag free material.</li>
-                  </ul>
-                </p>
+                <ul>
+                  <li>Be clean, safe, easily laundered or cleaned.</li>
+                  <li>Lightweight and managable.</li>
+                  <li>Labled with the dogs name.</li>
+                  <li>Made of a snag free material.</li>
+                </ul>
                 <p>
                   The bedding must fit into the dogs run while allowing him room
                   to eat, drink and move around. large oversized heavy bedding

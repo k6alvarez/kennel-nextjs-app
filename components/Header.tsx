@@ -149,7 +149,15 @@ const Header: React.FC = () => {
         <Link href="/profile">
           <a data-active={isActive("/profile")}>My Profile</a>
         </Link>
-        <button onClick={() => signOut()}>Log Out</button>
+        <button
+          onClick={() => {
+            signOut({ redirect: false, callbackUrl: "/" }).then(({ url }) => {
+              router.push(url);
+            });
+          }}
+        >
+          Log Out
+        </button>
       </NavWrapper>
     );
   }

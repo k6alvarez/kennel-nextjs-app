@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Steps } from "antd";
-
 import { BlockQuote, FormIntroGuest } from "./FormIntro";
 import { useGuestFormContext } from "../formContext";
 import { FieldsetClientInfo } from "../FieldsetFromState";
@@ -9,12 +8,15 @@ import { Button } from "../../ui-kit/Base";
 import { StepsContent, StepsAction } from "../styles";
 import { FieldSetPaymentInfo } from "./FieldSetPaymentInfo";
 import { next, prev, guestFormFieldsValid } from "../helpers";
-import { guestFormCreateDraft, guestFormSubmit } from "./services";
+import {
+  createGuestReservationDraft,
+  deleteGuestPet,
+  guestFormSubmit,
+} from "./services";
 import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,
 } from "../formInitialState";
-import { Error } from "../../Forms/styles";
 
 const { Step } = Steps;
 
@@ -22,9 +24,11 @@ export const GuestClientForm = () => {
   const {
     guestFormState,
     guestFormDispatch,
-    setFormError,
+    setGuestFormError,
     handleChange,
     guestFormError,
+    setGuestFormLoading,
+    guestFormLoading,
   } = useGuestFormContext();
 
   const [pets, setPets] = useState([]);
@@ -38,6 +42,7 @@ export const GuestClientForm = () => {
           initialState={INITIAL_USER_STATE}
           state={guestFormState}
           handleChange={handleChange}
+          formLoading={guestFormLoading}
         />
       ),
     },
@@ -48,12 +53,26 @@ export const GuestClientForm = () => {
           initialState={INITIAL_RESERVATION_STATE}
           state={guestFormState}
           handleChange={handleChange}
+          formLoading={guestFormLoading}
         />
       ),
     },
     {
       title: "Pets",
-      content: <FieldsetPetsInfo pets={pets} setPets={setPets} />,
+      content: (
+        <FieldsetPetsInfo
+          pets={pets}
+          setPets={setPets}
+          formState={guestFormState}
+          formDispatch={guestFormDispatch}
+          onDelete={(petId) => {
+            deleteGuestPet(petId).then(() => {
+              setPets(pets.filter((pet) => pet.id !== petId));
+            });
+          }}
+          apiPath="/api/guest-pet"
+        />
+      ),
     },
     {
       title: "Deposit",
@@ -68,7 +87,7 @@ export const GuestClientForm = () => {
         onSubmit={(e) => {
           guestFormSubmit(e, {
             state: guestFormState,
-            setFormError,
+            setFormError: setGuestFormError,
             dispatch: guestFormDispatch,
           });
         }}
@@ -80,7 +99,7 @@ export const GuestClientForm = () => {
         </Steps>
 
         <StepsContent>{formSteps[current].content}</StepsContent>
-        <BlockQuote>{guestFormError}</BlockQuote>
+        {guestFormError && <BlockQuote>{guestFormError}</BlockQuote>}
         <StepsAction>
           {current > 0 && (
             <Button type="button" onClick={() => prev({ current, setCurrent })}>
@@ -93,10 +112,10 @@ export const GuestClientForm = () => {
               type="button"
               onClick={() => {
                 if (pets.length === 0 && current === 2) {
-                  setFormError("Please add a pet to continue.");
+                  setGuestFormError("Please add a pet to continue.");
                   return;
                 } else {
-                  setFormError("");
+                  setGuestFormError("");
                 }
 
                 if (current < 2) {
@@ -112,20 +131,26 @@ export const GuestClientForm = () => {
 
                   if (fieldsValid) {
                     const draftCreated = guestFormState.reservationId;
-
                     if (!draftCreated) {
-                      guestFormCreateDraft(undefined, {
+                      setGuestFormLoading(true);
+                      createGuestReservationDraft(undefined, {
                         state: guestFormState,
-                        setFormError,
+                        setFormError: setGuestFormError,
                         dispatch: guestFormDispatch,
+                        apiPath: "/api/guest-reservation",
+                      }).then(() => {
+                        setGuestFormLoading(false);
+                        next({ current, setCurrent });
                       });
+                    } else {
+                      next({ current, setCurrent });
                     }
-                    next({ current, setCurrent });
                   }
                 } else {
                   next({ current, setCurrent });
                 }
               }}
+              disabled={guestFormLoading}
             >
               Next
             </Button>
