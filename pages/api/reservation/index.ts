@@ -44,7 +44,7 @@ export default async function handle(req, res) {
     apiOptions = {
       data: {
         author: { connect: { email: sessionUserEmail } },      
-        pets: {connect : petsAdded},       
+        pets: { connect : petsAdded },
         ...req.body,
       },
     }

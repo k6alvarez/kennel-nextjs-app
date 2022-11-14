@@ -4,7 +4,8 @@ import { useGuestFormContext } from "../formContext";
 import { BlockQuote } from "./FormIntro";
 import { guestFormUpdate } from "./services";
 import { TotalDeposit } from "../styles";
-import { Error } from "../../Forms/styles";
+import { InfoCircleOutlined } from "@ant-design/icons";
+import { ReservationSummary } from "../ReservationSummary";
 
 export const FieldSetPaymentInfo = () => {
   const { guestFormDispatch, guestFormState, setGuestFormError } =
@@ -19,18 +20,21 @@ export const FieldSetPaymentInfo = () => {
         dispatch: guestFormDispatch,
       });
     }
-  }),
-    [guestFormState];
+  }, [guestFormState]);
 
   return (
     <fieldset>
       <>
         <BlockQuote>
-          A $25.00 per run deposit is required for new client reservations. Your
-          reservation is not complete and will not be confirmed until we receive
-          your deposit and the completed reservation form.
+          <InfoCircleOutlined />
+          <p>
+            A $25.00 per run deposit is required for new client reservations.
+            Your reservation is not complete and will not be confirmed until we
+            receive your deposit and the completed reservation form.
+          </p>
         </BlockQuote>
         <TotalDeposit>Your total deposit due is $25.00</TotalDeposit>
+        <ReservationSummary state={guestFormState} />
         <PayPalCheckout
           onConfirm={(results) => {
             setDepositConfirmed(true);

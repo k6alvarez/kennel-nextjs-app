@@ -32,6 +32,11 @@ export const CardTitle = styled.div`
   gap: ${(props) => props.theme.space[4]};
   margin-bottom: ${(props) => props.theme.space[4]};
 
+  button {
+    margin: 0;
+    min-width: max-content;
+  }
+
   > a {
     font-size: ${(props) => props.theme.fontSizes[0]};
   }

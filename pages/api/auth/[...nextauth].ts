@@ -86,7 +86,7 @@ const options = {
 
   return `
 <body style="background: ${color.background};">
-  ${getHeader({color, host, origin})}
+  ${getHeader({color, origin})}
 
 
   <table width="100%" border="0" cellspacing="20" cellpadding="0"

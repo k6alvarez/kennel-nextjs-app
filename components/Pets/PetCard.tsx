@@ -1,15 +1,35 @@
-import { DeleteOutlined } from "@ant-design/icons";
+import {
+  CheckCircleOutlined,
+  DeleteOutlined,
+  PlusCircleOutlined,
+} from "@ant-design/icons";
 import { Card, Avatar } from "antd";
 import React, { useState } from "react";
+import { PetProps } from "../../pages/profile";
 import {
   petInfoOnly,
   petBoardingOnly,
-} from "../Reservations/GuestClients/FieldsetPetsInfo";
+} from "../Reservations/GuestClients/services";
+import { Button } from "../ui-kit/Base";
 import { PetInfo } from "./PetInfo";
 import { isValidHttpUrl } from "./services";
 import { CardTitle } from "./styles";
 
-export const PetCard = ({ pet }) => {
+interface PetCardProps {
+  pet: PetProps;
+  petSelected: any;
+  toggle?: any;
+  onDelete?: (petId: string) => void;
+  onUpdate?: (petId: string) => void;
+}
+
+export const PetCard = ({
+  pet,
+  toggle,
+  onDelete,
+  onUpdate,
+  petSelected,
+}: PetCardProps) => {
   const [activeTabKey1, setActiveTabKey1] = useState<string>("pet");
 
   const onTab1Change = (key: string) => {
@@ -26,6 +46,7 @@ export const PetCard = ({ pet }) => {
       tab: "Boarding Info",
     },
   ];
+
   return (
     <Card
       title={
@@ -33,17 +54,52 @@ export const PetCard = ({ pet }) => {
           {isValidHttpUrl(pet.image) && (
             <Avatar shape="square" size={80} alt="example" src={pet.image} />
           )}
-          <h4>{pet.name}</h4>
+          {toggle ? (
+            <Button
+              primary={petSelected}
+              type="button"
+              onClick={() => toggle(pet)}
+            >
+              {petSelected ? (
+                <>
+                  <CheckCircleOutlined /> {pet.name}
+                </>
+              ) : (
+                <>
+                  <PlusCircleOutlined /> {pet.name}
+                </>
+              )}
+            </Button>
+          ) : (
+            <h4>
+              <CheckCircleOutlined />
+              {pet.name}
+            </h4>
+          )}
         </CardTitle>
       }
       extra={
         <CardTitle>
-          <a href="#">
-            <DeleteOutlined /> Delete Pet
-          </a>
-          <a href="#">
-            <DeleteOutlined /> Update Pet
-          </a>
+          {onDelete && (
+            <button
+              type="button"
+              onClick={() => {
+                onDelete(pet.id);
+              }}
+            >
+              <DeleteOutlined /> Remove Pet
+            </button>
+          )}
+          {onUpdate && (
+            <button
+              type="button"
+              onClick={() => {
+                onUpdate(pet.id);
+              }}
+            >
+              <DeleteOutlined /> Update Pet
+            </button>
+          )}
         </CardTitle>
       }
       tabList={tabList}

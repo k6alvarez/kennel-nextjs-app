@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Steps } from "antd";
-
 import { BlockQuote, FormIntroGuest } from "./FormIntro";
 import { useGuestFormContext } from "../formContext";
 import { FieldsetClientInfo } from "../FieldsetFromState";
@@ -9,7 +8,11 @@ import { Button } from "../../ui-kit/Base";
 import { StepsContent, StepsAction } from "../styles";
 import { FieldSetPaymentInfo } from "./FieldSetPaymentInfo";
 import { next, prev, guestFormFieldsValid } from "../helpers";
-import { createGuestReservationDraft, guestFormSubmit } from "./services";
+import {
+  createGuestReservationDraft,
+  deleteGuestPet,
+  guestFormSubmit,
+} from "./services";
 import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,
@@ -62,6 +65,11 @@ export const GuestClientForm = () => {
           setPets={setPets}
           formState={guestFormState}
           formDispatch={guestFormDispatch}
+          onDelete={(petId) => {
+            deleteGuestPet(petId).then(() => {
+              setPets(pets.filter((pet) => pet.id !== petId));
+            });
+          }}
           apiPath="/api/guest-pet"
         />
       ),

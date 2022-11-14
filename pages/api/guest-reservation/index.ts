@@ -81,8 +81,8 @@ export default async function handle(req, res) {
  *
  * @note We don't add the email address to avoid needing to escape it, if you do, remember to sanitize it!
  */
- function html(params?: { url?: string; host?: string; origin?:string; email?: string, theme?: any }) {
-  const { url, host, theme } = params
+ function html(params?: { url?: string; host?: string; origin?: string; email?: string, theme?: any }) {
+  const { url, host, theme, origin } = params
   const escapedHost = host?.replace(/\./g, "&#8203;.")
 
   const brandColor = theme?.primary || "#22d172"

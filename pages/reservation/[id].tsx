@@ -77,39 +77,36 @@ const Reservation = ({ reservation }) => {
       const isImage = isImageURL(value);
       return (
         <div key={key}>
-          <p>
-            {fieldInGroup.label}: <br />
-            {isUrl ? (
-              <>
-                {isImage ? (
-                  <Image src={value as string} width={100} height={100} />
-                ) : (
-                  <a href={value as string} target="_blank" rel="noreferrer">
-                    <FileOutlined /> {fieldInGroup.label}
-                  </a>
-                )}
-              </>
-            ) : (
-              <span>
-                {fieldInGroup.type === "date" ||
-                fieldInGroup.type === "time" ? (
-                  <>
-                    {fieldInGroup.type === "date" &&
-                      DateTime.fromISO(value as string).toLocaleString(
-                        DateTime.DATE_MED_WITH_WEEKDAY
-                      )}
+          {fieldInGroup.label}: <br />
+          {isUrl ? (
+            <>
+              {isImage ? (
+                <Image src={value as string} width={100} height={100} />
+              ) : (
+                <a href={value as string} target="_blank" rel="noreferrer">
+                  <FileOutlined /> {fieldInGroup.label}
+                </a>
+              )}
+            </>
+          ) : (
+            <span>
+              {fieldInGroup.type === "date" || fieldInGroup.type === "time" ? (
+                <>
+                  {fieldInGroup.type === "date" &&
+                    DateTime.fromISO(value as string).toLocaleString(
+                      DateTime.DATE_MED_WITH_WEEKDAY
+                    )}
 
-                    {fieldInGroup.type === "time" &&
-                      DateTime.fromISO(value as string).toLocaleString(
-                        DateTime.TIME_SIMPLE
-                      )}
-                  </>
-                ) : (
-                  <span>{value}</span>
-                )}
-              </span>
-            )}
-          </p>
+                  {fieldInGroup.type === "time" &&
+                    DateTime.fromISO(value as string).toLocaleString(
+                      DateTime.TIME_SIMPLE
+                    )}
+                </>
+              ) : (
+                <span>{value}</span>
+              )}
+            </span>
+          )}
         </div>
       );
     }

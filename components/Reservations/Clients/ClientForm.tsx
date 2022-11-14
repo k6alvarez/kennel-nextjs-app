@@ -141,6 +141,14 @@ export const ClientForm = ({ session }) => {
           formState={clientFormState}
           formDispatch={clientFormDispatch}
           apiPath="/api/pet"
+          toggle={(pet) => {
+            clientFormDispatch({
+              type: "togglePet",
+              payload: {
+                pet,
+              },
+            });
+          }}
         />
       ),
     },

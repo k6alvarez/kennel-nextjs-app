@@ -51,6 +51,28 @@ const MyApp: React.FC = () => {
           entire room, complete with rocking chairs, cozy baskets, and wide
           window sills, is available on a first come first serve basis.
         </p>
+        <h2>Gillette Kennels is also proud to offer Obedience Training!</h2>
+        <p>
+          Kirk L. Gillette formally began professionally training dogs in
+          January of 1992 when he developed and opened Gillette Obedience
+          Training. The boarding kennel was added to the business in early 1998.
+          Mr. Gillette’s qualifications are unsurpassed in the Kalamazoo,
+          Portage, and Battle Creek area. In addition to holding a Master’s
+          Degree in Behavioral Psychology from Western Michigan University, Mr.
+          Gillette also obtained a diploma from West Virginia Canine College
+          that certified him in professional dog training and kennel management.
+          Our training courses range from puppy head start classes to basic,
+          intermediate, and advanced levels!
+        </p>
+        <h2>Our Mission</h2>
+        <p>
+          This website was created with you, our clients, in mind. Our goal is
+          to become the premier boarding kennel in Kalamazoo, Portage, and
+          Battle Creek. While many site enhancements are presently in the works,
+          we would love to learn your suggestions to improve the site so that we
+          can better serve you. Please Contact Us with your suggestions.
+        </p>
+        <p>Thank you, Kirk L. Gillette, M.A.</p>
       </Content>
       <Promos
         delay={defaultDelay * 6}
@@ -81,31 +103,6 @@ const MyApp: React.FC = () => {
           },
         ]}
       />
-
-      <Content>
-        <h2>Gillette Kennels is also proud to offer Obedience Training!</h2>
-        <p>
-          Kirk L. Gillette formally began professionally training dogs in
-          January of 1992 when he developed and opened Gillette Obedience
-          Training. The boarding kennel was added to the business in early 1998.
-          Mr. Gillette’s qualifications are unsurpassed in the Kalamazoo,
-          Portage, and Battle Creek area. In addition to holding a Master’s
-          Degree in Behavioral Psychology from Western Michigan University, Mr.
-          Gillette also obtained a diploma from West Virginia Canine College
-          that certified him in professional dog training and kennel management.
-          Our training courses range from puppy head start classes to basic,
-          intermediate, and advanced levels!
-        </p>
-        <h3>Our Mission</h3>
-        <p>
-          This website was created with you, our clients, in mind. Our goal is
-          to become the premier boarding kennel in Kalamazoo, Portage, and
-          Battle Creek. While many site enhancements are presently in the works,
-          we would love to learn your suggestions to improve the site so that we
-          can better serve you. Please Contact Us with your suggestions.
-        </p>
-        <p>Thank you, Kirk L. Gillette, M.A.</p>
-      </Content>
     </Layout>
   );
 };

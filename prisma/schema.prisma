@@ -17,9 +17,9 @@ enum Permission {
 }
 
 model Pet {
-  id                     String       @id @default(cuid())
-  createdAt              DateTime     @default(now())
-  updatedAt              DateTime     @updatedAt
+  id                     String        @id @default(cuid())
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
   type                   String
   name                   String
   breed                  String
@@ -36,18 +36,17 @@ model Pet {
   preferredRunSize       String
   feeding                String
   feedingCount           String
-  owner                  User         @relation(fields: [ownerId], references: [id])
+  owner                  User          @relation(fields: [ownerId], references: [id])
   ownerId                String
-  reservation            Reservation? @relation(fields: [reservationId], references: [id])
-  reservationId          String?
+  reservations           Reservation[]
 
   @@map("pets")
 }
 
 model GuestPet {
-  id                     String            @id @default(cuid())
-  createdAt              DateTime          @default(now())
-  updatedAt              DateTime          @updatedAt
+  id                     String             @id @default(cuid())
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
   type                   String
   name                   String
   breed                  String
@@ -64,8 +63,7 @@ model GuestPet {
   preferredRunSize       String
   feeding                String
   feedingCount           String
-  guestReservation       GuestReservation? @relation(fields: [guestReservationId], references: [id])
-  guestReservationId     String?
+  reservations           GuestReservation[]
 
   @@map("guest_pets")
 }
