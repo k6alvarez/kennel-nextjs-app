@@ -156,7 +156,7 @@ model Reservation {
   departureDate       String
   departureTime       String
   dateConfirmed       String?
-  specialInstructions String
+  specialInstructions String?
   pets                Pet[]
 
   @@map(name: "reservations")

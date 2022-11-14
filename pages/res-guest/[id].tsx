@@ -91,6 +91,7 @@ const ResGuest = ({ reservation }) => {
           <p>
             It looks like this reservation does not exist. Check the link sent
             to the email address provided when the reservation was submitted.
+            You must be logged in to view your reservation details.
           </p>
         </Content>
       </Layout>

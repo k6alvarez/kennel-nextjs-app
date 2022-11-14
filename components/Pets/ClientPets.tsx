@@ -12,7 +12,11 @@ export const ClientPets = ({ pets }) => {
 
       <StyledGridItems>
         {pets?.map((pet, i) => (
-          <PetCard key={`pet-${pet.id}-${i}`} pet={pet} />
+          <PetCard
+            key={`pet-${pet.id}-${i}`}
+            pet={pet}
+            petSelected={undefined}
+          />
         ))}
       </StyledGridItems>
     </Wrapper>
