@@ -72,7 +72,10 @@ const MyApp: React.FC = () => {
           we would love to learn your suggestions to improve the site so that we
           can better serve you. Please Contact Us with your suggestions.
         </p>
-        <p>Thank you, Kirk L. Gillette, M.A.</p>
+        <p>
+          Thank you, <br />
+          Kirk L. Gillette, M.A.
+        </p>
       </Content>
       <Promos
         delay={defaultDelay * 6}

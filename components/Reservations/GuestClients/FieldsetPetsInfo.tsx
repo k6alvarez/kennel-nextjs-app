@@ -108,7 +108,7 @@ export const FieldsetPetsInfo = ({
                 petSelected={
                   formState.pets instanceof Array
                     ? formState.pets.includes(pet)
-                    : formState.pets[pet] !== undefined
+                    : Object.keys(formState.pets).includes(pet.id)
                 }
               />
             );

@@ -4,6 +4,11 @@ import styled from "styled-components";
 const Wrapper = styled.span`
   display: flex;
   flex-direction: column;
+
+  span:first-child {
+    font-family: "Dancing_Script", cursive;
+    font-size: ${({ theme }) => theme.fontSizes[3]};
+  }
 `;
 
 const Slogan = styled.span`
