@@ -4,25 +4,30 @@ import styled from "styled-components";
 const Wrapper = styled.span`
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   span:first-child {
     font-family: "Dancing_Script", cursive;
-    font-size: ${({ theme }) => theme.fontSizes[3]};
+    font-size: ${({ theme, size }) =>
+      size ? `calc(${theme.fontSizes[size]})` : `calc(${theme.fontSizes[1]})`};
+    line-height: 1;
   }
 `;
 
 const Slogan = styled.span`
-  font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/1.5)`};
+  font-size: ${({ theme, size }) =>
+    size
+      ? `calc(${theme.fontSizes[size]}/2.5)`
+      : `calc(${theme.fontSizes[0]}/1.5)`};
   font-family: "Lato", sans-serif;
   letter-spacing: 1px;
 `;
 
-export const LogoOne = () => {
+export const LogoOne = ({ size }: { size?: number }) => {
   return (
-    <Wrapper>
+    <Wrapper size={size}>
       <span>Gillette Kennels</span>
-      <span></span>
-      <Slogan>An obedient dog, is a happy dog.</Slogan>
+      <Slogan size={size}>&nbsp;&nbsp;An obedient dog, is a happy dog.</Slogan>
     </Wrapper>
   );
 };

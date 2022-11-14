@@ -13,7 +13,7 @@ export const StyledNav = styled.nav`
   top: 0;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.primary};
-  padding: ${({ theme }) => theme.space[2]};
+  padding: ${({ theme }) => theme.space[3]};
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 5000;
   a {
@@ -52,6 +52,8 @@ export const StyledNav = styled.nav`
   .rightNav {
     display: none;
 
+    letter-spacing: 1px;
+
     @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
       display: flex;
     }
@@ -74,7 +76,7 @@ export const NavWrapper = styled.div`
 
   a,
   button {
-    font-size: ${({ theme }) => theme.fontSizes[1]};
+    font-size: ${({ theme }) => theme.fontSizes[0]};
   }
 `;
 
