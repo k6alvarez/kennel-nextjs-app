@@ -92,27 +92,25 @@ export const Content = styled.article`
 export const GridItems = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.space[6]};
   margin: ${({ theme }) => theme.space[4]} 0;
-  justify-content: center;
+  justify-content: space-between;
   overflow: hidden;
 
-  @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
+  @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
     flex-direction: ${({ breakMobile }) => (breakMobile ? "column" : "row")};
     padding: ${({ breakMobile, theme }) =>
       breakMobile ? theme.space[4] : "0"};
   }
 
-  @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
+  @media (min-width: ${(props) => props.theme.breakpoints[2]}) {
     flex-direction: row;
   }
 `;
 
 export const GridItem = styled.div`
   position: relative;
-  min-width: 100px;
-  width: 100%;
-  height: 30vh;
+  width: 100vw;
+  height: 100vw;
   background-image: url(${({ img }) => (img ? img : "")});
   background-color: ${({ theme, bg }) => theme.colors[bg] || theme.colors.nav};
   background-size: cover;
@@ -128,9 +126,9 @@ export const GridItem = styled.div`
     margin-right: 0;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-    width: ${({ size }) => (size ? size : "28vw")};
-    height: ${({ size }) => (size ? size : "20vw")};
+  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+    width: ${({ size }) => (size ? size : "25vw")};
+    height: ${({ size }) => (size ? size : "25vw")};
   }
 `;
 

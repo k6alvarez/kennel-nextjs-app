@@ -1,5 +1,4 @@
 import React from "react";
-import { getSession } from "next-auth/react";
 import Layout from "../components/Layout";
 import { defaultDelay, Promo } from "../components/ui-kit/Promo";
 import { Content } from "../components/ui-kit/Base";

@@ -40,7 +40,8 @@ export const Promos = ({
               key={key}
               style={{
                 ...props,
-                margin: "1rem 0 1rem 0",
+                margin: "1rem",
+                width: "100%",
               }}
             >
               {promo.link ? (
