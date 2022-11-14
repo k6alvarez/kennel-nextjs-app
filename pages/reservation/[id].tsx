@@ -15,6 +15,11 @@ import { FileOutlined } from "@ant-design/icons";
 import { Image, Tag } from "antd";
 
 import { DateTime } from "luxon";
+import { LetterSpacedText } from "../../components/Footer";
+
+const DetailItem = styled.div`
+  margin-bottom: ${({ theme }) => theme.space[4]};
+`;
 
 const Flex = styled.div`
   display: flex;
@@ -58,60 +63,60 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   };
 };
 
+export const getFieldGroupValues = (
+  fieldGroup: {
+    [x: string]: any;
+  },
+  key: string,
+  value: string | boolean | Date
+) => {
+  const fieldInGroup = fieldGroup[key];
+
+  if (key === "image" || key === "largeImage") {
+    return;
+  }
+
+  if (fieldInGroup && value) {
+    const isUrl = isValidHttpUrl(value);
+    const isImage = isImageURL(value);
+    return (
+      <DetailItem key={key}>
+        <LetterSpacedText bold>{fieldInGroup.label}:</LetterSpacedText>
+        {isUrl ? (
+          <>
+            {isImage ? (
+              <Image src={value as string} width={100} height={100} />
+            ) : (
+              <a href={value as string} target="_blank" rel="noreferrer">
+                <FileOutlined /> {fieldInGroup.label}
+              </a>
+            )}
+          </>
+        ) : (
+          <LetterSpacedText>
+            {fieldInGroup.type === "date" || fieldInGroup.type === "time" ? (
+              <>
+                {fieldInGroup.type === "date" &&
+                  DateTime.fromISO(value as string).toLocaleString(
+                    DateTime.DATE_MED_WITH_WEEKDAY
+                  )}
+
+                {fieldInGroup.type === "time" &&
+                  DateTime.fromISO(value as string).toLocaleString(
+                    DateTime.TIME_SIMPLE
+                  )}
+              </>
+            ) : (
+              <span>{value}</span>
+            )}
+          </LetterSpacedText>
+        )}
+      </DetailItem>
+    );
+  }
+};
+
 const Reservation = ({ reservation }) => {
-  const getFieldGroupValues = (
-    fieldGroup: {
-      [x: string]: any;
-    },
-    key: string,
-    value: string | boolean | Date
-  ) => {
-    const fieldInGroup = fieldGroup[key];
-
-    if (key === "image" || key === "largeImage") {
-      return;
-    }
-
-    if (fieldInGroup && value) {
-      const isUrl = isValidHttpUrl(value);
-      const isImage = isImageURL(value);
-      return (
-        <div key={key}>
-          {fieldInGroup.label}: <br />
-          {isUrl ? (
-            <>
-              {isImage ? (
-                <Image src={value as string} width={100} height={100} />
-              ) : (
-                <a href={value as string} target="_blank" rel="noreferrer">
-                  <FileOutlined /> {fieldInGroup.label}
-                </a>
-              )}
-            </>
-          ) : (
-            <span>
-              {fieldInGroup.type === "date" || fieldInGroup.type === "time" ? (
-                <>
-                  {fieldInGroup.type === "date" &&
-                    DateTime.fromISO(value as string).toLocaleString(
-                      DateTime.DATE_MED_WITH_WEEKDAY
-                    )}
-
-                  {fieldInGroup.type === "time" &&
-                    DateTime.fromISO(value as string).toLocaleString(
-                      DateTime.TIME_SIMPLE
-                    )}
-                </>
-              ) : (
-                <span>{value}</span>
-              )}
-            </span>
-          )}
-        </div>
-      );
-    }
-  };
-
   if (!reservation) {
     return (
       <Layout>
@@ -154,7 +159,7 @@ const Reservation = ({ reservation }) => {
         <Card
           title={
             <Flex>
-              <span>Boarding Details</span>
+              <h2>Reservation Details</h2>
               {reservation.confirmed ? (
                 <Tag color="green">Confirmed</Tag>
               ) : (
@@ -172,7 +177,7 @@ const Reservation = ({ reservation }) => {
 
         {reservation.pets.map((pet) => {
           return (
-            <Card title={pet.name} key={pet.id}>
+            <Card title={<h2>{pet.name}</h2>} key={pet.id}>
               {pet.image && (
                 <Image
                   src={pet.image}
@@ -181,6 +186,7 @@ const Reservation = ({ reservation }) => {
                   height={200}
                 />
               )}
+
               <Grid>
                 {Object.entries(pet).map(([key, value]: any) =>
                   getFieldGroupValues(PET_INITIAL_STATE, key, value)
@@ -190,7 +196,7 @@ const Reservation = ({ reservation }) => {
           );
         })}
 
-        <Card title={"Owner Details"}>
+        <Card title={<h2>Owner Details</h2>}>
           <Grid>
             {Object.entries(reservation.author).map(([key, value]: any) =>
               getFieldGroupValues(INITIAL_USER_STATE, key, value)

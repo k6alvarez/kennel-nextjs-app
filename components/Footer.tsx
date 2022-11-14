@@ -1,5 +1,4 @@
 import {
-  ClockCircleOutlined,
   CopyrightCircleOutlined,
   HomeOutlined,
   PhoneOutlined,
@@ -52,13 +51,13 @@ const BusinessInfo = styled.div`
   justify-content: space-between;
 `;
 
-const FooterSmallText = styled.p`
+export const LetterSpacedText = styled.p`
   margin: 0;
-  font-weight: 600;
-  font-size: ${({ theme }) => `calc(${theme.fontSizes[0]} / 1.2)`};
-  text-transform: uppercase;
+  font-weight: ${({ bold }) => (bold ? 600 : 400)};
+  font-size: ${({ theme }) => `calc(${theme.fontSizes[0]} / 1.1)`};
+  text-transform: ${({ uppercase }) =>
+    uppercase ? "uppercase" : "capitalize"};
   letter-spacing: 1px;
-  text-align: center;
 `;
 
 export const BusinessWrapper = styled.div`
@@ -110,36 +109,36 @@ export const Footer = () => {
           </RouteLink>
           <BusinessWrapper>
             <Hoursblock>
-              <FooterSmallText>Our Hours:</FooterSmallText>
+              <LetterSpacedText>Our Hours:</LetterSpacedText>
               <Card>
                 <TimeSpanElement>
-                  <FooterSmallText>Monday - Friday</FooterSmallText>
-                  <FooterSmallText>9AM to 7PM </FooterSmallText>
+                  <LetterSpacedText>Monday - Friday</LetterSpacedText>
+                  <LetterSpacedText>9AM to 7PM </LetterSpacedText>
                 </TimeSpanElement>
                 <TimeSpanElement>
-                  <FooterSmallText>Closed</FooterSmallText>
-                  <FooterSmallText>2PM to 4PM</FooterSmallText>
+                  <LetterSpacedText>Closed</LetterSpacedText>
+                  <LetterSpacedText>2PM to 4PM</LetterSpacedText>
                 </TimeSpanElement>
               </Card>
               <Card>
                 <TimeSpanElement>
-                  <FooterSmallText>Sunday</FooterSmallText>
-                  <FooterSmallText>9AM to 7PM</FooterSmallText>
+                  <LetterSpacedText>Sunday</LetterSpacedText>
+                  <LetterSpacedText>9AM to 7PM</LetterSpacedText>
                 </TimeSpanElement>
                 <TimeSpanElement>
-                  <FooterSmallText>Saturday</FooterSmallText>
-                  <FooterSmallText>Closed</FooterSmallText>
+                  <LetterSpacedText>Saturday</LetterSpacedText>
+                  <LetterSpacedText>Closed</LetterSpacedText>
                 </TimeSpanElement>
               </Card>
             </Hoursblock>
           </BusinessWrapper>
           <BusinessWrapper>
             <Hoursblock>
-              <FooterSmallText>Find Us:</FooterSmallText>
+              <LetterSpacedText>Find Us:</LetterSpacedText>
               <Card>
                 <TimeSpanElement>
-                  <FooterSmallText>Address:</FooterSmallText>
-                  <FooterSmallText style={{ textAlign: "right" }}>
+                  <LetterSpacedText>Address:</LetterSpacedText>
+                  <LetterSpacedText style={{ textAlign: "right" }}>
                     <HomeOutlined />{" "}
                     <a
                       href="https://www.google.com/maps/dir//42.2892336,-85.4501633/@42.289234,-85.450163,11z?hl=en-US"
@@ -149,20 +148,20 @@ export const Footer = () => {
                       <br />
                       Galesburg MI, 49053
                     </a>
-                  </FooterSmallText>
+                  </LetterSpacedText>
                 </TimeSpanElement>
               </Card>
               <Card>
                 <TimeSpanElement>
-                  <FooterSmallText>Phone:</FooterSmallText>
-                  <FooterSmallText>
+                  <LetterSpacedText>Phone:</LetterSpacedText>
+                  <LetterSpacedText>
                     <PhoneOutlined />{" "}
                     <a href="tel:269-665-4878">269-665-4878</a>
-                  </FooterSmallText>
+                  </LetterSpacedText>
                 </TimeSpanElement>
                 <TimeSpanElement>
-                  <FooterSmallText>Fax:</FooterSmallText>
-                  <FooterSmallText>269-665-6970</FooterSmallText>
+                  <LetterSpacedText>Fax:</LetterSpacedText>
+                  <LetterSpacedText>269-665-6970</LetterSpacedText>
                 </TimeSpanElement>
               </Card>
             </Hoursblock>

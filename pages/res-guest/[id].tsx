@@ -3,24 +3,20 @@ import { GetServerSideProps } from "next";
 import styled from "styled-components";
 import prisma from "../../lib/prisma";
 import { Content } from "../../components/ui-kit/Base";
-import { Image, Card } from "antd";
-import { FileOutlined } from "@ant-design/icons";
+import { Image, Card, Tag } from "antd";
 import Layout from "../../components/Layout";
 import {
   INITIAL_RESERVATION_STATE,
   INITIAL_USER_STATE,
 } from "../../components/Reservations/formInitialState";
 import { PET_INITIAL_STATE } from "../../components/Pets/petFormReducer";
-import { isValidHttpUrl } from "../../components/Pets/services";
+import { DateTime } from "luxon";
+import { getFieldGroupValues } from "../reservation/[id]";
 
 const Flex = styled.div`
   display: flex;
   justify-content: space-between;
   align-self: center;
-`;
-
-const ResId = styled.span`
-  font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/1.4)`};
 `;
 
 const Grid = styled.div`
@@ -51,38 +47,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 const ResGuest = ({ reservation }) => {
-  const getFieldGroupValues = (
-    fieldGroup: {
-      [x: string]: any;
-    },
-    key: string,
-    value: string | boolean | Date
-  ) => {
-    const fieldInGroup = fieldGroup[key];
-
-    if (key === "image" || key === "name") {
-      return;
-    }
-
-    if (fieldInGroup && value) {
-      const isUrl = isValidHttpUrl(value);
-      return (
-        <div key={key}>
-          <p>
-            {fieldInGroup.label}: <br />
-            {isUrl ? (
-              <a href={value as string} target="_blank" rel="noreferrer">
-                <FileOutlined /> {fieldInGroup.label}
-              </a>
-            ) : (
-              <span>{value}</span>
-            )}
-          </p>
-        </div>
-      );
-    }
-  };
-
   if (!reservation) {
     return (
       <Layout>
@@ -101,18 +65,37 @@ const ResGuest = ({ reservation }) => {
   return (
     <Layout>
       <Content maxWidth="900px">
-        <h1>Boarding Reservation for {reservation.arrivalDate}</h1>
+        <h1>
+          <span>
+            Boarding Reservation for{" "}
+            {DateTime.fromISO(reservation.arrivalDate).toLocaleString({
+              month: "long",
+              day: "2-digit",
+              year: "numeric",
+            })}
+          </span>
+        </h1>
         <p>
-          Your reservation details are below. We have also emailed you a link to
-          this page.
+          {reservation.confirmed ? (
+            <>Your reservation has been confirmed.</>
+          ) : (
+            <>
+              Your reservation is not confirmed until you have received a
+              confirmation email from us.
+            </>
+          )}
         </p>
       </Content>
       <Content maxWidth="900px" cardWrapper fs="0">
         <Card
           title={
             <Flex>
-              <span>Boarding Dates</span>
-              <ResId>Reservation ID: {reservation.id}</ResId>
+              <h2>Reservation Details</h2>
+              {reservation.confirmed ? (
+                <Tag color="green">Confirmed</Tag>
+              ) : (
+                <Tag color="red">Not Confirmed</Tag>
+              )}
             </Flex>
           }
         >
@@ -124,13 +107,15 @@ const ResGuest = ({ reservation }) => {
         </Card>
         {reservation.pets.map((pet) => {
           return (
-            <Card title={pet.name} key={pet.id}>
-              <Image
-                src={pet.image}
-                alt={`Picture of ${pet.name}`}
-                width={200}
-                height={200}
-              />
+            <Card title={<h2>{pet.name}</h2>} key={pet.id}>
+              {pet.image && (
+                <Image
+                  src={pet.image}
+                  alt={`Picture of ${pet.name}`}
+                  width={200}
+                  height={200}
+                />
+              )}
               <Grid>
                 {Object.entries(pet).map(([key, value]: any) =>
                   getFieldGroupValues(PET_INITIAL_STATE, key, value)
@@ -140,7 +125,7 @@ const ResGuest = ({ reservation }) => {
           );
         })}
 
-        <Card title={"Owner Details"}>
+        <Card title={<h2>Owner Details</h2>}>
           <Grid>
             {Object.entries(reservation).map(([key, value]: any) =>
               getFieldGroupValues(INITIAL_USER_STATE, key, value)

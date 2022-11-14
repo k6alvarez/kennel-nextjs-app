@@ -88,6 +88,10 @@ export const Content = styled.article`
     font-size: ${({ theme }) => `calc(${theme.fontSizes[0]})`};
     padding: 8px 16px;
   }
+
+  .ant-card-body > .ant-image {
+    margin-bottom: ${({ theme }) => theme.space[4]};
+  }
 `;
 
 export const GridItems = styled.div`

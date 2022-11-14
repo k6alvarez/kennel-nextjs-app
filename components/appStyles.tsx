@@ -106,6 +106,9 @@ export const GlobalStyle = createGlobalStyle`
     padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[3]};
     font-family: "Lato", sans-serif;
     text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   
