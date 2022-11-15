@@ -68,6 +68,7 @@ export const GlobalStyle = createGlobalStyle`
 
   .ant-message {
     font-family: ${({ theme }) => theme.fonts.body};
+    z-index: 5001;
   }
 
   .ant-tabs-content-holder article {
