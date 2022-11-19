@@ -11,7 +11,8 @@ import { LogoOne } from "./ui-kit/Logo";
 
 const FooterWrapper = styled.footer`
   background-color: ${({ theme }) => theme.colors.secondary};
-  padding: ${({ theme }) => `${theme.space[5]}`};
+  padding: ${({ theme }) => `${theme.space[5]}`}
+    ${({ theme }) => `${theme.space[5]}`} ${({ theme }) => `${theme.space[2]}`};
   position: absolute;
   top: 100%;
   width: 100%;
@@ -54,9 +55,10 @@ const BusinessInfo = styled.div`
 export const LetterSpacedText = styled.p`
   margin: 0;
   font-weight: ${({ bold }) => (bold ? 600 : 400)};
-  font-size: ${({ theme }) => `calc(${theme.fontSizes[0]} / 1.1)`};
-  text-transform: ${({ uppercase }) =>
-    uppercase ? "uppercase" : "capitalize"};
+  font-size: ${({ theme, fs }) =>
+    `calc(${fs ? fs : theme.fontSizes[0]} / 1.1)`};
+  text-transform: ${({ textTransform }) =>
+    textTransform ? textTransform : "capitalize"};
   letter-spacing: 1px;
 `;
 

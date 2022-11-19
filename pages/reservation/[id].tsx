@@ -17,7 +17,7 @@ import { Image, Tag } from "antd";
 import { DateTime } from "luxon";
 import { LetterSpacedText } from "../../components/Footer";
 
-const DetailItem = styled.div`
+export const DetailItem = styled.div`
   margin-bottom: ${({ theme }) => theme.space[4]};
 `;
 

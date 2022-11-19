@@ -1,39 +1,7 @@
 import React from "react";
 import { Card } from "antd";
-
-import styled from "styled-components";
-import { Content } from "../ui-kit/Base";
-
-export const FlexCards = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: ${({ theme }) => theme.space[4]};
-  padding: ${({ theme }) => theme.space[4]};
-  margin-bottom: ${({ theme }) => theme.space[4]};
-  flex-wrap: ${({ nowrap }) => (nowrap ? "nowrap" : "wrap")};
-  background-color: ${({ theme }) => theme.colors.secondary};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-    flex-direction: row;
-  }
-
-  .ant-card {
-    flex: 1;
-    margin-bottom: 0;
-    min-width: 25%;
-    width: 100%;
-
-    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-      width: max-content;
-    }
-  }
-`;
-
-export const TabContent = styled(Content)`
-  padding-top: 0;
-  padding-bottom: 0;
-`;
+import { RunSizes } from "./RunSizes";
+import { FlexCards, TabContent } from "./styles";
 
 export const BoardingHome = () => {
   return (
@@ -58,38 +26,9 @@ export const BoardingHome = () => {
           The boarding kennel contains three size runs to accommodate both large
           and small breeds.
         </p>
-        <FlexCards>
-          <Card title={<h2>Giant Run</h2>}>
-            <p>
-              Inside: <br />
-              5ft x 6ft
-            </p>
-            <p>
-              Outside: <br />
-              5ft x 15ft outside.{" "}
-            </p>
-          </Card>
-          <Card title={<h2>Large Run</h2>}>
-            <p>
-              Inside:
-              <br /> 4ft x 6ft
-            </p>
-            <p>
-              Outside:
-              <br /> 4ft x 15ft outside.{" "}
-            </p>
-          </Card>
-          <Card title={<h2>Small Run</h2>}>
-            <p>
-              Inside:
-              <br /> 3ft x 6ft
-            </p>
-            <p>
-              Outside:
-              <br /> 3ft x 15ft outside.{" "}
-            </p>
-          </Card>
-        </FlexCards>
+      </TabContent>
+      <RunSizes />
+      <TabContent>
         <p>
           Dogs have free access to the inside and outside areas from early
           morning to late evening (weather permitting). The runs are seperated
@@ -98,7 +37,6 @@ export const BoardingHome = () => {
           it rains while providing access to fresh air and the inside runs
           include in floor radiant heat.
         </p>
-        {/* <RunSizes /> */}
         <h2>C-Wing: Our Original Kennel (Updated 2020)</h2>
         <p>
           C-Wing is not connected to our main facility. After check-in our staff

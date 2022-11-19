@@ -103,6 +103,11 @@ export const GlobalStyle = createGlobalStyle`
     font-size: unset;
   }
 
+  .ant-card-head-title {
+    font-weight: 600;
+    font-size: ${({ theme }) => theme.fontSizes[2]};
+  }
+
   .ant-tag {
     padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[3]};
     font-family: "Lato", sans-serif;

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 interface PromosProps {
   promos: {
-    size: string;
+    size?: string;
     image: string;
     title?: string;
     description?: string;
@@ -15,6 +15,7 @@ interface PromosProps {
   delay?: number;
   breakMoble?: boolean;
   transparent?: boolean;
+  variant?: "row" | "column";
 }
 
 export const Promos = ({
@@ -22,10 +23,11 @@ export const Promos = ({
   breakMoble,
   delay = 0,
   promos = [],
+  variant = "row",
 }: PromosProps) => {
   return (
     <PromoPics transparent={transparent}>
-      <GridItems breakMobile={breakMoble || !!promos[0].link}>
+      <GridItems variant={variant}>
         {promos.map((promo, i) => {
           const props = useSpring({
             to: { opacity: 1, transform: "translate3d(0,0,0)" },
@@ -40,7 +42,7 @@ export const Promos = ({
               key={key}
               style={{
                 ...props,
-                margin: "1rem",
+                margin: "2rem 1rem",
                 width: "100%",
               }}
             >
@@ -49,12 +51,14 @@ export const Promos = ({
                   <Link href={promo.link}>
                     <a>
                       <ImageZoomWrapper>
-                        <GridItem size={promo.size} img={promo.image} />
+                        <GridItem img={promo.image} />
                       </ImageZoomWrapper>
-                      {promo.title ? <h2>{promo.title}</h2> : null}
-                      {promo.description ? (
-                        <span>{promo.description}</span>
-                      ) : null}
+                      <div>
+                        {promo.title ? <h2>{promo.title}</h2> : null}
+                        {promo.description ? (
+                          <span>{promo.description}</span>
+                        ) : null}
+                      </div>
                     </a>
                   </Link>
                 </PromoTextWrapper>

@@ -8,6 +8,7 @@ const MyApp: React.FC = () => {
   return (
     <Layout>
       <Promo
+        showFooter
         promos={[
           {
             image:
@@ -51,6 +52,34 @@ const MyApp: React.FC = () => {
           entire room, complete with rocking chairs, cozy baskets, and wide
           window sills, is available on a first come first serve basis.
         </p>
+      </Content>
+      <Promos
+        delay={defaultDelay * 6}
+        promos={[
+          {
+            title: "We board cats!",
+            description: "We have a cattery for your cat's stay.",
+            link: "/boarding?tab=boarding-cats",
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419343/gk-app/Kitty_window.jpg",
+          },
+          {
+            title: "Vaccinations",
+            description: "See our list of required vaccinations.",
+            link: "/boarding?tab=vaccinations",
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419325/gk-app/Addie3.jpg",
+          },
+          {
+            title: "Before you board",
+            link: "/boarding?tab=before-boarding",
+            description: "Learn more about our boarding services.",
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
+          },
+        ]}
+      />
+      <Content>
         <h2>Gillette Kennels is also proud to offer Obedience Training!</h2>
         <p>
           Kirk L. Gillette formally began professionally training dogs in
@@ -77,35 +106,6 @@ const MyApp: React.FC = () => {
           Kirk L. Gillette, M.A.
         </p>
       </Content>
-      <Promos
-        delay={defaultDelay * 6}
-        promos={[
-          {
-            title: "We board cats!",
-            description: "We have a cattery for your cat's stay.",
-            link: "/boarding?tab=boarding-cats",
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419343/gk-app/Kitty_window.jpg",
-            size: "10vw",
-          },
-          {
-            title: "Vaccinations",
-            description: "Read about our Vaccinations requirements.",
-            link: "/boarding?tab=vaccinations",
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419325/gk-app/Addie3.jpg",
-            size: "10vw",
-          },
-          {
-            title: "Before you board",
-            link: "/boarding?tab=before-boarding",
-            description: "Learn more about our boarding services.",
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
-            size: "10vw",
-          },
-        ]}
-      />
     </Layout>
   );
 };

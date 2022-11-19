@@ -2,10 +2,6 @@ import React from "react";
 import { renderFormFields } from "../Forms/renderFormFields";
 
 export const ReservationSummary = ({ state }) => {
-  console.log(
-    "🚀 ~ file: ReservationSummary.tsx ~ line 5 ~ ReservationSummary ~ data",
-    state
-  );
   return (
     <div>
       <h2>Reservation Summary</h2>
