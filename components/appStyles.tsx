@@ -103,6 +103,10 @@ export const GlobalStyle = createGlobalStyle`
     font-size: unset;
   }
 
+  .ant-card-cover {
+    padding: ${({ theme }) => theme.space[4]};
+  }
+
   .ant-card-head-title {
     font-weight: 600;
     font-size: ${({ theme }) => theme.fontSizes[2]};
