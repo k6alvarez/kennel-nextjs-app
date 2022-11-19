@@ -1,11 +1,11 @@
 import Link from "next/link";
 import React from "react";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
-import { TabContent } from "./BoardingHome";
+import { Content } from "../ui-kit/Base";
 
 export const BeforeBoarding = () => {
   return (
-    <TabContent>
+    <Content>
       <h1>Before Boarding</h1>
       <p>
         Our experience has shown us that dogs that frequently visit our boarding
@@ -69,6 +69,6 @@ export const BeforeBoarding = () => {
         you borrow a leash from us. Please read our{" "}
         <a>procedures for checking in</a> prior to your arrival.
       </p>
-    </TabContent>
+    </Content>
   );
 };

@@ -14,8 +14,9 @@ import BoardingRates, {
   rateLglRun,
   rateSmRun,
 } from "../components/Boarding/BoardingRates";
-import { FlexCards } from "../components/Boarding/BoardingHome";
+
 import { Card } from "antd";
+import { FlexCards } from "../components/Boarding/styles";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({

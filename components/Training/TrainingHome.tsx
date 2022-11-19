@@ -1,10 +1,10 @@
 import React from "react";
-import { TabContent } from "../Boarding/BoardingHome";
+import { Content } from "../ui-kit/Base";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 
 export const TrainingHome = () => {
   return (
-    <TabContent>
+    <Content>
       <p>
         Kirk L. Gillette holds a M.A. in Behavioral Psychology from Western
         Michigan University, a diploma from West Virginia Canine College, and
@@ -22,6 +22,6 @@ export const TrainingHome = () => {
             return DateTime.local() < DateTime.fromISO(x.startDate);
           }}
         /> */}
-    </TabContent>
+    </Content>
   );
 };

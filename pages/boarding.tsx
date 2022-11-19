@@ -99,26 +99,6 @@ const Boarding: React.FC<Props> = () => {
   return (
     <Layout>
       <Promo
-        promos={[
-          {
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg",
-            title: "",
-            description: "",
-          },
-          {
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
-            title: "",
-            description: "",
-          },
-          {
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg",
-            title: "",
-            description: "",
-          },
-        ]}
         title="to keep your dog warm in the winter."
         description="Our facility also has two spacious exercise and play areas."
       >

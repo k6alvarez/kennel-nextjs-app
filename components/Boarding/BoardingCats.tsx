@@ -1,10 +1,10 @@
 import React from "react";
 import { Promos } from "../ui-kit/Promo/Promos";
-import { TabContent } from "./BoardingHome";
+import { Content } from "../ui-kit/Base";
 
 const BoardingCats = (props) => {
   return (
-    <TabContent>
+    <Content>
       <h1>Cat Condos</h1>
       <p>
         We offer cat boarding services. Choose between a cat condo or the
@@ -35,7 +35,7 @@ const BoardingCats = (props) => {
         ]}
       />
       {/* <BoardingRates catsOnly={true} /> */}
-    </TabContent>
+    </Content>
   );
 };
 

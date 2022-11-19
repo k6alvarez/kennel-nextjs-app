@@ -19,12 +19,12 @@ export const Content = styled.article`
 
   h1 {
     font-weight: bold;
-    font-size: ${({ theme }) => theme.fontSizes[4]};
+    font-size: ${({ theme }) => theme.fontSizes[5]};
   }
 
   h2 {
     font-weight: bold;
-    font-size: ${({ theme }) => theme.fontSizes[2]};
+    font-size: ${({ theme }) => theme.fontSizes[3]};
   }
 
   h3 {
@@ -55,6 +55,7 @@ export const Content = styled.article`
     margin-bottom: ${({ theme }) => theme.space[4]};
     font-size: ${({ theme, fs }) =>
       fs ? theme.fontSizes[fs] : theme.fontSizes[1]};
+    box-shadow: ${({ theme }) => theme.shadows.light};
   }
 
   .ant-card-head-title {
@@ -93,6 +94,8 @@ export const Content = styled.article`
     margin-bottom: ${({ theme }) => theme.space[4]};
   }
 `;
+
+export const GridItemText = styled.div``;
 
 export const GridItems = styled.div`
   display: flex;

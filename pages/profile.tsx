@@ -13,6 +13,7 @@ import { profileFormReducer } from "../components/Profile/profileFormReducer";
 import { Size, useWindowSize } from "../components/ui-kit/hooks/useWindowSize";
 import { ProfileForm } from "../components/Profile/ProfileForm";
 import { PetsTab } from "../components/Pets/PetsTab";
+import { AdminTab } from "../components/Admin/AdminTab";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -168,7 +169,7 @@ Kalamazoo, MI 49009`,
     );
   }
 
-  const items = [
+  let allItems = [
     {
       label: "Profile",
       key: "profile",
@@ -191,6 +192,14 @@ Kalamazoo, MI 49009`,
     },
   ];
 
+  if (user.permissions.includes("ADMIN")) {
+    allItems.push({
+      label: "Settings",
+      key: "settings",
+      children: <AdminTab />,
+    });
+  }
+
   return (
     <Layout>
       <Content>
@@ -203,7 +212,7 @@ Kalamazoo, MI 49009`,
           style={{
             fontSize: "inherit",
           }}
-          items={items}
+          items={allItems}
           onChange={(key) => {
             router.push(`/profile?tab=${key}`, undefined, { shallow: true });
           }}

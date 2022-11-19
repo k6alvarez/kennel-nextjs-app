@@ -1,3 +1,4 @@
+import { FacebookOutlined, InstagramOutlined } from "@ant-design/icons";
 import React from "react";
 import { animated, config, useSpring } from "react-spring";
 import { Crest } from "../Navigation/LogoLinks";
@@ -7,6 +8,7 @@ import {
   PromoText,
   PromoTitle,
   PromoTitleWrapper,
+  PromoFooter,
 } from "./Promo/styles-promo";
 
 export const defaultDelay = 400;
@@ -16,6 +18,7 @@ export const Promo = ({
   title = null,
   description = null,
   children = undefined,
+  showFooter = false,
 }) => {
   const props = useSpring({
     from: { opacity: 0 },
@@ -67,7 +70,22 @@ export const Promo = ({
           </animated.div>
         </animated.div>
       </PromoText>
-      <Promos transparent delay={defaultDelay * 6} promos={promos} />
+      {promos.length > 0 && (
+        <Promos transparent delay={defaultDelay * 4} promos={promos} />
+      )}
+      {showFooter && (
+        <PromoFooter>
+          <p>9172 East K Ave, Galesburg MI, 49053</p>
+          <ul>
+            <li>
+              <FacebookOutlined />
+            </li>
+            <li>
+              <InstagramOutlined />
+            </li>
+          </ul>
+        </PromoFooter>
+      )}
     </PromoWrapper>
   );
 };

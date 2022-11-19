@@ -1,5 +1,24 @@
 import styled from "styled-components";
 
+export const PromoFooter = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  font-size: ${(props) => props.theme.fontSizes[2]};
+  padding: 0 ${(props) => props.theme.space[4]};
+
+  ul {
+    display: flex;
+    list-style: none;
+    gap: ${({ theme }) => theme.space[3]};
+    margin: 0;
+  }
+
+  p {
+    font-size: ${({ theme }) => theme.fontSizes[0]};
+  }
+`;
+
 export const PromoWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.primaryDark};
   color: ${({ theme }) => theme.colors.textPrimary};
@@ -46,7 +65,7 @@ export const PromoTextWrapper = styled.div`
     padding-top: ${({ theme }) => theme.space[4]};
   }
   span {
-    font-size: ${({ theme }) => theme.fontSizes[0]};
+    font-size: ${({ theme }) => `calc(${theme.fontSizes[0]})`};
     padding-bottom: ${({ theme }) => theme.space[4]};
   }
 
@@ -64,9 +83,10 @@ export const PromoTextWrapper = styled.div`
       background-position: center;
       background-size: cover;
       width: ${({ hasLink }) => (hasLink ? "100%" : "unset")};
+      height: 80vw;
 
-      @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-        height: 30vh;
+      @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+        height: 25vw;
         background-position: center;
       }
     }

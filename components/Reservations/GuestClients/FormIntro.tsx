@@ -13,9 +13,10 @@ export const BlockQuote = styled.blockquote`
   margin-top: ${(props) => props.theme.space[4]};
   margin-bottom: ${(props) => props.theme.space[4]};
   position: relative;
-  font-weight: 600;
+  font-weight: 500;
   padding: 0.5rem 1rem;
   background-color: ${(props) => props.theme.colors.secondaryDark};
+  box-shadow: ${({ theme }) => theme.shadows.light};
 
   &::before {
     content: "";

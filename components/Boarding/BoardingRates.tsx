@@ -1,7 +1,7 @@
 import { Card } from "antd";
 import React from "react";
 import styled from "styled-components";
-import { FlexCards } from "./BoardingHome";
+import { FlexCards } from "./styles";
 
 const Flex = styled.div`
   display: flex;

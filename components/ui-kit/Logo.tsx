@@ -14,7 +14,7 @@ const Wrapper = styled.span`
   }
 `;
 
-const Slogan = styled.span`
+export const Slogan = styled.span`
   font-size: ${({ theme, size }) =>
     size
       ? `calc(${theme.fontSizes[size]}/2.5)`
