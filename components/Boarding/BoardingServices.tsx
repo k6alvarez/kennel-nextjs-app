@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { FlexCards, TabContent } from "./BoardingHome";
+import { FlexCards, TabContent } from "./styles";
 import { Card, Collapse } from "antd";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 

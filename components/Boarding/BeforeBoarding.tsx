@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
-import { TabContent } from "./BoardingHome";
+import { TabContent } from "./styles";
 
 export const BeforeBoarding = () => {
   return (

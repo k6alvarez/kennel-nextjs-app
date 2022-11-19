@@ -1,7 +1,7 @@
 import { Collapse } from "antd";
 import React from "react";
 import styled from "styled-components";
-import { TabContent } from "./BoardingHome";
+import { TabContent } from "./styles";
 
 const { Panel } = Collapse;
 

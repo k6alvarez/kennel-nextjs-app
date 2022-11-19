@@ -2,7 +2,7 @@ import { Card } from "antd";
 import Link from "next/link";
 import React from "react";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
-import { FlexCards, TabContent } from "./BoardingHome";
+import { FlexCards, TabContent } from "./styles";
 
 export const BoardingCheckin = () => {
   return (

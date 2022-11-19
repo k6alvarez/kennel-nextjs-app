@@ -1,6 +1,6 @@
 import React from "react";
 import { Promos } from "../ui-kit/Promo/Promos";
-import { TabContent } from "./BoardingHome";
+import { TabContent } from "./styles";
 
 const BoardingCats = (props) => {
   return (

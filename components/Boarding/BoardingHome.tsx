@@ -1,7 +1,8 @@
+import { InfoCircleOutlined } from "@ant-design/icons";
 import React from "react";
-import { Card } from "antd";
-import { RunSizes } from "./RunSizes";
-import { FlexCards, TabContent } from "./styles";
+import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
+import { RunSizes, RunSizesCWing } from "./RunSizes";
+import { TabContent } from "./styles";
 
 export const BoardingHome = () => {
   return (
@@ -15,6 +16,20 @@ export const BoardingHome = () => {
           located between Kalamazoo and Battle Creek, provides a serene country
           atmosphere while remaining close, convenient, and easy to access.
         </p>
+        <p>
+          Our facility also has two spacious exercise and play areas surfaced
+          with pea stones. Pea stones are an ideal surface for exercise areas
+          because they are easy on dogs' paws yet enable us to maintain a
+          sanitary facility. Clients who want extra special attention given to
+          their companions can take advantage of the Special Services that we
+          offer.
+        </p>
+        <p>
+          We adhere the highest standards of canine care. Our facility is
+          cleaned and disinfected daily and all dogs are treated with kindness
+          and respect. We are proud of the excellent reputation that our kennel
+          has gained and invite you to call for a tour today.
+        </p>
 
         <h2>Main Kennel</h2>
         <p>
@@ -26,17 +41,20 @@ export const BoardingHome = () => {
           The boarding kennel contains three size runs to accommodate both large
           and small breeds.
         </p>
+        <BlockQuote large>
+          <InfoCircleOutlined />
+          <p>
+            Dogs have free access to the inside and outside areas from early
+            morning to late evening (weather permitting). The runs are seperated
+            by galvanized steel panels on the inside and outside to prevent
+            cross contamination. The outside runs are also covered to keep dogs
+            dry when it rains while providing access to fresh air and the inside
+            runs include in floor radiant heat.
+          </p>
+        </BlockQuote>
+        <RunSizes />
       </TabContent>
-      <RunSizes />
       <TabContent>
-        <p>
-          Dogs have free access to the inside and outside areas from early
-          morning to late evening (weather permitting). The runs are seperated
-          by galvanized steel panels on the inside and outside to prevent cross
-          contamination. The outside runs are also covered to keep dogs dry when
-          it rains while providing access to fresh air and the inside runs
-          include in floor radiant heat.
-        </p>
         <h2>C-Wing: Our Original Kennel (Updated 2020)</h2>
         <p>
           C-Wing is not connected to our main facility. After check-in our staff
@@ -53,51 +71,18 @@ export const BoardingHome = () => {
           The C-Wing kennel contains two size runs to accommodate both large and
           small breeds.
         </p>
-        <FlexCards>
-          <Card title={<h2>Large Run</h2>}>
-            <p>
-              Inside:
-              <br /> 4ft x 4.5ft
-            </p>
-            <p>
-              Outside:
-              <br /> 4ft x 15ft outside.{" "}
-            </p>
-          </Card>
-          <Card title={<h2>Small Run</h2>}>
-            <p>
-              Inside:
-              <br /> 3ft x 4.5ft
-            </p>
-            <p>
-              Outside:
-              <br /> 3ft x 15ft outside.{" "}
-            </p>
-          </Card>
-        </FlexCards>
-        <p>
-          Three-foot high four-inch block walls and chain link fencing separate
-          each individual inside area. Chain link fencing that sits on a curb to
-          prevent cross contamination during cleaning and disinfecting separates
-          the outside runs. The outside runs are also covered to keep dogs dry
-          when it rains while providing access to fresh air. This kennel is used
-          as our overflow kennel.
-        </p>
-        <h2>More Info</h2>
-        <p>
-          Our facility also has two spacious exercise and play areas surfaced
-          with pea stones. Pea stones are an ideal surface for exercise areas
-          because they are easy on dogs’ paws yet enable us to maintain a
-          sanitary facility. Clients who want extra special attention given to
-          their companions can take advantage of the Special Services that we
-          offer.
-        </p>
-        <p>
-          We adhere the highest standards of canine care. Our facility is
-          cleaned and disinfected daily and all dogs are treated with kindness
-          and respect. We are proud of the excellent reputation that our kennel
-          has gained and invite you to call for a tour today.
-        </p>
+        <BlockQuote large>
+          <InfoCircleOutlined />
+          <p>
+            Three-foot high four-inch block walls and chain link fencing
+            separate each individual inside area. Chain link fencing that sits
+            on a curb to prevent cross contamination during cleaning and
+            disinfecting separates the outside runs. The outside runs are also
+            covered to keep dogs dry when it rains while providing access to
+            fresh air. This kennel is used as our overflow kennel.
+          </p>
+        </BlockQuote>
+        <RunSizesCWing />
       </TabContent>
     </>
   );
