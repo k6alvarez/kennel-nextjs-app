@@ -1,12 +1,12 @@
 import Link from "next/link";
 import React from "react";
-import { TabContent } from "../Boarding/BoardingHome";
+import { Content } from "../ui-kit/Base";
 import { BoldText } from "../Boarding/MedicalIssues";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 
 export const PrivateLessons = () => {
   return (
-    <TabContent>
+    <Content>
       <BlockQuote>Our Best Service</BlockQuote>
       <p>
         One on one instruction provided at our training center. From puppy head
@@ -42,6 +42,6 @@ export const PrivateLessons = () => {
           <a>Contact Us</a>
         </Link>
       </p>
-    </TabContent>
+    </Content>
   );
 };

@@ -2,11 +2,12 @@ import { Card } from "antd";
 import Link from "next/link";
 import React from "react";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
-import { FlexCards, TabContent } from "./styles";
+import { Content } from "../ui-kit/Base";
+import { FlexCards } from "./styles";
 
 export const BoardingVaccinations = () => {
   return (
-    <TabContent>
+    <Content>
       <h1>Vaccinations</h1>
       <p>All dogs must have a current history of vaccinations that include:</p>
       <BlockQuote large>
@@ -64,6 +65,6 @@ export const BoardingVaccinations = () => {
           </ul>
         </Card>
       </FlexCards>
-    </TabContent>
+    </Content>
   );
 };

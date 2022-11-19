@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Content } from '../ui-kit/Base';
+
 
 export const RunSizeWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.secondary};
@@ -22,5 +22,3 @@ export const FlexCards = styled.div`
   }
 `;
 
-export const TabContent = styled(Content)`
-`;

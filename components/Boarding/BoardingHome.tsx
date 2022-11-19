@@ -2,12 +2,12 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import React from "react";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 import { RunSizes, RunSizesCWing } from "./RunSizes";
-import { TabContent } from "./styles";
+import { Content } from "../ui-kit/Base";
 
 export const BoardingHome = () => {
   return (
     <>
-      <TabContent>
+      <Content>
         <h1>Boarding</h1>
         <p>
           We constructed our modern boarding facility in 1998 to fill a need
@@ -53,8 +53,8 @@ export const BoardingHome = () => {
           </p>
         </BlockQuote>
         <RunSizes />
-      </TabContent>
-      <TabContent>
+      </Content>
+      <Content>
         <h2>C-Wing: Our Original Kennel (Updated 2020)</h2>
         <p>
           C-Wing is not connected to our main facility. After check-in our staff
@@ -83,7 +83,7 @@ export const BoardingHome = () => {
           </p>
         </BlockQuote>
         <RunSizesCWing />
-      </TabContent>
+      </Content>
     </>
   );
 };

@@ -1,12 +1,13 @@
 import React from "react";
 import Link from "next/link";
-import { FlexCards, TabContent } from "./styles";
+import { Content } from "../ui-kit/Base";
+import { FlexCards } from "./styles";
 import { Card, Collapse } from "antd";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 
 export const BoardingServices = () => {
   return (
-    <TabContent>
+    <Content>
       <h1>Boarding Services</h1>
       <p>
         A variety of additional services are offered to our boarding guests at a
@@ -201,6 +202,6 @@ export const BoardingServices = () => {
           </p>
         </Card>
       </FlexCards>
-    </TabContent>
+    </Content>
   );
 };

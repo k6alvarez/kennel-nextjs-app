@@ -2,11 +2,12 @@ import { Card } from "antd";
 import Link from "next/link";
 import React from "react";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
-import { FlexCards, TabContent } from "./styles";
+import { Content } from "../ui-kit/Base";
+import { FlexCards } from "./styles";
 
 export const BoardingCheckin = () => {
   return (
-    <TabContent>
+    <Content>
       <h1>Checking-In</h1>
       <BlockQuote large>
         When arriving to check-in please park in the large asphalt parking lot
@@ -92,6 +93,6 @@ export const BoardingCheckin = () => {
         with our clients. This relationship must be built on mutual respect and
         consideration.
       </p>
-    </TabContent>
+    </Content>
   );
 };

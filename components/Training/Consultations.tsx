@@ -1,10 +1,10 @@
 import React from "react";
-import { TabContent } from "../Boarding/BoardingHome";
+import { Content } from "../ui-kit/Base";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 
 export const Consultations = () => {
   return (
-    <TabContent>
+    <Content>
       <p>
         <BlockQuote>
           Having special problems with your dog? We can help!
@@ -37,6 +37,6 @@ export const Consultations = () => {
             form below."
         showAddress={true}
       /> */}
-    </TabContent>
+    </Content>
   );
 };
