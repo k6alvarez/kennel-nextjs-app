@@ -55,6 +55,7 @@ export const Content = styled.article`
     margin-bottom: ${({ theme }) => theme.space[4]};
     font-size: ${({ theme, fs }) =>
       fs ? theme.fontSizes[fs] : theme.fontSizes[1]};
+    box-shadow: ${({ theme }) => theme.shadows.light};
   }
 
   .ant-card-head-title {

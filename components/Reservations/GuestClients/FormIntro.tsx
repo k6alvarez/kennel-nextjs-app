@@ -16,6 +16,7 @@ export const BlockQuote = styled.blockquote`
   font-weight: 500;
   padding: 0.5rem 1rem;
   background-color: ${(props) => props.theme.colors.secondaryDark};
+  box-shadow: ${({ theme }) => theme.shadows.light};
 
   &::before {
     content: "";
