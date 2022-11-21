@@ -32,6 +32,7 @@ export const Consultations = () => {
         you to fill out a comprehensive questionnaire so that we can profile
         your dog and determine the best course of action.
       </p>
+      <p>Contact form coming soon.</p>
       {/* <GeneralContactForm
         emailSubject="Gillette Kennels Consultation Request"
         formHint="If you are interested in a consultation please contact us using the
