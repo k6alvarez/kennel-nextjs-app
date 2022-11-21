@@ -37,7 +37,7 @@ export const TabsListWrapper = styled.div`
   }
 `;
 
-const Boarding: React.FC<Props> = () => {
+const Boarding: React.FC = () => {
   const router = useRouter();
   const { tab } = router.query;
   const { breakpoints } = useContext(ThemePreferenceContext);
