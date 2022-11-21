@@ -40,18 +40,20 @@ export const FieldSetPaymentInfo = ({ pets }) => {
   return (
     <fieldset>
       <>
-        <BlockQuote>
-          <InfoCircleOutlined />
-          <p>
-            A $25.00 per run deposit is required for new client reservations.
-            Your reservation is not complete and will not be confirmed until we
-            receive your deposit and the completed reservation form.
-          </p>
-        </BlockQuote>
         <ReservationSummary state={guestFormState} pets={pets} />
-        <TotalDeposit>
-          Your total deposit due is {getDepositTotal(pets)}
-        </TotalDeposit>
+
+        <BlockQuote>
+          <div>
+            <p>
+              A $25.00 per run deposit is required for new client reservations.
+              Your reservation is not complete and will not be confirmed until
+              we receive your deposit and the completed reservation form.
+            </p>
+            <TotalDeposit>
+              <p>Your total deposit due is {getDepositTotal(pets)}</p>
+            </TotalDeposit>
+          </div>
+        </BlockQuote>
         <PayPalCheckout
           transactionTotal="25.00"
           onConfirm={(results) => {

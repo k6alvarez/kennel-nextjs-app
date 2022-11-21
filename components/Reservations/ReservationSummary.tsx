@@ -7,6 +7,7 @@ import { DateTime } from "luxon";
 import { PET_INITIAL_STATE } from "../Pets/petFormReducer";
 import Link from "next/link";
 import { LinkOutlined } from "@ant-design/icons";
+import { Image } from "antd";
 const Flex = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -31,11 +32,7 @@ export const getFormattedValue = (field) => {
   ) : (
     <>
       {field.type === "file" ? (
-        <Link href={field.value}>
-          <a>
-            <LinkOutlined /> View uploaded file
-          </a>
-        </Link>
+        <Image width="40%" src={field.value as string} />
       ) : (
         <span>{field.value}</span>
       )}
