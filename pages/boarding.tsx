@@ -98,6 +98,7 @@ const Boarding: React.FC<Props> = () => {
             router.replace(`/boarding?tab=${key}`, undefined, {
               shallow: true,
             });
+            window.scrollTo({ top: 0, behavior: "smooth" });
           }}
         />
       </TabsListWrapper>

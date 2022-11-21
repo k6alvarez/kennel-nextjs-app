@@ -5,15 +5,15 @@ import styled from "styled-components";
 export const BlockQuote = styled.blockquote`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 
   font-size: ${({ theme, large }) =>
-    large ? theme.fontSizes[1] : theme.fontSizes[0]};
-  line-height: 1.2;
+    large ? theme.fontSizes[2] : theme.fontSizes[1]};
+  line-height: 1.6;
   margin-top: ${(props) => props.theme.space[4]};
   margin-bottom: ${(props) => props.theme.space[4]};
   position: relative;
-  font-weight: 500;
+
   padding: 0.5rem 1rem;
   background-color: ${(props) => props.theme.colors.secondaryDark};
   box-shadow: ${({ theme }) => theme.shadows.light};

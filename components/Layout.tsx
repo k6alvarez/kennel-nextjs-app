@@ -5,6 +5,7 @@ import { Footer } from "./Footer";
 
 const PageWrapper = styled.div`
   font-family: ${({ theme }) => theme.fonts.body};
+  font-weight: 400;
   position: relative;
   min-height: 100vh;
 

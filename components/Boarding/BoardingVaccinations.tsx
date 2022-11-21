@@ -1,3 +1,4 @@
+import { InfoCircleOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import Link from "next/link";
 import React from "react";
@@ -11,6 +12,7 @@ export const BoardingVaccinations = () => {
       <h1>Vaccinations</h1>
       <p>All dogs must have a current history of vaccinations that include:</p>
       <BlockQuote large>
+        <InfoCircleOutlined />
         <p>
           Veterinarian provided proof of vaccinations must be provided prior to
           your dog’s initial stay. We must obtain a copy of records that we can
@@ -33,8 +35,8 @@ export const BoardingVaccinations = () => {
               boarded! We absolutely require Bordetella vaccination prior to
               entry of any dog into our kennel. If you would like more
               information about kennel cough please see our{" "}
-              <Link href="/boarding?activeTab=Medical Issues">
-                <a>Medical Issues</a>
+              <Link href="/boarding?tab=medical-issues">
+                <a>medical issues</a>
               </Link>{" "}
               section.
             </li>
@@ -57,8 +59,8 @@ export const BoardingVaccinations = () => {
               Bordetella: This is the vaccination for kennel cough. It is
               required for training classes and is for your dog's protection. If
               you would like more information about kennel cough please see our{" "}
-              <Link href="/boarding?activeTab=Medical Issues">
-                <a>Medical Issues</a>
+              <Link href="/boarding?tab=medical-issues">
+                <a>medical issues</a>
               </Link>{" "}
               section.
             </li>

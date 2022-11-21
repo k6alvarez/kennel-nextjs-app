@@ -54,7 +54,7 @@ const BusinessInfo = styled.div`
 
 export const LetterSpacedText = styled.p`
   margin: 0;
-  font-weight: ${({ bold }) => (bold ? 600 : 400)};
+  font-weight: ${({ bold }) => (bold ? 400 : 300)};
   font-size: ${({ theme, fs }) =>
     `calc(${fs ? fs : theme.fontSizes[0]} / 1.1)`};
   text-transform: ${({ textTransform }) =>

@@ -1,15 +1,6 @@
 import { Card } from "antd";
 import React from "react";
-import styled from "styled-components";
 import { FlexCards } from "./styles";
-
-const Flex = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 0.5rem 1rem;
-`;
 
 export const rateHoliday = (2.0).toFixed(2);
 export const rateDogRoommate = (17.0).toFixed(2);
@@ -19,6 +10,8 @@ export const rateGiantRun = (30.0).toFixed(2);
 export const rateCatCondo = (18.0).toFixed(2);
 export const rateCatRoom = (22.0).toFixed(2);
 export const rateCatRoommate = (15.0).toFixed(2);
+
+export const rateMedicalCare = (0.5).toFixed(2);
 
 const BoardingRates = ({ catsOnly = false }) => {
   return (

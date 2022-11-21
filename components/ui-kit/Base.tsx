@@ -48,7 +48,6 @@ export const Content = styled.article`
     display: flex;
     align-items: center;
     gap: ${({ theme }) => theme.space[3]};
-    letter-spacing: 1px;
   }
 
   .ant-card {
@@ -64,6 +63,10 @@ export const Content = styled.article`
 
   .ant-card-head {
     padding: 0 ${({ theme }) => theme.space[4]};
+
+    h2 {
+      font-weight: normal;
+    }
   }
 
   .ant-tabs-tab .ant-tabs-tab-btn {

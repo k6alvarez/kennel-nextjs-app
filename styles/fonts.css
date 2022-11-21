@@ -9,6 +9,14 @@
 @font-face {
     font-family: 'Lato';
     font-display: auto;
+    src: url('/fonts/Lato/Lato-Light.ttf');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lato';
+    font-display: auto;
     src: url('/fonts/Lato/Lato-Italic.ttf');
     font-weight: normal;
     font-style: italic;

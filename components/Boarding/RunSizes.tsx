@@ -8,7 +8,7 @@ import { FlexCards, RunSizeWrapper } from "./styles";
 export const RunSizes = () => {
   return (
     <RunSizeWrapper>
-      <FlexCards>
+      <FlexCards autoFill>
         <Card
           cover={
             <Image src="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419351/gk-app/Rocks_are_lava.jpg" />
@@ -19,7 +19,7 @@ export const RunSizes = () => {
             <LetterSpacedText fs={base.fontSizes[3]} bold>
               Inside:
             </LetterSpacedText>
-            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[2]}>
+            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[3]}>
               5ft x 6ft
             </LetterSpacedText>
           </DetailItem>
@@ -27,7 +27,7 @@ export const RunSizes = () => {
             <LetterSpacedText fs={base.fontSizes[3]} bold>
               Outside:
             </LetterSpacedText>
-            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[2]}>
+            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[3]}>
               5ft x 15ft
             </LetterSpacedText>
           </DetailItem>
@@ -42,7 +42,7 @@ export const RunSizes = () => {
             <LetterSpacedText fs={base.fontSizes[3]} bold>
               Inside:
             </LetterSpacedText>
-            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[2]}>
+            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[3]}>
               4ft x 6ft
             </LetterSpacedText>
           </DetailItem>
@@ -50,7 +50,7 @@ export const RunSizes = () => {
             <LetterSpacedText fs={base.fontSizes[3]} bold>
               Outside:
             </LetterSpacedText>
-            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[2]}>
+            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[3]}>
               4ft x 15ft
             </LetterSpacedText>
           </DetailItem>
@@ -65,7 +65,7 @@ export const RunSizes = () => {
             <LetterSpacedText fs={base.fontSizes[3]} bold>
               Inside:
             </LetterSpacedText>
-            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[2]}>
+            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[3]}>
               3ft x 6ft
             </LetterSpacedText>
           </DetailItem>
@@ -73,7 +73,7 @@ export const RunSizes = () => {
             <LetterSpacedText fs={base.fontSizes[3]} bold>
               Outside:
             </LetterSpacedText>
-            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[2]}>
+            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[3]}>
               3ft x 15ft
             </LetterSpacedText>
           </DetailItem>
@@ -97,7 +97,7 @@ export const RunSizesCWing = () => {
             <LetterSpacedText fs={base.fontSizes[3]} bold>
               Inside:
             </LetterSpacedText>
-            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[2]}>
+            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[3]}>
               4ft x 4.5ft
             </LetterSpacedText>
           </DetailItem>
@@ -105,7 +105,7 @@ export const RunSizesCWing = () => {
             <LetterSpacedText fs={base.fontSizes[3]} bold>
               Outside:
             </LetterSpacedText>
-            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[2]}>
+            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[3]}>
               4ft x 15ft
             </LetterSpacedText>
           </DetailItem>
@@ -121,7 +121,7 @@ export const RunSizesCWing = () => {
             <LetterSpacedText fs={base.fontSizes[3]} bold>
               Inside:
             </LetterSpacedText>
-            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[2]}>
+            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[3]}>
               3ft x 4.5ft
             </LetterSpacedText>
           </DetailItem>
@@ -129,7 +129,7 @@ export const RunSizesCWing = () => {
             <LetterSpacedText fs={base.fontSizes[3]} bold>
               Outside:
             </LetterSpacedText>
-            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[2]}>
+            <LetterSpacedText textTransform="lowercase" fs={base.fontSizes[3]}>
               3ft x 15ft
             </LetterSpacedText>
           </DetailItem>

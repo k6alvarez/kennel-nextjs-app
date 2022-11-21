@@ -1,7 +1,14 @@
+import {
+  AlertOutlined,
+  ExclamationCircleOutlined,
+  InfoCircleOutlined,
+} from "@ant-design/icons";
 import { Collapse } from "antd";
 import React from "react";
 import styled from "styled-components";
+import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 import { Content } from "../ui-kit/Base";
+import { rateMedicalCare } from "./BoardingRates";
 
 const { Panel } = Collapse;
 
@@ -28,7 +35,7 @@ export const MedicalIssues = () => {
             will not charge extra for the single administration of simple
             medications (e.g., passing a pill). However, should your dog require
             more extensive medical care (e.g., ear drops, eye drops, etc.), you
-            will be charged .50 cents for each administration.
+            will be charged {rateMedicalCare} cents for each administration.
           </p>
         </Panel>
         <Panel key={2} header="Diarrhea">
@@ -58,8 +65,9 @@ export const MedicalIssues = () => {
             quality Iam’s products are recommended to provide their dog’s food.
             Please see our page that describes our Food Policy.
           </p>
-          <p>
-            <BoldText>
+          <BlockQuote>
+            <InfoCircleOutlined />
+            <p>
               If diarrhea is noticed during boarding your veterinarian will be
               contacted and treatment guidelines will be followed. You will be
               informed of your veterinarian recommended treatment at the time of
@@ -69,8 +77,8 @@ export const MedicalIssues = () => {
               cleaning and disinfecting of our kennel, it is unlikely that the
               diarrhea is caused by something other than dietary changes and
               stress.
-            </BoldText>
-          </p>
+            </p>
+          </BlockQuote>
         </Panel>
         <Panel header="Dog Injuries and Illnesses" key={3}>
           <p>
@@ -97,14 +105,17 @@ export const MedicalIssues = () => {
             of fleas before you drop your dog off at our kennel and immediately
             after you check your dog out.
           </p>
+          <BlockQuote>
+            <InfoCircleOutlined />
+            <p>
+              In addition, please tell us if your dog has had a recent flea
+              infestation so that we can check for the reappearance of the
+              parasite. We feel that it is extremely important that we be
+              notified if your dog was treated “dipped” within a week of being
+              boarded.
+            </p>
+          </BlockQuote>
           <p>
-            In addition,{" "}
-            <BoldText>
-              please tell us if your dog has had a recent flea infestation so
-              that we can check for the reappearance of the parasite. We feel
-              that it is extremely important that we be notified if your dog was
-              treated “dipped” within a week of being boarded.
-            </BoldText>{" "}
             Although dips are a very effective treatment, they only kill the
             fleas that are present when the dog is being treated. All too
             frequently owners neglect to treat the entire environment and
@@ -113,9 +124,12 @@ export const MedicalIssues = () => {
             has become re-infested and will need another treatment. If this
             occurs, we will need to treat your dog as well as the entire kennel
             and grounds.{" "}
-            <BoldText>
-              So PLEASE TELL US IF YOUR DOG WAS RECENTLY INFESTED.
-            </BoldText>{" "}
+          </p>
+          <BlockQuote large>
+            <AlertOutlined />
+            <p>Please tell us if your dog was recently infested.</p>
+          </BlockQuote>
+          <p>
             Also, please contact us immediately if you believe that your dog
             became infested with fleas while being boarded with us.
           </p>
@@ -141,15 +155,19 @@ export const MedicalIssues = () => {
         <Panel header="Kennel Cough" key={6}>
           <p>
             It is important that all clients are made aware that Kennel Cough is
-            present always in South West Michigan and DOES NOT ORIGINATE IN A
-            KENNEL.
+            present always in South West Michigan and does not originate in a
+            kennel.
           </p>
-          <p>
-            We absolutely WILL NOT allow dogs in our facility that are coughing
-            or showing signs of kennel cough. However, it may be IMPOSSIBLE for
-            us to tell when a boarder has been exposed to kennel cough PRIOR to
-            his/her arrival.
-          </p>
+          <BlockQuote large>
+            <InfoCircleOutlined />{" "}
+            <p>
+              We absolutely will not allow dogs in our facility that are
+              coughing or showing signs of kennel cough. However, it may be
+              impossible for us to tell when a boarder has been exposed to
+              kennel cough prior to his/her arrival.
+            </p>
+          </BlockQuote>
+
           <p>
             We require that all dogs that enter our kennel have been properly
             vaccinated and that the owners provide us with written proof.
@@ -173,13 +191,22 @@ export const MedicalIssues = () => {
             “caught” outside the kennel and brought in by a boarder. A dog can
             be exposed at the park, grooming shop, pet store, veterinary office,
             walking around the neighborhood, or any place where dogs congregate
-            or pass through. The disease is not unique to a kennel, therefore;
-            the more appropriate term is CANINE COUGH. Unfortunately, canine
-            cough usually does not show visible symptoms for 5-7 days after
-            exposure. While we make intense efforts to prevent an outbreak in
-            our kennel through extensive cleaning and disinfecting, public
-            awareness, and by requiring vaccinations, we cannot guarantee that
-            your dog will not be exposed.
+            or pass through.
+          </p>
+          <BlockQuote>
+            <InfoCircleOutlined />
+            <p>
+              Kennel cough is not unique to a kennel, therefore; the more
+              appropriate term is canine cough.
+              <br /> Unfortunately, canine cough usually does not show visible
+              symptoms for 5-7 days after exposure.{" "}
+            </p>
+          </BlockQuote>
+          <p>
+            While we make intense efforts to prevent an outbreak in our kennel
+            through extensive cleaning and disinfecting, public awareness, and
+            by requiring vaccinations, we cannot guarantee that your dog will
+            not be exposed.
           </p>
           <p>
             Just as a child who attends school has the potential to contract a
@@ -194,14 +221,18 @@ export const MedicalIssues = () => {
             occur, the kennel will not be held liable for its treatment, cost
             thereof, or consequences.
           </p>
-          <p>
-            <BoldText>
+          <BlockQuote large>
+            <AlertOutlined />
+            <p>
+              {" "}
               Again, we make every effort to prevent an outbreak of canine
-              cough! All dogs are required to be up-to-date on all vaccinations,
-              including Bordetella; therefore, CLIENTS WHO BOARD THEIR DOGS WITH
-              US DO SO AT THEIR OWN RISK.
-            </BoldText>
-          </p>
+              cough!
+              <br />
+              All dogs are required to be up-to-date on all vaccinations,
+              including Bordetella; therefore, clients who board their dogs with
+              us do so at their own risk.
+            </p>
+          </BlockQuote>
         </Panel>
       </Collapse>
     </Content>
