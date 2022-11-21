@@ -44,7 +44,7 @@ const options = {
         await transport.sendMail({
           to: email,
           from,
-          subject: `Complete your profile at ${host}`,
+          subject: `Your profile at ${host}`,
           text: text({ url, host }),
           // we can pass in 'theme' to access default theme as a new parameter
           html: html({ url, host, origin, email, theme: themesMap.light }),
@@ -102,7 +102,7 @@ function html(params: { url: string; host: string; origin: string, email: string
           <tr>
             <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}">
               <a href="${newUrl}" target="_blank" style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;">
-                Log in to finish creating your account.
+                Log in to access your account.
               </a>
             </td>
           </tr>
