@@ -1,13 +1,10 @@
 import React, { useContext } from "react";
-import { GetStaticProps } from "next";
-import prisma from "../lib/prisma";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { Tabs } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
 import Layout from "../components/Layout";
-import { PostProps } from "../components/Post";
 import { Promo } from "../components/ui-kit/Promo";
 import { PromoTitle } from "../components/ui-kit/Promo/styles-promo";
 import { BoardingHome } from "../components/Boarding/BoardingHome";
@@ -19,26 +16,6 @@ import { MedicalIssues } from "../components/Boarding/MedicalIssues";
 import { Size, useWindowSize } from "../components/ui-kit/hooks/useWindowSize";
 import { ThemePreferenceContext } from "./_app";
 import { BoardingServices } from "../components/Boarding/BoardingServices";
-
-export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.post.findMany({
-    where: { published: true },
-    include: {
-      author: {
-        select: { name: true },
-      },
-    },
-  });
-
-  return {
-    props: { feed },
-    revalidate: 10,
-  };
-};
-
-type Props = {
-  feed: PostProps[];
-};
 
 export const headerHt = "47px";
 
@@ -108,7 +85,8 @@ const Boarding: React.FC<Props> = () => {
       </Promo>
       <TabsListWrapper>
         <Tabs
-          defaultActiveKey={typeof tab === "string" ? tab : "boarding"}
+          defaultActiveKey="boarding"
+          activeKey={typeof tab === "string" ? tab : "boarding"}
           tabPosition={"top"}
           size={mobileScreen ? "small" : "large"}
           moreIcon={<DownOutlined />}
