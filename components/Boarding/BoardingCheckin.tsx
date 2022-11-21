@@ -1,3 +1,4 @@
+import { InfoCircleOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import Link from "next/link";
 import React from "react";
@@ -10,10 +11,13 @@ export const BoardingCheckin = () => {
     <Content>
       <h1>Checking-In</h1>
       <BlockQuote large>
-        When arriving to check-in please park in the large asphalt parking lot
-        located at 9172 East K Ave. Please enter the kennel reception room
-        through the office entrance and follow the Check-In Procedure outlined
-        below.
+        <InfoCircleOutlined />
+        <p>
+          When arriving to check-in please park in the large asphalt parking lot
+          located at 9172 East K Ave. Please enter the kennel reception room
+          through the office entrance and follow the Check-In Procedure outlined
+          below.
+        </p>
       </BlockQuote>
       <FlexCards>
         <Card title={<h2>Check-In Procedure</h2>}>
@@ -51,12 +55,18 @@ export const BoardingCheckin = () => {
         activities such as cleaning and disinfecting, exercising or obedience
         training dogs, teaching private lessons, and teaching classes. We also
         frequently hire independent contractors to help us to maintain the
-        grounds. All staff members and individuals on the premises are not
-        qualified to check clients in and out, so please be sure to enter the
-        reception area through the OFFICE ENTRANCE. A doorbell will
-        automatically sound when the OFFICE ENTRANCE door is opened and a
-        qualified staff member will immediately service you.
+        grounds.
       </p>
+      <BlockQuote large>
+        <InfoCircleOutlined />
+        <p>
+          All staff members and individuals on the premises are not qualified to
+          check clients in and out, so please be sure to enter the reception
+          area through the office entrance. A doorbell will automatically sound
+          when the office entrance door is opened and a qualified staff member
+          will immediately service you.
+        </p>
+      </BlockQuote>
       <h2>More Info</h2>
       <p>
         Again, please remember to leash your dog before you let him/her out of
@@ -83,15 +93,21 @@ export const BoardingCheckin = () => {
         of your veterinarian's clinic, and your dog’s name, age, and breed.
         Also, please provide us with feeding guidelines, a contact telephone
         number (where you can be reached), your dog's medication schedule (if
-        applicable), and indicate which <a>Special Services</a> you would like
-        for us to provide for your dog. Please be sure to thoroughly read, sign,
-        and date the boarding agreement.
+        applicable), and indicate which{" "}
+        <Link href="/boarding?tab=special-services">
+          <a>special services</a>
+        </Link>{" "}
+        you would like for us to provide for your dog. Please be sure to
+        thoroughly read, sign, and date the boarding agreement.
       </p>
       <p>
-        Please check our kennels <a>Policies</a> and Hours before you board your
-        pet with us. We strive to develop and maintain an excellent relationship
-        with our clients. This relationship must be built on mutual respect and
-        consideration.
+        Please check our kennels{" "}
+        <Link href="/policies">
+          <a>policies</a>
+        </Link>{" "}
+        and Hours before you board your pet with us. We strive to develop and
+        maintain an excellent relationship with our clients. This relationship
+        must be built on mutual respect and consideration.
       </p>
     </Content>
   );

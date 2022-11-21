@@ -52,8 +52,8 @@ export const BoardingHome = () => {
             runs include in floor radiant heat.
           </p>
         </BlockQuote>
-        <RunSizes />
       </Content>
+      <RunSizes />
       <Content>
         <h2>C-Wing: Our Original Kennel (Updated 2020)</h2>
         <p>

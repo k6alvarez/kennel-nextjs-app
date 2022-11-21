@@ -185,23 +185,25 @@ export const BoardingServices = () => {
             if you plan to provide us with your dogs bed.
           </p>
         </Collapse.Panel>
+        <Collapse.Panel header="Bath Services" key={6}>
+          <FlexCards>
+            <Card title={<h2>Bath Services</h2>}>
+              <p>
+                A bath entails shampooing, rinsing, and drying. We are not
+                groomers and do not offer clipping or cutting hair, de-matting,
+                flea dips, or de-skunking. A brief brush out is included in the
+                cost of a bath. The prices for these services are listed below.
+              </p>
+              <p>
+                Bath: <br /> $25.00
+              </p>
+              <p>
+                Full Brush Out: <br /> $25.00
+              </p>
+            </Card>
+          </FlexCards>
+        </Collapse.Panel>
       </Collapse>
-      <FlexCards>
-        <Card title={<h2>Bath Services</h2>}>
-          <p>
-            A bath entails shampooing, rinsing, and drying. We are not groomers
-            and do not offer clipping or cutting hair, de-matting, flea dips, or
-            de-skunking. A brief brush out is included in the cost of a bath.
-            The prices for these services are listed below.
-          </p>
-          <p>
-            Bath: <br /> $25.00
-          </p>
-          <p>
-            Full Brush Out: <br /> $25.00
-          </p>
-        </Card>
-      </FlexCards>
     </Content>
   );
 };
