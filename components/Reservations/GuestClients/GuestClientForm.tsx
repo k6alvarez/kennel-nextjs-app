@@ -17,6 +17,7 @@ import {
   INITIAL_USER_STATE,
   INITIAL_RESERVATION_STATE,
 } from "../formInitialState";
+import { WarningOutlined } from "@ant-design/icons";
 
 const { Step } = Steps;
 
@@ -76,7 +77,7 @@ export const GuestClientForm = () => {
     },
     {
       title: "Deposit",
-      content: <FieldSetPaymentInfo />,
+      content: <FieldSetPaymentInfo pets={pets} />,
     },
   ];
 
@@ -99,7 +100,12 @@ export const GuestClientForm = () => {
         </Steps>
 
         <StepsContent>{formSteps[current].content}</StepsContent>
-        {guestFormError && <BlockQuote>{guestFormError}</BlockQuote>}
+        {guestFormError && (
+          <BlockQuote>
+            <WarningOutlined />
+            <p>{guestFormError}</p>
+          </BlockQuote>
+        )}
         <StepsAction>
           {current > 0 && (
             <Button type="button" onClick={() => prev({ current, setCurrent })}>
@@ -112,7 +118,9 @@ export const GuestClientForm = () => {
               type="button"
               onClick={() => {
                 if (pets.length === 0 && current === 2) {
-                  setGuestFormError("Please add a pet to continue.");
+                  setGuestFormError(
+                    "Please add a pet to continue with your reservation request."
+                  );
                   return;
                 } else {
                   setGuestFormError("");

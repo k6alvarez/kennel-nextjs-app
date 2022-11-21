@@ -189,7 +189,7 @@ export const INITIAL_RESERVATION_STATE = {
   howHear: {
     value: "",
     error: null,
-    type: "text",
+    type: "textarea",
     label: "How did you hear about us?",
   },
 };

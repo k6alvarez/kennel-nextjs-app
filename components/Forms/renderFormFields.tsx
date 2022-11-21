@@ -1,4 +1,4 @@
-import { Image } from "antd";
+import { Image, message } from "antd";
 import {
   Field,
   StyledLabel,
@@ -75,6 +75,8 @@ export const renderFormFields = ({
                 formData.append("upload_preset", "gk-app");
                 setFormLoading && setFormLoading(true);
                 imgLoading = true;
+
+                message.loading(`Uploading your ${field.label} file.`);
                 const data = await fetch(
                   "https://api.cloudinary.com/v1_1/dhcv2fdfq/image/upload",
                   {

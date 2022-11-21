@@ -91,10 +91,16 @@ export const PET_INITIAL_STATE = {
     required: true,
   },
   feeding: {
-    value: "",
+    value: "Client Food",
     error: null,
-    type: "text",
+    type: "select",
     label: "Feeding",
+    options: [
+      "Client Food",
+      "Iams Eukanuba Adult",
+      "Iams Eukanuba Large Breed Puppy",
+      "Iams Puppy",
+    ],
     required: true,
   },
   feedingCount: {
@@ -103,7 +109,7 @@ export const PET_INITIAL_STATE = {
     type: "number",
     inputMode: "numeric",
     min: "1",
-    label: "Feeding Count",
+    label: "Bags Per Feeding",
     required: true,
   },
 };

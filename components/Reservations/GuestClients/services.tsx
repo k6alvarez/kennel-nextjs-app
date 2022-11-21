@@ -1,3 +1,4 @@
+import { message } from "antd";
 import Router from "next/router";
 
 export const deleteGuestPet = async (id: string): Promise<void> => {
@@ -8,7 +9,7 @@ export const deleteGuestPet = async (id: string): Promise<void> => {
 
 export const guestFormUpdate = async (e, { state, dispatch, setFormError }) => {
   e?.preventDefault();
-
+  message.loading("Sending reservation request.", 1);
   const data = Object.entries(state).map(([key, _value]) => {
     return {
       [key]: state[key].value !== undefined ? state[key].value : state[key],
@@ -38,6 +39,10 @@ export const guestFormUpdate = async (e, { state, dispatch, setFormError }) => {
           });
           setFormError(validationError);
         }
+        message.success("Reservation request submitted successfully.");
+        dispatch({
+          type: "resetForm",
+        });
         await Router.push("/res-guest/[id]", `/res-guest/${res.id}`);
       });
   } catch (error) {
