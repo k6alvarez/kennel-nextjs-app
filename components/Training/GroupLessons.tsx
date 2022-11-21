@@ -5,6 +5,7 @@ import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 export const GroupLessons = () => {
   return (
     <Content>
+      <h1>Group Lessons</h1>
       <p>
         Group training is ideal for individuals who want to save money and
         socialize their pets. Our small group size (12 dogs) enables us to give
@@ -12,7 +13,7 @@ export const GroupLessons = () => {
         lasts approximately 1.5 hours. Enrollments are assigned on a first
         received basis.
       </p>
-      <h1>Puppy Head Start</h1>
+      <h2>Puppy Head Start</h2>
 
       <p>
         Puppy socialization is paramount to raising a well adjusted puppy.
@@ -25,7 +26,7 @@ export const GroupLessons = () => {
         First class attendance is required. Please DO NOT bring puppy to first
         class.
       </BlockQuote>
-      <h1>Basic Obedience</h1>
+      <h2>Basic Obedience</h2>
       <p>
         Help your dog to unleash his/her potential by attending basic obedience
         training. This course is offered to dogs five months and up. Lessons
@@ -48,7 +49,7 @@ export const GroupLessons = () => {
         class.
       </BlockQuote>
 
-      <h1>Intermediate Obedience</h1>
+      <h2>Intermediate Obedience</h2>
       <p>
         Prerequisite: enrolled dog and owner must have attended Gillette’s Basic
         Obedience or receive Instructor's approval. Teach your dog advanced
@@ -70,7 +71,7 @@ export const GroupLessons = () => {
         <li>Discrimination Training</li>
       </ul>
       <BlockQuote>Please bring dog to first class.</BlockQuote>
-      <h1>Advanced Obedience</h1>
+      <h2>Advanced Obedience</h2>
       <p>
         Prerequisite: enrolled dog and owner must have attended Gillette’s Basic
         Obedience or higher. Introduce advanced exercises and obtain off-lead

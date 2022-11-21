@@ -1,14 +1,14 @@
 import React from "react";
 import { GetStaticProps } from "next";
+import { useRouter } from "next/router";
 import prisma from "../lib/prisma";
+import { Tabs } from "antd";
 
 import Layout from "../components/Layout";
 import { PostProps } from "../components/Post";
 import { Promo } from "../components/ui-kit/Promo";
-import { Content } from "../components/ui-kit/Base";
 import { PromoTitle } from "../components/ui-kit/Promo/styles-promo";
-import { Tabs } from "antd";
-import { headerHt, TabsListWrapper } from "./boarding";
+import { TabsListWrapper } from "./boarding";
 import { TrainingHome } from "../components/Training/TrainingHome";
 import { GroupLessons } from "../components/Training/GroupLessons";
 import { PrivateLessons } from "../components/Training/PrivateLessons";
@@ -36,12 +36,26 @@ type Props = {
 };
 
 const Training: React.FC<Props> = (props) => {
+  const router = useRouter();
+  const { tab } = router.query;
   const items = [
-    { label: "Training", key: "item-1", children: <TrainingHome /> },
-    { label: "Group Lessons", key: "item-2", children: <GroupLessons /> },
-    { label: "Private Lessons", key: "item-3", children: <PrivateLessons /> },
-    { label: "Agility", key: "item-4", children: <AgilityLessons /> },
-    { label: "Consultations", key: "item-5", children: <Consultations /> },
+    { label: "Training", key: "training", children: <TrainingHome /> },
+    {
+      label: "Group Lessons",
+      key: "group-lessons",
+      children: <GroupLessons />,
+    },
+    {
+      label: "Private Lessons",
+      key: "private-lessons",
+      children: <PrivateLessons />,
+    },
+    { label: "Agility", key: "agility", children: <AgilityLessons /> },
+    {
+      label: "Consultations",
+      key: "consultations",
+      children: <Consultations />,
+    },
   ];
   return (
     <Layout>
@@ -75,13 +89,20 @@ const Training: React.FC<Props> = (props) => {
       </Promo>
       <TabsListWrapper>
         <Tabs
-          defaultActiveKey="1"
+          defaultActiveKey="training"
+          activeKey={typeof tab === "string" ? tab : "training"}
           tabPosition="top"
           size="large"
           style={{
             fontSize: "inherit",
           }}
           items={items}
+          onTabClick={(key) => {
+            router.replace(`/training?tab=${key}`, undefined, {
+              shallow: true,
+            });
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
         />
       </TabsListWrapper>
     </Layout>
