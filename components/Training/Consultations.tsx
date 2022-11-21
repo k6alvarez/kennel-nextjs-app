@@ -1,15 +1,16 @@
 import React from "react";
 import { Content } from "../ui-kit/Base";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
+import { InfoCircleOutlined } from "@ant-design/icons";
 
 export const Consultations = () => {
   return (
     <Content>
-      <p>
-        <BlockQuote>
-          Having special problems with your dog? We can help!
-        </BlockQuote>
-      </p>
+      <h1>Consultations</h1>
+      <BlockQuote>
+        <InfoCircleOutlined />
+        <p>Having special problems with your dog? We can help!</p>
+      </BlockQuote>
       <p>
         Most behavioral problems can be changed but not always 100% “cured.” It
         really depends on many variables. A comprehensive evaluation followed by

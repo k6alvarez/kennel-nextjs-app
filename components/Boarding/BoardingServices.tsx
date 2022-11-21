@@ -4,6 +4,7 @@ import { Content } from "../ui-kit/Base";
 import { FlexCards } from "./styles";
 import { Card, Collapse } from "antd";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
+import { InfoCircleOutlined } from "@ant-design/icons";
 
 export const BoardingServices = () => {
   return (
@@ -151,39 +152,65 @@ export const BoardingServices = () => {
             rent bedding from us. We offer a selection of quality bedding for
             rent at a nominal fee.
           </p>
-          <p>
-            FLEECE beds are constructed of Sterilon synthetic fleece covering
-            foam rubber and polyfill batting. They are soft and comfortable and
-            are an excellent choice.
-          </p>
-          <p>
-            KEN-L-MAT These mats are constructed of sturdy cotton fabric and
-            quilted to a premium polyester batting. These durable beds are
-            limited in supply and therefore rental is subject to availability.
-          </p>
-          <p>
-            BEDDING RISK. If you think that your dog will chew or destroy
-            bedding we recommend that you do not rent! If your dog damages the
-            rented bedding you will be charged a $15.00 replacement fee. We do
-            not presently offer bedding for retail sale.
-          </p>
-          <p>
-            BEDDING RENTAL RATES *all rental rates are per visit, regardless of
-            length of visit. Fleece Bed ................$5.00; replacement cost
-            $15.00 Ken-L-Mat. ..............$5.00; replacement cost $20.00
-          </p>
+          <BlockQuote>
+            <InfoCircleOutlined />
+            <p>
+              Bedding Risk:
+              <br /> If you think that your dog will chew or destroy bedding we
+              recommend that you do not rent! If your dog damages the rented
+              bedding you will be charged a replacement fee. We do not presently
+              offer bedding for retail sale.
+              <br />
+              All rental rates are per visit, regardless of length of visit.
+            </p>
+          </BlockQuote>
+          <FlexCards>
+            <Card title={<h2>Fleece Beds</h2>}>
+              <p>
+                Constructed of Sterilon synthetic fleece covering foam rubber
+                and polyfill batting. They are soft and comfortable and are an
+                excellent choice.
+              </p>
+              <p>
+                Rental: <br /> $5.00
+              </p>
+              <p>
+                Replacement Cost: <br /> $15.00
+              </p>
+            </Card>
+
+            <Card title={<h2>KEN-L-MAT</h2>}>
+              <p>
+                These mats are constructed of sturdy cotton fabric and quilted
+                to a premium polyester batting. These durable beds are limited
+                in supply and therefore rental is subject to availability.
+              </p>
+              <p>
+                Rental: <br /> $5.00
+              </p>
+              <p>
+                Replacement Cost: <br /> $20.00
+              </p>
+            </Card>
+          </FlexCards>
+
           <p>
             The advantage of kennel provided bedding is that your dog will have
-            freshly laundered bedding on a continual basis. Clients who choose
-            to provide their own bedding will be charged a LAUNDRY SERVICE FEE
-            of $1.50 PER INCIDENT should their dogs soil their bedding. The
-            laundry service is required for owner provided bedding. Please be
-            sure to read our{" "}
+            freshly laundered bedding on a continual basis. The laundry service
+            is required for owner provided bedding. Please be sure to read our{" "}
             <Link href="/policies?tab=bedding">
               <a>bedding policy</a>
             </Link>{" "}
             if you plan to provide us with your dogs bed.
           </p>
+          <BlockQuote>
+            <InfoCircleOutlined />
+            <p>
+              Clients who choose to provide their own bedding will be charged a
+              laundry service fee of $1.50 per incident should their dogs soil
+              their bedding.
+            </p>
+          </BlockQuote>
         </Collapse.Panel>
         <Collapse.Panel header="Bath Services" key={6}>
           <FlexCards>

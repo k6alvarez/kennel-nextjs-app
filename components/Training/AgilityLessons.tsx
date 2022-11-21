@@ -5,10 +5,11 @@ import { Content } from "../ui-kit/Base";
 export const AgilityLessons = () => {
   return (
     <Content>
+      <h1>Agility Training</h1>
       <p>
-        Agility Training Fun for owners and dogs. Your dog will learn how to
-        negotiate jumps, tunnels, and obstacles. Unlimited practice time during
-        scheduled course hours (while enrolled in class).
+        Fun for owners and dogs. Your dog will learn how to negotiate jumps,
+        tunnels, and obstacles. Unlimited practice time during scheduled course
+        hours (while enrolled in class).
       </p>
       <p>
         Contact us for more information, or view our{" "}

@@ -3,23 +3,30 @@ import React from "react";
 import { Content } from "../ui-kit/Base";
 import { BoldText } from "../Boarding/MedicalIssues";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
+import { CheckCircleOutlined } from "@ant-design/icons";
 
 export const PrivateLessons = () => {
   return (
     <Content>
-      <BlockQuote>Our Best Service</BlockQuote>
+      <h1>Private Lessons</h1>
+      <BlockQuote large>
+        <CheckCircleOutlined />
+        <p>Our Best Service</p>
+      </BlockQuote>
       <p>
         One on one instruction provided at our training center. From puppy head
         start through advanced obedience. We will help you to design a program
         that meets your needs.
       </p>
-      <p>
-        The advantage of private training is that it entails one-on-one
-        instruction and that <BoldText>distractions can be minimized</BoldText>.
-        The truth is that the <BoldText>BEST</BoldText> way to train a dog is
-        initially with few or no distractions, and then distractions are
-        gradually added as the dog learns, building on successful responses.
-      </p>
+      <BlockQuote>
+        <p>
+          The advantage of private training is that it entails one-on-one
+          instruction and that distractions can be minimized. The truth is that
+          the best way to train a dog is initially with few or no distractions,
+          and then distractions are gradually added as the dog learns, building
+          on successful responses.
+        </p>
+      </BlockQuote>
       <p>
         The other advantage of private lessons is that the instructor will teach
         your dog each new command while you observe. When your dog responds to
@@ -31,10 +38,8 @@ export const PrivateLessons = () => {
         can accomplish is a group format.
       </p>
       <p>
-        <BlockQuote>
-          A six week private lesson course is $460.00 Each lesson lasts between
-          1 and 1.5 hours.
-        </BlockQuote>
+        A six week private lesson course is $460.00 Each lesson lasts between 1
+        and 1.5 hours.
       </p>
       <p>
         Interested in private lessons?{" "}

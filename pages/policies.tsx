@@ -9,6 +9,7 @@ import { BoldText } from "../components/Boarding/MedicalIssues";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { InfoCircleOutlined } from "@ant-design/icons";
 
 const { Panel } = Collapse;
 
@@ -63,6 +64,7 @@ const Policies: React.FC<Props> = () => {
         >
           <Panel id="abandoned" key="abandoned" header="Abandoned Dog Policy">
             <BlockQuote large>
+              <InfoCircleOutlined />
               <p>It is unfortunate that this policy is necessary.</p>
             </BlockQuote>
             <p>
@@ -153,14 +155,16 @@ const Policies: React.FC<Props> = () => {
               However,
             </p>
             <BlockQuote large>
-              <Card>
+              <div>
                 <p>All client provided bedding must:</p>
-                <ul>
-                  <li>Be clean, safe, easily laundered or cleaned.</li>
-                  <li>Lightweight and managable.</li>
-                  <li>Labled with the dogs name.</li>
-                  <li>Made of a snag free material.</li>
-                </ul>
+                <p>
+                  <ul>
+                    <li>Be clean, safe, easily laundered or cleaned.</li>
+                    <li>Lightweight and managable.</li>
+                    <li>Labled with the dogs name.</li>
+                    <li>Made of a snag free material.</li>
+                  </ul>
+                </p>
                 <p>
                   The bedding must fit into the dogs run while allowing him room
                   to eat, drink and move around. large oversized heavy bedding
@@ -172,7 +176,7 @@ const Policies: React.FC<Props> = () => {
                   charged a laundry service fee of $1.50 per incident should
                   their dogs soil their bedding.{" "}
                 </p>
-              </Card>
+              </div>
             </BlockQuote>
             <p>
               The laundry service is required for owner provided bedding. We
