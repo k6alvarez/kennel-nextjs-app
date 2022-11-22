@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Router from "next/router";
 
-import { Steps } from "antd";
+import { message, Steps } from "antd";
 import { StepsContent, StepsAction } from "../styles";
 import { Button } from "../../ui-kit/Base";
 import { guestFormFieldsValid, next, prev } from "../helpers";
@@ -31,7 +31,7 @@ export const createReservationDraft = async (
   delete cloneState["emergencyContactName"];
   delete cloneState["emergencyContactPhone"];
   delete cloneState["howHear"];
-
+  message.loading("Sending reservation request.", 1);
   const data = Object.entries(cloneState).map(([key, _value]) => {
     return {
       [key]: state[key].value !== undefined ? state[key].value : state[key],
@@ -69,6 +69,7 @@ export const createReservationDraft = async (
             reservationId: res.id,
           },
         });
+        message.success("Reservation request submitted successfully.");
         await Router.push("/reservation/[id]", `/reservation/${res.id}`);
       });
   } catch (error) {
