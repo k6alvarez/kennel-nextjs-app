@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
@@ -6,6 +6,7 @@ import { signOut, useSession } from "next-auth/react";
 import { LeftNav } from "./Navigation/LogoLinks";
 import { Drawer } from "antd";
 import { LogoName } from "./Navigation/NavStyles";
+import { ThemePreferenceContext } from "../pages/_app";
 
 export const StyledNav = styled.nav`
   display: flex;
@@ -102,6 +103,7 @@ const getMainLinks = (isActive) => (
 
 const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const { currentTheme } = useContext(ThemePreferenceContext);
   const router = useRouter();
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
@@ -165,7 +167,7 @@ const Header: React.FC = () => {
   }
 
   return (
-    <StyledNav>
+    <StyledNav currentTheme={currentTheme}>
       {leftNav}
       {rightNav}
       <Drawer

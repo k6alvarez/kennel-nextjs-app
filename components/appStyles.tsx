@@ -1,8 +1,15 @@
 import { createGlobalStyle } from "styled-components";
-import { light, dark } from "../components/ui-kit/Theme";
+import {
+  light,
+  dark,
+  livelySoothing,
+  naturalEarth,
+} from "../components/ui-kit/Theme";
 
 export const themesMap = {
   light,
+  livelySoothing,
+  naturalEarth,
   dark,
 };
 

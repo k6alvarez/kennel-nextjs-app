@@ -6,11 +6,15 @@ import {
 import { Card } from "antd";
 import React from "react";
 import styled from "styled-components";
+import { ThemePreferenceContext } from "../pages/_app";
 import { RouteLink } from "./Navigation/RouteLink";
 import { LogoOne } from "./ui-kit/Logo";
 
 const FooterWrapper = styled.footer`
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme, currentTheme }) =>
+    currentTheme === "livelySoothing"
+      ? theme.colors.primaryDark
+      : theme.colors.textSecondary};
   padding: ${({ theme }) => `${theme.space[5]}`}
     ${({ theme }) => `${theme.space[5]}`} ${({ theme }) => `${theme.space[2]}`};
   position: absolute;
@@ -19,7 +23,10 @@ const FooterWrapper = styled.footer`
   font-size: ${({ theme }) => theme.fontSizes[0]};
 
   a {
-    color: ${({ theme }) => theme.colors.textSecondary};
+    color: ${({ theme, currentTheme }) =>
+      currentTheme === "naturalEarth"
+        ? theme.colors.textPrimary
+        : theme.colors.textSecondary};
   }
 `;
 
@@ -82,6 +89,13 @@ export const Hoursblock = styled.div`
   min-width: 200px;
   width: 100%;
 
+  > p {
+    color: ${({ theme, currentTheme }) =>
+      currentTheme !== "naturalEarth"
+        ? theme.colors.textPrimary
+        : theme.colors.textSecondary};
+  }
+
   a:hover {
     text-decoration: underline;
   }
@@ -100,8 +114,9 @@ export const Copy = styled.span`
 
 export const Footer = () => {
   const date = new Date();
+  const { currentTheme } = React.useContext(ThemePreferenceContext);
   return (
-    <FooterWrapper>
+    <FooterWrapper currentTheme={currentTheme}>
       <FooterTop>
         <BusinessInfo>
           <RouteLink activeClassName="active" href="/">

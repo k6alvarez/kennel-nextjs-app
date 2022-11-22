@@ -47,22 +47,37 @@ export const light = {
   inputPlaceholder: "#a9a9a9",
 };
 
-// export const livelySoothing = {
-//   primary: "#026670",
-//   primaryDark: "#9FEdd7",
-//   secondaryLight: "#fef9c7",
-//   secondary: "#fce181",
-//   white: "#fff",
-//   secondaryDark: "#edeae5",
-//   nav: "#f8f8f8",
-//   border: "#212121",
-//   textPrimary: "#ffffff",
-//   textSecondary: "#212121",
-//   inputFocus: "#1890ff",
-//   inputDisabled: "#dcd9d9",
-//   inputPlaceholder: "#a9a9a9",
-// };
+export const livelySoothing = {
+  primary: "#026670",
+  primaryDark: "#edeae5",
+  secondaryLight: "#fce181",
+  secondary: "#fef9c7",
+  white: "#fff",
+  secondaryDark: "#fce181",
+  nav: "#f8f8f8",
+  border: "#212121",
+  textPrimary: "#ffffff",
+  textSecondary: "#212121",
+  inputFocus: "#1890ff",
+  inputDisabled: "#dcd9d9",
+  inputPlaceholder: "#a9a9a9",
+};
 
+export const naturalEarth = {
+  primary: "#659DBD",
+  primaryDark: "#bc986A",
+  secondaryLight: "#fbeec1",
+  secondary: "#DAAD86",
+  white: "#fff",
+  secondaryDark: "#8D8741",
+  nav: "#f8f8f8",
+  border: "#212121",
+  textPrimary: "#ffffff",
+  textSecondary: "#212121",
+  inputFocus: "#1890ff",
+  inputDisabled: "#dcd9d9",
+  inputPlaceholder: "#a9a9a9",
+};
 export const dark = {
   primary: "#8c0b3e",
   primaryDark: "#740833",

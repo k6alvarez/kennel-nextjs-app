@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useSpring, config, animated } from "react-spring";
 import { GridItems, GridItem } from "../Base";
 import { PromoPics, PromoTextWrapper, ImageZoomWrapper } from "./styles-promo";
 import Link from "next/link";
+import { ThemePreferenceContext } from "../../../pages/_app";
 
 interface PromosProps {
   promos: {
@@ -26,8 +27,9 @@ export const Promos = ({
   variant = "row",
   noMargin = false,
 }: PromosProps) => {
+  const { currentTheme } = useContext(ThemePreferenceContext);
   return (
-    <PromoPics transparent={transparent}>
+    <PromoPics transparent={transparent} currentTheme={currentTheme}>
       <GridItems variant={variant}>
         {promos.map((promo, i) => {
           const props = useSpring({
@@ -50,7 +52,10 @@ export const Promos = ({
               }}
             >
               {promo.link ? (
-                <PromoTextWrapper hasLink={!!promo.link}>
+                <PromoTextWrapper
+                  currentTheme={currentTheme}
+                  hasLink={!!promo.link}
+                >
                   <Link href={promo.link}>
                     <a>
                       <ImageZoomWrapper>
