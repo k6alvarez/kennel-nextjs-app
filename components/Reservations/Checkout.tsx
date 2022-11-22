@@ -5,8 +5,9 @@ const PaypalContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
-  div:first-child {
+  #paypal-container {
     width: 100%;
     max-width: 300px;
   }
@@ -46,6 +47,7 @@ export const PayPalCheckout = ({
   }, []);
   return (
     <PaypalContainer>
+      <p>Make a payment using the options below:</p>
       <div id="paypal-container" />
     </PaypalContainer>
   );

@@ -65,9 +65,9 @@ export const FieldsetPetsInfo = ({
   } = usePetFormContext();
 
   return (
-    <fieldset disabled={petFormLoading}>
+    <>
       <Error>{petFormError}</Error>
-      <Fieldset>
+      <Fieldset disabled={petFormLoading}>
         <Flex>
           <p>
             <span>Boarding Dates:</span>
@@ -78,7 +78,7 @@ export const FieldsetPetsInfo = ({
           </p>
           <p>
             <span>Deposit amount due:</span>
-            <span>{calculateDeposit(pets)}</span>
+            <span>{calculateDeposit(formState.pets)}</span>
           </p>
         </Flex>
         <PetCards>
@@ -172,6 +172,6 @@ export const FieldsetPetsInfo = ({
           </p>
         )}
       </Fieldset>
-    </fieldset>
+    </>
   );
 };

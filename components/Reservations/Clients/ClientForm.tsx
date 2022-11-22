@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Router from "next/router";
 
-import { Steps } from "antd";
+import { message, Steps } from "antd";
 import { StepsContent, StepsAction } from "../styles";
 import { Button } from "../../ui-kit/Base";
 import { guestFormFieldsValid, next, prev } from "../helpers";
@@ -14,6 +14,7 @@ import { FieldsetClientInfo } from "../FieldsetFromState";
 import { getPets, getUser } from "../../Pets/services";
 import { FieldsetPetsInfo } from "../GuestClients/FieldsetPetsInfo";
 import { BlockQuote } from "../GuestClients/FormIntro";
+import { ReservationSummary } from "../ReservationSummary";
 
 export const createReservationDraft = async (
   e: React.SyntheticEvent,
@@ -30,7 +31,7 @@ export const createReservationDraft = async (
   delete cloneState["emergencyContactName"];
   delete cloneState["emergencyContactPhone"];
   delete cloneState["howHear"];
-
+  message.loading("Sending reservation request.", 1);
   const data = Object.entries(cloneState).map(([key, _value]) => {
     return {
       [key]: state[key].value !== undefined ? state[key].value : state[key],
@@ -68,6 +69,7 @@ export const createReservationDraft = async (
             reservationId: res.id,
           },
         });
+        message.success("Reservation request submitted successfully.");
         await Router.push("/reservation/[id]", `/reservation/${res.id}`);
       });
   } catch (error) {
@@ -155,29 +157,20 @@ export const ClientForm = ({ session }) => {
     {
       title: "Summary",
       content: (
-        <>
-          {Object.keys(clientFormState).map((key, i) => (
-            <div key={key + "-" + i}>
-              <label>{key}</label>
-              {key === "pets" ? (
-                <ul>
-                  {Object.keys(clientFormState[key]).map((petId, i) => (
-                    <li key={petId + "-" + i}>{petId}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p>{clientFormState[key].value}</p>
-              )}
-            </div>
-          ))}
-        </>
+        <ReservationSummary
+          state={clientFormState}
+          pets={clientFormState.pets}
+        />
       ),
     },
   ];
 
   return (
     <>
-      <p>Let's get started with your boarding reservation.</p>
+      <p>
+        Let's get started with your boarding reservation. Verify your details
+        below.
+      </p>
       <form>
         <Steps current={current}>
           {formSteps.map((item) => (
@@ -197,8 +190,10 @@ export const ClientForm = ({ session }) => {
             <Button
               type="button"
               onClick={() => {
-                if (pets.length === 0 && current === 2) {
-                  setClientFormError("Please add a pet to continue.");
+                if (clientFormState.pets.length === 0 && current === 2) {
+                  setClientFormError(
+                    "Please add a pet to continue with your reservation request."
+                  );
                   return;
                 } else {
                   setClientFormError("");

@@ -1,6 +1,6 @@
 import React from "react";
 import { renderFormFields } from "../Forms/renderFormFields";
-import { Fields } from "../Forms/styles";
+import { Fields, Fieldset } from "../Forms/styles";
 
 interface FieldsetClientInfoProps {
   initialState: { [s: string]: unknown } | ArrayLike<unknown>;
@@ -18,7 +18,7 @@ export const FieldsetClientInfo = ({
   formLoading,
 }: FieldsetClientInfoProps) => {
   return (
-    <fieldset disabled={formLoading}>
+    <Fieldset disabled={formLoading}>
       <Fields>
         {renderFormFields({
           initialState,
@@ -26,6 +26,6 @@ export const FieldsetClientInfo = ({
           handleChange,
         })}
       </Fields>
-    </fieldset>
+    </Fieldset>
   );
 };

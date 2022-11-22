@@ -7,7 +7,22 @@ import { TotalDeposit } from "../styles";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { ReservationSummary } from "../ReservationSummary";
 
-export const FieldSetPaymentInfo = () => {
+const getDepositTotal = (pets) => {
+  let depositTotal = 0;
+  pets.map((pet) => {
+    if (pet.preferredRunSize === "Small") {
+      return (depositTotal += 25);
+    } else if (pet.preferredRunSize === "Large") {
+      return (depositTotal += 25);
+    } else if (pet.preferredRunSize === "Extra Large") {
+      return (depositTotal += 25);
+    }
+  });
+
+  return "$" + depositTotal.toFixed(2);
+};
+
+export const FieldSetPaymentInfo = ({ pets }) => {
   const { guestFormDispatch, guestFormState, setGuestFormError } =
     useGuestFormContext();
   const [depositConfirmed, setDepositConfirmed] = useState(false);
@@ -25,17 +40,22 @@ export const FieldSetPaymentInfo = () => {
   return (
     <fieldset>
       <>
+        <ReservationSummary state={guestFormState} pets={pets} />
+
         <BlockQuote>
-          <InfoCircleOutlined />
-          <p>
-            A $25.00 per run deposit is required for new client reservations.
-            Your reservation is not complete and will not be confirmed until we
-            receive your deposit and the completed reservation form.
-          </p>
+          <div>
+            <p>
+              A $25.00 per run deposit is required for new client reservations.
+              Your reservation is not complete and will not be confirmed until
+              we receive your deposit and the completed reservation form.
+            </p>
+            <TotalDeposit>
+              <p>Your total deposit due is {getDepositTotal(pets)}</p>
+            </TotalDeposit>
+          </div>
         </BlockQuote>
-        <TotalDeposit>Your total deposit due is $25.00</TotalDeposit>
-        <ReservationSummary state={guestFormState} />
         <PayPalCheckout
+          transactionTotal="25.00"
           onConfirm={(results) => {
             setDepositConfirmed(true);
             guestFormDispatch({

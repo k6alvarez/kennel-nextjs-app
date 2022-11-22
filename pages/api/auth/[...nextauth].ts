@@ -38,27 +38,27 @@ const options = {
         identifier: email,
         url,
         provider: { server, from },
-     }) {
-        const { host, origin } = new URL(url);            
+      }) {
+        const { host, origin } = new URL(url);
         const transport = createTransport(server);
         await transport.sendMail({
           to: email,
           from,
-          subject: `Complete your profile at ${host}`,
+          subject: `Your profile at ${host}`,
           text: text({ url, host }),
           // we can pass in 'theme' to access default theme as a new parameter
           html: html({ url, host, origin, email, theme: themesMap.light }),
         });
       },
     }),
-  ],  
+  ],
   pages: {
     signIn: '/auth/signin',
     error: '/auth/error', // Error code passed in query string as ?error=
     verifyRequest: '/auth/verify-request', // (used for check email message)
   },
   adapter: PrismaAdapter(prisma),
-  secret: process.env.SECRET,  
+  secret: process.env.SECRET,
 };
 
 /**
@@ -69,11 +69,11 @@ const options = {
  *
  * @note We don't add the email address to avoid needing to escape it, if you do, remember to sanitize it!
  */
- function html(params: { url: string; host: string; origin: string, email: string, theme?: any }) {
+function html(params: { url: string; host: string; origin: string, email: string, theme?: any }) {
   const { url, host, theme, origin } = params
   const newUrl = new URL(url)
   newUrl.searchParams.delete('callbackUrl')
-  newUrl.searchParams.set('callbackUrl', "/profile")    
+  newUrl.searchParams.set('callbackUrl', "/profile")
   const brandColor = theme?.primary || "#22d172"
   const color = {
     background: brandColor || "#f9f9f9",
@@ -85,8 +85,8 @@ const options = {
   }
 
   return `
-<body style="background: ${color.background};">
-  ${getHeader({color, origin})}
+<body style="background: ${color.background}; padding: 10px;">
+  ${getHeader({ color, origin })}
 
 
   <table width="100%" border="0" cellspacing="20" cellpadding="0"
@@ -102,7 +102,7 @@ const options = {
           <tr>
             <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}">
               <a href="${newUrl}" target="_blank" style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;">
-                Log in to finish creating your account.
+                Log in to access your account.
               </a>
             </td>
           </tr>
@@ -136,7 +136,7 @@ export function getFooter() {
   `
 }
 
-export function getHeader({color, origin}) {
+export function getHeader({ color, origin }) {
   return `
     <table width="100%" border="0" cellspacing="20" cellpadding="0"
     style="background: ${color.mainBackground}; max-width: 600px; margin: 10px auto; ">

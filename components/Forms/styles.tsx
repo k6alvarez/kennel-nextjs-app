@@ -1,14 +1,23 @@
 import styled from "styled-components";
 export const Fields = styled.div`
-  display: grid;
-  grid-template-columns: ${({ gridColumns }) =>
-    gridColumns ? gridColumns : "1fr 1fr"};
+  display: flex;
+  flex-direction: column;
   width: 100%;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+    display: grid;
+    grid-template-columns: ${({ gridColumns }) =>
+      gridColumns ? gridColumns : "1fr 1fr"};
+  }
 `;
 
 export const Fieldset = styled.fieldset`
   width: 100%;
   max-width: 100%;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[3]}) {
+    max-width: 70%;
+  }
 `;
 
 export const PreviewWrapper = styled.div`
