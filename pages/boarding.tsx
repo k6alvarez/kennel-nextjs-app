@@ -76,6 +76,7 @@ const Boarding: React.FC = () => {
   return (
     <Layout>
       <Promo
+        showFooter
         title="to keep your dog warm in the winter."
         description="Our facility also has two spacious exercise and play areas."
       >

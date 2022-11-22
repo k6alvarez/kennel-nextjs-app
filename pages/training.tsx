@@ -60,6 +60,7 @@ const Training: React.FC<Props> = (props) => {
   return (
     <Layout>
       <Promo
+        showFooter
         promos={[
           {
             image:
