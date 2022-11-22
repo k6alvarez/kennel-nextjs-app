@@ -77,6 +77,20 @@ const Boarding: React.FC = () => {
     <Layout>
       <Promo
         showFooter
+        promos={[
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419357/gk-app/BTS_Eike.png",
+          },
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419353/gk-app/Ruthie3.jpg",
+          },
+          {
+            image:
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419355/gk-app/two_cute_dogs.jpg",
+          },
+        ]}
         title="to keep your dog warm in the winter."
         description="Our facility also has two spacious exercise and play areas."
       >

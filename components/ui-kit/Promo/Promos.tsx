@@ -16,14 +16,15 @@ interface PromosProps {
   breakMoble?: boolean;
   transparent?: boolean;
   variant?: "row" | "column";
+  noMargin?: boolean;
 }
 
 export const Promos = ({
   transparent,
-  breakMoble,
   delay = 0,
   promos = [],
   variant = "row",
+  noMargin = false,
 }: PromosProps) => {
   return (
     <PromoPics transparent={transparent}>
@@ -42,7 +43,9 @@ export const Promos = ({
               key={key}
               style={{
                 ...props,
-                margin: "2rem 1rem",
+                margin: noMargin ? "2rem 0" : "2rem 1rem",
+                display: noMargin ? "flex" : "initial",
+                justifyContent: noMargin ? "center" : "initial",
                 width: "100%",
               }}
             >
@@ -54,9 +57,15 @@ export const Promos = ({
                         <GridItem img={promo.image} />
                       </ImageZoomWrapper>
                       <div>
-                        {promo.title ? <h2>{promo.title}</h2> : null}
+                        {promo.title ? (
+                          <h2 style={{ width: "100%", textAlign: "center" }}>
+                            {promo.title}
+                          </h2>
+                        ) : null}
                         {promo.description ? (
-                          <span>{promo.description}</span>
+                          <span style={{ width: "100%", textAlign: "center" }}>
+                            {promo.description}
+                          </span>
                         ) : null}
                       </div>
                     </a>
@@ -65,8 +74,16 @@ export const Promos = ({
               ) : (
                 <>
                   <GridItem size={promo.size} img={promo.image} />
-                  {promo.title ? <h2>{promo.title}</h2> : null}
-                  {promo.description ? <span>{promo.description}</span> : null}
+                  {promo.title ? (
+                    <h2 style={{ width: "100%", textAlign: "center" }}>
+                      {promo.title}
+                    </h2>
+                  ) : null}
+                  {promo.description ? (
+                    <span style={{ width: "100%", textAlign: "center" }}>
+                      {promo.description}
+                    </span>
+                  ) : null}
                 </>
               )}
             </animated.div>

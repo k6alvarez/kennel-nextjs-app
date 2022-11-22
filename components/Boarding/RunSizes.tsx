@@ -34,7 +34,7 @@ export const RunSizes = () => {
         </Card>
         <Card
           cover={
-            <Image src="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419357/gk-app/BTS_Eike.png" />
+            <Image src="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419357/gk-app/Jager_fence.png" />
           }
           title={<h2>Large Run</h2>}
         >
@@ -57,7 +57,7 @@ export const RunSizes = () => {
         </Card>
         <Card
           cover={
-            <Image src="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419357/gk-app/Jager_fence.png" />
+            <Image src="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419355/gk-app/spike_tongue_out.jpg" />
           }
           title={<h2>Small Run</h2>}
         >

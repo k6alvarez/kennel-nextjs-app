@@ -35,7 +35,7 @@ export const TrainingHome = () => {
                 "Ideal for individuals who want to save money and socialize their pets.",
               link: "/training?tab=group-lessons",
               image:
-                "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419343/gk-app/Kitty_window.jpg",
+                "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419327/gk-app/Georgia_getting_some_fresh_air_edit.jpg",
             },
             {
               title: "Private Lessons",
@@ -43,7 +43,7 @@ export const TrainingHome = () => {
                 "One on one instruction at our training center. Our Best Service.",
               link: "/training?tab=private-lessons",
               image:
-                "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419325/gk-app/Addie3.jpg",
+                "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585015261/gk-app/gktrain.jpg",
             },
           ]}
         />
@@ -56,7 +56,7 @@ export const TrainingHome = () => {
               description:
                 "Fun for owners and dogs, agility training is a great way to bond.",
               image:
-                "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
+                "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585015261/gk-app/gktrainer.jpg",
             },
             {
               title: "Consultations",
@@ -64,7 +64,7 @@ export const TrainingHome = () => {
               description:
                 "Having special problems with your dog? We can help!",
               image:
-                "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
+                "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419324/gk-app/Dobermann.png",
             },
           ]}
         />

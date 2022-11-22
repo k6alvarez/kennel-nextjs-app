@@ -61,7 +61,7 @@ export const PromoTextWrapper = styled.div`
 
   h2 {
     color: ${({ theme }) => theme.colors.textPrimary};
-    font-size: ${({ theme }) => theme.fontSizes[1]};
+    font-size: ${({ theme }) => theme.fontSizes[2]};
     padding-top: ${({ theme }) => theme.space[4]};
   }
   span {
