@@ -116,7 +116,7 @@ export const createGuestReservationDraft = async (
       .then((res) => {
         return res.json();
       })
-      .then(async (res) => {
+      .then((res) => {
         if (res.errors) {
           const validationError =
             "Please verify all required fields are filled out.";
@@ -131,13 +131,15 @@ export const createGuestReservationDraft = async (
           });
           setFormError(validationError);
           throw new Error(validationError);
+        } else {
+          dispatch({
+            type: "formDraftCreated",
+            payload: {
+              reservationId: res.id,
+            },
+          });
+          return res;
         }
-        dispatch({
-          type: "formDraftCreated",
-          payload: {
-            reservationId: res.id,
-          },
-        });
       });
   } catch (error) {
     console.error(error);

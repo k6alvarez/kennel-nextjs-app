@@ -53,18 +53,16 @@ export const ReservationSummary = ({ state, pets }) => {
             if (!field.value && key === "pets") return null;
 
             return (
-              <>
-                <DetailItem key={key + "-" + i}>
-                  <LetterSpacedText fs={base.fontSizes[1]} bold>
-                    {field.label}
+              <DetailItem key={key + "-" + i}>
+                <LetterSpacedText fs={base.fontSizes[1]} bold>
+                  {field.label}
+                </LetterSpacedText>
+                {key !== "pets" && (
+                  <LetterSpacedText as="div" fs={base.fontSizes[2]}>
+                    {getFormattedValue(field)}
                   </LetterSpacedText>
-                  {key !== "pets" && (
-                    <LetterSpacedText as="div" fs={base.fontSizes[2]}>
-                      {getFormattedValue(field)}
-                    </LetterSpacedText>
-                  )}
-                </DetailItem>
-              </>
+                )}
+              </DetailItem>
             );
           })}
       </Flex>
