@@ -14,7 +14,7 @@ const FooterWrapper = styled.footer`
   background-color: ${({ theme, currentTheme }) =>
     currentTheme === "livelySoothing"
       ? theme.colors.primaryDark
-      : theme.colors.textSecondary};
+      : theme.colors.secondary};
   padding: ${({ theme }) => `${theme.space[5]}`}
     ${({ theme }) => `${theme.space[5]}`} ${({ theme }) => `${theme.space[2]}`};
   position: absolute;
@@ -91,8 +91,8 @@ export const Hoursblock = styled.div`
 
   > p {
     color: ${({ theme, currentTheme }) =>
-      currentTheme !== "naturalEarth"
-        ? theme.colors.textPrimary
+      currentTheme === "naturalEarth"
+        ? theme.colors.textSecondary
         : theme.colors.textSecondary};
   }
 
