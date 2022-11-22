@@ -64,19 +64,19 @@ const Training: React.FC<Props> = (props) => {
         promos={[
           {
             image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg",
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419353/gk-app/sage_training.png",
             title: "",
             description: "",
           },
           {
             image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419352/gk-app/SadieMae_101920.jpg",
             title: "",
             description: "",
           },
           {
             image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg",
+              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419354/gk-app/Winsten_BS.jpg",
             title: "",
             description: "",
           },

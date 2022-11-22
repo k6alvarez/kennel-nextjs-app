@@ -71,7 +71,7 @@ export const Promo = ({
         </animated.div>
       </PromoText>
       {promos.length > 0 && (
-        <Promos transparent delay={defaultDelay * 4} promos={promos} />
+        <Promos transparent delay={defaultDelay * 4} promos={promos} noMargin />
       )}
       {showFooter && (
         <PromoFooter>
