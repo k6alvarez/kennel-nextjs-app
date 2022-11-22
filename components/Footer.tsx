@@ -111,36 +111,36 @@ export const Footer = () => {
           </RouteLink>
           <BusinessWrapper>
             <Hoursblock>
-              <LetterSpacedText>Our Hours:</LetterSpacedText>
+              <LetterSpacedText bold>Our Hours:</LetterSpacedText>
               <Card>
                 <TimeSpanElement>
-                  <LetterSpacedText>Monday - Friday</LetterSpacedText>
-                  <LetterSpacedText>9AM to 7PM </LetterSpacedText>
+                  <LetterSpacedText bold>Monday - Friday</LetterSpacedText>
+                  <LetterSpacedText bold>9AM to 7PM </LetterSpacedText>
                 </TimeSpanElement>
                 <TimeSpanElement>
-                  <LetterSpacedText>Closed</LetterSpacedText>
-                  <LetterSpacedText>2PM to 4PM</LetterSpacedText>
+                  <LetterSpacedText bold>Closed</LetterSpacedText>
+                  <LetterSpacedText bold>2PM to 4PM</LetterSpacedText>
                 </TimeSpanElement>
               </Card>
               <Card>
                 <TimeSpanElement>
-                  <LetterSpacedText>Sunday</LetterSpacedText>
-                  <LetterSpacedText>9AM to 7PM</LetterSpacedText>
+                  <LetterSpacedText bold>Sunday</LetterSpacedText>
+                  <LetterSpacedText bold>9AM to 7PM</LetterSpacedText>
                 </TimeSpanElement>
                 <TimeSpanElement>
-                  <LetterSpacedText>Saturday</LetterSpacedText>
-                  <LetterSpacedText>Closed</LetterSpacedText>
+                  <LetterSpacedText bold>Saturday</LetterSpacedText>
+                  <LetterSpacedText bold>Closed</LetterSpacedText>
                 </TimeSpanElement>
               </Card>
             </Hoursblock>
           </BusinessWrapper>
           <BusinessWrapper>
             <Hoursblock>
-              <LetterSpacedText>Find Us:</LetterSpacedText>
+              <LetterSpacedText bold>Find Us:</LetterSpacedText>
               <Card>
                 <TimeSpanElement>
-                  <LetterSpacedText>Address:</LetterSpacedText>
-                  <LetterSpacedText style={{ textAlign: "right" }}>
+                  <LetterSpacedText bold>Address:</LetterSpacedText>
+                  <LetterSpacedText bold style={{ textAlign: "right" }}>
                     <HomeOutlined />{" "}
                     <a
                       href="https://www.google.com/maps/dir//42.2892336,-85.4501633/@42.289234,-85.450163,11z?hl=en-US"
@@ -155,15 +155,15 @@ export const Footer = () => {
               </Card>
               <Card>
                 <TimeSpanElement>
-                  <LetterSpacedText>Phone:</LetterSpacedText>
-                  <LetterSpacedText>
+                  <LetterSpacedText bold>Phone:</LetterSpacedText>
+                  <LetterSpacedText bold>
                     <PhoneOutlined />{" "}
                     <a href="tel:269-665-4878">269-665-4878</a>
                   </LetterSpacedText>
                 </TimeSpanElement>
                 <TimeSpanElement>
-                  <LetterSpacedText>Fax:</LetterSpacedText>
-                  <LetterSpacedText>269-665-6970</LetterSpacedText>
+                  <LetterSpacedText bold>Fax:</LetterSpacedText>
+                  <LetterSpacedText bold>269-665-6970</LetterSpacedText>
                 </TimeSpanElement>
               </Card>
             </Hoursblock>
