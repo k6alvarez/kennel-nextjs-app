@@ -41,59 +41,67 @@ export const getFormattedValue = (field) => {
 };
 
 export const ReservationSummary = ({ state, pets }) => {
+  const getState = typeof state === "object" ? Object.keys(state) : state;
   return (
     <div>
       <h1>Reservation Summary</h1>
       <Flex>
-        {Object.keys(state).map((key, i) => {
-          const field = state[key];
+        {state &&
+          getState.map((key, i) => {
+            const field = state[key];
 
-          if (!field.value && key === "pets") return null;
+            if (!field.value && key === "pets") return null;
 
-          return (
-            <>
-              <DetailItem key={key + "-" + i}>
-                <LetterSpacedText fs={base.fontSizes[1]} bold>
-                  {field.label}
-                </LetterSpacedText>
-                {key !== "pets" && (
-                  <LetterSpacedText fs={base.fontSizes[2]}>
-                    {getFormattedValue(field)}
+            return (
+              <>
+                <DetailItem key={key + "-" + i}>
+                  <LetterSpacedText fs={base.fontSizes[1]} bold>
+                    {field.label}
                   </LetterSpacedText>
-                )}
-              </DetailItem>
-            </>
-          );
-        })}
+                  {key !== "pets" && (
+                    <LetterSpacedText as="div" fs={base.fontSizes[2]}>
+                      {getFormattedValue(field)}
+                    </LetterSpacedText>
+                  )}
+                </DetailItem>
+              </>
+            );
+          })}
       </Flex>
-      <h1>{pets.length} Pets Boarded</h1>
-      {pets.map((pet, i) => {
-        return (
-          <>
-            <h2>{pet.name}</h2>
-            <Flex>
-              {Object.entries(PET_INITIAL_STATE).map(([key, value]) => {
-                return (
-                  pet[key] && (
-                    <DetailItem key={pet.id + "-" + key}>
-                      <LetterSpacedText fs={base.fontSizes[1]} bold>
-                        {PET_INITIAL_STATE[key].label}
-                      </LetterSpacedText>
-                      <LetterSpacedText fs={base.fontSizes[2]}>
-                        {getFormattedValue({
-                          value: pet[key],
-                          type: PET_INITIAL_STATE[key].type,
-                        })}
-                      </LetterSpacedText>
-                    </DetailItem>
-                  )
-                );
-                return i;
-              })}
-            </Flex>
-          </>
-        );
-      })}
+      {pets && (
+        <>
+          <h1>
+            {pets.length} {pets.length > 1 ? "Pets" : "Pet"} Boarded
+          </h1>
+          {pets.map((pet, i) => {
+            return (
+              <div key={`${pet.id}-${i}`}>
+                <h2>{pet.name}</h2>
+                <Flex>
+                  {Object.entries(PET_INITIAL_STATE).map(([key, value]) => {
+                    return (
+                      pet[key] && (
+                        <DetailItem key={pet.id + "-" + key}>
+                          <LetterSpacedText fs={base.fontSizes[1]} bold>
+                            {PET_INITIAL_STATE[key].label}
+                          </LetterSpacedText>
+                          <LetterSpacedText as="div" fs={base.fontSizes[2]}>
+                            {getFormattedValue({
+                              value: pet[key],
+                              type: PET_INITIAL_STATE[key].type,
+                            })}
+                          </LetterSpacedText>
+                        </DetailItem>
+                      )
+                    );
+                    return i;
+                  })}
+                </Flex>
+              </div>
+            );
+          })}
+        </>
+      )}
     </div>
   );
 };

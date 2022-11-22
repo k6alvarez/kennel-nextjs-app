@@ -176,3 +176,9 @@ export const Button = styled.button`
     cursor: not-allowed;
   }
 `;
+export const SplitHeader = styled.h1`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: ${({ theme }) => theme.space[2]};
+`;

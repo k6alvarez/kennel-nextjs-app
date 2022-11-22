@@ -12,6 +12,10 @@ const PageWrapper = styled.div`
   h1 {
     font-size: ${({ theme }) => theme.fontSizes[4]};
     margin: ${({ theme }) => theme.space[3]} 0;
+
+    button {
+      margin: 0;
+    }
   }
 
   a {

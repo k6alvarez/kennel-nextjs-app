@@ -78,7 +78,7 @@ export const FieldsetPetsInfo = ({
           </p>
           <p>
             <span>Deposit amount due:</span>
-            <span>{calculateDeposit(pets)}</span>
+            <span>{calculateDeposit(formState.pets)}</span>
           </p>
         </Flex>
         <PetCards>
