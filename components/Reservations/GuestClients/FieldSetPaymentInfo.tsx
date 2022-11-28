@@ -4,7 +4,10 @@ import { useGuestFormContext } from "../formContext";
 import { BlockQuote } from "./FormIntro";
 import { guestFormUpdate } from "./services";
 import { TotalDeposit } from "../styles";
-import { InfoCircleOutlined } from "@ant-design/icons";
+import {
+  InfoCircleOutlined,
+  Loading3QuartersOutlined,
+} from "@ant-design/icons";
 import { ReservationSummary } from "../ReservationSummary";
 
 const getDepositTotal = (pets) => {
@@ -74,8 +77,10 @@ export const FieldSetPaymentInfo = ({ pets }) => {
 
       {depositConfirmed && (
         <>
-          Your deposit was successful. One moment while we save your
-          reservation.
+          <p>
+            <Loading3QuartersOutlined spin /> Your deposit was successful. One
+            moment while we save your reservation.
+          </p>
         </>
       )}
     </fieldset>

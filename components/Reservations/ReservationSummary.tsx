@@ -54,11 +54,11 @@ export const ReservationSummary = ({ state, pets }) => {
 
             return (
               <DetailItem key={key + "-" + i}>
-                <LetterSpacedText fs={base.fontSizes[1]} bold>
+                <LetterSpacedText fs={base.fontSizes[1]}>
                   {field.label}
                 </LetterSpacedText>
                 {key !== "pets" && (
-                  <LetterSpacedText as="div" fs={base.fontSizes[2]}>
+                  <LetterSpacedText as="div" fs={base.fontSizes[2]} bold>
                     {getFormattedValue(field)}
                   </LetterSpacedText>
                 )}
