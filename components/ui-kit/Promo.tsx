@@ -80,10 +80,20 @@ export const Promo = ({
           <p>9172 East K Ave, Galesburg MI, 49053</p>
           <ul>
             <li>
-              <FacebookOutlined />
+              <a
+                target="_blank"
+                href="https://www.facebook.com/gillettekennels1/"
+              >
+                <FacebookOutlined />
+              </a>
             </li>
             <li>
-              <InstagramOutlined />
+              <a
+                target="_blank"
+                href="https://www.instagram.com/gillettekennels/"
+              >
+                <InstagramOutlined />
+              </a>
             </li>
           </ul>
         </PromoFooter>

@@ -1,13 +1,10 @@
-import {
-  CopyrightCircleOutlined,
-  HomeOutlined,
-  PhoneOutlined,
-} from "@ant-design/icons";
-import { Card } from "antd";
+import { CopyrightCircleOutlined } from "@ant-design/icons";
 import React from "react";
 import styled from "styled-components";
 import { ThemePreferenceContext } from "../pages/_app";
+import { Crest } from "./Navigation/LogoLinks";
 import { RouteLink } from "./Navigation/RouteLink";
+import { BusinessHours } from "./ui-kit/BusinessHours";
 import { LogoOne } from "./ui-kit/Logo";
 
 const FooterWrapper = styled.footer`
@@ -30,40 +27,32 @@ const FooterWrapper = styled.footer`
   }
 `;
 
+const Flex = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: ${({ theme }) => theme.space[4]};
+  gap: ${({ theme }) => theme.space[4]};
+  align-items: center;
+  justify-content: space-around;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+    flex-direction: row;
+  }
+`;
+
 const FooterBottom = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
   font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/ 1.2)`};
   line-height: 1;
-`;
-
-const FooterTop = styled.div`
-  display: grid;
-  justify-content: center;
-  grid-template-columns: 1fr;
-  gap: ${({ theme }) => `${theme.space[6]}`};
-
-  @media only screen and (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-    grid-template-columns: 2fr 2fr;
-  }
-
-  @media only screen and (min-width: ${({ theme }) => theme.breakpoints[2]}) {
-    grid-template-columns: 1fr 2fr;
-  }
-`;
-
-const BusinessInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 `;
 
 export const LetterSpacedText = styled.p`
   margin: 0;
   font-weight: ${({ bold }) => (bold ? 400 : 300)};
   font-size: ${({ theme, fs }) =>
-    `calc(${fs ? fs : theme.fontSizes[0]} / 1.1)`};
+    `calc(${fs ? theme.fontSizes[fs] : theme.fontSizes[0]} / 1.1)`};
   text-transform: ${({ textTransform }) =>
     textTransform ? textTransform : "capitalize"};
   letter-spacing: 1px;
@@ -75,8 +64,7 @@ export const BusinessWrapper = styled.div`
   flex: 1;
 
   justify-content: space-between;
-  margin-top: ${({ theme }) => `${theme.space[4]}`};
-  gap: ${({ theme }) => `${theme.space[4]}`};
+
   align-items: center;
   .ant-card {
     width: 400px;
@@ -109,7 +97,9 @@ export const TimeSpanElement = styled.span`
 
 export const Copy = styled.span`
   font-family: "Dancing_Script", cursive;
-  font-size: ${({ theme }) => `calc(${theme.fontSizes[1]}/ 1.2)`};
+  font-size: ${({ theme }) => `calc(${theme.fontSizes[1]}/ 1.3)`};
+
+  font-weight: bold;
 `;
 
 export const Footer = () => {
@@ -117,87 +107,28 @@ export const Footer = () => {
   const { currentTheme } = React.useContext(ThemePreferenceContext);
   return (
     <FooterWrapper currentTheme={currentTheme}>
-      <FooterTop>
-        <BusinessInfo>
-          <RouteLink activeClassName="active" href="/">
-            <a>
-              <LogoOne size={7} />
-            </a>
-          </RouteLink>
-          <BusinessWrapper>
-            <Hoursblock>
-              <LetterSpacedText bold>Our Hours:</LetterSpacedText>
-              <Card>
-                <TimeSpanElement>
-                  <LetterSpacedText bold>Monday - Friday</LetterSpacedText>
-                  <LetterSpacedText bold>9AM to 7PM </LetterSpacedText>
-                </TimeSpanElement>
-                <TimeSpanElement>
-                  <LetterSpacedText bold>Closed</LetterSpacedText>
-                  <LetterSpacedText bold>2PM to 4PM</LetterSpacedText>
-                </TimeSpanElement>
-              </Card>
-              <Card>
-                <TimeSpanElement>
-                  <LetterSpacedText bold>Sunday</LetterSpacedText>
-                  <LetterSpacedText bold>9AM to 7PM</LetterSpacedText>
-                </TimeSpanElement>
-                <TimeSpanElement>
-                  <LetterSpacedText bold>Saturday</LetterSpacedText>
-                  <LetterSpacedText bold>Closed</LetterSpacedText>
-                </TimeSpanElement>
-              </Card>
-            </Hoursblock>
-          </BusinessWrapper>
-          <BusinessWrapper>
-            <Hoursblock>
-              <LetterSpacedText bold>Find Us:</LetterSpacedText>
-              <Card>
-                <TimeSpanElement>
-                  <LetterSpacedText bold>Address:</LetterSpacedText>
-                  <LetterSpacedText bold style={{ textAlign: "right" }}>
-                    <HomeOutlined />{" "}
-                    <a
-                      href="https://www.google.com/maps/dir//42.2892336,-85.4501633/@42.289234,-85.450163,11z?hl=en-US"
-                      target="_blank"
-                    >
-                      9172 East K Ave
-                      <br />
-                      Galesburg MI, 49053
-                    </a>
-                  </LetterSpacedText>
-                </TimeSpanElement>
-              </Card>
-              <Card>
-                <TimeSpanElement>
-                  <LetterSpacedText bold>Phone:</LetterSpacedText>
-                  <LetterSpacedText bold>
-                    <PhoneOutlined />{" "}
-                    <a href="tel:269-665-4878">269-665-4878</a>
-                  </LetterSpacedText>
-                </TimeSpanElement>
-                <TimeSpanElement>
-                  <LetterSpacedText bold>Fax:</LetterSpacedText>
-                  <LetterSpacedText bold>269-665-6970</LetterSpacedText>
-                </TimeSpanElement>
-              </Card>
-            </Hoursblock>
-          </BusinessWrapper>
-        </BusinessInfo>
-        <iframe
-          width="100%"
-          height="520"
-          frameBorder="0"
-          src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJpRxZd7uaF4gR7V1wVGncMpE&key=AIzaSyCZDOY0IiSO7q2u1PYLNN8rekYbU3-ZMm4&zoom=11"
-          allowFullScreen
-        />
-      </FooterTop>
+      <Flex>
+        <RouteLink activeClassName="active" href="/">
+          <a>
+            <LogoOne size={7} />
+            <Crest />
+          </a>
+        </RouteLink>
+        <BusinessHours />
+      </Flex>
+      <iframe
+        width="100%"
+        height="520"
+        frameBorder="0"
+        src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJpRxZd7uaF4gR7V1wVGncMpE&key=AIzaSyCZDOY0IiSO7q2u1PYLNN8rekYbU3-ZMm4&zoom=11"
+        allowFullScreen
+      />
       <FooterBottom>
         <span>
           <CopyrightCircleOutlined /> {date.getFullYear()}&nbsp;
         </span>
         <span>
-          <Copy>Gillette Kennels</Copy>. All rights reserved.
+          <Copy>Gillette Kennels. All rights reserved.</Copy>
         </span>
       </FooterBottom>
     </FooterWrapper>

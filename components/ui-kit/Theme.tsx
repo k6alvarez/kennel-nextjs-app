@@ -31,6 +31,7 @@ export const base = {
     light: "0px 2px 4px rgba(0, 0, 0, 0.2)",
   },
 };
+
 export const light = {
   primary: "#8c0b3e",
   primaryDark: "#740833",

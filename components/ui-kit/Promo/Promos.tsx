@@ -48,7 +48,7 @@ export const Promos = ({
                 margin: noMargin ? "2rem 0" : "2rem 1rem",
                 display: noMargin ? "flex" : "initial",
                 justifyContent: noMargin ? "center" : "initial",
-                width: "100%",
+                width: noMargin ? "100%" : "calc(100% - 2rem)",
               }}
             >
               {promo.link ? (

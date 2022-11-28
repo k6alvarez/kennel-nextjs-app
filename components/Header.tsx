@@ -58,6 +58,10 @@ export const StyledNav = styled.nav`
     @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
       display: flex;
     }
+
+    a:hover {
+      text-decoration: underline;
+    }
   }
 `;
 

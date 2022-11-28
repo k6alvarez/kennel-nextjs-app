@@ -14,6 +14,14 @@ export const PromoFooter = styled.div`
     margin: 0;
   }
 
+  a {
+    color: ${(props) => props.theme.colors.textPrimary};
+
+    &:hover {
+      color: ${(props) => props.theme.colors.inputFocus};
+    }
+  }
+
   p {
     font-size: ${({ theme }) => theme.fontSizes[0]};
   }
