@@ -1,6 +1,7 @@
 import { FacebookOutlined, InstagramOutlined } from "@ant-design/icons";
-import React from "react";
+import React, { useContext } from "react";
 import { animated, config, useSpring } from "react-spring";
+import { ThemePreferenceContext } from "../../pages/_app";
 import { Crest } from "../Navigation/LogoLinks";
 import { Promos } from "./Promo/Promos";
 import {
@@ -20,6 +21,7 @@ export const Promo = ({
   children = undefined,
   showFooter = false,
 }) => {
+  const { currentTheme } = useContext(ThemePreferenceContext);
   const props = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
@@ -39,7 +41,7 @@ export const Promo = ({
   });
 
   return (
-    <PromoWrapper>
+    <PromoWrapper currentTheme={currentTheme}>
       <PromoText>
         {/* <animated.div style={{ ...props }}>
           <Crest />
@@ -78,10 +80,20 @@ export const Promo = ({
           <p>9172 East K Ave, Galesburg MI, 49053</p>
           <ul>
             <li>
-              <FacebookOutlined />
+              <a
+                target="_blank"
+                href="https://www.facebook.com/gillettekennels1/"
+              >
+                <FacebookOutlined />
+              </a>
             </li>
             <li>
-              <InstagramOutlined />
+              <a
+                target="_blank"
+                href="https://www.instagram.com/gillettekennels/"
+              >
+                <InstagramOutlined />
+              </a>
             </li>
           </ul>
         </PromoFooter>

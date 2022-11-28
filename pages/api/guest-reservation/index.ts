@@ -1,5 +1,6 @@
 import { GuestReservation } from '@prisma/client';
 import { getSession } from 'next-auth/react';
+import { INITIAL_USER_STATE } from '../../../components/Reservations/formInitialState';
 import prisma from '../../../lib/prisma';
 
 
@@ -9,19 +10,20 @@ type Errors = {
 };
 
 
-const validateFields = async (fields: GuestReservation) => {
-  const errors: Partial<Errors> = undefined;
-  // Object.entries(INITIAL_STATE).filter(([key, _value]) => {
-  //   const fieldIsRequired = INITIAL_STATE[key].required;
-  //   const fieldIsEmpty = fields[key].length === 0;
-  //   if (fieldIsRequired && fieldIsEmpty) {
-  //     errors[key] = `${INITIAL_STATE[key].label} is required`;
-  //   }
+const validateFields = (fields: GuestReservation) => {
+  const errors: Partial<Errors> = {};
+  fields && Object.entries(INITIAL_USER_STATE).filter(([key, _value]) => {
+    const fieldIsRequired = INITIAL_USER_STATE[key].required;
+    const fieldIsEmpty = fields[key].length === 0;
 
-  //   if (key === 'email' && !/^[^@]+@[^@]+\.[^@]+$/.test(fields[key])) {
-  //     errors[key] = `${INITIAL_STATE[key].label} is not a valid email address`;
-  //   }
-  // });
+    if (fieldIsRequired && fieldIsEmpty) {
+      errors[key] = `${INITIAL_USER_STATE[key].label} is required`;
+    }
+
+    if (key === 'email' && !/^[^@]+@[^@]+\.[^@]+$/.test(fields[key])) {
+      errors[key] = `${INITIAL_USER_STATE[key].label} is not a valid email address`;
+    }
+  });
   return errors;
 }
 
@@ -46,14 +48,14 @@ export default async function handle(req, res) {
     }
   }
 
-  const errors = await validateFields(apiOptions.data)
-  if (errors) {
+  const errors = validateFields(apiOptions.data)
+  if (errors && Object.keys(errors).length > 0) {
     return res.status(400).json({ errors });
   } else {
     const result = await prisma.guestReservation.create(apiOptions);
-
-    res.json(result);
+    return res.json(result);
   }
+
 }
 
 

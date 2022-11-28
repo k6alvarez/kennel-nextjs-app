@@ -15,6 +15,7 @@ import { getPets, getUser } from "../../Pets/services";
 import { FieldsetPetsInfo } from "../GuestClients/FieldsetPetsInfo";
 import { BlockQuote } from "../GuestClients/FormIntro";
 import { ReservationSummary } from "../ReservationSummary";
+import { WarningOutlined } from "@ant-design/icons";
 
 export const createReservationDraft = async (
   e: React.SyntheticEvent,
@@ -178,7 +179,12 @@ export const ClientForm = ({ session }) => {
           ))}
         </Steps>
         <StepsContent>{formSteps[current].content}</StepsContent>
-        {clientFormError && <BlockQuote>{clientFormError}</BlockQuote>}
+        {clientFormError && (
+          <BlockQuote large>
+            <WarningOutlined />
+            <p>{clientFormError}</p>
+          </BlockQuote>
+        )}
         <StepsAction>
           {current > 0 && (
             <Button type="button" onClick={() => prev({ current, setCurrent })}>
@@ -200,17 +206,17 @@ export const ClientForm = ({ session }) => {
                 }
 
                 if (current < 2) {
-                  const fieldsValid = guestFormFieldsValid(
-                    {
-                      currentFormSection: current,
-                    },
-                    {
-                      state: clientFormState,
-                      dispatch: clientFormDispatch,
-                    }
-                  );
+                  // const fieldsValid = guestFormFieldsValid(
+                  //   {
+                  //     currentFormSection: current,
+                  //   },
+                  //   {
+                  //     state: clientFormState,
+                  //     dispatch: clientFormDispatch,
+                  //   }
+                  // );
 
-                  if (fieldsValid) {
+                  if (true) {
                     next({ current, setCurrent });
                   }
                 } else {

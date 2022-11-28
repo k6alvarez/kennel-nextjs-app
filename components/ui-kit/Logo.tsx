@@ -5,6 +5,7 @@ const Wrapper = styled.span`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 
   span:first-child {
     font-family: "Dancing_Script", cursive;

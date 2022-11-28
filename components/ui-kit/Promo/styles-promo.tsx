@@ -14,6 +14,14 @@ export const PromoFooter = styled.div`
     margin: 0;
   }
 
+  a {
+    color: ${(props) => props.theme.colors.textPrimary};
+
+    &:hover {
+      color: ${(props) => props.theme.colors.inputFocus};
+    }
+  }
+
   p {
     font-size: ${({ theme }) => theme.fontSizes[0]};
   }
@@ -21,7 +29,11 @@ export const PromoFooter = styled.div`
 
 export const PromoWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.primaryDark};
-  color: ${({ theme }) => theme.colors.textPrimary};
+
+  color: ${({ theme, currentTheme }) =>
+    currentTheme === "livelySoothing"
+      ? theme.colors.textSecondary
+      : theme.colors.textPrimary};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,7 +72,13 @@ export const PromoTextWrapper = styled.div`
   }
 
   h2 {
-    color: ${({ theme }) => theme.colors.textPrimary};
+    transition: all 0.4s ease-in-out;
+    color: ${({ theme, currentTheme }) =>
+      currentTheme === "livelySoothing"
+        ? theme.colors.textSecondary
+        : currentTheme === "naturalEarth"
+        ? theme.colors.textPrimary
+        : theme.colors.textPrimary};
     font-size: ${({ theme }) => theme.fontSizes[2]};
     padding-top: ${({ theme }) => theme.space[4]};
   }
@@ -70,15 +88,24 @@ export const PromoTextWrapper = styled.div`
   }
 
   a {
-    background-color: ${({ theme }) => theme.colors.primaryDark};
+    background-color: ${({ theme, currentTheme }) =>
+      currentTheme === "livelySoothing"
+        ? theme.colors.secondaryDark
+        : currentTheme === "naturalEarth"
+        ? theme.colors.primary
+        : theme.colors.primaryDark};
+
     transform: scale(1);
-    transition: all 0.5s ease-in-out;
-    color: ${({ theme }) => theme.colors.textPrimary};
+    transition: all 0.4s ease-in-out;
+    color: ${({ theme, currentTheme }) =>
+      currentTheme === "livelySoothing"
+        ? theme.colors.textSecondary
+        : theme.colors.textPrimary};
     box-shadow: ${({ theme }) => theme.shadows.default};
 
     div > div {
       transform: scale(1);
-      transition: all 0.5s ease-in-out;
+      transition: all 0.4s ease-in-out;
       transform-origin: center;
       background-position: center;
       background-size: cover;
@@ -99,6 +126,17 @@ export const PromoTextWrapper = styled.div`
       background-color: ${({ theme, hasLink }) =>
         hasLink ? theme.colors.primary : theme.colors.primaryDark};
       transform: scale(1.05);
+      color: ${({ theme, currentTheme }) =>
+        currentTheme === "livelySoothing"
+          ? theme.colors.white
+          : theme.colors.textPrimary};
+
+      h2 {
+        color: ${({ theme, currentTheme }) =>
+          currentTheme === "livelySoothing"
+            ? theme.colors.white
+            : theme.colors.textPrimary};
+      }
 
       div > div {
         transform: scale(1.1);
@@ -110,8 +148,14 @@ export const PromoTextWrapper = styled.div`
 export const PromoPics = styled.div`
   flex: 1;
   width: 100%;
-  background-color: ${({ theme, transparent }) =>
-    !transparent ? theme.colors.secondary : "transparent"};
+  background-color: ${({ theme, transparent, currentTheme }) =>
+    !transparent
+      ? currentTheme === "livelySoothing"
+        ? theme.colors.primaryDark
+        : currentTheme === "naturalEarth"
+        ? theme.colors.primaryDark
+        : theme.colors.secondary
+      : "transparent"};
   padding: 0 ${({ theme }) => theme.space[4]};
 `;
 

@@ -267,13 +267,11 @@ export const StyledHeader = styled.header`
 `;
 
 export const CrestLogo = styled.img`
-  height: 240px;
-  cursor: pointer;
-
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 35px;
+  left: 42px;
+  width: 72%;
+  filter: grayscale(100%);
 `;
 
 export const Close = styled.div`
