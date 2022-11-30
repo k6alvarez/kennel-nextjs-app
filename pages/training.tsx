@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import prisma from "../lib/prisma";
@@ -14,6 +14,7 @@ import { GroupLessons } from "../components/Training/GroupLessons";
 import { PrivateLessons } from "../components/Training/PrivateLessons";
 import { AgilityLessons } from "../components/Training/AgilityLessons";
 import { Consultations } from "../components/Training/Consultations";
+import { BoardingSchool } from "../components/Training/BoardingSchool";
 
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
@@ -38,12 +39,25 @@ type Props = {
 const Training: React.FC<Props> = (props) => {
   const router = useRouter();
   const { tab } = router.query;
+  const [activeKey, setActiveKey] = useState("training");
+  useEffect(() => {
+    if (tab) {
+      console.log("🚀 ~ file: training.tsx:45 ~ useEffect ~ tab", tab);
+      window.scrollTo({ top: 779, behavior: "smooth" });
+      setActiveKey(tab as string);
+    }
+  }, [tab]);
   const items = [
     { label: "Training", key: "training", children: <TrainingHome /> },
     {
       label: "Group Lessons",
       key: "group-lessons",
       children: <GroupLessons />,
+    },
+    {
+      label: "Boarding School",
+      key: "boarding-school",
+      children: <BoardingSchool />,
     },
     {
       label: "Private Lessons",
@@ -91,7 +105,7 @@ const Training: React.FC<Props> = (props) => {
       <TabsListWrapper>
         <Tabs
           defaultActiveKey="training"
-          activeKey={typeof tab === "string" ? tab : "training"}
+          activeKey={activeKey}
           tabPosition="top"
           size="large"
           style={{
@@ -102,7 +116,7 @@ const Training: React.FC<Props> = (props) => {
             router.replace(`/training?tab=${key}`, undefined, {
               shallow: true,
             });
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            window.scrollTo({ top: 779, behavior: "smooth" });
           }}
         />
       </TabsListWrapper>

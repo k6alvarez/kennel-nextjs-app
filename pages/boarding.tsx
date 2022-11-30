@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { Tabs } from "antd";
@@ -43,6 +43,16 @@ const Boarding: React.FC = () => {
   const { breakpoints } = useContext(ThemePreferenceContext);
   const size: Size = useWindowSize();
   const mobileScreen = size.width < parseInt(breakpoints[0]);
+
+  const [activeKey, setActiveKey] = useState("boarding");
+  useEffect(() => {
+    if (tab) {
+      console.log("🚀 ~ file: training.tsx:45 ~ useEffect ~ tab", tab);
+      window.scrollTo({ top: 779, behavior: "smooth" });
+      setActiveKey(tab as string);
+    }
+  }, [tab]);
+
   const items = [
     { label: "Boarding", key: "boarding", children: <BoardingHome /> },
     {
@@ -101,7 +111,7 @@ const Boarding: React.FC = () => {
       <TabsListWrapper>
         <Tabs
           defaultActiveKey="boarding"
-          activeKey={typeof tab === "string" ? tab : "boarding"}
+          activeKey={activeKey}
           tabPosition={"top"}
           size={mobileScreen ? "small" : "large"}
           moreIcon={<DownOutlined />}
@@ -113,7 +123,7 @@ const Boarding: React.FC = () => {
             router.replace(`/boarding?tab=${key}`, undefined, {
               shallow: true,
             });
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            window.scrollTo({ top: 779, behavior: "smooth" });
           }}
         />
       </TabsListWrapper>
