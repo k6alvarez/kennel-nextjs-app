@@ -1,7 +1,6 @@
 import prisma from '../../../lib/prisma';
 import { createTransport } from "nodemailer"
 import { getFooter, getHeader } from '../auth/[...nextauth]';
-import { INITIAL_STATE } from '../../../components/Reservations/GuestClients/guestFormReducer';
 import { themesMap } from '../../../components/appStyles';
 
 // PUT /api/guest-reservation/:id

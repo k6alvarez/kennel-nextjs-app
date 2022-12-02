@@ -40,6 +40,14 @@ export const Content = styled.article`
     margin: 0;
   }
 
+  h5 {
+    font-weight: bold;
+    font-size: ${({ theme }) => theme.fontSizes[1]};
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
   h1,
   h2,
   h3,

@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { GetStaticProps } from "next";
 import { useRouter } from "next/router";
-import prisma from "../lib/prisma";
 import { Tabs } from "antd";
 
 import Layout from "../components/Layout";
-import { PostProps } from "../components/Post";
 import { Promo } from "../components/ui-kit/Promo";
 import { PromoTitle } from "../components/ui-kit/Promo/styles-promo";
 import { TabsListWrapper } from "./boarding";
@@ -16,27 +13,7 @@ import { AgilityLessons } from "../components/Training/AgilityLessons";
 import { Consultations } from "../components/Training/Consultations";
 import { BoardingSchool } from "../components/Training/BoardingSchool";
 
-export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.post.findMany({
-    where: { published: true },
-    include: {
-      author: {
-        select: { name: true },
-      },
-    },
-  });
-
-  return {
-    props: { feed },
-    revalidate: 10,
-  };
-};
-
-type Props = {
-  feed: PostProps[];
-};
-
-const Training: React.FC<Props> = (props) => {
+const Training: React.FC = () => {
   const router = useRouter();
   const { tab } = router.query;
   const [activeKey, setActiveKey] = useState("training");
