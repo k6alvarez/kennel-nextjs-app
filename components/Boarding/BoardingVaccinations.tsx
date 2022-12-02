@@ -23,7 +23,7 @@ export const BoardingVaccinations = () => {
       <FlexCards>
         <Card title={<h2>Boarding Vaccinations Required</h2>}>
           <ul>
-            <li>Distemper: Vaccination given within the last one (1) year)</li>
+            <li>Distemper: Vaccination given within the last one (1) year</li>
             <li>Parvo-Virus: Vaccination given within the last one (1) year</li>
             <li>
               Rabies: Vaccination given within the last one (1) year on dogs
@@ -46,7 +46,7 @@ export const BoardingVaccinations = () => {
       <FlexCards>
         <Card title={<h2>Training Vaccinations Required</h2>}>
           <ul>
-            <li>Distemper: Vaccination given within the last one (1) year)</li>
+            <li>Distemper: Vaccination given within the last one (1) year</li>
             <li>Parvo-Virus: Vaccination given within the last one (1) year</li>
             <li>
               Rabies: Vaccination given within the last one (1) year on dogs

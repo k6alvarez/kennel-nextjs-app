@@ -67,7 +67,7 @@ const Boarding: React.FC = () => {
     },
     { label: "Checking In", key: "checking-in", children: <BoardingCheckin /> },
     {
-      label: "Vaccination Record",
+      label: "Vaccinations",
       key: "vaccinations",
       children: <BoardingVaccinations />,
     },

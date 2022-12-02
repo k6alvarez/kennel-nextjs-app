@@ -6,10 +6,7 @@ import {
 import { Card, Avatar } from "antd";
 import React, { useState } from "react";
 import { PetProps } from "../../pages/profile";
-import {
-  petInfoOnly,
-  petBoardingOnly,
-} from "../Reservations/GuestClients/services";
+import { petInfoOnly } from "../Reservations/GuestClients/services";
 import { Button } from "../ui-kit/Base";
 import { PetInfo } from "./PetInfo";
 import { isValidHttpUrl } from "./services";
@@ -40,10 +37,6 @@ export const PetCard = ({
     {
       key: "pet",
       tab: "Pet Info",
-    },
-    {
-      key: "boarding",
-      tab: "Boarding Info",
     },
   ];
 
@@ -109,7 +102,6 @@ export const PetCard = ({
       }}
     >
       {activeTabKey1 === "pet" && <PetInfo pet={petInfoOnly(pet)} />}
-      {activeTabKey1 === "boarding" && <PetInfo pet={petBoardingOnly(pet)} />}
     </Card>
   );
 };
