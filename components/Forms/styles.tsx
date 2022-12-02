@@ -28,7 +28,7 @@ export const PreviewWrapper = styled.div`
 export const Field = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: ${({ align }) => (align ? align : "center")};
   width: ${({ setWidth }) => (setWidth ? setWidth : "calc(100% - 1rem)")};
   grid-column: ${({ grow }) => (grow ? "span 2" : "auto")};
 `;
@@ -49,6 +49,10 @@ export const StyledInput = styled.input`
     border-color: ${({ theme }) => theme.colors.inputFocus};
   }
 
+  &:hover:not(:disabled) {
+    cursor: pointer;
+  }
+
   ::-webkit-file-upload-button {
     font-size: ${({ theme }) => theme.fontSizes[0]};
   }
@@ -57,6 +61,10 @@ export const StyledInput = styled.input`
 export const StyledLabel = styled.label`
   color: ${({ theme, error }) =>
     error ? theme.colors.primary : theme.colors.textSecondary};
+
+  &:hover:not(:disabled) {
+    cursor: pointer;
+  }
 `;
 
 export const Error = styled.span`
@@ -78,6 +86,9 @@ export const StyledTextarea = styled.textarea`
   &:focus {
     border-color: ${({ theme }) => theme.colors.inputFocus};
   }
+  &:hover:not(:disabled) {
+    cursor: pointer;
+  }
 `;
 export const StyledSelect = styled.select`
   border: 1px solid
@@ -85,5 +96,8 @@ export const StyledSelect = styled.select`
       error ? theme.colors.primary : theme.colors.textSecondary};
   &:focus {
     border-color: ${({ theme }) => theme.colors.inputFocus};
+  }
+  &:hover:not(:disabled) {
+    cursor: pointer;
   }
 `;

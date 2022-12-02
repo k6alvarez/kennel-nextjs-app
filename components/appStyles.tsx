@@ -128,6 +128,25 @@ export const GlobalStyle = createGlobalStyle`
     align-items: center;
   }
 
-  
+  .ant-checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    font-size: inherit;
+    margin-top: ${({ theme }) => theme.space[3]};
+    width: max-content;
+    align-self: flex-start;
+  }
+
+  .ant-checkbox {
+    display: flex;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+  }
+
+  .ant-checkbox-inner {
+    transform: scale(1.5);
+    transform-origin: top;
+  }
 
 `;

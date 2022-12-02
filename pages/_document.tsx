@@ -27,12 +27,7 @@ class MyDocument extends Document {
             as="font"
             crossOrigin=""
           />
-          <link
-            rel="preload"
-            href="/fonts/Lato/Lato-Black.ttf"
-            as="font"
-            crossOrigin=""
-          />
+          <link href="/fonts/Lato/Lato-Black.ttf" as="font" crossOrigin="" />
 
           {this.props.styles}
         </Head>

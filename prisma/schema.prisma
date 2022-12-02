@@ -194,3 +194,20 @@ model GuestReservation {
 
   @@map(name: "guest_reservations")
 }
+
+model HolidayPremiumDates {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now()) @map(name: "created_at")
+  updatedAt  DateTime @updatedAt @map(name: "updated_at")
+  type       String
+  name       String   @unique
+  isClosed   Boolean  @default(false)
+  dateFrom   String
+  dateTo     String?
+  timeOpen   String?
+  timeClose  String?
+  breakClose String?
+  breakOpen  String?
+
+  @@map(name: "holiday_premium_dates")
+}

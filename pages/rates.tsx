@@ -1,10 +1,9 @@
 import React from "react";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import prisma from "../lib/prisma";
 import Link from "next/link";
 
 import Layout from "../components/Layout";
-import { PostProps } from "../components/Post";
 import { Content } from "../components/ui-kit/Base";
 import { BlockQuote } from "../components/Reservations/GuestClients/FormIntro";
 import BoardingRates, {
@@ -17,28 +16,27 @@ import BoardingRates, {
 
 import { Card } from "antd";
 import { FlexCards } from "../components/Boarding/styles";
+import { HolidayPremiumDatesList } from "../components/Admin/HolidayPremiumDatesList";
+import { HolidayPremiumDates } from "@prisma/client";
 
-export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.post.findMany({
-    where: { published: true },
-    include: {
-      author: {
-        select: { name: true },
-      },
-    },
-  });
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const dates = await prisma.holidayPremiumDates.findMany();
 
   return {
-    props: { feed },
-    revalidate: 10,
+    props: {
+      dates: JSON.parse(JSON.stringify(dates)),
+      revalidate: 10,
+    },
   };
 };
 
 type Props = {
-  feed: PostProps[];
+  dates: HolidayPremiumDates[];
 };
 
 const Rates: React.FC<Props> = (props) => {
+  const { dates } = props;
+
   return (
     <Layout>
       <Content>
@@ -73,6 +71,34 @@ const Rates: React.FC<Props> = (props) => {
           </p>
         </BlockQuote>
         <BoardingRates />
+        <h2>Holiday Premium Dates</h2>
+        <p>
+          Holiday Rates ($2.00 extra per dog per day) will be charged for the
+          following Holiday/Premium Periods:
+        </p>
+        <ul>
+          <li>Thanksgiving Period </li>
+          <li>Christmas Period </li>
+          <li>Labor Day Period </li>
+          <li>Memorial Day Period </li>
+          <li>Independence Day Period</li>
+
+          <li>Spring Break Period</li>
+        </ul>
+        <p>
+          Holiday Rates are in effect for the entire holiday period. For
+          example: The Thanksgiving holiday period runs from the Wednesday
+          before Thanksgiving to the Sunday after. Please be sure that you
+          thoroughly read our{" "}
+          <Link href="/policies?tab=premium-cancellation">
+            <a>holiday cancellation policy</a>
+          </Link>{" "}
+          before making Holiday reservations. In addition to Holiday periods, we
+          will also charge $2.00 extra per dog per day for other premium time
+          periods, such as spring break. We have provided a comprehensive list
+          of Holiday Hours and Premium Dates which are subject to this charge.
+        </p>
+        <HolidayPremiumDatesList holidayPremiumDates={dates} />
         <h2>You may also be charged for:</h2>
         <ul>
           <li>

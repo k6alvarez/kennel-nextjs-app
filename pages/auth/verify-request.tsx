@@ -15,7 +15,7 @@ const Error = ({}) => {
 
 export default Error;
 
-export async function getServerSideProps(context) {
+export async function fgetServerSideProps(context) {
   const { req, res } = context;
   const session = await getSession({ req });
 

@@ -1,4 +1,4 @@
-import { Image, message } from "antd";
+import { Checkbox, Image, message } from "antd";
 import {
   Field,
   StyledLabel,
@@ -29,6 +29,7 @@ interface InputProps
   placeholder?: string;
   rows?: string;
   maxWidth?: string;
+  cancelAutoFocus?: boolean;
 }
 
 export interface renderFormFieldProps {
@@ -48,18 +49,26 @@ export const renderFormFields = ({
 }: renderFormFieldProps) => {
   return Object.entries(initialState).map(([key, _value], i) => {
     const field = state[key];
-    const onChange = (e) => handleChange(key, e.target.value);
+    const onChange = (e) => {
+      if (e.target.id === "isClosed") {
+        return handleChange(key, e.target.checked);
+      } else {
+        return handleChange(key, e.target.value);
+      }
+    };
 
-    const autoFocus = i === 0;
+    const autoFocus = i === 0 && !field.cancelAutoFocus;
     const requiredField = field?.required || false;
 
     let imgLoading = false;
 
     return (
       <Field key={key} grow={field?.grow}>
-        <StyledLabel htmlFor={key} error={field?.error || false}>
-          {`${field?.label}${field?.required ? "*" : ""}`}
-        </StyledLabel>
+        {field?.type !== "checkbox" && (
+          <StyledLabel htmlFor={key} error={field?.error || false}>
+            {`${field?.label}${field?.required ? "*" : ""}`}
+          </StyledLabel>
+        )}
 
         {field?.type === "file" && (
           <>
@@ -152,9 +161,16 @@ export const renderFormFields = ({
           </StyledSelect>
         )}
 
+        {field?.type === "checkbox" && (
+          <Checkbox id={key} onChange={onChange} disabled={field?.disabled}>
+            {`${field?.label}${field?.required ? "*" : ""}`}
+          </Checkbox>
+        )}
+
         {field?.type !== "textarea" &&
           field?.type !== "select" &&
-          field?.type !== "file" && (
+          field?.type !== "file" &&
+          field?.type !== "checkbox" && (
             <StyledInput
               autoFocus={autoFocus}
               onChange={onChange}
