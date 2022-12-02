@@ -10,7 +10,7 @@ const StyledWrapper = styled(Wrapper)`
   align-items: flex-start;
   flex-direction: column;
   padding: 1rem;
-  width: 100%;
+  width: 90vw;
   .ant-card {
     width: 100%;
     min-width: 33vw;
@@ -22,7 +22,7 @@ const StyledWrapper = styled(Wrapper)`
   }
 `;
 
-export const BusinessHoursList = ({ businessHours, center }) => {
+export const BusinessHoursList = ({ businessHours, center = false }) => {
   if (!businessHours || businessHours.length === 0) {
     return null;
   }

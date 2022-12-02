@@ -39,7 +39,7 @@ const Flex = styled.div`
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
     flex-direction: row;
     justify-content: space-around;
-    align-items: flex-start;
+    align-items: ${({ align }) => (align ? align : "flex-start")};
   }
 `;
 
@@ -126,7 +126,27 @@ export const Footer = () => {
             <Crest />
           </a>
         </RouteLink>
-        <BusinessHoursList businessHours={businessHours} />
+        <div>
+          <BusinessHoursList businessHours={businessHours} />
+          <Flex align="center">
+            <a href="http://canineprofessionals.com/" target="_blank">
+              <img
+                src="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1670006065/gk-app/memberiacp.gif"
+                width="140"
+                height="126"
+              />
+            </a>
+            <a
+              href="https://www.bbb.org/western-michigan/business-reviews/pet-training/gillette-kennels-in-galesburg-mi-8000795#sealclick"
+              target="_blank"
+            >
+              <img
+                alt="Click for the BBB Business Review of this Pet Training in Galesburg MI"
+                src="https://seal-westernmichigan.bbb.org/seals/blue-seal-250-52-gillettekennels-8000795.png"
+              />
+            </a>
+          </Flex>
+        </div>
       </Flex>
       <iframe
         width="100%"
