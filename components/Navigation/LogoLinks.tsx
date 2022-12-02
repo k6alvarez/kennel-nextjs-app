@@ -28,11 +28,18 @@ export const LeftNav = ({ toggleDrawer }) => {
 
 const CrestVector = styled.div`
   position: relative;
+  transform: scale(${({ scale }) => scale || 1});
+  margin-top: ${({ theme }) => theme.space[4]};
+  transform-origin: top;
+
+  img {
+    transform: scale(${({ crestScale }) => crestScale || 1});
+  }
 `;
 
-export const Crest = (props) => {
+export const Crest = ({ scale = 1, crestScale = 1 }) => {
   return (
-    <CrestVector>
+    <CrestVector scale={scale} crestScale={crestScale}>
       <svg viewBox="0 0 152 184" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           id="Vector"
