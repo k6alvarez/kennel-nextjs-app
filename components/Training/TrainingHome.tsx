@@ -20,12 +20,13 @@ export const TrainingHome = () => {
         </p>
         <BlockQuote large>
           <InfoCircleOutlined />
+
           <p>
-            Our classes range from puppy head start classes to basic,
-            intermediate, and advanced levels!
+            New class schedule and tuition costs coming soon. Our classes range
+            from puppy head start classes to basic, intermediate, and advanced
+            levels!
           </p>
         </BlockQuote>
-        <p>New class schedule and tuition costs coming soon!</p>
         <Promos
           delay={defaultDelay * 6}
           promos={[

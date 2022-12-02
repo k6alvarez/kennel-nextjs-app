@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React from "react";
 import { Content } from "../ui-kit/Base";
-import { BoldText } from "../Boarding/MedicalIssues";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 import { CheckCircleOutlined } from "@ant-design/icons";
 
@@ -38,13 +37,13 @@ export const PrivateLessons = () => {
         can accomplish is a group format.
       </p>
       <p>
-        A six week private lesson course is $460.00 Each lesson lasts between 1
-        and 1.5 hours.
+        A six week private lesson course is $600.00 and each lesson lasts
+        between 1 and 1.5 hours.
       </p>
       <p>
         Interested in private lessons?{" "}
         <Link href="/contact">
-          <a>Contact Us</a>
+          <a>Contact Us.</a>
         </Link>
       </p>
     </Content>
