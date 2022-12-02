@@ -8,6 +8,14 @@ export const BUSINESS_HOURS_INITIAL_STATE = {
         grow: true,
         cancelAutoFocus: true,
     },
+    isClosed: {
+        value: false,
+        error: null,
+        type: "checkbox",
+        label: "Closed All Day",
+        required: false,
+        grow: true,
+    },
     timeOpen: {
         value: "",
         error: null,
@@ -27,14 +35,14 @@ export const BUSINESS_HOURS_INITIAL_STATE = {
         error: null,
         label: "Lunch Close Time",
         type: "time",
-        required: true,
+
     },
     breakOpen: {
         value: "",
         error: null,
         label: "Lunch Open Time",
         type: "time",
-        required: true,
+
     },
 }
 

@@ -70,3 +70,9 @@ export const getHolidayPremiumDates = async () => {
     const pets = await res.json();
     return pets;
 };
+
+export const getBusinessHours = async () => {
+    const res = await fetch("/api/business-hours");
+    const hours = await res.json();
+    return hours;
+};
