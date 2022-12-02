@@ -17,6 +17,26 @@ export const Content = styled.article`
     max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "1200px")};
   }
 
+  iframe {
+    display: block; /* iframes are inline by default */
+    background: #000;
+    border: none; /* Reset default border */
+    height: 38vh; /* Viewport-relative units */
+    width: 100%;
+
+    @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
+      height: 45vh; /* Viewport-relative units */
+    }
+
+    @media (min-width: ${(props) => props.theme.breakpoints[2]}) {
+      height: 50vh; /* Viewport-relative units */
+    }
+
+    @media (min-width: ${(props) => props.theme.breakpoints[3]}) {
+      height: 65vh; /* Viewport-relative units */
+    }
+  }
+
   h1 {
     font-weight: bold;
     font-size: ${({ theme }) => theme.fontSizes[5]};

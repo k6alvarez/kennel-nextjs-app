@@ -1,10 +1,11 @@
 import { CopyrightCircleOutlined } from "@ant-design/icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ThemePreferenceContext } from "../pages/_app";
+import { BusinessHoursList } from "./Admin/BusinessHoursList";
+import { getBusinessHours } from "./Admin/services";
 import { Crest } from "./Navigation/LogoLinks";
 import { RouteLink } from "./Navigation/RouteLink";
-import { BusinessHours } from "./ui-kit/BusinessHours";
 import { LogoOne } from "./ui-kit/Logo";
 
 const FooterWrapper = styled.footer`
@@ -33,10 +34,12 @@ const Flex = styled.div`
   margin-bottom: ${({ theme }) => theme.space[4]};
   gap: ${({ theme }) => theme.space[4]};
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
     flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
   }
 `;
 
@@ -103,6 +106,15 @@ export const Copy = styled.span`
 `;
 
 export const Footer = () => {
+  const [businessHours, setBusinessHours] = useState([]);
+  const fetchBusinessHours = async () => {
+    const dates = await getBusinessHours();
+    setBusinessHours(dates);
+  };
+
+  useEffect(() => {
+    fetchBusinessHours();
+  }, []);
   const date = new Date();
   const { currentTheme } = React.useContext(ThemePreferenceContext);
   return (
@@ -114,7 +126,7 @@ export const Footer = () => {
             <Crest />
           </a>
         </RouteLink>
-        <BusinessHours />
+        <BusinessHoursList businessHours={businessHours} />
       </Flex>
       <iframe
         width="100%"
