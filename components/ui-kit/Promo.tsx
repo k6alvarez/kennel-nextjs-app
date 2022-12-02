@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { animated, config, useSpring } from "react-spring";
 import { ThemePreferenceContext } from "../../pages/_app";
 import { Crest } from "../Navigation/LogoLinks";
+import { Size, useWindowSize } from "./hooks/useWindowSize";
 import { LogoOne } from "./Logo";
 import { Promos } from "./Promo/Promos";
 import {
@@ -22,7 +23,7 @@ export const Promo = ({
   children = undefined,
   showFooter = false,
 }) => {
-  const { currentTheme } = useContext(ThemePreferenceContext);
+  const { currentTheme, breakpoints } = useContext(ThemePreferenceContext);
   const props = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
@@ -41,13 +42,18 @@ export const Promo = ({
     reset: true,
   });
 
+  const size: Size = useWindowSize();
+  const mobileScreen = size.width < parseInt(breakpoints[0]);
+
   return (
     <PromoWrapper currentTheme={currentTheme}>
       <PromoText>
-        <animated.div style={{ ...props, height: "320px" }}>
+        <animated.div
+          style={{ ...props, height: mobileScreen ? "180px" : "320px" }}
+        >
           <>
             <LogoOne size={7} />
-            <Crest scale={0.6} crestScale={0.8} />
+            <Crest scale={0.6} />
           </>
         </animated.div>
       </PromoText>

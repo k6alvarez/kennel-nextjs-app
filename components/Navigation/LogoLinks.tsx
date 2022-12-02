@@ -2,7 +2,7 @@ import React from "react";
 import { createGlobalStyle } from "styled-components";
 import { RouteLink } from "./RouteLink";
 import styled from "styled-components";
-import { SubText, CrestLogo, LogoName, BadgeStyles } from "./NavStyles";
+import { CrestLogo, LogoName, BadgeStyles } from "./NavStyles";
 import { MenuOutlined } from "@ant-design/icons";
 import { LogoOne } from "../ui-kit/Logo";
 const GlobalStyle = createGlobalStyle`
@@ -33,7 +33,7 @@ const CrestVector = styled.div`
   transform-origin: top;
 
   img {
-    transform: scale(${({ crestScale }) => crestScale || 1});
+    transform: scale(0.9);
   }
 `;
 

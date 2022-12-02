@@ -268,10 +268,15 @@ export const StyledHeader = styled.header`
 
 export const CrestLogo = styled.img`
   position: absolute;
-  top: 35px;
-  left: 42px;
+  top: 20px;
+  left: 22px;
   width: 72%;
   filter: grayscale(100%);
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
+    top: 35px;
+    left: 42px;
+  }
 `;
 
 export const Close = styled.div`
