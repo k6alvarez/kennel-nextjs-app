@@ -9,9 +9,8 @@ const StyledWrapper = styled(Wrapper)`
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  padding: 0;
+  padding: 1rem;
   width: 100%;
-
   .ant-card {
     width: 100%;
     min-width: 33vw;
@@ -19,15 +18,16 @@ const StyledWrapper = styled(Wrapper)`
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
     width: max-content;
+    margin: ${({ center }) => (center ? "0 auto" : "unset")};
   }
 `;
 
-export const BusinessHoursList = ({ businessHours }) => {
+export const BusinessHoursList = ({ businessHours, center }) => {
   if (!businessHours || businessHours.length === 0) {
     return null;
   }
   return (
-    <StyledWrapper>
+    <StyledWrapper center={center}>
       <Card>
         {businessHours?.map((hourObj) => (
           <div key={hourObj.id}>

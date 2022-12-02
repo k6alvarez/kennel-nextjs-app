@@ -28,7 +28,7 @@ export const FormBusinessHours = () => {
   }, []);
   return (
     <>
-      <BusinessHoursList businessHours={businessHours} />
+      <BusinessHoursList center businessHours={businessHours} />
       <form
         onSubmit={(e) => {
           e.preventDefault();
