@@ -23,7 +23,7 @@ export const Consultations = () => {
         information about your dog and his environment. After the information is
         gathered and analyzed the results are discussed and sound advice is
         offered. The consultation will take approximately 1 to 1.5 hours. The
-        fee is $150.00 to be paid at the time of the consultation.
+        fee is $225.00 to be paid at the time of the consultation.
       </p>
       <p>
         If you are interested in a consultation please contact us using the form

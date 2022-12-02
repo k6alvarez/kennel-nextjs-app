@@ -52,6 +52,13 @@ const MyApp: React.FC = () => {
           entire room, complete with rocking chairs, cozy baskets, and wide
           window sills, is available on a first come first serve basis.
         </p>
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/586iqAqMYl4"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
       </Content>
       <Promos
         delay={defaultDelay * 6}

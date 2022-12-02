@@ -1,8 +1,8 @@
 import { Tag } from "antd";
 import { DateTime } from "luxon";
 import React from "react";
+import { LetterSpacedText } from "../Footer";
 import { Wrapper } from "../Pets/styles";
-import { LetterSpacedText } from "../ui-kit/BusinessHours";
 
 export const HolidayPremiumDatesList = ({ holidayPremiumDates }) => {
   if (!holidayPremiumDates || holidayPremiumDates.length === 0) {
