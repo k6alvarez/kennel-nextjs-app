@@ -18,8 +18,13 @@ export const HolidayPremiumDates = () => {
     HOLIDAY_AND_PREMIUM_DAYS_INITIAL_STATE
   );
 
+  const fetchHolidayPremiumDates = async () => {
+    const dates = await getHolidayPremiumDates();
+    setHolidayPremiumDates(dates);
+  };
+
   useEffect(() => {
-    getHolidayPremiumDates().then((dates) => setHolidayPremiumDates(dates));
+    fetchHolidayPremiumDates();
   }, []);
 
   return (
