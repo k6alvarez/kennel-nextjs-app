@@ -153,9 +153,18 @@ export const FieldsetPetsInfo = ({
                         },
                         reservationId: formState.reservationId,
                         apiPath,
-                      }).then(() => {
-                        setPetFormLoading(false);
-                      });
+                      })
+                        .then(() => {
+                          setPetFormLoading(false);
+                        })
+                        .catch((error) => {
+                          console.log(
+                            "🚀 ~ file: FieldsetPetsInfo.tsx:159 ~ error",
+                            error
+                          );
+
+                          setPetFormLoading(false);
+                        });
                     }
                     setPetFormLoading(false);
                   }}

@@ -13,7 +13,5 @@ export default async function handle(req, res) {
             reservations: { connect: { id: reservationId } },
         },
     });
-    console.log("🚀 ~ file: index.ts:16 ~ handle ~ result", result)
-
     res.json(result);
 }
