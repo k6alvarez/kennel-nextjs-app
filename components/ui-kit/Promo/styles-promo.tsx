@@ -6,6 +6,7 @@ export const PromoFooter = styled.div`
   justify-content: space-between;
   font-size: ${(props) => props.theme.fontSizes[2]};
   padding: 0 ${(props) => props.theme.space[4]};
+  margin-top: ${(props) => props.theme.space[4]};
 
   ul {
     display: flex;

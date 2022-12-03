@@ -24,6 +24,12 @@ export const Promo = ({
   showFooter = false,
 }) => {
   const { currentTheme, breakpoints } = useContext(ThemePreferenceContext);
+  const noDelay = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 0,
+    config: config.slow,
+  });
   const props = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
@@ -57,6 +63,10 @@ export const Promo = ({
           </>
         </animated.div>
       </PromoText>
+
+      {promos.length > 0 && (
+        <Promos transparent delay={defaultDelay * 4} promos={promos} noMargin />
+      )}
       <animated.div style={props}>
         <PromoTitleWrapper>
           {children ? (
@@ -82,10 +92,6 @@ export const Promo = ({
           </PromoTitleWrapper>
         </animated.div>
       </animated.div>
-      {promos.length > 0 && (
-        <Promos transparent delay={defaultDelay * 4} promos={promos} noMargin />
-      )}
-
       {showFooter && (
         <PromoFooter>
           <p>9172 East K Ave, Galesburg MI, 49053</p>
