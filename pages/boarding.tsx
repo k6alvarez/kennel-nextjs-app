@@ -47,7 +47,6 @@ const Boarding: React.FC = () => {
   const [activeKey, setActiveKey] = useState("boarding");
   useEffect(() => {
     if (tab) {
-      console.log("🚀 ~ file: training.tsx:45 ~ useEffect ~ tab", tab);
       window.scrollTo({ top: 779, behavior: "smooth" });
       setActiveKey(tab as string);
     }

@@ -19,7 +19,6 @@ const Training: React.FC = () => {
   const [activeKey, setActiveKey] = useState("training");
   useEffect(() => {
     if (tab) {
-      console.log("🚀 ~ file: training.tsx:45 ~ useEffect ~ tab", tab);
       window.scrollTo({ top: 779, behavior: "smooth" });
       setActiveKey(tab as string);
     }
