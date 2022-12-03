@@ -30,10 +30,10 @@ model Pet {
   largeImage             String?
   vaccinations           String
   vaccinationsLargeImage String?
-  distemperVaccine       String
-  bordetellaVaccine      String
-  rabiesVaccine          String
-  parvoVirusesVaccine    String
+  distemperVaccine       String?
+  bordetellaVaccine      String?
+  rabiesVaccine          String?
+  parvoVirusesVaccine    String?
   age                    String
   weight                 String
   vet                    String
@@ -61,10 +61,10 @@ model GuestPet {
   largeImage             String?
   vaccinations           String
   vaccinationsLargeImage String?
-  distemperVaccine       String
-  bordetellaVaccine      String
-  rabiesVaccine          String
-  parvoVirusesVaccine    String
+  distemperVaccine       String?
+  bordetellaVaccine      String?
+  rabiesVaccine          String?
+  parvoVirusesVaccine    String?
   age                    String
   weight                 String
   vet                    String
