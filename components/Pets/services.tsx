@@ -117,7 +117,10 @@ export const guestPetFormSubmit = async (
         formSuccessCallback && formSuccessCallback(res);
       });
   } catch (error) {
-    setPetFormError("We're sorry, something went wrong. Please try again.");
+    console.log("🚀 ~ file: services.tsx:120 ~ error", error);
+    setPetFormError(
+      "We're sorry, something went wrong adding your pet. Please try again."
+    );
     console.error(error);
   }
 };
