@@ -56,10 +56,10 @@ export type PetProps = {
   preferredRunSize: string;
   feeding: string;
   feedingCount: string;
-  distemperVaccine: string;
-  bordetellaVaccine: string;
-  rabiesVaccine: string;
-  parvoVirusesVaccine: string;
+  distemperVaccine?: string;
+  bordetellaVaccine?: string;
+  rabiesVaccine?: string;
+  parvoVirusesVaccine?: string;
 };
 
 type Props = {
