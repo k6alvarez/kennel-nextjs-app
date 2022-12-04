@@ -18,7 +18,6 @@ export const INITIAL_CLIENT_STATE = {
     inputMode: "email",
     label: "Email",
     required: true,
-    grow: true,
     disabled: true,
   },
   pets: [],

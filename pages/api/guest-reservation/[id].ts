@@ -73,7 +73,7 @@ function html(params?: { url?: string; host?: string; origin?: string; email?: s
   
   
     <table width="100%" border="0" cellspacing="20" cellpadding="0"
-      style="background: ${color.mainBackground}; max-width: 600px; margin: 10px auto; ">
+      style="background: ${color.mainBackground}; max-width: 1000px; margin: 10px auto; ">
       <tr>
         <td align="center"
           style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
@@ -132,7 +132,7 @@ function htmlGKApp(params?: { url?: string; host?: string; origin?: string; emai
   
   
     <table width="100%" border="0" cellspacing="20" cellpadding="0"
-      style="background: ${color.mainBackground}; max-width: 600px; margin: 10px auto; ">
+      style="background: ${color.mainBackground}; max-width: 1000px; margin: 10px auto; ">
       <tr>
         <td align="center"
           style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">

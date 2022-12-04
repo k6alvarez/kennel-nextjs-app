@@ -9,7 +9,14 @@ const Reservation: React.FC = () => {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return <Layout>Loading ...</Layout>;
+    return (
+      <Layout>
+        <Content>
+          <h1>Client Reservations</h1>
+          <p>Loading...</p>
+        </Content>
+      </Layout>
+    );
   }
 
   return (

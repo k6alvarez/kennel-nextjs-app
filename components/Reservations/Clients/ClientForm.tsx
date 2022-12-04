@@ -28,6 +28,10 @@ export const createReservationDraft = async (
   delete cloneState["email"];
   delete cloneState["phone"];
   delete cloneState["address"];
+  delete cloneState["unit"];
+  delete cloneState["city"];
+  delete cloneState["state"];
+  delete cloneState["zip"];
   delete cloneState["altPhone"];
   delete cloneState["emergencyContactName"];
   delete cloneState["emergencyContactPhone"];
@@ -206,19 +210,16 @@ export const ClientForm = ({ session }) => {
                 }
 
                 if (current < 2) {
-                  // const fieldsValid = guestFormFieldsValid(
-                  //   {
-                  //     currentFormSection: current,
-                  //   },
-                  //   {
-                  //     state: clientFormState,
-                  //     dispatch: clientFormDispatch,
-                  //   }
-                  // );
-
-                  if (true) {
-                    next({ current, setCurrent });
-                  }
+                  const fieldsValid = guestFormFieldsValid(
+                    {
+                      currentFormSection: current,
+                    },
+                    {
+                      state: clientFormState,
+                      dispatch: clientFormDispatch,
+                    }
+                  );
+                  next({ current, setCurrent });
                 } else {
                   next({ current, setCurrent });
                 }

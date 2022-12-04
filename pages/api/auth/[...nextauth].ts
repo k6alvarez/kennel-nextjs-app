@@ -90,7 +90,7 @@ function html(params: { url: string; host: string; origin: string, email: string
 
 
   <table width="100%" border="0" cellspacing="20" cellpadding="0"
-    style="background: ${color.mainBackground}; max-width: 600px; margin: 10px auto; ">
+    style="background: ${color.mainBackground}; max-width: 1000px; margin: 10px auto; ">
     <tr>
       <td align="center" style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
         Please verify your email address using the link below to access your profile.
@@ -139,7 +139,7 @@ export function getFooter() {
 export function getHeader({ color, origin }) {
   return `
     <table width="100%" border="0" cellspacing="20" cellpadding="0"
-    style="background: ${color.mainBackground}; max-width: 600px; margin: 10px auto; ">
+    style="background: ${color.mainBackground}; max-width: 1000px; margin: 10px auto; ">
       <tr>
         <td align="center" style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
           <ul style="list-style:none; margin: 0; padding: 0; display: flex; justify-content: space-between;gap: 14px;">

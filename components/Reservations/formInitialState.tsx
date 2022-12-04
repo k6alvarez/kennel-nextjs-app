@@ -76,7 +76,6 @@ export const INITIAL_USER_STATE = {
     inputMode: "email",
     label: "Email",
     required: true,
-    grow: true,
   },
   phone: {
     value: "",
@@ -97,14 +96,38 @@ export const INITIAL_USER_STATE = {
   address: {
     value: "",
     error: null,
-    type: "textarea",
+    type: "text",
     label: "Address",
     required: true,
-    rows: 3,
-    grow: true,
-    placeholder: `123 Main St
-Apt 2
-Kalamazoo, MI 49009`,
+  },
+  unit: {
+    value: "",
+    error: null,
+    type: "text",
+    label: "Unit",
+    required: true,
+  },
+  city: {
+    value: "",
+    error: null,
+    type: "text",
+    label: "City",
+    required: true,
+  },
+  state: {
+    value: "",
+    error: null,
+    type: "select",
+    label: "State",
+    required: true,
+    options: statesArray,
+  },
+  zip: {
+    value: "",
+    error: null,
+    type: "text",
+    label: "Zip",
+    required: true,
   },
   emergencyContactName: {
     value: "",

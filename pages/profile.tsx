@@ -14,6 +14,7 @@ import { Size, useWindowSize } from "../components/ui-kit/hooks/useWindowSize";
 import { ProfileForm } from "../components/Profile/ProfileForm";
 import { PetsTab } from "../components/Pets/PetsTab";
 import { AdminTab } from "../components/Admin/AdminTab";
+import { statesArray } from "../components/Reservations/formInitialState";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -83,7 +84,6 @@ const Profile: React.FC<Props> = ({ user }) => {
       inputMode: "email",
       label: "Email",
       disabled: true,
-      grow: true,
     },
     name: {
       value: user?.name || "",
@@ -102,14 +102,38 @@ const Profile: React.FC<Props> = ({ user }) => {
     address: {
       value: user?.address || "",
       error: null,
-      type: "textarea",
+      type: "text",
       label: "Address",
       required: true,
-      rows: 3,
-      grow: true,
-      placeholder: `123 Main St
-Apt 2
-Kalamazoo, MI 49009`,
+    },
+    unit: {
+      value: user?.unit || "",
+      error: null,
+      type: "text",
+      label: "Unit",
+      required: true,
+    },
+    city: {
+      value: user?.city || "",
+      error: null,
+      type: "text",
+      label: "City",
+      required: true,
+    },
+    state: {
+      value: user?.state || "",
+      error: null,
+      type: "select",
+      label: "State",
+      required: true,
+      options: statesArray,
+    },
+    zip: {
+      value: user?.zip || "",
+      error: null,
+      type: "text",
+      label: "Zip",
+      required: true,
     },
     phone: {
       value: user?.phone || "",
