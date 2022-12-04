@@ -57,13 +57,13 @@ export const PET_INITIAL_STATE = {
     label: "Vaccinations Upload",
     required: true,
   },
-  // distemperVaccine: {
-  //   value: "",
-  //   error: null,
-  //   type: "date",
-  //   label: "Distemper Vaccine Expiration",
-  //   required: true,
-  // },
+  distemperVaccine: {
+    value: "",
+    error: null,
+    type: "date",
+    label: "Distemper Vaccine Expiration",
+    required: true,
+  },
   // bordetellaVaccine: {
   //   value: "",
   //   error: null,
