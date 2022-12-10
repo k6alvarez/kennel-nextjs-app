@@ -12,11 +12,26 @@ import { PrivateLessons } from "../components/Training/PrivateLessons";
 import { AgilityLessons } from "../components/Training/AgilityLessons";
 import { Consultations } from "../components/Training/Consultations";
 import { BoardingSchool } from "../components/Training/BoardingSchool";
+import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
+import { isTimeStampExpired } from ".";
 
 const Training: React.FC = () => {
   const router = useRouter();
   const { tab } = router.query;
   const [activeKey, setActiveKey] = useState("training");
+  const [expiry, setExpiry] = useLocalStorage<number>(
+    "trainingPageAnimate",
+    null
+  );
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  useEffect(() => {
+    if (isTimeStampExpired(expiry)) {
+      // set expiry to 24 hours from now
+      setExpiry(new Date().getTime() + 24 * 60 * 60 * 1000);
+      setShouldAnimate(true);
+    }
+  }, []);
   useEffect(() => {
     if (tab) {
       window.scrollTo({ top: 779, behavior: "smooth" });
@@ -50,6 +65,7 @@ const Training: React.FC = () => {
   return (
     <Layout>
       <Promo
+        animate={shouldAnimate}
         showFooter
         promos={[
           {

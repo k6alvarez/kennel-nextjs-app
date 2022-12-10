@@ -18,6 +18,7 @@ interface PromosProps {
   transparent?: boolean;
   variant?: "row" | "column";
   noMargin?: boolean;
+  animate?: boolean;
 }
 
 export const Promos = ({
@@ -26,6 +27,7 @@ export const Promos = ({
   promos = [],
   variant = "row",
   noMargin = false,
+  animate = true,
 }: PromosProps) => {
   const { currentTheme } = useContext(ThemePreferenceContext);
   return (
@@ -34,8 +36,11 @@ export const Promos = ({
         {promos.map((promo, i) => {
           const props = useSpring({
             to: { opacity: 1, transform: "translate3d(0,0,0)" },
-            from: { opacity: 0, transform: "translate3d(0,100px,0)" },
-            delay: delay + i * 200,
+            from: {
+              opacity: animate ? 0 : 1,
+              transform: `translate3d(0,${animate ? "100px" : "0"},0)`,
+            },
+            delay: animate ? delay + i * 200 : 0,
             config: config.slow,
           });
           const urlArray = promo.image.split("/");

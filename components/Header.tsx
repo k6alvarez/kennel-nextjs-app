@@ -83,6 +83,10 @@ export const NavWrapper = styled.div`
   button {
     font-size: ${({ theme }) => theme.fontSizes[0]};
   }
+
+  button:last-child {
+    margin-left: ${({ theme }) => theme.space[3]};
+  }
 `;
 
 const getMainLinks = (isActive) => (
@@ -107,7 +111,9 @@ const getMainLinks = (isActive) => (
 
 const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const { currentTheme } = useContext(ThemePreferenceContext);
+  const { currentTheme, editMode, setEditMode } = useContext(
+    ThemePreferenceContext
+  );
   const router = useRouter();
   const isActive: (pathname: string) => boolean = (pathname) =>
     router.pathname === pathname;
@@ -165,6 +171,13 @@ const Header: React.FC = () => {
           }}
         >
           Log Out
+        </button>
+        <button
+          onClick={() => {
+            setEditMode(!editMode);
+          }}
+        >
+          Edit Mode {editMode ? "On" : "Off"}
         </button>
       </NavWrapper>
     );

@@ -26,6 +26,8 @@ import { PetFormProvider } from "../components/Pets/formContext";
 export const ThemePreferenceContext = createContext(null);
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const [editMode, setEditMode] = useState(true);
+
   const [currentTheme, setCurrentTheme] = useState("light");
   const theme = { ...base, colors: themesMap[currentTheme] };
 
@@ -57,6 +59,8 @@ const App = ({ Component, pageProps }: AppProps) => {
           currentTheme,
           setCurrentTheme,
           breakpoints: theme.breakpoints,
+          editMode,
+          setEditMode,
         }}
       >
         <ThemeProvider theme={theme}>

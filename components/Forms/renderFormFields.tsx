@@ -9,7 +9,7 @@ import {
   PreviewWrapper,
 } from "./styles";
 
-interface InputProps
+export interface InputProps
   extends React.InputHTMLAttributes<
     HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
   > {

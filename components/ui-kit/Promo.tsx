@@ -2,6 +2,7 @@ import { FacebookOutlined, InstagramOutlined } from "@ant-design/icons";
 import React, { useContext } from "react";
 import { animated, config, useSpring } from "react-spring";
 import { ThemePreferenceContext } from "../../pages/_app";
+import { EditForm, Field, StyledInput, StyledLabel } from "../Forms/styles";
 import { Crest } from "../Navigation/LogoLinks";
 import { Size, useWindowSize } from "./hooks/useWindowSize";
 import { LogoOne } from "./Logo";
@@ -14,7 +15,7 @@ import {
   PromoFooter,
 } from "./Promo/styles-promo";
 
-export const defaultDelay = 400;
+export const defaultDelay = 200;
 
 export const Promo = ({
   promos = [],
@@ -22,29 +23,27 @@ export const Promo = ({
   description = null,
   children = undefined,
   showFooter = false,
+  animate = true,
 }) => {
-  const { currentTheme, breakpoints } = useContext(ThemePreferenceContext);
-  const noDelay = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    delay: 0,
-    config: config.slow,
-  });
+  const { currentTheme, breakpoints, editMode } = useContext(
+    ThemePreferenceContext
+  );
+
   const props = useSpring({
-    from: { opacity: 0 },
+    from: { opacity: animate ? 0 : 1 },
     to: { opacity: 1 },
-    delay: defaultDelay,
+    delay: animate ? defaultDelay : 0,
     config: config.slow,
   });
   const fadeInPt1 = useSpring({
     from: {
-      opacity: 0,
+      opacity: animate ? 0 : 1,
     },
     to: {
       opacity: 1,
     },
     config: config.slow,
-    delay: defaultDelay * 3,
+    delay: animate ? defaultDelay : 0,
     reset: true,
   });
 
@@ -65,22 +64,58 @@ export const Promo = ({
       </PromoText>
 
       {promos.length > 0 && (
-        <Promos transparent delay={defaultDelay * 4} promos={promos} noMargin />
+        <Promos
+          animate={animate}
+          transparent
+          delay={defaultDelay * 4}
+          promos={promos}
+          noMargin
+        />
       )}
       <animated.div style={props}>
         <PromoTitleWrapper>
-          {children ? (
-            children
+          {editMode ? (
+            <EditForm>
+              <Field>
+                <StyledLabel>Greeting</StyledLabel>
+                <StyledInput value={"At"} />
+              </Field>
+              <Field>
+                <StyledLabel>Title</StyledLabel>
+                <StyledInput value={"Gillette Kennels"} />
+              </Field>
+            </EditForm>
           ) : (
-            <span>
-              At <PromoTitle>Gillette Kennels</PromoTitle>,{" "}
-            </span>
+            <>
+              {children ? (
+                children
+              ) : (
+                <span>
+                  At <PromoTitle>Gillette Kennels</PromoTitle>,{" "}
+                </span>
+              )}
+            </>
           )}
 
           <animated.span style={fadeInPt1}>
-            {title
-              ? title
-              : "we are committed to providing the best care for your pet."}
+            {editMode ? (
+              <EditForm>
+                <Field>
+                  <StyledLabel>Title</StyledLabel>
+                  <StyledInput
+                    value={
+                      "we are committed to providing the best care for your pet."
+                    }
+                  />
+                </Field>
+              </EditForm>
+            ) : (
+              <>
+                {title
+                  ? title
+                  : "we are committed to providing the best care for your pet."}
+              </>
+            )}
           </animated.span>
         </PromoTitleWrapper>
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { headerHt } from "../../../pages/boarding";
 
 export const PromoFooter = styled.div`
   display: flex;
@@ -42,6 +43,7 @@ export const PromoWrapper = styled.div`
   padding-top: ${({ theme }) => theme.space[4]};
   font-size: ${({ theme }) => theme.fontSizes[1]};
   line-height: 1.2;
+  min-height: calc(100vh - ${headerHt});
 
   p {
     margin-bottom: ${({ theme }) => theme.space[4]};

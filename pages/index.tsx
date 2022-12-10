@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { defaultDelay, Promo } from "../components/ui-kit/Promo";
 import { Content } from "../components/ui-kit/Base";
 import { Promos } from "../components/ui-kit/Promo/Promos";
+import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
+
+export function isTimeStampExpired(expiryValue) {
+  if (expiryValue === null) return true;
+  const currentTimeStamp = new Date().getTime();
+  const local = JSON.parse(expiryValue) || {};
+  return currentTimeStamp > local;
+}
 
 const MyApp: React.FC = () => {
+  const [expiry, setExpiry] = useLocalStorage<number>("homePageAnimate", null);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  useEffect(() => {
+    if (isTimeStampExpired(expiry)) {
+      // set expiry to 24 hours from now
+      setExpiry(new Date().getTime() + 24 * 60 * 60 * 1000);
+      setShouldAnimate(true);
+    }
+  }, []);
+
   return (
     <Layout>
       <Promo
+        animate={shouldAnimate}
         showFooter
         promos={[
           {
