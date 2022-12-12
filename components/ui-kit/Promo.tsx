@@ -14,6 +14,13 @@ import {
   PromoTitleWrapper,
   PromoFooter,
 } from "./Promo/styles-promo";
+import { Tiptap } from "./Tiptap";
+
+const CONTENT_ITEMS_INITIAL_STATE = {
+  name: "homePagePromoTitle",
+  content:
+    "At Gillette Kennels, we are committed to providing the best care for your pet.",
+};
 
 export const defaultDelay = 200;
 
@@ -50,6 +57,10 @@ export const Promo = ({
   const size: Size = useWindowSize();
   const mobileScreen = size.width < parseInt(breakpoints[0]);
 
+  const onSave = async (html) => {
+    console.log(html);
+  };
+
   return (
     <PromoWrapper currentTheme={currentTheme}>
       <PromoText>
@@ -72,20 +83,17 @@ export const Promo = ({
           noMargin
         />
       )}
-      <animated.div style={props}>
-        <PromoTitleWrapper>
-          {editMode ? (
-            <EditForm>
-              <Field>
-                <StyledLabel>Greeting</StyledLabel>
-                <StyledInput value={"At"} />
-              </Field>
-              <Field>
-                <StyledLabel>Title</StyledLabel>
-                <StyledInput value={"Gillette Kennels"} />
-              </Field>
-            </EditForm>
-          ) : (
+
+      {editMode ? (
+        <EditForm onSubmit={(e) => e.preventDefault()}>
+          <Tiptap
+            content={CONTENT_ITEMS_INITIAL_STATE.content}
+            onSave={onSave}
+          />
+        </EditForm>
+      ) : (
+        <animated.div style={props}>
+          <PromoTitleWrapper>
             <>
               {children ? (
                 children
@@ -95,38 +103,25 @@ export const Promo = ({
                 </span>
               )}
             </>
-          )}
-
-          <animated.span style={fadeInPt1}>
-            {editMode ? (
-              <EditForm>
-                <Field>
-                  <StyledLabel>Title</StyledLabel>
-                  <StyledInput
-                    value={
-                      "we are committed to providing the best care for your pet."
-                    }
-                  />
-                </Field>
-              </EditForm>
-            ) : (
+            <animated.span style={fadeInPt1}>
               <>
                 {title
                   ? title
                   : "we are committed to providing the best care for your pet."}
               </>
-            )}
-          </animated.span>
-        </PromoTitleWrapper>
-
-        <animated.div style={fadeInPt1}>
-          <PromoTitleWrapper>
-            {description
-              ? description
-              : "Each of our runs provide your dog with spacious, private, indoor and outdoor areas."}
+            </animated.span>
           </PromoTitleWrapper>
+
+          <animated.div style={fadeInPt1}>
+            <PromoTitleWrapper>
+              {description
+                ? description
+                : "Each of our runs provide your dog with spacious, private, indoor and outdoor areas."}
+            </PromoTitleWrapper>
+          </animated.div>
         </animated.div>
-      </animated.div>
+      )}
+
       {showFooter && (
         <PromoFooter>
           <p>9172 East K Ave, Galesburg MI, 49053</p>

@@ -1,12 +1,10 @@
 import styled from "styled-components";
 
 export const EditForm = styled.form`
-  padding: ${({ theme }) => theme.space[4]} 0;
   background-color: ${({ theme }) => theme.colors.white};
-
-  input {
-    color: ${({ theme }) => theme.colors.textSecondary};
-  }
+  color: ${({ theme }) => theme.colors.textSecondary};
+  max-width: 80vw;
+  margin: ${({ theme }) => theme.space[4]} 0;
 `;
 
 export const Fields = styled.div`

@@ -16,6 +16,12 @@ enum Permission {
   EMPLOYEE
 }
 
+enum ContentPages {
+  HOME
+  BOARDING
+  TRAINING
+}
+
 model Pet {
   id                     String        @id @default(cuid())
   createdAt              DateTime      @default(now())
@@ -142,6 +148,8 @@ model User {
   permissions           Permission[]       @default(value: [USER])
   reservation           Reservation[]
   guestReservation      GuestReservation[]
+  HomeContent           HomeContent[]
+  ContentItem           ContentItem[]
 
   @@map(name: "users")
 }
@@ -240,4 +248,28 @@ model BusinessHours {
   breakOpen  String?
 
   @@map(name: "business_hours")
+}
+
+model HomeContent {
+  id        String   @id @default(cuid())
+  promo     String?
+  intro     String?
+  content   String?
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String?
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+  @@map(name: "home_content")
+}
+
+model ContentItem {
+  id        String       @id @default(cuid())
+  name      String       @unique
+  page      ContentPages @default(value: HOME)
+  content   String
+  author    User?        @relation(fields: [authorId], references: [id])
+  authorId  String?
+  updatedAt DateTime     @updatedAt @map(name: "updated_at")
+
+  @@map(name: "content_items")
 }
