@@ -109,7 +109,7 @@ const Training = ({ contentItems, promoItems }) => {
         animate={shouldAnimate}
         showFooter
         promos={trainingPromos}
-        homePromoTitle={trainingPromoTitle || { content: "" }}
+        contentItem={trainingPromoTitle || { content: "" }}
       />
       <TabsListWrapper>
         <Tabs
