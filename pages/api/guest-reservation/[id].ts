@@ -26,7 +26,7 @@ export default async function handle(req, res) {
 
   await transport.sendMail({
     to: req.body.email,
-    from: process.env.EMAIL_FROM,
+    from: `Gillette Kennels ${process.env.EMAIL_FROM}`,
     subject: `Your reservation at ${process.env.HOSTNAME}`,
     text: text({ url: `${process.env.HOSTNAME}/res-guest/${updatedReservation.id}` }),
     html: html({ url: `${process.env.HOSTNAME}/res-guest/${updatedReservation.id}`, host: process.env.HOSTNAME, origin: process.env.HOSTNAME, email: req.body.email, theme: themesMap.light }),
@@ -35,7 +35,7 @@ export default async function handle(req, res) {
 
   await transport.sendMail({
     to: process.env.EMAIL_FROM,
-    from: req.body.email,
+    from: `Gillette Kennels ${req.body.email}`,
     subject: `New Client Reservation ${process.env.HOSTNAME}`,
     text: text({ url: `${process.env.HOSTNAME}/res-guest/${updatedReservation.id}` }),
     html: htmlGKApp({ url: `${process.env.HOSTNAME}/res-guest/${updatedReservation.id}`, host: process.env.HOSTNAME, origin: process.env.HOSTNAME, email: req.body.email, theme: themesMap.light }),
