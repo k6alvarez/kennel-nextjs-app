@@ -43,7 +43,7 @@ const options = {
         const transport = createTransport(server);
         await transport.sendMail({
           to: email,
-          from,
+          from: `Gillette Kennels ${from}`,
           subject: `Your profile at ${host}`,
           text: text({ url, host }),
           // we can pass in 'theme' to access default theme as a new parameter
