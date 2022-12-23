@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { Tabs } from "antd";
+import { GetServerSideProps } from "next";
 import { DownOutlined } from "@ant-design/icons";
+import prisma from "../lib/prisma";
 
 import Layout from "../components/Layout";
 import { Promo } from "../components/ui-kit/Promo";
@@ -18,8 +20,6 @@ import { ThemePreferenceContext } from "./_app";
 import { BoardingServices } from "../components/Boarding/BoardingServices";
 import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
 import { isTimeStampExpired } from "../components/Admin/services";
-
-export const headerHt = "47px";
 
 export const TabsListWrapper = styled.div`
   position: relative;
@@ -39,10 +39,32 @@ export const TabsListWrapper = styled.div`
   }
 `;
 
-const Boarding: React.FC = () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const page = "BOARDING";
+  const contentItems = await prisma.contentItem.findMany({
+    where: {
+      page,
+    },
+  });
+
+  const promoItems = await prisma.promoItem.findMany({
+    where: {
+      page,
+    },
+  });
+
+  return {
+    props: {
+      contentItems: JSON.stringify(contentItems),
+      promoItems: JSON.stringify(promoItems),
+    },
+  };
+};
+
+const Boarding = ({ contentItems, promoItems }) => {
   const router = useRouter();
   const { tab } = router.query;
-  const { breakpoints } = useContext(ThemePreferenceContext);
+  const { breakpoints, editMode } = useContext(ThemePreferenceContext);
   const size: Size = useWindowSize();
   const mobileScreen = size.width < parseInt(breakpoints[0]);
   const [expiry, setExpiry] = useLocalStorage<number>(
@@ -50,6 +72,48 @@ const Boarding: React.FC = () => {
     null
   );
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const parsedContentItems = JSON.parse(contentItems);
+  const parsedPromoItems = JSON.parse(promoItems);
+
+  const boardingHome = parsedContentItems.find(
+    (item) => item.name === "boardingHome"
+  );
+
+  const boardingCats = parsedContentItems.find(
+    (item) => item.name === "boardingCats"
+  );
+
+  const boardingBefore = parsedContentItems.find(
+    (item) => item.name === "boardingBefore"
+  );
+
+  const boardingCheckin = parsedContentItems.find(
+    (item) => item.name === "boardingCheckin"
+  );
+
+  const boardingVaccinations = parsedContentItems.find(
+    (item) => item.name === "boardingVaccinations"
+  );
+
+  const boardingMedicalIssues = parsedContentItems.find(
+    (item) => item.name === "boardingMedicalIssues"
+  );
+
+  const boardingServices = parsedContentItems.find(
+    (item) => item.name === "boardingServices"
+  );
+
+  const boardingCWing = parsedContentItems.find(
+    (item) => item.name === "boardingCWing"
+  );
+  const boardingPromos = parsedPromoItems.filter(
+    (item) => item.promoGroup === "gallery"
+  );
+  const boardingPromoTitle = parsedContentItems.find(
+    (item) => item.name === "boardingPromoTitle"
+  );
 
   useEffect(() => {
     if (isTimeStampExpired(expiry)) {
@@ -68,32 +132,90 @@ const Boarding: React.FC = () => {
   }, [tab]);
 
   const items = [
-    { label: "Boarding", key: "boarding", children: <BoardingHome /> },
+    {
+      label: "Boarding",
+      key: "boarding",
+      children: (
+        <BoardingHome
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={boardingHome}
+          secondaryContent={boardingCWing}
+          editMode={editMode}
+        />
+      ),
+    },
     {
       label: "We Board Cats",
       key: "boarding-cats",
-      children: <BoardingCats />,
+      children: (
+        <BoardingCats
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={boardingCats}
+          editMode={editMode}
+        />
+      ),
     },
     {
       label: "Before Boarding",
       key: "before-boarding",
-      children: <BeforeBoarding />,
+      children: (
+        <BeforeBoarding
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={boardingBefore}
+          editMode={editMode}
+        />
+      ),
     },
-    { label: "Checking In", key: "checking-in", children: <BoardingCheckin /> },
+    {
+      label: "Checking In",
+      key: "checking-in",
+      children: (
+        <BoardingCheckin
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={boardingCheckin}
+          editMode={editMode}
+        />
+      ),
+    },
     {
       label: "Vaccinations",
       key: "vaccinations",
-      children: <BoardingVaccinations />,
+      children: (
+        <BoardingVaccinations
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={boardingVaccinations}
+          editMode={editMode}
+        />
+      ),
     },
     {
       label: "Medical Issues",
       key: "medical-issues",
-      children: <MedicalIssues />,
+      children: (
+        <MedicalIssues
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={boardingMedicalIssues}
+          editMode={editMode}
+        />
+      ),
     },
     {
       label: "Special Services",
       key: "special-services",
-      children: <BoardingServices />,
+      children: (
+        <BoardingServices
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={boardingServices}
+          editMode={editMode}
+        />
+      ),
     },
   ];
 
@@ -102,27 +224,9 @@ const Boarding: React.FC = () => {
       <Promo
         animate={shouldAnimate}
         showFooter
-        promos={[
-          {
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419357/gk-app/BTS_Eike.png",
-          },
-          {
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419353/gk-app/Ruthie3.jpg",
-          },
-          {
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419355/gk-app/two_cute_dogs.jpg",
-          },
-        ]}
-        // title="to keep your dog warm in the winter."
-        // description="Our facility also has two spacious exercise and play areas."
-      >
-        <span>
-          Inside runs include <PromoTitle>Radient Heat</PromoTitle>,
-        </span>{" "}
-      </Promo>
+        promos={boardingPromos}
+        contentItem={boardingPromoTitle || { content: "" }}
+      />
       <TabsListWrapper>
         <Tabs
           defaultActiveKey="boarding"

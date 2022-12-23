@@ -2,24 +2,39 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import Link from "next/link";
 import React from "react";
+import { saveContent } from "../Admin/services";
+import { EditForm } from "../Forms/styles";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 import { Content } from "../ui-kit/Base";
+import { Tiptap } from "../ui-kit/Tiptap";
 import { FlexCards } from "./styles";
 
-export const BoardingVaccinations = () => {
+export const BoardingVaccinations = ({
+  editMode,
+  content,
+  setIsLoading,
+  isLoading,
+}) => {
   return (
     <Content>
-      <h1>Vaccinations</h1>
-      <p>All dogs must have a current history of vaccinations that include:</p>
-      <BlockQuote large>
-        <InfoCircleOutlined />
-        <p>
-          Veterinarian provided proof of vaccinations must be provided prior to
-          your dog’s initial stay. We must obtain a copy of records that we can
-          keep on file. Our records must be updated annually. Vaccination
-          records can be uploaded, mailed or faxed to us at (269) 665-6970.
-        </p>
-      </BlockQuote>
+      {editMode ? (
+        <EditForm onSubmit={(e) => e.preventDefault()}>
+          <Tiptap
+            content={content?.content || { content: "" }}
+            onSave={(html) => {
+              saveContent({
+                apiPath: `/api/content-item/${content.id}`,
+                html,
+                setLoading: setIsLoading,
+              });
+            }}
+            isLoading={isLoading}
+          />
+        </EditForm>
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: content?.content }} />
+      )}
+
       <FlexCards>
         <Card title={<h2>Boarding Vaccinations Required</h2>}>
           <ul>

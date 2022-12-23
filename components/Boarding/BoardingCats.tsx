@@ -1,16 +1,31 @@
 import React from "react";
+import { saveContent } from "../Admin/services";
+import { EditForm } from "../Forms/styles";
 import { Content } from "../ui-kit/Base";
 import { Gallery } from "../ui-kit/Gallery";
+import { Tiptap } from "../ui-kit/Tiptap";
 import BoardingRates from "./BoardingRates";
 
-const BoardingCats = () => {
+const BoardingCats = ({ editMode, content, setIsLoading, isLoading }) => {
   return (
     <Content>
-      <h1>Cat Condos</h1>
-      <p>
-        We offer cat boarding services. Choose between a cat condo or the
-        catery!
-      </p>
+      {editMode ? (
+        <EditForm onSubmit={(e) => e.preventDefault()}>
+          <Tiptap
+            content={content?.content || { content: "" }}
+            onSave={(html) => {
+              saveContent({
+                apiPath: `/api/content-item/${content.id}`,
+                html,
+                setLoading: setIsLoading,
+              });
+            }}
+            isLoading={isLoading}
+          />
+        </EditForm>
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: content?.content }} />
+      )}
       <BoardingRates catsOnly />
       <Gallery
         images={[

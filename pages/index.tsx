@@ -74,7 +74,7 @@ const MyApp = ({ contentItems, promoItems }) => {
         animate={shouldAnimate}
         showFooter
         promos={homePromos}
-        homePromoTitle={homePromoTitle || { content: "" }}
+        contentItem={homePromoTitle || { content: "" }}
       />
       <Content>
         {editMode ? (

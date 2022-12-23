@@ -1,21 +1,39 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import React from "react";
+import { saveContent } from "../Admin/services";
+import { EditForm } from "../Forms/styles";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 import { Content } from "../ui-kit/Base";
+import { Tiptap } from "../ui-kit/Tiptap";
 
-export const BeforeBoarding = () => {
+export const BeforeBoarding = ({
+  editMode,
+  content,
+  setIsLoading,
+  isLoading,
+}) => {
   return (
     <Content>
-      <h1>Before Boarding</h1>
-      <p>
-        Our experience has shown us that dogs that frequently visit our boarding
-        kennel from puppy hood absolutely love coming here. It is like their
-        home away from home. Many older dogs (five years or older) that have
-        never before been boarded have a hard time adjusting to the kennel
-        atmosphere.
-      </p>
-      <BlockQuote large>
+      {editMode ? (
+        <EditForm onSubmit={(e) => e.preventDefault()}>
+          <Tiptap
+            content={content?.content || { content: "" }}
+            onSave={(html) => {
+              saveContent({
+                apiPath: `/api/content-item/${content.id}`,
+                html,
+                setLoading: setIsLoading,
+              });
+            }}
+            isLoading={isLoading}
+          />
+        </EditForm>
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: content?.content }} />
+      )}
+
+      {/* <BlockQuote large>
         <InfoCircleOutlined />
         <p>
           It is extremely important to socialize your dog to a boarding kennel
@@ -86,7 +104,7 @@ export const BeforeBoarding = () => {
           <a>procedures for checking in</a>
         </Link>{" "}
         prior to your arrival.
-      </p>
+      </p> */}
     </Content>
   );
 };

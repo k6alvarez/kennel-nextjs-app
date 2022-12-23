@@ -5,21 +5,36 @@ import { FlexCards } from "./styles";
 import { Card, Collapse } from "antd";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 import { InfoCircleOutlined } from "@ant-design/icons";
+import { saveContent } from "../Admin/services";
+import { EditForm } from "../Forms/styles";
+import { Tiptap } from "../ui-kit/Tiptap";
 
-export const BoardingServices = () => {
+export const BoardingServices = ({
+  editMode,
+  content,
+  setIsLoading,
+  isLoading,
+}) => {
   return (
     <Content>
-      <h1>Boarding Services</h1>
-      <p>
-        A variety of additional services are offered to our boarding guests at a
-        nominal fee. In addition to the services listed below, we also offer
-        baths. Special services will not be offered to aggressive dogs. Please
-        review our{" "}
-        <Link href="/policies?tab=aggressive-dog">
-          <a>aggressive dog policy</a>
-        </Link>
-        .
-      </p>
+      {editMode ? (
+        <EditForm onSubmit={(e) => e.preventDefault()}>
+          <Tiptap
+            content={content?.content || { content: "" }}
+            onSave={(html) => {
+              saveContent({
+                apiPath: `/api/content-item/${content.id}`,
+                html,
+                setLoading: setIsLoading,
+              });
+            }}
+            isLoading={isLoading}
+          />
+        </EditForm>
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: content?.content }} />
+      )}
+
       <Collapse>
         <Collapse.Panel header="Exercise" key="1">
           <p>

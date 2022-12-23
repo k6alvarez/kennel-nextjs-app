@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
-import { headerHt } from "../../../pages/boarding";
+
+export const headerHt = "47px";
 
 export const PromoFooter = styled.div`
   display: flex;
