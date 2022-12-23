@@ -31,6 +31,7 @@ export const Promo = ({
   showFooter = false,
   animate = true,
   contentItem = null,
+  setContentItem = undefined,
 }) => {
   const { currentTheme, breakpoints, editMode } = useContext(
     ThemePreferenceContext
@@ -64,7 +65,10 @@ export const Promo = ({
       apiPath: `/api/content-item/${contentItem.id}`,
       html,
     })
-      .then(() => setIsLoading(false))
+      .then(() => {
+        setIsLoading(false);
+        setContentItem({ content: html });
+      })
       .catch(() => setIsLoading(false));
   };
 

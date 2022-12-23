@@ -14,9 +14,10 @@ export const BoardingCheckin = ({
   content,
   setIsLoading,
   isLoading,
+  editorStickyTop,
 }) => {
   return (
-    <Content>
+    <Content editorStickyTop={editorStickyTop}>
       {editMode ? (
         <EditForm onSubmit={(e) => e.preventDefault()}>
           <Tiptap

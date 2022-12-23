@@ -90,6 +90,9 @@ const CreatePromo: React.FC = () => {
             <option value="HOME">Home</option>
             <option value="BOARDING">Boarding</option>
             <option value="TRAINING">Training</option>
+            <option value="POLICIES">Policies</option>
+            <option value="RATES">Rates</option>
+            <option value="CONTACT">Contact</option>
           </select>
           <label htmlFor="promoGroup">
             Group Name - Items will be grouped together by their group name.

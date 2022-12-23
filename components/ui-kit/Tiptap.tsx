@@ -13,7 +13,10 @@ import {
   UnorderedListOutlined,
 } from "@ant-design/icons";
 import { Button } from "./Base";
-import { blockquoteStyles } from "../Reservations/GuestClients/FormIntro";
+
+const EditorContentWrapper = styled.div`
+  padding: ${({ theme }) => theme.space[1]};
+`;
 
 const Container = styled.div`
   /* Basic editor styles */
@@ -73,12 +76,12 @@ const Container = styled.div`
   }
 `;
 
-const MenuWrapper = styled.div`
+export const TipTapMenuWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding-bottom: ${({ theme }) => theme.space[4]};
   gap: ${({ theme }) => theme.space[3]};
-  border-bottom: 3px solid ${({ theme }) => theme.colors.secondary};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.secondary};
 `;
 
 const MenuBar = ({ editor }) => {
@@ -87,7 +90,7 @@ const MenuBar = ({ editor }) => {
   }
 
   return (
-    <MenuWrapper>
+    <TipTapMenuWrapper>
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -172,7 +175,7 @@ const MenuBar = ({ editor }) => {
       >
         <RedoOutlined />
       </button>
-    </MenuWrapper>
+    </TipTapMenuWrapper>
   );
 };
 
@@ -185,7 +188,9 @@ export const Tiptap = ({ content, onSave, isLoading = false }) => {
   return (
     <Container>
       <MenuBar editor={editor} />
-      <EditorContent editor={editor} />
+      <EditorContentWrapper>
+        <EditorContent editor={editor} />
+      </EditorContentWrapper>
       <Button
         primary
         onClick={() => {

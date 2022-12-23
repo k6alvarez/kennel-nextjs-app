@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Tabs } from "antd";
 import prisma from "../lib/prisma";
@@ -16,6 +16,7 @@ import { Consultations } from "../components/Training/Consultations";
 import { BoardingSchool } from "../components/Training/BoardingSchool";
 import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
 import { isTimeStampExpired } from "../components/Admin/services";
+import { ThemePreferenceContext } from "./_app";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const page = "TRAINING";
@@ -41,6 +42,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
 const Training = ({ contentItems, promoItems }) => {
   const router = useRouter();
+  const { editMode } = useContext(ThemePreferenceContext);
   const { tab } = router.query;
   const [activeKey, setActiveKey] = useState("training");
   const [expiry, setExpiry] = useLocalStorage<number>(
@@ -48,6 +50,7 @@ const Training = ({ contentItems, promoItems }) => {
     null
   );
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const parsedContentItems = JSON.parse(contentItems);
   const parsedPromoItems = JSON.parse(promoItems);
   const trainingPromos = parsedPromoItems.filter(
@@ -61,6 +64,28 @@ const Training = ({ contentItems, promoItems }) => {
   const trainingContent = parsedContentItems.find(
     (item) => item.name === "trainingContent"
   );
+
+  const trainingGroupLessons = parsedContentItems.find(
+    (item) => item.name === "trainingGroupLessons"
+  );
+
+  const trainingBoardingSchool = parsedContentItems.find(
+    (item) => item.name === "trainingBoardingSchool"
+  );
+
+  const trainingPrivateLessons = parsedContentItems.find(
+    (item) => item.name === "trainingPrivateLessons"
+  );
+
+  const trainingAgilityLessons = parsedContentItems.find(
+    (item) => item.name === "trainingAgilityLessons"
+  );
+
+  const trainingConsultations = parsedContentItems.find(
+    (item) => item.name === "trainingConsultations"
+  );
+
+  const stickyEditorPosTop = "108px";
 
   useEffect(() => {
     if (isTimeStampExpired(expiry)) {
@@ -79,28 +104,80 @@ const Training = ({ contentItems, promoItems }) => {
     {
       label: "Training",
       key: "training",
-      children: <TrainingHome trainingContent={trainingContent} />,
+      children: (
+        <TrainingHome
+          editorStickyTop={stickyEditorPosTop}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={trainingContent}
+          editMode={editMode}
+        />
+      ),
     },
     {
       label: "Group Lessons",
       key: "group-lessons",
-      children: <GroupLessons />,
+      children: (
+        <GroupLessons
+          editorStickyTop={stickyEditorPosTop}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={trainingGroupLessons}
+          editMode={editMode}
+        />
+      ),
     },
     {
       label: "Boarding School",
       key: "boarding-school",
-      children: <BoardingSchool />,
+      children: (
+        <BoardingSchool
+          editorStickyTop={stickyEditorPosTop}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={trainingBoardingSchool}
+          editMode={editMode}
+        />
+      ),
     },
     {
       label: "Private Lessons",
       key: "private-lessons",
-      children: <PrivateLessons />,
+      children: (
+        <PrivateLessons
+          editorStickyTop={stickyEditorPosTop}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={trainingPrivateLessons}
+          editMode={editMode}
+        />
+      ),
     },
-    { label: "Agility", key: "agility", children: <AgilityLessons /> },
+    {
+      label: "Agility",
+      key: "agility",
+      children: (
+        <AgilityLessons
+          editorStickyTop={stickyEditorPosTop}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={trainingAgilityLessons}
+          editMode={editMode}
+        />
+      ),
+    },
     {
       label: "Consultations",
       key: "consultations",
-      children: <Consultations />,
+      children: (
+        <Consultations
+          editorStickyTop={stickyEditorPosTop}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={trainingConsultations}
+          editMode={editMode}
+        />
+      ),
     },
   ];
   return (

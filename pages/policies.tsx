@@ -1,26 +1,54 @@
-import React, { useEffect, useState } from "react";
-import { Card, Collapse, Image } from "antd";
+import React, { useContext, useEffect, useState } from "react";
+import { Collapse, Image } from "antd";
 
 import Layout from "../components/Layout";
 import { PostProps } from "../components/Post";
 import { Content } from "../components/ui-kit/Base";
 import { BlockQuote } from "../components/Reservations/GuestClients/FormIntro";
-import { BoldText } from "../components/Boarding/MedicalIssues";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { InfoCircleOutlined } from "@ant-design/icons";
+import prisma from "../lib/prisma";
+import { GetServerSideProps } from "next";
+import { ContentItem } from "@prisma/client";
+import { saveContent } from "../components/Admin/services";
+import { EditForm } from "../components/Forms/styles";
+import { Tiptap } from "../components/ui-kit/Tiptap";
+import { ThemePreferenceContext } from "./_app";
 
 const { Panel } = Collapse;
 
 type Props = {
   feed: PostProps[];
+  contentItems: string;
 };
 
-const Policies: React.FC<Props> = () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const page = "POLICIES";
+  const contentItems = await prisma.contentItem.findMany({
+    where: {
+      page,
+    },
+  });
+
+  return {
+    props: {
+      contentItems: JSON.stringify(contentItems),
+    },
+  };
+};
+
+const Policies: React.FC<Props> = ({ contentItems }) => {
   const router = useRouter();
   const { tab } = router.query;
   const [activeKey, setActiveKey] = useState("abandoned");
+  const parsedContentItems = JSON.parse(contentItems);
+  const { editMode } = useContext(ThemePreferenceContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const policiesContent = parsedContentItems.find(
+    (item) => item.name === "policiesContent"
+  );
 
   useEffect(() => {
     if (tab) {
@@ -39,16 +67,24 @@ const Policies: React.FC<Props> = () => {
   return (
     <Layout>
       <Content>
-        <h1>Policies</h1>
-        <p>
-          We strive to establish a friendly professional relationship with all
-          of our clients. This relationship can only be built through effective
-          communication and mutual respect. Many of these policies were
-          implemented only after numerous serious discussions, debates, and
-          research into how other kennels around the country handle these
-          issues. Please help us to build a positive relationship by knowing our
-          policies.
-        </p>
+        {editMode ? (
+          <EditForm onSubmit={(e) => e.preventDefault()}>
+            <Tiptap
+              content={policiesContent?.content || { content: "" }}
+              onSave={(html) => {
+                saveContent({
+                  apiPath: `/api/content-item/${policiesContent.id}`,
+                  html,
+                  setLoading: setIsLoading,
+                });
+              }}
+              isLoading={isLoading}
+            />
+          </EditForm>
+        ) : (
+          <div dangerouslySetInnerHTML={{ __html: policiesContent?.content }} />
+        )}
+
         <Collapse
           activeKey={activeKey}
           onChange={(key) => {

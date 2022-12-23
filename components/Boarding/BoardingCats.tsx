@@ -6,9 +6,15 @@ import { Gallery } from "../ui-kit/Gallery";
 import { Tiptap } from "../ui-kit/Tiptap";
 import BoardingRates from "./BoardingRates";
 
-const BoardingCats = ({ editMode, content, setIsLoading, isLoading }) => {
+const BoardingCats = ({
+  editMode,
+  content,
+  setIsLoading,
+  isLoading,
+  editorStickyTop,
+}) => {
   return (
-    <Content>
+    <Content editorStickyTop={editorStickyTop}>
       {editMode ? (
         <EditForm onSubmit={(e) => e.preventDefault()}>
           <Tiptap

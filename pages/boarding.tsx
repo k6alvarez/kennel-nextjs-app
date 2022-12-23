@@ -30,7 +30,7 @@ export const TabsListWrapper = styled.div`
     top: 51px;
     background: ${({ theme }) => theme.colors.white};
     width: 100%;
-    z-index: 1;
+    z-index: 2;
     box-shadow: ${({ theme }) => theme.shadows.light};
   }
 
@@ -115,6 +115,8 @@ const Boarding = ({ contentItems, promoItems }) => {
     (item) => item.name === "boardingPromoTitle"
   );
 
+  const stickyEditorPosTop = "108px";
+
   useEffect(() => {
     if (isTimeStampExpired(expiry)) {
       // set expiry to 24 hours from now
@@ -137,6 +139,7 @@ const Boarding = ({ contentItems, promoItems }) => {
       key: "boarding",
       children: (
         <BoardingHome
+          editorStickyTop={stickyEditorPosTop}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingHome}
@@ -150,6 +153,7 @@ const Boarding = ({ contentItems, promoItems }) => {
       key: "boarding-cats",
       children: (
         <BoardingCats
+          editorStickyTop={stickyEditorPosTop}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingCats}
@@ -162,6 +166,7 @@ const Boarding = ({ contentItems, promoItems }) => {
       key: "before-boarding",
       children: (
         <BeforeBoarding
+          editorStickyTop={stickyEditorPosTop}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingBefore}
@@ -174,6 +179,7 @@ const Boarding = ({ contentItems, promoItems }) => {
       key: "checking-in",
       children: (
         <BoardingCheckin
+          editorStickyTop={stickyEditorPosTop}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingCheckin}
@@ -186,6 +192,7 @@ const Boarding = ({ contentItems, promoItems }) => {
       key: "vaccinations",
       children: (
         <BoardingVaccinations
+          editorStickyTop={stickyEditorPosTop}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingVaccinations}
@@ -198,6 +205,7 @@ const Boarding = ({ contentItems, promoItems }) => {
       key: "medical-issues",
       children: (
         <MedicalIssues
+          editorStickyTop={stickyEditorPosTop}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingMedicalIssues}
@@ -210,6 +218,7 @@ const Boarding = ({ contentItems, promoItems }) => {
       key: "special-services",
       children: (
         <BoardingServices
+          editorStickyTop={stickyEditorPosTop}
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingServices}

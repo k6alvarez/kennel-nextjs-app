@@ -13,10 +13,11 @@ export const BoardingHome = ({
   secondaryContent,
   setIsLoading,
   isLoading,
+  editorStickyTop,
 }) => {
   return (
     <>
-      <Content>
+      <Content editorStickyTop={editorStickyTop}>
         {editMode ? (
           <EditForm onSubmit={(e) => e.preventDefault()}>
             <Tiptap
@@ -36,7 +37,7 @@ export const BoardingHome = ({
         )}
       </Content>
       <RunSizes />
-      <Content>
+      <Content editorStickyTop={editorStickyTop}>
         {editMode ? (
           <EditForm onSubmit={(e) => e.preventDefault()}>
             <Tiptap
