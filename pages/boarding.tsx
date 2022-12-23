@@ -17,7 +17,7 @@ import { Size, useWindowSize } from "../components/ui-kit/hooks/useWindowSize";
 import { ThemePreferenceContext } from "./_app";
 import { BoardingServices } from "../components/Boarding/BoardingServices";
 import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
-import { isTimeStampExpired } from ".";
+import { isTimeStampExpired } from "../components/Admin/services";
 
 export const headerHt = "47px";
 

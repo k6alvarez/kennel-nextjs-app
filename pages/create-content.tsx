@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Router from "next/router";
 import { Content } from "../components/ui-kit/Base";
+import { useSession } from "next-auth/react";
+import { LoadingOutlined, LockOutlined } from "@ant-design/icons";
 
 const CreateContent: React.FC = () => {
+  const { data: session, status } = useSession();
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const [page, setPage] = useState("HOME");
@@ -17,19 +20,42 @@ const CreateContent: React.FC = () => {
   const submitPost = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
-      const body = { name, content };
+      const body = { name, content, page };
       await fetch("/api/content-item", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      // await Router.push("/drafts");
-      console.log("Content Item Created");
       resetForm();
     } catch (error) {
       console.error(error);
     }
   };
+
+  if (status === "loading") {
+    return (
+      <Layout>
+        <Content>
+          <div>
+            <LoadingOutlined /> Loading...
+          </div>
+        </Content>
+      </Layout>
+    );
+  }
+
+  if (!session) {
+    return (
+      <Layout>
+        <Content>
+          <h1>
+            <LockOutlined /> Restricted Area
+          </h1>
+          <div>You need to be authenticated to view this page.</div>
+        </Content>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -44,12 +70,16 @@ const CreateContent: React.FC = () => {
             value={name}
             id="name"
           />
-          <label htmlFor="page">Page</label>
+          <label htmlFor="page">
+            Page - Select the page where this content will appear.
+          </label>
           <select
             name="page"
             id="page"
             value={page}
-            onChange={(e) => setPage(e.target.value)}
+            onChange={(e) => {
+              setPage(e.target.value);
+            }}
           >
             <option value="HOME">Home</option>
             <option value="BOARDING">Boarding</option>

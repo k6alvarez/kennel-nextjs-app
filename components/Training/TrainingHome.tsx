@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Content } from "../ui-kit/Base";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 import { Promos } from "../ui-kit/Promo/Promos";
 import { defaultDelay } from "../ui-kit/Promo";
 import { InfoCircleOutlined } from "@ant-design/icons";
+import { saveContent } from "../Admin/services";
+import { EditForm } from "../Forms/styles";
+import { Tiptap } from "../ui-kit/Tiptap";
+import { ThemePreferenceContext } from "../../pages/_app";
 
-export const TrainingHome = () => {
+export const TrainingHome = ({ trainingContent }) => {
+  const { editMode } = useContext(ThemePreferenceContext);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <>
       <Content>
-        <h1>Gillette Kennels Obedience Training</h1>
+        {/* <h1>Gillette Kennels Obedience Training</h1>
         <p>
           Kirk L. Gillette holds a M.A. in Behavioral Psychology from Western
           Michigan University, a diploma from West Virginia Canine College, and
@@ -26,7 +32,25 @@ export const TrainingHome = () => {
             from puppy head start classes to basic, intermediate, and advanced
             levels!
           </p>
-        </BlockQuote>
+        </BlockQuote> */}
+        {editMode ? (
+          <EditForm onSubmit={(e) => e.preventDefault()}>
+            <Tiptap
+              content={trainingContent.content || { content: "" }}
+              onSave={(html) => {
+                saveContent({
+                  html,
+                  apiPath: `/api/content-item/${trainingContent.id}`,
+                  setLoading: setIsLoading,
+                });
+              }}
+              isLoading={isLoading}
+            />
+          </EditForm>
+        ) : (
+          <div dangerouslySetInnerHTML={{ __html: trainingContent?.content }} />
+        )}
+
         <Promos
           delay={defaultDelay * 6}
           promos={[

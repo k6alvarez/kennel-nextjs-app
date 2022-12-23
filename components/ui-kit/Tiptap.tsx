@@ -13,6 +13,7 @@ import {
   UnorderedListOutlined,
 } from "@ant-design/icons";
 import { Button } from "./Base";
+import { blockquoteStyles } from "../Reservations/GuestClients/FormIntro";
 
 const Container = styled.div`
   /* Basic editor styles */
@@ -62,11 +63,6 @@ const Container = styled.div`
     img {
       max-width: 100%;
       height: auto;
-    }
-
-    blockquote {
-      padding-left: 1rem;
-      border-left: 2px solid rgba(#0d0d0d, 0.1);
     }
 
     hr {

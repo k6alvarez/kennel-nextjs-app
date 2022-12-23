@@ -5,6 +5,8 @@ import {
   livelySoothing,
   naturalEarth,
 } from "../components/ui-kit/Theme";
+import { blockquoteStyles } from "./Reservations/GuestClients/FormIntro";
+import { promoStyles } from "./ui-kit/Promo/styles-promo";
 
 export const themesMap = {
   light,
@@ -27,6 +29,14 @@ export const GlobalStyle = createGlobalStyle`
       margin-top: ${({ theme }) => theme.space[4]};
     }
 
+  }
+
+  blockquote {
+    ${blockquoteStyles}
+  }
+
+  em {
+    ${promoStyles}
   }
 
   main, section, article {

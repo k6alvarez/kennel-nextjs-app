@@ -1,64 +1,66 @@
 import React, { useContext, useEffect, useState } from "react";
+import prisma from "../lib/prisma";
+import { GetServerSideProps } from "next";
+
 import Layout from "../components/Layout";
-import { defaultDelay } from "../components/ui-kit/Promo";
+import { defaultDelay, Promo } from "../components/ui-kit/Promo";
 import { Content } from "../components/ui-kit/Base";
 import { Promos } from "../components/ui-kit/Promo/Promos";
 import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
 import { EditForm } from "../components/Forms/styles";
 import { Tiptap } from "../components/ui-kit/Tiptap";
 import { ThemePreferenceContext } from "./_app";
-import prisma from "../lib/prisma";
-import { GetServerSideProps } from "next";
-
-export function isTimeStampExpired(expiryValue) {
-  if (expiryValue === null) return true;
-  const currentTimeStamp = new Date().getTime();
-  const local = JSON.parse(expiryValue) || {};
-  return currentTimeStamp > local;
-}
-
-const saveContent = async ({ html, setLoading = undefined, contentId }) => {
-  setLoading && setLoading(true);
-  try {
-    await fetch(`/api/content-item/${contentId}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: html }),
-    });
-    setLoading && setLoading(false);
-  } catch (error) {
-    console.error(error);
-    setLoading && setLoading(false);
-  }
-};
+import { isTimeStampExpired, saveContent } from "../components/Admin/services";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const page = "HOME";
   const contentItems = await prisma.contentItem.findMany({
     where: {
-      page: "HOME",
+      page,
+    },
+  });
+
+  const promoItems = await prisma.promoItem.findMany({
+    where: {
+      page,
     },
   });
 
   return {
-    props: { contentItems: JSON.stringify(contentItems) },
+    props: {
+      contentItems: JSON.stringify(contentItems),
+      promoItems: JSON.stringify(promoItems),
+    },
   };
 };
 
-const MyApp = ({ contentItems }) => {
+const MyApp = ({ contentItems, promoItems }) => {
   const [expiry, setExpiry] = useLocalStorage<number>("homePageAnimate", null);
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const { editMode } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
-
-  const homeContent = JSON.parse(contentItems).find(
+  const parsedContentItems = JSON.parse(contentItems);
+  const parsedPromoItems = JSON.parse(promoItems);
+  const homeContent = parsedContentItems.find(
     (item) => item.name === "homeContent"
   );
-  const missionStatement = JSON.parse(contentItems).find(
+  const missionStatement = parsedContentItems.find(
     (item) => item.name === "missionStatement"
   );
 
+  const homePromos = parsedPromoItems.filter(
+    (item) => item.promoGroup === "gallery"
+  );
+
+  const homeCallouts = parsedPromoItems.filter(
+    (item) => item.promoGroup === "callouts"
+  );
+
+  const homePromoTitle = parsedContentItems.find(
+    (item) => item.name === "homePromoTitle"
+  );
+
   useEffect(() => {
-    // setContent(JSON.parse(contentItems));
     if (isTimeStampExpired(expiry)) {
       // set expiry to 24 hours from now
       setExpiry(new Date().getTime() + 24 * 60 * 60 * 1000);
@@ -68,42 +70,21 @@ const MyApp = ({ contentItems }) => {
 
   return (
     <Layout>
-      {/* <Promo
+      <Promo
         animate={shouldAnimate}
         showFooter
-        promos={[
-          {
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006907/gk-app/gkplays.jpg",
-            size: "20vw",
-          },
-          {
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585006544/gk-app/gktwopups.jpg",
-            size: "20vw",
-          },
-          {
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005125/gk-app/gk_home_01.jpg",
-            size: "20vw",
-          },
-          {
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419325/gk-app/Aggie2_playtime.jpg",
-            size: "20vw",
-          },
-        ]}
-      /> */}
-
+        promos={homePromos}
+        homePromoTitle={homePromoTitle || { content: "" }}
+      />
       <Content>
         {editMode ? (
           <EditForm onSubmit={(e) => e.preventDefault()}>
             <Tiptap
-              content={homeContent.content || ""}
+              content={homeContent?.content || { content: "" }}
               onSave={(html) => {
                 saveContent({
+                  apiPath: `/api/content-item/${homeContent.id}`,
                   html,
-                  contentId: homeContent.id,
                   setLoading: setIsLoading,
                 });
               }}
@@ -111,7 +92,7 @@ const MyApp = ({ contentItems }) => {
             />
           </EditForm>
         ) : (
-          <div dangerouslySetInnerHTML={{ __html: homeContent.content }} />
+          <div dangerouslySetInnerHTML={{ __html: homeContent?.content }} />
         )}
 
         <iframe
@@ -122,41 +103,16 @@ const MyApp = ({ contentItems }) => {
           allowFullScreen
         ></iframe>
       </Content>
-      <Promos
-        delay={defaultDelay * 6}
-        promos={[
-          {
-            title: "We board cats!",
-            description: "We have a cattery for your cat's stay.",
-            link: "/boarding?tab=boarding-cats",
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419343/gk-app/Kitty_window.jpg",
-          },
-          {
-            title: "Vaccinations",
-            description: "See our list of required vaccinations.",
-            link: "/boarding?tab=vaccinations",
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419325/gk-app/Addie3.jpg",
-          },
-          {
-            title: "Before you board",
-            link: "/boarding?tab=before-boarding",
-            description: "Learn more about our boarding services.",
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585005807/gk-app/gkrun.jpg",
-          },
-        ]}
-      />
+      <Promos delay={defaultDelay * 6} promos={homeCallouts} />
       <Content>
         {editMode ? (
           <EditForm onSubmit={(e) => e.preventDefault()}>
             <Tiptap
-              content={missionStatement.content || ""}
+              content={missionStatement?.content || { content: "" }}
               onSave={(html) => {
                 saveContent({
                   html,
-                  contentId: missionStatement.id,
+                  apiPath: `/api/content-item/${missionStatement.id}`,
                   setLoading: setIsLoading,
                 });
               }}
@@ -164,7 +120,9 @@ const MyApp = ({ contentItems }) => {
             />
           </EditForm>
         ) : (
-          <div dangerouslySetInnerHTML={{ __html: missionStatement.content }} />
+          <div
+            dangerouslySetInnerHTML={{ __html: missionStatement?.content }}
+          />
         )}
       </Content>
     </Layout>

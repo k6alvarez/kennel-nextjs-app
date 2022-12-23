@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
@@ -7,6 +7,8 @@ import { LeftNav } from "./Navigation/LogoLinks";
 import { Drawer } from "antd";
 import { LogoName } from "./Navigation/NavStyles";
 import { ThemePreferenceContext } from "../pages/_app";
+import { User } from "@prisma/client";
+import { getUser } from "./Pets/services";
 
 export const StyledNav = styled.nav`
   display: flex;
@@ -111,6 +113,7 @@ const getMainLinks = (isActive) => (
 
 const Header: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState<User>(undefined);
   const { currentTheme, editMode, setEditMode } = useContext(
     ThemePreferenceContext
   );
@@ -127,6 +130,14 @@ const Header: React.FC = () => {
   const onClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (session) {
+      getUser().then((user) => {
+        setLoggedInUser(user);
+      });
+    }
+  }, [session]);
 
   let leftNav = <LeftNav toggleDrawer={toggleDrawer} />;
 
@@ -172,13 +183,15 @@ const Header: React.FC = () => {
         >
           Log Out
         </button>
-        <button
-          onClick={() => {
-            setEditMode(!editMode);
-          }}
-        >
-          Edit Mode {editMode ? "On" : "Off"}
-        </button>
+        {loggedInUser?.permissions.includes("ADMIN") && (
+          <button
+            onClick={() => {
+              setEditMode(!editMode);
+            }}
+          >
+            Edit Mode {editMode ? "On" : "Off"}
+          </button>
+        )}
       </NavWrapper>
     );
   }

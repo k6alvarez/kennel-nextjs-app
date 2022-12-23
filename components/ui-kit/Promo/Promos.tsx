@@ -19,6 +19,7 @@ interface PromosProps {
   variant?: "row" | "column";
   noMargin?: boolean;
   animate?: boolean;
+  noFlexGrow?: boolean;
 }
 
 export const Promos = ({
@@ -28,19 +29,24 @@ export const Promos = ({
   variant = "row",
   noMargin = false,
   animate = true,
+  noFlexGrow = false,
 }: PromosProps) => {
   const { currentTheme } = useContext(ThemePreferenceContext);
   return (
-    <PromoPics transparent={transparent} currentTheme={currentTheme}>
+    <PromoPics
+      transparent={transparent}
+      currentTheme={currentTheme}
+      flex={noFlexGrow ? "unset" : "1"}
+    >
       <GridItems variant={variant}>
         {promos.map((promo, i) => {
           const props = useSpring({
             to: { opacity: 1, transform: "translate3d(0,0,0)" },
             from: {
-              opacity: animate ? 0 : 1,
-              transform: `translate3d(0,${animate ? "100px" : "0"},0)`,
+              opacity: 0,
+              transform: `translate3d(0, 100px ,0)`,
             },
-            delay: animate ? delay + i * 200 : 0,
+            delay: delay + i * 180,
             config: config.slow,
           });
           const urlArray = promo.image.split("/");
