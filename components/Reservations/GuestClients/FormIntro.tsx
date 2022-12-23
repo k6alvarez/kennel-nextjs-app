@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const BlockQuote = styled.blockquote`
+export const blockquoteStyles = css`
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -36,6 +36,8 @@ export const BlockQuote = styled.blockquote`
     color: ${({ theme }) => theme.colors.primary};
   }
 `;
+
+export const BlockQuote = styled.blockquote``;
 
 export const FormIntroGuest = () => {
   return (

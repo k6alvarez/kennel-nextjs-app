@@ -1,7 +1,9 @@
 import { FacebookOutlined, InstagramOutlined } from "@ant-design/icons";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { animated, config, useSpring } from "react-spring";
 import { ThemePreferenceContext } from "../../pages/_app";
+import { saveContent } from "../Admin/services";
+import { EditForm, Field, StyledInput, StyledLabel } from "../Forms/styles";
 import { Crest } from "../Navigation/LogoLinks";
 import { Size, useWindowSize } from "./hooks/useWindowSize";
 import { LogoOne } from "./Logo";
@@ -13,43 +15,58 @@ import {
   PromoTitleWrapper,
   PromoFooter,
 } from "./Promo/styles-promo";
+import { Tiptap } from "./Tiptap";
 
-export const defaultDelay = 400;
+export const CONTENT_ITEMS_INITIAL_STATE = {
+  name: "homePagePromoTitle",
+  content:
+    "At Gillette Kennels, we are committed to providing the best care for your pet.",
+};
+
+export const defaultDelay = 200;
 
 export const Promo = ({
   promos = [],
-  title = null,
-  description = null,
   children = undefined,
   showFooter = false,
+  animate = true,
+  homePromoTitle = null,
 }) => {
-  const { currentTheme, breakpoints } = useContext(ThemePreferenceContext);
-  const noDelay = useSpring({
-    from: { opacity: 0 },
-    to: { opacity: 1 },
-    delay: 0,
-    config: config.slow,
-  });
+  const { currentTheme, breakpoints, editMode } = useContext(
+    ThemePreferenceContext
+  );
+  const [isLoading, setIsLoading] = useState(false);
+
   const props = useSpring({
-    from: { opacity: 0 },
+    from: { opacity: animate ? 0 : 1 },
     to: { opacity: 1 },
-    delay: defaultDelay,
+    delay: animate ? defaultDelay : 0,
     config: config.slow,
   });
   const fadeInPt1 = useSpring({
     from: {
-      opacity: 0,
+      opacity: animate ? 0 : 1,
     },
     to: {
       opacity: 1,
     },
     config: config.slow,
-    delay: defaultDelay * 3,
+    delay: animate ? defaultDelay : 0,
     reset: true,
   });
 
   const size: Size = useWindowSize();
   const mobileScreen = size.width < parseInt(breakpoints[0]);
+
+  const onSave = (html) => {
+    setIsLoading(true);
+    saveContent({
+      apiPath: `/api/content-item/${homePromoTitle.id}`,
+      html,
+    })
+      .then(() => setIsLoading(false))
+      .catch(() => setIsLoading(false));
+  };
 
   return (
     <PromoWrapper currentTheme={currentTheme}>
@@ -63,35 +80,43 @@ export const Promo = ({
           </>
         </animated.div>
       </PromoText>
-
-      {promos.length > 0 && (
-        <Promos transparent delay={defaultDelay * 4} promos={promos} noMargin />
-      )}
-      <animated.div style={props}>
-        <PromoTitleWrapper>
-          {children ? (
-            children
-          ) : (
-            <span>
-              At <PromoTitle>Gillette Kennels</PromoTitle>,{" "}
-            </span>
-          )}
-
-          <animated.span style={fadeInPt1}>
-            {title
-              ? title
-              : "we are committed to providing the best care for your pet."}
-          </animated.span>
-        </PromoTitleWrapper>
-
+      {editMode && homePromoTitle.content ? (
+        <EditForm onSubmit={(e) => e.preventDefault()}>
+          <Tiptap
+            content={homePromoTitle.content}
+            onSave={onSave}
+            isLoading={isLoading}
+          />
+        </EditForm>
+      ) : (
         <animated.div style={fadeInPt1}>
           <PromoTitleWrapper>
-            {description
-              ? description
-              : "Each of our runs provide your dog with spacious, private, indoor and outdoor areas."}
+            <>
+              {children ? (
+                children
+              ) : (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: homePromoTitle?.content,
+                  }}
+                />
+              )}
+            </>
           </PromoTitleWrapper>
         </animated.div>
-      </animated.div>
+      )}
+
+      {promos.length > 0 && (
+        <Promos
+          animate={animate}
+          transparent
+          delay={defaultDelay * 4}
+          promos={promos}
+          noMargin
+          noFlexGrow
+        />
+      )}
+
       {showFooter && (
         <PromoFooter>
           <p>9172 East K Ave, Galesburg MI, 49053</p>

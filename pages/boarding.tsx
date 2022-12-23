@@ -16,6 +16,8 @@ import { MedicalIssues } from "../components/Boarding/MedicalIssues";
 import { Size, useWindowSize } from "../components/ui-kit/hooks/useWindowSize";
 import { ThemePreferenceContext } from "./_app";
 import { BoardingServices } from "../components/Boarding/BoardingServices";
+import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
+import { isTimeStampExpired } from "../components/Admin/services";
 
 export const headerHt = "47px";
 
@@ -43,6 +45,19 @@ const Boarding: React.FC = () => {
   const { breakpoints } = useContext(ThemePreferenceContext);
   const size: Size = useWindowSize();
   const mobileScreen = size.width < parseInt(breakpoints[0]);
+  const [expiry, setExpiry] = useLocalStorage<number>(
+    "boardingPageAnimate",
+    null
+  );
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  useEffect(() => {
+    if (isTimeStampExpired(expiry)) {
+      // set expiry to 24 hours from now
+      setExpiry(new Date().getTime() + 24 * 60 * 60 * 1000);
+      setShouldAnimate(true);
+    }
+  }, []);
 
   const [activeKey, setActiveKey] = useState("boarding");
   useEffect(() => {
@@ -85,6 +100,7 @@ const Boarding: React.FC = () => {
   return (
     <Layout>
       <Promo
+        animate={shouldAnimate}
         showFooter
         promos={[
           {
@@ -100,8 +116,8 @@ const Boarding: React.FC = () => {
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419355/gk-app/two_cute_dogs.jpg",
           },
         ]}
-        title="to keep your dog warm in the winter."
-        description="Our facility also has two spacious exercise and play areas."
+        // title="to keep your dog warm in the winter."
+        // description="Our facility also has two spacious exercise and play areas."
       >
         <span>
           Inside runs include <PromoTitle>Radient Heat</PromoTitle>,

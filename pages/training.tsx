@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Tabs } from "antd";
+import prisma from "../lib/prisma";
+import { GetServerSideProps } from "next";
 
 import Layout from "../components/Layout";
 import { Promo } from "../components/ui-kit/Promo";
@@ -12,11 +14,61 @@ import { PrivateLessons } from "../components/Training/PrivateLessons";
 import { AgilityLessons } from "../components/Training/AgilityLessons";
 import { Consultations } from "../components/Training/Consultations";
 import { BoardingSchool } from "../components/Training/BoardingSchool";
+import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
+import { isTimeStampExpired } from "../components/Admin/services";
 
-const Training: React.FC = () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const page = "TRAINING";
+  const contentItems = await prisma.contentItem.findMany({
+    where: {
+      page,
+    },
+  });
+
+  const promoItems = await prisma.promoItem.findMany({
+    where: {
+      page,
+    },
+  });
+
+  return {
+    props: {
+      contentItems: JSON.stringify(contentItems),
+      promoItems: JSON.stringify(promoItems),
+    },
+  };
+};
+
+const Training = ({ contentItems, promoItems }) => {
   const router = useRouter();
   const { tab } = router.query;
   const [activeKey, setActiveKey] = useState("training");
+  const [expiry, setExpiry] = useLocalStorage<number>(
+    "trainingPageAnimate",
+    null
+  );
+  const [shouldAnimate, setShouldAnimate] = useState(false);
+  const parsedContentItems = JSON.parse(contentItems);
+  const parsedPromoItems = JSON.parse(promoItems);
+  const trainingPromos = parsedPromoItems.filter(
+    (item) => item.promoGroup === "gallery"
+  );
+
+  const trainingPromoTitle = parsedContentItems.find(
+    (item) => item.name === "trainingPromoTitle"
+  );
+
+  const trainingContent = parsedContentItems.find(
+    (item) => item.name === "trainingContent"
+  );
+
+  useEffect(() => {
+    if (isTimeStampExpired(expiry)) {
+      // set expiry to 24 hours from now
+      setExpiry(new Date().getTime() + 24 * 60 * 60 * 1000);
+      setShouldAnimate(true);
+    }
+  }, []);
   useEffect(() => {
     if (tab) {
       window.scrollTo({ top: 779, behavior: "smooth" });
@@ -24,7 +76,11 @@ const Training: React.FC = () => {
     }
   }, [tab]);
   const items = [
-    { label: "Training", key: "training", children: <TrainingHome /> },
+    {
+      label: "Training",
+      key: "training",
+      children: <TrainingHome trainingContent={trainingContent} />,
+    },
     {
       label: "Group Lessons",
       key: "group-lessons",
@@ -50,34 +106,11 @@ const Training: React.FC = () => {
   return (
     <Layout>
       <Promo
+        animate={shouldAnimate}
         showFooter
-        promos={[
-          {
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419353/gk-app/sage_training.png",
-            title: "",
-            description: "",
-          },
-          {
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419352/gk-app/SadieMae_101920.jpg",
-            title: "",
-            description: "",
-          },
-          {
-            image:
-              "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419354/gk-app/Winsten_BS.jpg",
-            title: "",
-            description: "",
-          },
-        ]}
-        title="the way in conscientious dog training and client education."
-        description="Our classes range from puppy head start classes to basic, intermediate, and advanced levels!"
-      >
-        <span>
-          <PromoTitle>Kirk L. Gillette</PromoTitle> continues to lead,
-        </span>{" "}
-      </Promo>
+        promos={trainingPromos}
+        homePromoTitle={trainingPromoTitle || { content: "" }}
+      />
       <TabsListWrapper>
         <Tabs
           defaultActiveKey="training"

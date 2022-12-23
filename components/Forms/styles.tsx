@@ -1,4 +1,12 @@
 import styled from "styled-components";
+
+export const EditForm = styled.form`
+  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.textSecondary};
+  max-width: 80vw;
+  margin: ${({ theme }) => theme.space[4]} 0;
+`;
+
 export const Fields = styled.div`
   display: flex;
   flex-direction: column;

@@ -76,3 +76,29 @@ export const getBusinessHours = async () => {
     const hours = await res.json();
     return hours;
 };
+
+export const saveContent = async ({
+    apiPath,
+    html,
+    setLoading = undefined,
+}) => {
+    setLoading && setLoading(true);
+    try {
+        await fetch(apiPath, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ content: html }),
+        });
+        setLoading && setLoading(false);
+    } catch (error) {
+        console.error(error);
+        setLoading && setLoading(false);
+    }
+};
+
+export function isTimeStampExpired(expiryValue) {
+    if (expiryValue === null) return true;
+    const currentTimeStamp = new Date().getTime();
+    const local = JSON.parse(expiryValue) || {};
+    return currentTimeStamp > local;
+}

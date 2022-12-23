@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { headerHt } from "../../../pages/boarding";
 
 export const PromoFooter = styled.div`
   display: flex;
@@ -38,10 +39,12 @@ export const PromoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   gap: ${({ theme }) => theme.space[2]};
   padding-top: ${({ theme }) => theme.space[4]};
   font-size: ${({ theme }) => theme.fontSizes[1]};
   line-height: 1.2;
+  min-height: calc(100vh - ${headerHt});
 
   p {
     margin-bottom: ${({ theme }) => theme.space[4]};
@@ -147,7 +150,7 @@ export const PromoTextWrapper = styled.div`
 `;
 
 export const PromoPics = styled.div`
-  flex: 1;
+  flex: ${({ flex }) => (flex ? flex : 1)};
   width: 100%;
   background-color: ${({ theme, transparent, currentTheme }) =>
     !transparent
@@ -169,7 +172,6 @@ export const PromoTitleWrapper = styled.div`
 `;
 
 export const PromoText = styled.div`
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -186,7 +188,7 @@ export const PromoText = styled.div`
   }
 `;
 
-export const PromoTitle = styled.span`
+export const promoStyles = css`
   font-family: ${({ theme }) => theme.fonts.heading};
   font-size: ${({ theme }) => theme.fontSizes[3]};
   letter-spacing: 1px;
@@ -198,4 +200,8 @@ export const PromoTitle = styled.span`
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     font-size: ${({ theme }) => theme.fontSizes[6]};
   }
+`;
+
+export const PromoTitle = styled.span`
+  ${promoStyles}
 `;
