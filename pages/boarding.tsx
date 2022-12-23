@@ -116,8 +116,8 @@ const Boarding: React.FC = () => {
               "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419355/gk-app/two_cute_dogs.jpg",
           },
         ]}
-        title="to keep your dog warm in the winter."
-        description="Our facility also has two spacious exercise and play areas."
+        // title="to keep your dog warm in the winter."
+        // description="Our facility also has two spacious exercise and play areas."
       >
         <span>
           Inside runs include <PromoTitle>Radient Heat</PromoTitle>,
