@@ -20,6 +20,9 @@ enum ContentPages {
   HOME
   BOARDING
   TRAINING
+  POLICIES
+  RATES
+  CONTACT
 }
 
 model Pet {

@@ -6,8 +6,11 @@ import {
 import { Collapse } from "antd";
 import React from "react";
 import styled from "styled-components";
+import { saveContent } from "../Admin/services";
+import { EditForm } from "../Forms/styles";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 import { Content } from "../ui-kit/Base";
+import { Tiptap } from "../ui-kit/Tiptap";
 import { rateMedicalCare } from "./BoardingRates";
 
 const { Panel } = Collapse;
@@ -21,11 +24,35 @@ export const Accordion = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const MedicalIssues = () => {
+export const MedicalIssues = ({
+  editMode,
+  content,
+  setContent,
+  setIsLoading,
+  isLoading,
+  editorStickyTop,
+}) => {
   return (
-    <Content>
-      <h1>Medical Issues</h1>
-      <p>Select a topic to learn about each of our medical policies.</p>
+    <Content editorStickyTop={editorStickyTop}>
+      {editMode ? (
+        <EditForm onSubmit={(e) => e.preventDefault()}>
+          <Tiptap
+            content={content?.content || { content: "" }}
+            onSave={(html) => {
+              setContent({ content: html });
+              saveContent({
+                apiPath: `/api/content-item/${content.id}`,
+                html,
+                setLoading: setIsLoading,
+              });
+            }}
+            isLoading={isLoading}
+          />
+        </EditForm>
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: content?.content }} />
+      )}
+
       <Collapse defaultActiveKey={["1"]}>
         <Panel key={1} header="Administering Medications">
           <p>

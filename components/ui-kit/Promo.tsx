@@ -30,7 +30,8 @@ export const Promo = ({
   children = undefined,
   showFooter = false,
   animate = true,
-  homePromoTitle = null,
+  contentItem = null,
+  setContentItem = undefined,
 }) => {
   const { currentTheme, breakpoints, editMode } = useContext(
     ThemePreferenceContext
@@ -61,10 +62,13 @@ export const Promo = ({
   const onSave = (html) => {
     setIsLoading(true);
     saveContent({
-      apiPath: `/api/content-item/${homePromoTitle.id}`,
+      apiPath: `/api/content-item/${contentItem.id}`,
       html,
     })
-      .then(() => setIsLoading(false))
+      .then(() => {
+        setIsLoading(false);
+        setContentItem({ content: html });
+      })
       .catch(() => setIsLoading(false));
   };
 
@@ -80,10 +84,10 @@ export const Promo = ({
           </>
         </animated.div>
       </PromoText>
-      {editMode && homePromoTitle.content ? (
+      {editMode && contentItem?.content ? (
         <EditForm onSubmit={(e) => e.preventDefault()}>
           <Tiptap
-            content={homePromoTitle.content}
+            content={contentItem.content}
             onSave={onSave}
             isLoading={isLoading}
           />
@@ -97,7 +101,7 @@ export const Promo = ({
               ) : (
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: homePromoTitle?.content,
+                    __html: contentItem?.content,
                   }}
                 />
               )}

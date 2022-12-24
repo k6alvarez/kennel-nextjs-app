@@ -2,37 +2,39 @@ import React from "react";
 import { Content } from "../ui-kit/Base";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 import { InfoCircleOutlined } from "@ant-design/icons";
+import { saveContent } from "../Admin/services";
+import { EditForm } from "../Forms/styles";
+import { Tiptap } from "../ui-kit/Tiptap";
 
-export const Consultations = () => {
+export const Consultations = ({
+  editMode,
+  content,
+  setContent,
+  setIsLoading,
+  isLoading,
+  editorStickyTop,
+}) => {
   return (
-    <Content>
-      <h1>Consultations</h1>
-      <BlockQuote>
-        <InfoCircleOutlined />
-        <p>Having special problems with your dog? We can help!</p>
-      </BlockQuote>
-      <p>
-        Most behavioral problems can be changed but not always 100% “cured.” It
-        really depends on many variables. A comprehensive evaluation followed by
-        a private consultation will enable you to eliminate or at least reduce
-        the frequency of most behavioral problems.
-      </p>
-      <p>
-        A consultation is a meeting with you and your dog provided at my
-        training center. Ninety percent of the process entails gathering
-        information about your dog and his environment. After the information is
-        gathered and analyzed the results are discussed and sound advice is
-        offered. The consultation will take approximately 1 to 1.5 hours. The
-        fee is $225.00 to be paid at the time of the consultation.
-      </p>
-      <p>
-        If you are interested in a consultation please contact us using the form
-        below. Please provide a brief description of the problem during your
-        initial contact. After we receive the initial contact form we will ask
-        you to fill out a comprehensive questionnaire so that we can profile
-        your dog and determine the best course of action.
-      </p>
-      <p>Contact form coming soon.</p>
+    <Content editorStickyTop={editorStickyTop}>
+      {editMode ? (
+        <EditForm onSubmit={(e) => e.preventDefault()}>
+          <Tiptap
+            content={content?.content || { content: "" }}
+            onSave={(html) => {
+              setContent({ content: html });
+              saveContent({
+                html,
+                apiPath: `/api/content-item/${content.id}`,
+                setLoading: setIsLoading,
+              });
+            }}
+            isLoading={isLoading}
+          />
+        </EditForm>
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: content?.content }} />
+      )}
+
       {/* <GeneralContactForm
         emailSubject="Gillette Kennels Consultation Request"
         formHint="If you are interested in a consultation please contact us using the

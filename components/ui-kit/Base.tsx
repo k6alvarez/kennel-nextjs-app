@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { headerHt } from "./Promo/styles-promo";
+import { TipTapMenuWrapper } from "./Tiptap";
 
 export const Content = styled.article`
   padding: ${({ theme }) => theme.space[4]};
@@ -15,6 +17,15 @@ export const Content = styled.article`
         : `${theme.space[5]} ${theme.space[4]}`};
     width: ${({ maxWidth }) => (maxWidth ? maxWidth : "80vw")};
     max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "1200px")};
+  }
+
+  ${TipTapMenuWrapper} {
+    position: sticky;
+    top: ${({ editorStickyTop }) =>
+      editorStickyTop ? editorStickyTop : headerHt};
+    z-index: 1;
+    background-color: ${({ theme }) => theme.colors.white};
+    padding-top: ${({ theme }) => theme.space[4]};
   }
 
   iframe {

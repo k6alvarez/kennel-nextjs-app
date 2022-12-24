@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Link from "@tiptap/extension-link";
 import styled from "styled-components";
 import {
   BoldOutlined,
@@ -13,7 +14,10 @@ import {
   UnorderedListOutlined,
 } from "@ant-design/icons";
 import { Button } from "./Base";
-import { blockquoteStyles } from "../Reservations/GuestClients/FormIntro";
+
+const EditorContentWrapper = styled.div`
+  padding: ${({ theme }) => theme.space[1]};
+`;
 
 const Container = styled.div`
   /* Basic editor styles */
@@ -73,21 +77,21 @@ const Container = styled.div`
   }
 `;
 
-const MenuWrapper = styled.div`
+export const TipTapMenuWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding-bottom: ${({ theme }) => theme.space[4]};
   gap: ${({ theme }) => theme.space[3]};
-  border-bottom: 3px solid ${({ theme }) => theme.colors.secondary};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.secondary};
 `;
 
-const MenuBar = ({ editor }) => {
+const MenuBar = ({ editor, setLink }) => {
   if (!editor) {
     return null;
   }
 
   return (
-    <MenuWrapper>
+    <TipTapMenuWrapper>
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -161,6 +165,18 @@ const MenuBar = ({ editor }) => {
         hard break
       </button>
       <button
+        onClick={setLink}
+        className={editor.isActive("link") ? "is-active" : ""}
+      >
+        setLink
+      </button>
+      <button
+        onClick={() => editor.chain().focus().unsetLink().run()}
+        disabled={!editor.isActive("link")}
+      >
+        unsetLink
+      </button>
+      <button
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().chain().focus().undo().run()}
       >
@@ -172,20 +188,47 @@ const MenuBar = ({ editor }) => {
       >
         <RedoOutlined />
       </button>
-    </MenuWrapper>
+    </TipTapMenuWrapper>
   );
 };
 
 export const Tiptap = ({ content, onSave, isLoading = false }) => {
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, Link.configure({ openOnClick: false })],
     content,
   });
 
+  const setLink = useCallback(() => {
+    const previousUrl = editor.getAttributes("link").href;
+    const url = window.prompt("URL", previousUrl);
+
+    // cancelled
+    if (url === null) {
+      return;
+    }
+
+    // empty
+    if (url === "") {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+
+      return;
+    }
+
+    // update link
+    editor
+      .chain()
+      .focus()
+      .extendMarkRange("link")
+      .setLink({ href: url, target: "_self" })
+      .run();
+  }, [editor]);
+
   return (
     <Container>
-      <MenuBar editor={editor} />
-      <EditorContent editor={editor} />
+      <MenuBar editor={editor} setLink={setLink} />
+      <EditorContentWrapper>
+        <EditorContent editor={editor} />
+      </EditorContentWrapper>
       <Button
         primary
         onClick={() => {

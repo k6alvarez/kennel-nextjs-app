@@ -12,6 +12,10 @@ import { Tiptap } from "../components/ui-kit/Tiptap";
 import { ThemePreferenceContext } from "./_app";
 import { isTimeStampExpired, saveContent } from "../components/Admin/services";
 
+export const defaultContent = {
+  content: "",
+};
+
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const page = "HOME";
   const contentItems = await prisma.contentItem.findMany({
@@ -41,23 +45,26 @@ const MyApp = ({ contentItems, promoItems }) => {
   const [isLoading, setIsLoading] = useState(false);
   const parsedContentItems = JSON.parse(contentItems);
   const parsedPromoItems = JSON.parse(promoItems);
-  const homeContent = parsedContentItems.find(
-    (item) => item.name === "homeContent"
+
+  const [homeContent, setHomeContent] = useState(
+    parsedContentItems.find((item) => item.name === "homeContent") ||
+      defaultContent
   );
-  const missionStatement = parsedContentItems.find(
-    (item) => item.name === "missionStatement"
+  const [missionStatement, setMissionStatement] = useState(
+    parsedContentItems.find((item) => item.name === "missionStatement") ||
+      defaultContent
+  );
+  const [homePromos, setHomePromos] = useState(
+    parsedPromoItems.filter((item) => item.promoGroup === "gallery")
   );
 
-  const homePromos = parsedPromoItems.filter(
-    (item) => item.promoGroup === "gallery"
+  const [homeCallouts, setHomeCallouts] = useState(
+    parsedPromoItems.filter((item) => item.promoGroup === "callouts") || []
   );
 
-  const homeCallouts = parsedPromoItems.filter(
-    (item) => item.promoGroup === "callouts"
-  );
-
-  const homePromoTitle = parsedContentItems.find(
-    (item) => item.name === "homePromoTitle"
+  const [homePromoTitle, setHomePromoTitle] = useState(
+    parsedContentItems.find((item) => item.name === "homePromoTitle") ||
+      defaultContent
   );
 
   useEffect(() => {
@@ -74,7 +81,8 @@ const MyApp = ({ contentItems, promoItems }) => {
         animate={shouldAnimate}
         showFooter
         promos={homePromos}
-        homePromoTitle={homePromoTitle || { content: "" }}
+        contentItem={homePromoTitle}
+        setContentItem={setHomePromoTitle}
       />
       <Content>
         {editMode ? (
@@ -82,6 +90,9 @@ const MyApp = ({ contentItems, promoItems }) => {
             <Tiptap
               content={homeContent?.content || { content: "" }}
               onSave={(html) => {
+                setHomeContent({
+                  content: html,
+                });
                 saveContent({
                   apiPath: `/api/content-item/${homeContent.id}`,
                   html,
@@ -110,6 +121,9 @@ const MyApp = ({ contentItems, promoItems }) => {
             <Tiptap
               content={missionStatement?.content || { content: "" }}
               onSave={(html) => {
+                setMissionStatement({
+                  content: html,
+                });
                 saveContent({
                   html,
                   apiPath: `/api/content-item/${missionStatement.id}`,

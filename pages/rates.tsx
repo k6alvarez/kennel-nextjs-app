@@ -1,15 +1,11 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { GetServerSideProps } from "next";
 import prisma from "../lib/prisma";
-import Link from "next/link";
 
 import Layout from "../components/Layout";
 import { Content } from "../components/ui-kit/Base";
-import { BlockQuote } from "../components/Reservations/GuestClients/FormIntro";
 import BoardingRates, {
   rateDogRoommate,
-  rateGiantRun,
-  rateHoliday,
   rateLglRun,
   rateSmRun,
 } from "../components/Boarding/BoardingRates";
@@ -18,131 +14,126 @@ import { Card } from "antd";
 import { FlexCards } from "../components/Boarding/styles";
 import { HolidayPremiumDatesList } from "../components/Admin/HolidayPremiumDatesList";
 import { HolidayPremiumDates } from "@prisma/client";
+import { ThemePreferenceContext } from "./_app";
+import { saveContent } from "../components/Admin/services";
+import { EditForm } from "../components/Forms/styles";
+import { Tiptap } from "../components/ui-kit/Tiptap";
+import { defaultContent } from ".";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const dates = await prisma.holidayPremiumDates.findMany();
+  const page = "RATES";
+  const contentItems = await prisma.contentItem.findMany({
+    where: {
+      page,
+    },
+  });
 
   return {
     props: {
       dates: JSON.parse(JSON.stringify(dates)),
       revalidate: 10,
+      contentItems: JSON.stringify(contentItems),
     },
   };
 };
 
 type Props = {
   dates: HolidayPremiumDates[];
+  contentItems: string;
 };
 
-const Rates: React.FC<Props> = (props) => {
-  const { dates } = props;
+const Rates: React.FC<Props> = ({ dates, contentItems }) => {
+  const parsedContentItems = JSON.parse(contentItems);
+  const { editMode } = useContext(ThemePreferenceContext);
+  const [isLoading, setIsLoading] = useState(false);
 
+  const [ratesContent, setRatesContent] = useState(
+    parsedContentItems.find((item) => item.name === "ratesContent") ||
+      defaultContent
+  );
+
+  const [ratesHolidayContent, setRatesHolidayContent] = useState(
+    parsedContentItems.find((item) => item.name === "ratesHolidayContent") ||
+      defaultContent
+  );
+
+  const [ratesDiscountContent, setRatesDiscountContent] = useState(
+    parsedContentItems.find((item) => item.name === "ratesDiscountContent") ||
+      defaultContent
+  );
+
+  const [ratesAdditionalContent, setRatesAdditionalContent] = useState(
+    parsedContentItems.find((item) => item.name === "ratesAdditionalContent") ||
+      defaultContent
+  );
   return (
     <Layout>
       <Content>
-        <h1>Boarding Rates</h1>
-        <p>
-          Boarding charges are calculated by day, similar to human hotels,
-          clients are charged for a full day the day/night they check their pet
-          in, regardless of the check in time. Clients who check out by or
-          before our check out time (11:00 AM) on normal business days will not
-          be charged for that day. Clients who check out after 11:00 AM are
-          charged for the full day.
-        </p>
-        <p>
-          Most clients pay when they pick their pets up, however, you can choose
-          to pre-pay when you arrive. We accept credit and debit cards, cash,
-          personal checks, and travelers checks.
-        </p>
-        <p>
-          Also similar to human hotels that charge more for larger rooms,
-          boarding clients are charged for the size of the run rented. We
-          presently offer three size kennel runs. Small runs housing a single
-          dog are rented for ${rateSmRun} per day and large runs housing a
-          single dog are rented for ${rateLglRun} per day. Giant (extra large)
-          runs housing a single dog are rented for ${rateGiantRun} per day.
-          Other per day or per incident charges may apply. For example, holiday
-          rates are ${rateHoliday} per day more than the normal daily rate.
-        </p>
-        <BlockQuote large>
-          <p>
-            Clients who check out by or before 11:00 AM on normal business days
-            will not be charged for that day
-          </p>
-        </BlockQuote>
+        {editMode ? (
+          <EditForm onSubmit={(e) => e.preventDefault()}>
+            <Tiptap
+              content={ratesContent?.content || { content: "" }}
+              onSave={(html) => {
+                setRatesContent({ content: html });
+                saveContent({
+                  apiPath: `/api/content-item/${ratesContent.id}`,
+                  html,
+                  setLoading: setIsLoading,
+                });
+              }}
+              isLoading={isLoading}
+            />
+          </EditForm>
+        ) : (
+          <div dangerouslySetInnerHTML={{ __html: ratesContent?.content }} />
+        )}
+
         <BoardingRates />
-        <h2>Holiday Premium Dates</h2>
-        <p>
-          Holiday Rates ($2.00 extra per dog per day) will be charged for the
-          following Holiday/Premium Periods:
-        </p>
-        <ul>
-          <li>Thanksgiving Period </li>
-          <li>Christmas Period </li>
-          <li>Labor Day Period </li>
-          <li>Memorial Day Period </li>
-          <li>Independence Day Period</li>
+        {editMode ? (
+          <EditForm onSubmit={(e) => e.preventDefault()}>
+            <Tiptap
+              content={ratesHolidayContent?.content || { content: "" }}
+              onSave={(html) => {
+                setRatesHolidayContent({ content: html });
+                saveContent({
+                  apiPath: `/api/content-item/${ratesHolidayContent.id}`,
+                  html,
+                  setLoading: setIsLoading,
+                });
+              }}
+              isLoading={isLoading}
+            />
+          </EditForm>
+        ) : (
+          <div
+            dangerouslySetInnerHTML={{ __html: ratesHolidayContent?.content }}
+          />
+        )}
 
-          <li>Spring Break Period</li>
-        </ul>
-        <p>
-          Holiday Rates are in effect for the entire holiday period. For
-          example: The Thanksgiving holiday period runs from the Wednesday
-          before Thanksgiving to the Sunday after. Please be sure that you
-          thoroughly read our{" "}
-          <Link href="/policies?tab=premium-cancellation">
-            <a>holiday cancellation policy</a>
-          </Link>{" "}
-          before making Holiday reservations. In addition to Holiday periods, we
-          will also charge $2.00 extra per dog per day for other premium time
-          periods, such as spring break. We have provided a comprehensive list
-          of Holiday Hours and Premium Dates which are subject to this charge.
-        </p>
         <HolidayPremiumDatesList holidayPremiumDates={dates} />
-        <h2>You may also be charged for:</h2>
-        <ul>
-          <li>
-            <Link href="/boarding?tab=medical-issues">
-              <a>Special medical attention</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/policies?tab=feeding">
-              <a>Special food preparation or additional feedings</a>
-            </Link>
-          </li>
 
-          <li>
-            <Link href="/boarding?tab=special-services">
-              <a>Special services</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/policies?tab=bedding">
-              <a>Laundry service fee</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/policies?tab=after-hours">
-              <a>After hours service</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/rates">
-              <a>Holiday Rates</a>
-            </Link>
-          </li>
-        </ul>
-        {/* <HolidayRates /> */}
+        {editMode ? (
+          <EditForm onSubmit={(e) => e.preventDefault()}>
+            <Tiptap
+              content={ratesDiscountContent?.content || { content: "" }}
+              onSave={(html) => {
+                setRatesDiscountContent({ content: html });
+                saveContent({
+                  apiPath: `/api/content-item/${ratesDiscountContent.id}`,
+                  html,
+                  setLoading: setIsLoading,
+                });
+              }}
+              isLoading={isLoading}
+            />
+          </EditForm>
+        ) : (
+          <div
+            dangerouslySetInnerHTML={{ __html: ratesDiscountContent?.content }}
+          />
+        )}
 
-        <h1>Discounts</h1>
-
-        <p>
-          We offer discounts for multiple pets belonging to the same family when
-          the dogs stay in the same run. We charge the daily rate for the run
-          plus ${rateDogRoommate} extra per roommate.
-        </p>
-        <p>See a few boarding examples below:</p>
         <FlexCards>
           <Card>
             <p>Large run used to house three small dogs</p>
@@ -178,39 +169,29 @@ const Rates: React.FC<Props> = (props) => {
             </p>
           </Card>
         </FlexCards>
-        <BlockQuote large>
-          Premium and holiday rates will be applied to discounted dogs should
-          the dog occupy a run during these dates.
-        </BlockQuote>
-        <p>
-          Gillette Kennels reserves the right to determine if dogs housed in the
-          same run are suited for multi-pet accommodations. When pets are
-          extremely active, aggressive, or messy, it is not to their benefit to
-          house them together. Our primary concern is the comfort, health, and
-          well-being of pets in our care. Overcrowding, (boarding too many dogs
-          together) is an invitation to health and sanitation problems that we
-          make every effort to prevent. Under no circumstances will we board
-          more that three small dogs or two large dogs (over 40 LBS) in a single
-          run.
-        </p>
-        <BlockQuote large>
-          <p>
-            We also offer a 10% discount to clients who board a dog for an
-            extended stay.
-          </p>
-        </BlockQuote>
-        <p>
-          The 10% discount applies to boarding rates ONLY, and does not extend
-          to “special services.” Clients who contract for an extended stay must
-          prepay 50% of the boarding charge. Any client that contracts for an
-          extended stay and picks-up early will be charged the lesser of the
-          entire discounted booked reservation, or the present daily rate for
-          entire period that the dog was boarded. We will also charge our daily
-          rate for any additional days that a discounted dog is boarded after
-          the scheduled departure date. Premium and holiday rates will be
-          applied to discounted dogs should the dog occupy a run during these
-          dates.
-        </p>
+
+        {editMode ? (
+          <EditForm onSubmit={(e) => e.preventDefault()}>
+            <Tiptap
+              content={ratesAdditionalContent?.content || { content: "" }}
+              onSave={(html) => {
+                setRatesAdditionalContent({ content: html });
+                saveContent({
+                  apiPath: `/api/content-item/${ratesAdditionalContent.id}`,
+                  html,
+                  setLoading: setIsLoading,
+                });
+              }}
+              isLoading={isLoading}
+            />
+          </EditForm>
+        ) : (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: ratesAdditionalContent?.content,
+            }}
+          />
+        )}
       </Content>
     </Layout>
   );

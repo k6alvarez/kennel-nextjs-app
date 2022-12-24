@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Tabs } from "antd";
 import prisma from "../lib/prisma";
@@ -16,6 +16,8 @@ import { Consultations } from "../components/Training/Consultations";
 import { BoardingSchool } from "../components/Training/BoardingSchool";
 import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
 import { isTimeStampExpired } from "../components/Admin/services";
+import { ThemePreferenceContext } from "./_app";
+import { defaultContent } from ".";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const page = "TRAINING";
@@ -41,6 +43,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
 const Training = ({ contentItems, promoItems }) => {
   const router = useRouter();
+  const { editMode } = useContext(ThemePreferenceContext);
   const { tab } = router.query;
   const [activeKey, setActiveKey] = useState("training");
   const [expiry, setExpiry] = useLocalStorage<number>(
@@ -48,19 +51,56 @@ const Training = ({ contentItems, promoItems }) => {
     null
   );
   const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const parsedContentItems = JSON.parse(contentItems);
   const parsedPromoItems = JSON.parse(promoItems);
-  const trainingPromos = parsedPromoItems.filter(
-    (item) => item.promoGroup === "gallery"
+
+  const [trainingPromos, setTrainingPromos] = useState(
+    parsedPromoItems.filter((item) => item.promoGroup === "gallery")
+  );
+  const [trainingPromoTitle, setTrainingPromoTitle] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingPromoTitle" || defaultContent
+    )
   );
 
-  const trainingPromoTitle = parsedContentItems.find(
-    (item) => item.name === "trainingPromoTitle"
+  const [trainingContent, setTrainingContent] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingContent" || defaultContent
+    )
   );
 
-  const trainingContent = parsedContentItems.find(
-    (item) => item.name === "trainingContent"
+  const [trainingGroupLessons, setTrainingGroupLessons] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingGroupLessons" || defaultContent
+    )
   );
+
+  const [trainingBoardingSchool, setTrainingBoardingSchool] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingBoardingSchool" || defaultContent
+    )
+  );
+
+  const [trainingPrivateLessons, setTrainingPrivateLessons] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingPrivateLessons" || defaultContent
+    )
+  );
+
+  const [trainingAgilityLessons, setTrainingAgilityLessons] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingAgilityLessons" || defaultContent
+    )
+  );
+
+  const [trainingConsultations, setTrainingConsultations] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingConsultations" || defaultContent
+    )
+  );
+
+  const stickyEditorPosTop = "108px";
 
   useEffect(() => {
     if (isTimeStampExpired(expiry)) {
@@ -79,28 +119,86 @@ const Training = ({ contentItems, promoItems }) => {
     {
       label: "Training",
       key: "training",
-      children: <TrainingHome trainingContent={trainingContent} />,
+      children: (
+        <TrainingHome
+          editorStickyTop={stickyEditorPosTop}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={trainingContent}
+          setContent={setTrainingContent}
+          editMode={editMode}
+        />
+      ),
     },
     {
       label: "Group Lessons",
       key: "group-lessons",
-      children: <GroupLessons />,
+      children: (
+        <GroupLessons
+          editorStickyTop={stickyEditorPosTop}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={trainingGroupLessons}
+          setContent={setTrainingGroupLessons}
+          editMode={editMode}
+        />
+      ),
     },
     {
       label: "Boarding School",
       key: "boarding-school",
-      children: <BoardingSchool />,
+      children: (
+        <BoardingSchool
+          editorStickyTop={stickyEditorPosTop}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={trainingBoardingSchool}
+          setContent={setTrainingBoardingSchool}
+          editMode={editMode}
+        />
+      ),
     },
     {
       label: "Private Lessons",
       key: "private-lessons",
-      children: <PrivateLessons />,
+      children: (
+        <PrivateLessons
+          editorStickyTop={stickyEditorPosTop}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={trainingPrivateLessons}
+          setContent={setTrainingPrivateLessons}
+          editMode={editMode}
+        />
+      ),
     },
-    { label: "Agility", key: "agility", children: <AgilityLessons /> },
+    {
+      label: "Agility",
+      key: "agility",
+      children: (
+        <AgilityLessons
+          editorStickyTop={stickyEditorPosTop}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={trainingAgilityLessons}
+          setContent={setTrainingAgilityLessons}
+          editMode={editMode}
+        />
+      ),
+    },
     {
       label: "Consultations",
       key: "consultations",
-      children: <Consultations />,
+      children: (
+        <Consultations
+          editorStickyTop={stickyEditorPosTop}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+          content={trainingConsultations}
+          setContent={setTrainingConsultations}
+          editMode={editMode}
+        />
+      ),
     },
   ];
   return (
@@ -109,7 +207,8 @@ const Training = ({ contentItems, promoItems }) => {
         animate={shouldAnimate}
         showFooter
         promos={trainingPromos}
-        homePromoTitle={trainingPromoTitle || { content: "" }}
+        contentItem={trainingPromoTitle || { content: "" }}
+        setContentItem={setTrainingPromoTitle}
       />
       <TabsListWrapper>
         <Tabs

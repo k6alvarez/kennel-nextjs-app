@@ -1,23 +1,38 @@
 import Link from "next/link";
 import React from "react";
+import { saveContent } from "../Admin/services";
+import { EditForm } from "../Forms/styles";
 import { Content } from "../ui-kit/Base";
+import { Tiptap } from "../ui-kit/Tiptap";
 
-export const AgilityLessons = () => {
+export const AgilityLessons = ({
+  editMode,
+  content,
+  setContent,
+  setIsLoading,
+  isLoading,
+  editorStickyTop,
+}) => {
   return (
-    <Content>
-      <h1>Agility Training</h1>
-      <p>
-        Fun for owners and dogs. Your dog will learn how to negotiate jumps,
-        tunnels, and obstacles. Unlimited practice time during scheduled course
-        hours (while enrolled in class).
-      </p>
-      <p>
-        Contact us for more information, or view our{" "}
-        <Link href="/training">
-          <a>class schedule</a>
-        </Link>{" "}
-        for upcoming classes.
-      </p>
+    <Content editorStickyTop={editorStickyTop}>
+      {editMode ? (
+        <EditForm onSubmit={(e) => e.preventDefault()}>
+          <Tiptap
+            content={content?.content || { content: "" }}
+            onSave={(html) => {
+              setContent({ content: html });
+              saveContent({
+                html,
+                apiPath: `/api/content-item/${content.id}`,
+                setLoading: setIsLoading,
+              });
+            }}
+            isLoading={isLoading}
+          />
+        </EditForm>
+      ) : (
+        <div dangerouslySetInnerHTML={{ __html: content?.content }} />
+      )}
       {/* <GeneralContactForm
         emailSubject={"Gillette Kennels Agility Training Contact"}
         formHint="Learn more about Agility Training using the form below."
