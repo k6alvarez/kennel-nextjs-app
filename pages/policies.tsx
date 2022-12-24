@@ -46,8 +46,8 @@ const Policies: React.FC<Props> = ({ contentItems }) => {
   const parsedContentItems = JSON.parse(contentItems);
   const { editMode } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
-  const policiesContent = parsedContentItems.find(
-    (item) => item.name === "policiesContent"
+  const [policiesContent, setPoliciesContent] = useState(
+    parsedContentItems.find((item) => item.name === "policiesContent")
   );
 
   useEffect(() => {
@@ -72,6 +72,7 @@ const Policies: React.FC<Props> = ({ contentItems }) => {
             <Tiptap
               content={policiesContent?.content || { content: "" }}
               onSave={(html) => {
+                setPoliciesContent({ content: html });
                 saveContent({
                   apiPath: `/api/content-item/${policiesContent.id}`,
                   html,

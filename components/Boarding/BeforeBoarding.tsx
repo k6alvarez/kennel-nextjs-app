@@ -10,6 +10,7 @@ import { Tiptap } from "../ui-kit/Tiptap";
 export const BeforeBoarding = ({
   editMode,
   content,
+  setContent,
   setIsLoading,
   isLoading,
   editorStickyTop,
@@ -21,6 +22,7 @@ export const BeforeBoarding = ({
           <Tiptap
             content={content?.content || { content: "" }}
             onSave={(html) => {
+              setContent({ content: html });
               saveContent({
                 apiPath: `/api/content-item/${content.id}`,
                 html,

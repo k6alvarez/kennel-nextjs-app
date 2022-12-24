@@ -10,7 +10,9 @@ import { saveContent } from "../Admin/services";
 export const BoardingHome = ({
   editMode,
   content,
+  setContent,
   secondaryContent,
+  setSecondaryContent,
   setIsLoading,
   isLoading,
   editorStickyTop,
@@ -23,6 +25,7 @@ export const BoardingHome = ({
             <Tiptap
               content={content?.content || { content: "" }}
               onSave={(html) => {
+                setContent({ content: html });
                 saveContent({
                   apiPath: `/api/content-item/${content.id}`,
                   html,
@@ -43,6 +46,7 @@ export const BoardingHome = ({
             <Tiptap
               content={secondaryContent?.content || { content: "" }}
               onSave={(html) => {
+                setSecondaryContent({ content: html });
                 saveContent({
                   apiPath: `/api/content-item/${secondaryContent.id}`,
                   html,

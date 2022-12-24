@@ -8,6 +8,7 @@ import { Tiptap } from "../ui-kit/Tiptap";
 export const AgilityLessons = ({
   editMode,
   content,
+  setContent,
   setIsLoading,
   isLoading,
   editorStickyTop,
@@ -19,6 +20,7 @@ export const AgilityLessons = ({
           <Tiptap
             content={content?.content || { content: "" }}
             onSave={(html) => {
+              setContent({ content: html });
               saveContent({
                 html,
                 apiPath: `/api/content-item/${content.id}`,

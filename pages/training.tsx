@@ -17,6 +17,7 @@ import { BoardingSchool } from "../components/Training/BoardingSchool";
 import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
 import { isTimeStampExpired } from "../components/Admin/services";
 import { ThemePreferenceContext } from "./_app";
+import { defaultContent } from ".";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const page = "TRAINING";
@@ -53,36 +54,50 @@ const Training = ({ contentItems, promoItems }) => {
   const [isLoading, setIsLoading] = useState(false);
   const parsedContentItems = JSON.parse(contentItems);
   const parsedPromoItems = JSON.parse(promoItems);
-  const trainingPromos = parsedPromoItems.filter(
-    (item) => item.promoGroup === "gallery"
+
+  const [trainingPromos, setTrainingPromos] = useState(
+    parsedPromoItems.filter((item) => item.promoGroup === "gallery")
+  );
+  const [trainingPromoTitle, setTrainingPromoTitle] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingPromoTitle" || defaultContent
+    )
   );
 
-  const trainingPromoTitle = parsedContentItems.find(
-    (item) => item.name === "trainingPromoTitle"
+  const [trainingContent, setTrainingContent] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingContent" || defaultContent
+    )
   );
 
-  const trainingContent = parsedContentItems.find(
-    (item) => item.name === "trainingContent"
+  const [trainingGroupLessons, setTrainingGroupLessons] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingGroupLessons" || defaultContent
+    )
   );
 
-  const trainingGroupLessons = parsedContentItems.find(
-    (item) => item.name === "trainingGroupLessons"
+  const [trainingBoardingSchool, setTrainingBoardingSchool] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingBoardingSchool" || defaultContent
+    )
   );
 
-  const trainingBoardingSchool = parsedContentItems.find(
-    (item) => item.name === "trainingBoardingSchool"
+  const [trainingPrivateLessons, setTrainingPrivateLessons] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingPrivateLessons" || defaultContent
+    )
   );
 
-  const trainingPrivateLessons = parsedContentItems.find(
-    (item) => item.name === "trainingPrivateLessons"
+  const [trainingAgilityLessons, setTrainingAgilityLessons] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingAgilityLessons" || defaultContent
+    )
   );
 
-  const trainingAgilityLessons = parsedContentItems.find(
-    (item) => item.name === "trainingAgilityLessons"
-  );
-
-  const trainingConsultations = parsedContentItems.find(
-    (item) => item.name === "trainingConsultations"
+  const [trainingConsultations, setTrainingConsultations] = useState(
+    parsedContentItems.find(
+      (item) => item.name === "trainingConsultations" || defaultContent
+    )
   );
 
   const stickyEditorPosTop = "108px";
@@ -110,6 +125,7 @@ const Training = ({ contentItems, promoItems }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={trainingContent}
+          setContent={setTrainingContent}
           editMode={editMode}
         />
       ),
@@ -123,6 +139,7 @@ const Training = ({ contentItems, promoItems }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={trainingGroupLessons}
+          setContent={setTrainingGroupLessons}
           editMode={editMode}
         />
       ),
@@ -136,6 +153,7 @@ const Training = ({ contentItems, promoItems }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={trainingBoardingSchool}
+          setContent={setTrainingBoardingSchool}
           editMode={editMode}
         />
       ),
@@ -149,6 +167,7 @@ const Training = ({ contentItems, promoItems }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={trainingPrivateLessons}
+          setContent={setTrainingPrivateLessons}
           editMode={editMode}
         />
       ),
@@ -162,6 +181,7 @@ const Training = ({ contentItems, promoItems }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={trainingAgilityLessons}
+          setContent={setTrainingAgilityLessons}
           editMode={editMode}
         />
       ),
@@ -175,6 +195,7 @@ const Training = ({ contentItems, promoItems }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={trainingConsultations}
+          setContent={setTrainingConsultations}
           editMode={editMode}
         />
       ),
@@ -187,6 +208,7 @@ const Training = ({ contentItems, promoItems }) => {
         showFooter
         promos={trainingPromos}
         contentItem={trainingPromoTitle || { content: "" }}
+        setContentItem={setTrainingPromoTitle}
       />
       <TabsListWrapper>
         <Tabs

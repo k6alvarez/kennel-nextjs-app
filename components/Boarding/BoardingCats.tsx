@@ -9,6 +9,7 @@ import BoardingRates from "./BoardingRates";
 const BoardingCats = ({
   editMode,
   content,
+  setContent,
   setIsLoading,
   isLoading,
   editorStickyTop,
@@ -20,6 +21,7 @@ const BoardingCats = ({
           <Tiptap
             content={content?.content || { content: "" }}
             onSave={(html) => {
+              setContent({ content: html });
               saveContent({
                 apiPath: `/api/content-item/${content.id}`,
                 html,

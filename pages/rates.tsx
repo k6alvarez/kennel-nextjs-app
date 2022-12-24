@@ -1,15 +1,11 @@
 import React, { useContext, useState } from "react";
 import { GetServerSideProps } from "next";
 import prisma from "../lib/prisma";
-import Link from "next/link";
 
 import Layout from "../components/Layout";
 import { Content } from "../components/ui-kit/Base";
-import { BlockQuote } from "../components/Reservations/GuestClients/FormIntro";
 import BoardingRates, {
   rateDogRoommate,
-  rateGiantRun,
-  rateHoliday,
   rateLglRun,
   rateSmRun,
 } from "../components/Boarding/BoardingRates";
@@ -22,6 +18,7 @@ import { ThemePreferenceContext } from "./_app";
 import { saveContent } from "../components/Admin/services";
 import { EditForm } from "../components/Forms/styles";
 import { Tiptap } from "../components/ui-kit/Tiptap";
+import { defaultContent } from ".";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const dates = await prisma.holidayPremiumDates.findMany();
@@ -50,22 +47,26 @@ const Rates: React.FC<Props> = ({ dates, contentItems }) => {
   const parsedContentItems = JSON.parse(contentItems);
   const { editMode } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
-  const ratesContent = parsedContentItems.find(
-    (item) => item.name === "ratesContent"
+
+  const [ratesContent, setRatesContent] = useState(
+    parsedContentItems.find((item) => item.name === "ratesContent") ||
+      defaultContent
   );
 
-  const ratesHolidayContent = parsedContentItems.find(
-    (item) => item.name === "ratesHolidayContent"
+  const [ratesHolidayContent, setRatesHolidayContent] = useState(
+    parsedContentItems.find((item) => item.name === "ratesHolidayContent") ||
+      defaultContent
   );
 
-  const ratesDiscountContent = parsedContentItems.find(
-    (item) => item.name === "ratesDiscountContent"
+  const [ratesDiscountContent, setRatesDiscountContent] = useState(
+    parsedContentItems.find((item) => item.name === "ratesDiscountContent") ||
+      defaultContent
   );
 
-  const ratesAdditionalContent = parsedContentItems.find(
-    (item) => item.name === "ratesAdditionalContent"
+  const [ratesAdditionalContent, setRatesAdditionalContent] = useState(
+    parsedContentItems.find((item) => item.name === "ratesAdditionalContent") ||
+      defaultContent
   );
-
   return (
     <Layout>
       <Content>
@@ -74,6 +75,7 @@ const Rates: React.FC<Props> = ({ dates, contentItems }) => {
             <Tiptap
               content={ratesContent?.content || { content: "" }}
               onSave={(html) => {
+                setRatesContent({ content: html });
                 saveContent({
                   apiPath: `/api/content-item/${ratesContent.id}`,
                   html,
@@ -93,6 +95,7 @@ const Rates: React.FC<Props> = ({ dates, contentItems }) => {
             <Tiptap
               content={ratesHolidayContent?.content || { content: "" }}
               onSave={(html) => {
+                setRatesHolidayContent({ content: html });
                 saveContent({
                   apiPath: `/api/content-item/${ratesHolidayContent.id}`,
                   html,
@@ -115,6 +118,7 @@ const Rates: React.FC<Props> = ({ dates, contentItems }) => {
             <Tiptap
               content={ratesDiscountContent?.content || { content: "" }}
               onSave={(html) => {
+                setRatesDiscountContent({ content: html });
                 saveContent({
                   apiPath: `/api/content-item/${ratesDiscountContent.id}`,
                   html,
@@ -171,6 +175,7 @@ const Rates: React.FC<Props> = ({ dates, contentItems }) => {
             <Tiptap
               content={ratesAdditionalContent?.content || { content: "" }}
               onSave={(html) => {
+                setRatesAdditionalContent({ content: html });
                 saveContent({
                   apiPath: `/api/content-item/${ratesAdditionalContent.id}`,
                   html,

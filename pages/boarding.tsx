@@ -8,7 +8,6 @@ import prisma from "../lib/prisma";
 
 import Layout from "../components/Layout";
 import { Promo } from "../components/ui-kit/Promo";
-import { PromoTitle } from "../components/ui-kit/Promo/styles-promo";
 import { BoardingHome } from "../components/Boarding/BoardingHome";
 import BoardingCats from "../components/Boarding/BoardingCats";
 import { BeforeBoarding } from "../components/Boarding/BeforeBoarding";
@@ -20,6 +19,7 @@ import { ThemePreferenceContext } from "./_app";
 import { BoardingServices } from "../components/Boarding/BoardingServices";
 import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
 import { isTimeStampExpired } from "../components/Admin/services";
+import { defaultContent } from ".";
 
 export const TabsListWrapper = styled.div`
   position: relative;
@@ -77,42 +77,53 @@ const Boarding = ({ contentItems, promoItems }) => {
   const parsedContentItems = JSON.parse(contentItems);
   const parsedPromoItems = JSON.parse(promoItems);
 
-  const boardingHome = parsedContentItems.find(
-    (item) => item.name === "boardingHome"
+  const [boardingHome, setBoardingHome] = useState(
+    parsedContentItems.find((item) => item.name === "boardingHome") ||
+      defaultContent
   );
 
-  const boardingCats = parsedContentItems.find(
-    (item) => item.name === "boardingCats"
+  const [boardingCats, setBoardingCats] = useState(
+    parsedContentItems.find((item) => item.name === "boardingCats") ||
+      defaultContent
   );
 
-  const boardingBefore = parsedContentItems.find(
-    (item) => item.name === "boardingBefore"
+  const [boardingBefore, setBoardingBefore] = useState(
+    parsedContentItems.find((item) => item.name === "boardingBefore") ||
+      defaultContent
   );
 
-  const boardingCheckin = parsedContentItems.find(
-    (item) => item.name === "boardingCheckin"
+  const [boardingCheckin, setBoardingCheckin] = useState(
+    parsedContentItems.find((item) => item.name === "boardingCheckin") ||
+      defaultContent
   );
 
-  const boardingVaccinations = parsedContentItems.find(
-    (item) => item.name === "boardingVaccinations"
+  const [boardingVaccinations, setBoardingVaccinations] = useState(
+    parsedContentItems.find((item) => item.name === "boardingVaccinations") ||
+      defaultContent
   );
 
-  const boardingMedicalIssues = parsedContentItems.find(
-    (item) => item.name === "boardingMedicalIssues"
+  const [boardingMedicalIssues, setBoardingMedicalIssues] = useState(
+    parsedContentItems.find((item) => item.name === "boardingMedicalIssues") ||
+      defaultContent
   );
 
-  const boardingServices = parsedContentItems.find(
-    (item) => item.name === "boardingServices"
+  const [boardingServices, setBoardingServices] = useState(
+    parsedContentItems.find((item) => item.name === "boardingServices") ||
+      defaultContent
   );
 
-  const boardingCWing = parsedContentItems.find(
-    (item) => item.name === "boardingCWing"
+  const [boardingCWing, setBoardingCWing] = useState(
+    parsedContentItems.find((item) => item.name === "boardingCWing") ||
+      defaultContent
   );
-  const boardingPromos = parsedPromoItems.filter(
-    (item) => item.promoGroup === "gallery"
+
+  const [boardingPromos, setBoardingPromos] = useState(
+    parsedPromoItems.filter((item) => item.promoGroup === "gallery")
   );
-  const boardingPromoTitle = parsedContentItems.find(
-    (item) => item.name === "boardingPromoTitle"
+
+  const [boardingPromoTitle, setBoardingPromoTitle] = useState(
+    parsedContentItems.find((item) => item.name === "boardingPromoTitle") ||
+      defaultContent
   );
 
   const stickyEditorPosTop = "108px";
@@ -143,7 +154,9 @@ const Boarding = ({ contentItems, promoItems }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingHome}
+          setContent={setBoardingHome}
           secondaryContent={boardingCWing}
+          setSecondaryContent={setBoardingCWing}
           editMode={editMode}
         />
       ),
@@ -157,6 +170,7 @@ const Boarding = ({ contentItems, promoItems }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingCats}
+          setContent={setBoardingCats}
           editMode={editMode}
         />
       ),
@@ -170,6 +184,7 @@ const Boarding = ({ contentItems, promoItems }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingBefore}
+          setContent={setBoardingBefore}
           editMode={editMode}
         />
       ),
@@ -183,6 +198,7 @@ const Boarding = ({ contentItems, promoItems }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingCheckin}
+          setContent={setBoardingCheckin}
           editMode={editMode}
         />
       ),
@@ -196,6 +212,7 @@ const Boarding = ({ contentItems, promoItems }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingVaccinations}
+          setContent={setBoardingVaccinations}
           editMode={editMode}
         />
       ),
@@ -209,6 +226,7 @@ const Boarding = ({ contentItems, promoItems }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingMedicalIssues}
+          setContent={setBoardingMedicalIssues}
           editMode={editMode}
         />
       ),
@@ -222,6 +240,7 @@ const Boarding = ({ contentItems, promoItems }) => {
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           content={boardingServices}
+          setContent={setBoardingServices}
           editMode={editMode}
         />
       ),
@@ -235,6 +254,7 @@ const Boarding = ({ contentItems, promoItems }) => {
         showFooter
         promos={boardingPromos}
         contentItem={boardingPromoTitle || { content: "" }}
+        setContentItem={setBoardingPromoTitle}
       />
       <TabsListWrapper>
         <Tabs

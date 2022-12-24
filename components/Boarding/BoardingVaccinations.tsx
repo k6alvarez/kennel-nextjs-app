@@ -12,6 +12,7 @@ import { FlexCards } from "./styles";
 export const BoardingVaccinations = ({
   editMode,
   content,
+  setContent,
   setIsLoading,
   isLoading,
   editorStickyTop,
@@ -23,6 +24,7 @@ export const BoardingVaccinations = ({
           <Tiptap
             content={content?.content || { content: "" }}
             onSave={(html) => {
+              setContent({ content: html });
               saveContent({
                 apiPath: `/api/content-item/${content.id}`,
                 html,

@@ -10,6 +10,7 @@ import { Tiptap } from "../ui-kit/Tiptap";
 export const TrainingHome = ({
   editMode,
   content,
+  setContent,
   setIsLoading,
   isLoading,
   editorStickyTop,
@@ -22,6 +23,7 @@ export const TrainingHome = ({
             <Tiptap
               content={content?.content || { content: "" }}
               onSave={(html) => {
+                setContent({ content: html });
                 saveContent({
                   html,
                   apiPath: `/api/content-item/${content.id}`,
