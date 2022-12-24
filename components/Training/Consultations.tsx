@@ -9,6 +9,7 @@ import { Tiptap } from "../ui-kit/Tiptap";
 export const Consultations = ({
   editMode,
   content,
+  setContent,
   setIsLoading,
   isLoading,
   editorStickyTop,
@@ -20,6 +21,7 @@ export const Consultations = ({
           <Tiptap
             content={content?.content || { content: "" }}
             onSave={(html) => {
+              setContent({ content: html });
               saveContent({
                 html,
                 apiPath: `/api/content-item/${content.id}`,
