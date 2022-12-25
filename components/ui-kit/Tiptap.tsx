@@ -168,13 +168,13 @@ const MenuBar = ({ editor, setLink }) => {
         onClick={setLink}
         className={editor.isActive("link") ? "is-active" : ""}
       >
-        setLink
+        set link
       </button>
       <button
         onClick={() => editor.chain().focus().unsetLink().run()}
         disabled={!editor.isActive("link")}
       >
-        unsetLink
+        clear link
       </button>
       <button
         onClick={() => editor.chain().focus().undo().run()}
@@ -219,7 +219,7 @@ export const Tiptap = ({ content, onSave, isLoading = false }) => {
       .chain()
       .focus()
       .extendMarkRange("link")
-      .setLink({ href: url, target: "_self" })
+      .setLink({ href: url, target: "_blank" })
       .run();
   }, [editor]);
 
