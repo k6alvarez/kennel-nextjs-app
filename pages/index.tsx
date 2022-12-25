@@ -78,6 +78,7 @@ const MyApp = ({ contentItems, promoItems }) => {
         animate={shouldAnimate}
         showFooter
         promos={homePromos}
+        setPromos={setHomePromos}
         contentItem={homePromoTitle}
         setContentItem={setHomePromoTitle}
       />
@@ -111,7 +112,12 @@ const MyApp = ({ contentItems, promoItems }) => {
           allowFullScreen
         ></iframe>
       </Content>
-      <Promos delay={defaultDelay * 6} promos={homeCallouts} />
+      <Promos
+        delay={defaultDelay * 6}
+        promos={homeCallouts}
+        setPromos={setHomeCallouts}
+        editMode={editMode}
+      />
       <Content>
         {editMode ? (
           <EditForm onSubmit={(e) => e.preventDefault()}>

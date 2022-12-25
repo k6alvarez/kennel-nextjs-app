@@ -196,6 +196,7 @@ const Training = ({ contentItems, promoItems }) => {
         animate={shouldAnimate}
         showFooter
         promos={trainingPromos}
+        setPromos={setTrainingPromos}
         contentItem={trainingPromoTitle || { content: "" }}
         setContentItem={setTrainingPromoTitle}
       />

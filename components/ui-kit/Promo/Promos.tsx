@@ -4,8 +4,10 @@ import { GridItems, GridItem } from "../Base";
 import { PromoPics, PromoTextWrapper, ImageZoomWrapper } from "./styles-promo";
 import Link from "next/link";
 import { ThemePreferenceContext } from "../../../pages/_app";
+import { EditablePromo } from "./EditablePromo";
 
 interface PromosProps {
+  editMode: boolean;
   promos: {
     size?: string;
     image: string;
@@ -13,6 +15,7 @@ interface PromosProps {
     description?: string;
     link?: string;
   }[];
+  setPromos?: (promos: any) => void;
   delay?: number;
   breakMoble?: boolean;
   transparent?: boolean;
@@ -26,9 +29,10 @@ export const Promos = ({
   transparent,
   delay = 0,
   promos = [],
+  editMode = false,
+  setPromos = undefined,
   variant = "row",
   noMargin = false,
-  animate = true,
   noFlexGrow = false,
 }: PromosProps) => {
   const { currentTheme } = useContext(ThemePreferenceContext);
@@ -39,72 +43,22 @@ export const Promos = ({
       flex={noFlexGrow ? "unset" : "1"}
     >
       <GridItems variant={variant}>
-        {promos.map((promo, i) => {
-          const props = useSpring({
-            to: { opacity: 1, transform: "translate3d(0,0,0)" },
-            from: {
-              opacity: 0,
-              transform: `translate3d(0, 100px ,0)`,
-            },
-            delay: delay + i * 180,
-            config: config.slow,
-          });
-          const urlArray = promo.image.split("/");
-          const key = urlArray[urlArray.length - 1].split(".")[0] + "-" + i;
-          return (
-            <animated.div
-              key={key}
-              style={{
-                ...props,
-                margin: noMargin ? "2rem 0" : "2rem 1rem",
-                display: noMargin ? "flex" : "initial",
-                justifyContent: noMargin ? "center" : "initial",
-                width: noMargin ? "100%" : "calc(100% - 2rem)",
-              }}
-            >
-              {promo.link ? (
-                <PromoTextWrapper
-                  currentTheme={currentTheme}
-                  hasLink={!!promo.link}
-                >
-                  <Link href={promo.link}>
-                    <a>
-                      <ImageZoomWrapper>
-                        <GridItem img={promo.image} />
-                      </ImageZoomWrapper>
-                      <div>
-                        {promo.title ? (
-                          <h2 style={{ width: "100%", textAlign: "center" }}>
-                            {promo.title}
-                          </h2>
-                        ) : null}
-                        {promo.description ? (
-                          <span style={{ width: "100%", textAlign: "center" }}>
-                            {promo.description}
-                          </span>
-                        ) : null}
-                      </div>
-                    </a>
-                  </Link>
-                </PromoTextWrapper>
-              ) : (
-                <>
-                  <GridItem size={promo.size} img={promo.image} />
-                  {promo.title ? (
-                    <h2 style={{ width: "100%", textAlign: "center" }}>
-                      {promo.title}
-                    </h2>
-                  ) : null}
-                  {promo.description ? (
-                    <span style={{ width: "100%", textAlign: "center" }}>
-                      {promo.description}
-                    </span>
-                  ) : null}
-                </>
-              )}
-            </animated.div>
-          );
-        })}
+        {promos.map((promo, i) => (
+          <EditablePromo
+            noMargin={noMargin}
+            delay={delay}
+            promo={promo}
+            updatePromo={(newPromo) => {
+              const newPromos = [...promos];
+              newPromos[i] = newPromo;
+              setPromos(newPromos);
+            }}
+            editMode={editMode}
+            currentTheme={currentTheme}
+            i={i}
+            key={i}
+          />
+        ))}
       </GridItems>
     </PromoPics>
   );

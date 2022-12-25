@@ -27,6 +27,7 @@ export const defaultDelay = 200;
 
 export const Promo = ({
   promos = [],
+  setPromos = undefined,
   children = undefined,
   showFooter = false,
   animate = true,
@@ -115,7 +116,9 @@ export const Promo = ({
           animate={animate}
           transparent
           delay={defaultDelay * 4}
+          editMode={editMode}
           promos={promos}
+          setPromos={setPromos}
           noMargin
           noFlexGrow
         />
