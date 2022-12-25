@@ -153,6 +153,8 @@ model User {
   guestReservation      GuestReservation[]
   ContentItem           ContentItem[]
   PromoItem             PromoItem[]
+  Policy                Policy[]
+  Question              Question[]
 
   @@map(name: "users")
 }
@@ -280,4 +282,26 @@ model PromoItem {
   link        String?
 
   @@map(name: "promo_items")
+}
+
+model Policy {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  content   String
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String?
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+  @@map(name: "policies")
+}
+
+model Question {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  content   String
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String?
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+  @@map(name: "questions")
 }

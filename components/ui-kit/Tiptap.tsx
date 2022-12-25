@@ -192,7 +192,7 @@ const MenuBar = ({ editor, setLink }) => {
   );
 };
 
-export const Tiptap = ({ content, onSave, isLoading = false }) => {
+export const Tiptap = ({ content, onSave = undefined, isLoading = false }) => {
   const editor = useEditor({
     extensions: [StarterKit, Link.configure({ openOnClick: false })],
     content,
@@ -229,21 +229,23 @@ export const Tiptap = ({ content, onSave, isLoading = false }) => {
       <EditorContentWrapper>
         <EditorContent editor={editor} />
       </EditorContentWrapper>
-      <Button
-        primary
-        onClick={() => {
-          const html = editor.getHTML();
-          onSave(html);
-        }}
-      >
-        {isLoading ? (
-          <span>
-            <LoadingOutlined /> Saving
-          </span>
-        ) : (
-          "Save Changes"
-        )}
-      </Button>
+      {onSave && (
+        <Button
+          primary
+          onClick={() => {
+            const html = editor.getHTML();
+            onSave(html);
+          }}
+        >
+          {isLoading ? (
+            <span>
+              <LoadingOutlined /> Saving
+            </span>
+          ) : (
+            "Save Changes"
+          )}
+        </Button>
+      )}
     </Container>
   );
 };

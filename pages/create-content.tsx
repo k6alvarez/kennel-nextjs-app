@@ -2,10 +2,31 @@ import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Router from "next/router";
 import { Content } from "../components/ui-kit/Base";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { LoadingOutlined, LockOutlined } from "@ant-design/icons";
+import prisma from "../lib/prisma";
+import { GetServerSideProps } from "next/types";
 
-const CreateContent: React.FC = () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getSession({ req });
+  if (!session) {
+    res.statusCode = 403;
+    return { props: {} };
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email },
+  });
+
+  return {
+    props: {
+      user: JSON.parse(JSON.stringify(user)),
+      revalidate: 10,
+    },
+  };
+};
+
+const CreateContent = ({ user }) => {
   const { data: session, status } = useSession();
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
@@ -44,7 +65,7 @@ const CreateContent: React.FC = () => {
     );
   }
 
-  if (!session) {
+  if (!session || !user.permissions.includes("ADMIN")) {
     return (
       <Layout>
         <Content>

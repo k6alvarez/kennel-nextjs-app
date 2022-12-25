@@ -165,8 +165,8 @@ export const PromoPics = styled.div`
 `;
 
 export const PromoTitleWrapper = styled.div`
-  width: 100%;
-  float: right;
+  width: 90vw;
+  margin: 0 auto;
   text-align: center;
   margin-bottom: ${({ theme }) => theme.space[4]};
   flex: 1;
