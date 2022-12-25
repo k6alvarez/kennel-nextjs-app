@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
-import Router from "next/router";
 import { Content } from "../components/ui-kit/Base";
 import { getSession, useSession } from "next-auth/react";
 import { LoadingOutlined, LockOutlined } from "@ant-design/icons";
@@ -8,6 +7,7 @@ import { EditForm } from "../components/Forms/styles";
 import { Tiptap } from "../components/ui-kit/Tiptap";
 import prisma from "../lib/prisma";
 import { GetServerSideProps } from "next";
+import { message } from "antd";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -88,7 +88,10 @@ const CreatePolicy = ({ user }) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body),
               })
-                .then(() => resetForm())
+                .then(() => {
+                  resetForm();
+                  message.success("Policy Created Successfully");
+                })
                 .catch((err) => console.log(err));
             }}
             buttonText="Add New Policy"

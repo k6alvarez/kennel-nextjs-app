@@ -1,29 +1,37 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Collapse, Image } from "antd";
-
+import { Collapse, message } from "antd";
+import styled from "styled-components";
 import Layout from "../components/Layout";
-import { PostProps } from "../components/Post";
-import { Content } from "../components/ui-kit/Base";
-import { BlockQuote } from "../components/Reservations/GuestClients/FormIntro";
+import { Button, Content } from "../components/ui-kit/Base";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { InfoCircleOutlined } from "@ant-design/icons";
 import prisma from "../lib/prisma";
 import { GetServerSideProps } from "next";
-import { ContentItem } from "@prisma/client";
 import { saveContent } from "../components/Admin/services";
 import { EditForm } from "../components/Forms/styles";
 import { Tiptap } from "../components/ui-kit/Tiptap";
 import { ThemePreferenceContext } from "./_app";
-import { defaultContent } from ".";
 
 const { Panel } = Collapse;
 
-type Props = {
-  feed: PostProps[];
-  contentItems: string;
+export const deletePolicy = async (id: string): Promise<void> => {
+  await fetch(`/api/policy/${id}`, {
+    method: "DELETE",
+  });
 };
+
+const TitleText = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+    margin: 0;
+    padding: ${(props) => props.theme.space[1]};
+    font-size: calc(${(props) => props.theme.fontSizes[1]} / 1.2);
+  }
+`;
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const page = "POLICIES";
@@ -115,7 +123,33 @@ const Policies = ({ contentItems, policies = undefined }) => {
             }}
           >
             {policiesState.map((policy) => (
-              <Panel id={policy.id} key={policy.id} header={policy.name}>
+              <Panel
+                id={policy.id}
+                key={policy.id}
+                header={
+                  <TitleText>
+                    {editMode ? (
+                      <>
+                        {policy.name}{" "}
+                        <Button
+                          onClick={() => {
+                            deletePolicy(policy.id).then(() => {
+                              message.success("Policy deleted");
+                              setPoliciesState(
+                                policiesState.filter((p) => p.id !== policy.id)
+                              );
+                            });
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </>
+                    ) : (
+                      <>{policy.name}</>
+                    )}
+                  </TitleText>
+                }
+              >
                 {editMode ? (
                   <>
                     <EditForm onSubmit={(e) => e.preventDefault()}>
