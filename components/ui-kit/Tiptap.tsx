@@ -219,7 +219,7 @@ export const Tiptap = ({ content, onSave, isLoading = false }) => {
       .chain()
       .focus()
       .extendMarkRange("link")
-      .setLink({ href: url, target: "_blank" })
+      .setLink({ href: url, target: "_self" })
       .run();
   }, [editor]);
 
