@@ -10,6 +10,27 @@ import { ThemePreferenceContext } from "../pages/_app";
 import { User } from "@prisma/client";
 import { getUser } from "./Pets/services";
 
+const SignedInAs = styled.span`
+  font-size: calc(${({ theme }) => theme.fontSizes[0]} / 1.2);
+  padding: ${({ theme }) => theme.space[1]};
+  display: block;
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+    display: none;
+  }
+`;
+
+const Flex = styled.div`
+  display: flex;
+  width: 96%;
+  margin: ${({ theme }) => theme.space[3]} auto;
+  justify-content: space-between;
+
+  button {
+    font-size: ${({ theme }) => theme.fontSizes[0]};
+    font-size: calc(${({ theme }) => theme.fontSizes[0]} / 1.2);
+  }
+`;
+
 const AdminLeftNav = styled.div`
   display: flex;
   align-items: center;
@@ -79,8 +100,13 @@ export const StyledNav = styled.nav`
 
 export const NavWrapper = styled.div`
   display: flex;
+  flex-direction: column-reverse !important;
   align-items: center;
   flex: 1;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+    flex-direction: row !important;
+  }
 
   &:last-child {
     justify-content: flex-end;
@@ -187,15 +213,18 @@ const Header: React.FC = () => {
         <Link href="/profile">
           <a data-active={isActive("/profile")}>My Profile</a>
         </Link>
-        <button
-          onClick={() => {
-            signOut({ redirect: false, callbackUrl: "/" }).then(({ url }) => {
-              router.push(url);
-            });
-          }}
-        >
-          Log Out
-        </button>
+        <Flex>
+          <SignedInAs>Signed in as {loggedInUser?.email}</SignedInAs>
+          <button
+            onClick={() => {
+              signOut({ redirect: false, callbackUrl: "/" }).then(({ url }) => {
+                router.push(url);
+              });
+            }}
+          >
+            Log Out
+          </button>
+        </Flex>
       </NavWrapper>
     );
 
@@ -220,7 +249,13 @@ const Header: React.FC = () => {
       {leftNav}
       {rightNav}
       <Drawer
-        title={<LogoName>Gillette Kennels</LogoName>}
+        title={
+          <LogoName>
+            <Link href="/">
+              <a>Gillette Kennels</a>
+            </Link>
+          </LogoName>
+        }
         placement="left"
         onClose={onClose}
         open={open}

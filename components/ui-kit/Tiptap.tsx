@@ -192,7 +192,12 @@ const MenuBar = ({ editor, setLink }) => {
   );
 };
 
-export const Tiptap = ({ content, onSave = undefined, isLoading = false }) => {
+export const Tiptap = ({
+  content,
+  onSave = undefined,
+  isLoading = false,
+  buttonText = "Save Changes",
+}) => {
   const editor = useEditor({
     extensions: [StarterKit, Link.configure({ openOnClick: false })],
     content,
@@ -242,7 +247,7 @@ export const Tiptap = ({ content, onSave = undefined, isLoading = false }) => {
               <LoadingOutlined /> Saving
             </span>
           ) : (
-            "Save Changes"
+            buttonText
           )}
         </Button>
       )}

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { EditForm } from "../Forms/styles";
 import { headerHt } from "./Promo/styles-promo";
 import { TipTapMenuWrapper } from "./Tiptap";
 
@@ -17,6 +18,12 @@ export const Content = styled.article`
         : `${theme.space[5]} ${theme.space[4]}`};
     width: ${({ maxWidth }) => (maxWidth ? maxWidth : "80vw")};
     max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "1200px")};
+  }
+
+  ${EditForm} {
+    border: 1px solid
+      ${({ theme, error }) =>
+        error ? theme.colors.primary : theme.colors.textSecondary};
   }
 
   ${TipTapMenuWrapper} {

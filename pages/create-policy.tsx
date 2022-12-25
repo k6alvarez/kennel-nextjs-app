@@ -75,7 +75,8 @@ const CreatePolicy = ({ user }) => {
           value={name}
           id="name"
         />
-
+        <br />
+        <br />
         <label htmlFor="content">Policy Description</label>
         <EditForm onSubmit={(e) => e.preventDefault()}>
           <Tiptap
@@ -90,6 +91,7 @@ const CreatePolicy = ({ user }) => {
                 .then(() => resetForm())
                 .catch((err) => console.log(err));
             }}
+            buttonText="Add New Policy"
           />
         </EditForm>
       </Content>

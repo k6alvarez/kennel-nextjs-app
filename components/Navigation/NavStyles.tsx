@@ -27,6 +27,7 @@ export const LogoName = styled.h2`
   }
   a {
     text-decoration: none;
+    color: ${({ theme }) => theme.colors.textPrimary};
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {

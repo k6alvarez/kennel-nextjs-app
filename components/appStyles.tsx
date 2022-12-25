@@ -112,6 +112,57 @@ export const GlobalStyle = createGlobalStyle`
   .ant-drawer .rightNav {
     display: flex;
     flex-direction: column;
+    width: 100%;
+  }
+
+  .ant-drawer-header {
+    background-color: ${({ theme }) => theme.colors.primary};
+    .ant-drawer-title h2, .anticon-close {
+      color: ${({ theme }) => theme.colors.textPrimary};
+    }
+  }
+
+  .ant-drawer-body {
+    padding: 0;
+    font-family: ${({ theme }) => theme.fonts.body};
+
+    a {
+      text-align: center;      
+      text-transform: uppercase;
+      font-size: calc(${({ theme }) => theme.fontSizes[0]} / 1.2);
+      letter-spacing: 1px;
+      left: -8px;
+      width: 100%;
+      position: relative;
+      margin: 0;
+      padding: ${({ theme }) => theme.space[4]};
+      border-bottom: 1px solid ${({ theme }) => theme.colors.secondary};
+      color: ${({ theme }) => theme.colors.textSecondary};
+
+      &:last-of-type {
+        border-top: 1px solid ${({ theme }) => theme.colors.secondary};
+      }
+
+      &[data-active="true"] {
+        color: ${({ theme }) => theme.colors.primary};
+        text-decoration: underline;
+      }
+    }
+
+    button {
+      margin-top: ${({ theme }) => theme.space[0]};
+      background-color: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.textPrimary};
+    }
+  }
+
+  .ant-drawer-content {
+    
+  }
+
+  .ant-drawer .rightNav {
+    display: flex;
+    flex-direction: column;
     align-items: baseline;
   }
 
