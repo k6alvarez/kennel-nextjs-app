@@ -16,6 +16,7 @@ import { saveContent } from "../components/Admin/services";
 import { EditForm } from "../components/Forms/styles";
 import { Tiptap } from "../components/ui-kit/Tiptap";
 import { ThemePreferenceContext } from "./_app";
+import { defaultContent } from ".";
 
 const { Panel } = Collapse;
 
@@ -47,7 +48,8 @@ const Policies: React.FC<Props> = ({ contentItems }) => {
   const { editMode } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
   const [policiesContent, setPoliciesContent] = useState(
-    parsedContentItems.find((item) => item.name === "policiesContent")
+    parsedContentItems.find((item) => item.name === "policiesContent") ||
+      defaultContent
   );
 
   useEffect(() => {
