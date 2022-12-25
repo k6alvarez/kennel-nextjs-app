@@ -48,8 +48,7 @@ const Policies: React.FC<Props> = ({ contentItems }) => {
   const { editMode } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
   const [policiesContent, setPoliciesContent] = useState(
-    parsedContentItems.find((item) => item.name === "policiesContent") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "policiesContent")
   );
 
   useEffect(() => {

@@ -78,43 +78,35 @@ const Boarding = ({ contentItems, promoItems }) => {
   const parsedPromoItems = JSON.parse(promoItems);
 
   const [boardingHome, setBoardingHome] = useState(
-    parsedContentItems.find((item) => item.name === "boardingHome") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "boardingHome")
   );
 
   const [boardingCats, setBoardingCats] = useState(
-    parsedContentItems.find((item) => item.name === "boardingCats") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "boardingCats")
   );
 
   const [boardingBefore, setBoardingBefore] = useState(
-    parsedContentItems.find((item) => item.name === "boardingBefore") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "boardingBefore")
   );
 
   const [boardingCheckin, setBoardingCheckin] = useState(
-    parsedContentItems.find((item) => item.name === "boardingCheckin") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "boardingCheckin")
   );
 
   const [boardingVaccinations, setBoardingVaccinations] = useState(
-    parsedContentItems.find((item) => item.name === "boardingVaccinations") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "boardingVaccinations")
   );
 
   const [boardingMedicalIssues, setBoardingMedicalIssues] = useState(
-    parsedContentItems.find((item) => item.name === "boardingMedicalIssues") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "boardingMedicalIssues")
   );
 
   const [boardingServices, setBoardingServices] = useState(
-    parsedContentItems.find((item) => item.name === "boardingServices") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "boardingServices")
   );
 
   const [boardingCWing, setBoardingCWing] = useState(
-    parsedContentItems.find((item) => item.name === "boardingCWing") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "boardingCWing")
   );
 
   const [boardingPromos, setBoardingPromos] = useState(
@@ -122,8 +114,7 @@ const Boarding = ({ contentItems, promoItems }) => {
   );
 
   const [boardingPromoTitle, setBoardingPromoTitle] = useState(
-    parsedContentItems.find((item) => item.name === "boardingPromoTitle") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "boardingPromoTitle")
   );
 
   const stickyEditorPosTop = "108px";

@@ -53,51 +53,40 @@ const Training = ({ contentItems, promoItems }) => {
   const [shouldAnimate, setShouldAnimate] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const parsedContentItems = JSON.parse(contentItems);
+
   const parsedPromoItems = JSON.parse(promoItems);
 
   const [trainingPromos, setTrainingPromos] = useState(
     parsedPromoItems.filter((item) => item.promoGroup === "gallery")
   );
   const [trainingPromoTitle, setTrainingPromoTitle] = useState(
-    parsedContentItems.find(
-      (item) => item.name === "trainingPromoTitle" || defaultContent
-    )
+    parsedContentItems.find((item) => item.name === "trainingPromoTitle") || {
+      content: "",
+    }
   );
 
   const [trainingContent, setTrainingContent] = useState(
-    parsedContentItems.find(
-      (item) => item.name === "trainingContent" || defaultContent
-    )
+    parsedContentItems.find((item) => item.name === "trainingContent")
   );
 
   const [trainingGroupLessons, setTrainingGroupLessons] = useState(
-    parsedContentItems.find(
-      (item) => item.name === "trainingGroupLessons" || defaultContent
-    )
+    parsedContentItems.find((item) => item.name === "trainingGroupLessons")
   );
 
   const [trainingBoardingSchool, setTrainingBoardingSchool] = useState(
-    parsedContentItems.find(
-      (item) => item.name === "trainingBoardingSchool" || defaultContent
-    )
+    parsedContentItems.find((item) => item.name === "trainingBoardingSchool")
   );
 
   const [trainingPrivateLessons, setTrainingPrivateLessons] = useState(
-    parsedContentItems.find(
-      (item) => item.name === "trainingPrivateLessons" || defaultContent
-    )
+    parsedContentItems.find((item) => item.name === "trainingPrivateLessons")
   );
 
   const [trainingAgilityLessons, setTrainingAgilityLessons] = useState(
-    parsedContentItems.find(
-      (item) => item.name === "trainingAgilityLessons" || defaultContent
-    )
+    parsedContentItems.find((item) => item.name === "trainingAgilityLessons")
   );
 
   const [trainingConsultations, setTrainingConsultations] = useState(
-    parsedContentItems.find(
-      (item) => item.name === "trainingConsultations" || defaultContent
-    )
+    parsedContentItems.find((item) => item.name === "trainingConsultations")
   );
 
   const stickyEditorPosTop = "108px";

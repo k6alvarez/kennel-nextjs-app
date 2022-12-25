@@ -49,23 +49,19 @@ const Rates: React.FC<Props> = ({ dates, contentItems }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [ratesContent, setRatesContent] = useState(
-    parsedContentItems.find((item) => item.name === "ratesContent") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "ratesContent")
   );
 
   const [ratesHolidayContent, setRatesHolidayContent] = useState(
-    parsedContentItems.find((item) => item.name === "ratesHolidayContent") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "ratesHolidayContent")
   );
 
   const [ratesDiscountContent, setRatesDiscountContent] = useState(
-    parsedContentItems.find((item) => item.name === "ratesDiscountContent") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "ratesDiscountContent")
   );
 
   const [ratesAdditionalContent, setRatesAdditionalContent] = useState(
-    parsedContentItems.find((item) => item.name === "ratesAdditionalContent") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "ratesAdditionalContent")
   );
   return (
     <Layout>

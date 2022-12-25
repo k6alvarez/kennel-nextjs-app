@@ -47,12 +47,10 @@ const MyApp = ({ contentItems, promoItems }) => {
   const parsedPromoItems = JSON.parse(promoItems);
 
   const [homeContent, setHomeContent] = useState(
-    parsedContentItems.find((item) => item.name === "homeContent") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "homeContent")
   );
   const [missionStatement, setMissionStatement] = useState(
-    parsedContentItems.find((item) => item.name === "missionStatement") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "missionStatement")
   );
   const [homePromos, setHomePromos] = useState(
     parsedPromoItems.filter((item) => item.promoGroup === "gallery")
@@ -63,8 +61,7 @@ const MyApp = ({ contentItems, promoItems }) => {
   );
 
   const [homePromoTitle, setHomePromoTitle] = useState(
-    parsedContentItems.find((item) => item.name === "homePromoTitle") ||
-      defaultContent
+    parsedContentItems.find((item) => item.name === "homePromoTitle")
   );
 
   useEffect(() => {
