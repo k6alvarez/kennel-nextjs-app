@@ -6,7 +6,6 @@ import { GetServerSideProps } from "next";
 
 import Layout from "../components/Layout";
 import { Promo } from "../components/ui-kit/Promo";
-import { PromoTitle } from "../components/ui-kit/Promo/styles-promo";
 import { TabsListWrapper } from "./boarding";
 import { TrainingHome } from "../components/Training/TrainingHome";
 import { GroupLessons } from "../components/Training/GroupLessons";
@@ -17,7 +16,6 @@ import { BoardingSchool } from "../components/Training/BoardingSchool";
 import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
 import { isTimeStampExpired } from "../components/Admin/services";
 import { ThemePreferenceContext } from "./_app";
-import { defaultContent } from ".";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const page = "TRAINING";
@@ -104,6 +102,15 @@ const Training = ({ contentItems, promoItems }) => {
       setActiveKey(tab as string);
     }
   }, [tab]);
+
+  const [classesPrimary, setClassesPrimary] = useState(
+    parsedPromoItems.filter((item) => item.promoGroup === "classesPrimary")
+  );
+
+  const [classesSecondary, setClassesSecondary] = useState(
+    parsedPromoItems.filter((item) => item.promoGroup === "classesSecondary")
+  );
+
   const items = [
     {
       label: "Training",
@@ -116,6 +123,10 @@ const Training = ({ contentItems, promoItems }) => {
           content={trainingContent}
           setContent={setTrainingContent}
           editMode={editMode}
+          classesPrimary={classesPrimary}
+          setClassesPrimary={setClassesPrimary}
+          classesSecondary={classesSecondary}
+          setClassesSecondary={setClassesSecondary}
         />
       ),
     },
