@@ -1,8 +1,6 @@
-import React, { useContext } from "react";
-import { useSpring, config, animated } from "react-spring";
-import { GridItems, GridItem } from "../Base";
-import { PromoPics, PromoTextWrapper, ImageZoomWrapper } from "./styles-promo";
-import Link from "next/link";
+import React, { useContext, useState } from "react";
+import { GridItems } from "../Base";
+import { PromoPics } from "./styles-promo";
 import { ThemePreferenceContext } from "../../../pages/_app";
 import { EditablePromo } from "./EditablePromo";
 
@@ -36,6 +34,7 @@ export const Promos = ({
   noFlexGrow = false,
 }: PromosProps) => {
   const { currentTheme } = useContext(ThemePreferenceContext);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <PromoPics
       transparent={transparent}
@@ -57,6 +56,8 @@ export const Promos = ({
             currentTheme={currentTheme}
             i={i}
             key={i}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
           />
         ))}
       </GridItems>

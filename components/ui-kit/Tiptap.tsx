@@ -241,7 +241,7 @@ export const Tiptap = ({ content, onSave, isLoading = false }) => {
             <LoadingOutlined /> Saving
           </span>
         ) : (
-          "Save Updates"
+          "Save Changes"
         )}
       </Button>
     </Container>
