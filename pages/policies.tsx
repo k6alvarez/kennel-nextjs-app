@@ -54,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 const Policies = ({ contentItems, policies = undefined }) => {
   const router = useRouter();
   const { tab } = router.query;
-  const [activeKey, setActiveKey] = useState("abandoned");
+  const [activeKey, setActiveKey] = useState(policies[0]?.name || "");
   const parsedContentItems = JSON.parse(contentItems);
   const { editMode } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -124,8 +124,8 @@ const Policies = ({ contentItems, policies = undefined }) => {
           >
             {policiesState.map((policy) => (
               <Panel
-                id={policy.id}
-                key={policy.id}
+                id={policy.name}
+                key={policy.name}
                 header={
                   <TitleText>
                     {editMode ? (
