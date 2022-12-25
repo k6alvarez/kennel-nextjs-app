@@ -156,7 +156,15 @@ const Policies = ({ contentItems, policies = undefined }) => {
                       <Tiptap
                         content={policy?.content || { content: "" }}
                         onSave={(html) => {
-                          setPoliciesContent({ content: html });
+                          setPoliciesContent(() => {
+                            const policies = policiesState.map((p) => {
+                              if (p.id === policy.id) {
+                                return { ...p, content: html };
+                              }
+                              return p;
+                            });
+                            setPoliciesState(policies);
+                          });
                           saveContent({
                             apiPath: `/api/policy/${policy.id}`,
                             html,
