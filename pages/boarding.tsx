@@ -244,6 +244,7 @@ const Boarding = ({ contentItems, promoItems }) => {
         animate={shouldAnimate}
         showFooter
         promos={boardingPromos}
+        setPromos={setBoardingPromos}
         contentItem={boardingPromoTitle || { content: "" }}
         setContentItem={setBoardingPromoTitle}
       />
