@@ -31,6 +31,7 @@ export const LogoName = styled.h2`
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
     padding-right: 0;
+    margin-left: 0;
   }
 `;
 export const LogoDesc = styled.div`

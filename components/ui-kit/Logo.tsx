@@ -12,6 +12,10 @@ const Wrapper = styled.span`
     font-size: ${({ theme }) => theme.fontSizes[2]};
     line-height: 1;
 
+    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+      display: block;
+    }
+
     @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
       font-size: ${({ theme, size }) =>
         size
@@ -30,6 +34,10 @@ export const Slogan = styled.span`
       size
         ? `calc(${theme.fontSizes[size]}/2.5)`
         : `calc(${theme.fontSizes[0]}/1.5)`};
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+    display: block;
   }
 `;
 

@@ -57,6 +57,7 @@ export const TrainingHome = ({
                 "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1585015261/gk-app/gktrain.jpg",
             },
           ]}
+          editMode={false}
         />
         <Promos
           delay={defaultDelay * 6}
@@ -78,6 +79,7 @@ export const TrainingHome = ({
                 "https://res.cloudinary.com/dhcv2fdfq/image/upload/v1666419324/gk-app/Dobermann.png",
             },
           ]}
+          editMode={false}
         />
 
         {/* <ClassList
