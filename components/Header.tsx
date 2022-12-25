@@ -10,6 +10,12 @@ import { ThemePreferenceContext } from "../pages/_app";
 import { User } from "@prisma/client";
 import { getUser } from "./Pets/services";
 
+const AdminLeftNav = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
 export const StyledNav = styled.nav`
   display: flex;
   position: sticky;
@@ -21,6 +27,7 @@ export const StyledNav = styled.nav`
   z-index: 5000;
   a {
     color: ${({ theme }) => theme.colors.textPrimary};
+    white-space: nowrap;
 
     &[data-active="true"] {
       text-decoration: underline;
@@ -32,6 +39,8 @@ export const StyledNav = styled.nav`
     color: ${({ theme }) => theme.colors.primary};
     border: none;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: ${({ theme }) => theme.fontSizes[0]};
+    white-space: nowrap;
   }
 
   .leftNav {
@@ -39,15 +48,16 @@ export const StyledNav = styled.nav`
     align-items: center;
     width: 100%;
     display: flex;
+    margin-right: ${({ theme }) => theme.space[3]};
     color: ${({ theme }) => theme.colors.textPrimary};
 
     .mobileNav {
-      @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+      @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
         display: none;
       }
     }
 
-    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+    @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
       width: auto;
     }
   }
@@ -57,7 +67,7 @@ export const StyledNav = styled.nav`
 
     letter-spacing: 1px;
 
-    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+    @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
       display: flex;
     }
 
@@ -104,6 +114,9 @@ const getMainLinks = (isActive) => (
     </Link>
     <Link href="/rates">
       <a data-active={isActive("/rates")}>Rates</a>
+    </Link>
+    <Link href="/contact">
+      <a data-active={isActive("/contact")}>Contact</a>
     </Link>
     <Link href="/create-reservation">
       <a data-active={isActive("/create-reservation")}>Book Reservation</a>
@@ -183,17 +196,23 @@ const Header: React.FC = () => {
         >
           Log Out
         </button>
-        {loggedInUser?.permissions.includes("ADMIN") && (
+      </NavWrapper>
+    );
+
+    if (loggedInUser?.permissions.includes("ADMIN")) {
+      leftNav = (
+        <AdminLeftNav>
+          <LeftNav toggleDrawer={toggleDrawer} />
           <button
             onClick={() => {
               setEditMode(!editMode);
             }}
           >
-            Edit Mode {editMode ? "On" : "Off"}
+            Admin Mode {editMode ? "On" : "Off"}
           </button>
-        )}
-      </NavWrapper>
-    );
+        </AdminLeftNav>
+      );
+    }
   }
 
   return (
