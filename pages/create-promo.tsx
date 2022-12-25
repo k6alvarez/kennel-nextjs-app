@@ -3,9 +3,30 @@ import Layout from "../components/Layout";
 import Router from "next/router";
 import { Content } from "../components/ui-kit/Base";
 import { LockOutlined } from "@ant-design/icons";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
+import { GetServerSideProps } from "next";
+import prisma from "../lib/prisma";
 
-const CreatePromo: React.FC = () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getSession({ req });
+  if (!session) {
+    res.statusCode = 403;
+    return { props: {} };
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email },
+  });
+
+  return {
+    props: {
+      user: JSON.parse(JSON.stringify(user)),
+      revalidate: 10,
+    },
+  };
+};
+
+const CreatePromo = ({ user }) => {
   const { data: session } = useSession();
   const [page, setPage] = useState("HOME");
   const [name, setName] = useState("");
@@ -52,7 +73,7 @@ const CreatePromo: React.FC = () => {
     }
   };
 
-  if (!session) {
+  if (!session || !user.permissions.includes("ADMIN")) {
     return (
       <Layout>
         <Content>

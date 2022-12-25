@@ -33,14 +33,17 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
   });
 
+  const policies = await prisma.policy.findMany();
+
   return {
     props: {
       contentItems: JSON.stringify(contentItems),
+      policies: JSON.parse(JSON.stringify(policies)),
     },
   };
 };
 
-const Policies: React.FC<Props> = ({ contentItems }) => {
+const Policies = ({ contentItems, policies = undefined }) => {
   const router = useRouter();
   const { tab } = router.query;
   const [activeKey, setActiveKey] = useState("abandoned");
@@ -50,6 +53,8 @@ const Policies: React.FC<Props> = ({ contentItems }) => {
   const [policiesContent, setPoliciesContent] = useState(
     parsedContentItems.find((item) => item.name === "policiesContent")
   );
+
+  const [policiesState, setPoliciesState] = useState(policies);
 
   useEffect(() => {
     if (tab) {
@@ -87,20 +92,26 @@ const Policies: React.FC<Props> = ({ contentItems }) => {
           <div dangerouslySetInnerHTML={{ __html: policiesContent?.content }} />
         )}
 
-        <Collapse
-          activeKey={activeKey}
-          onChange={(key) => {
-            router.replace(
-              {
-                pathname: "/policies",
-                query: { tab: key },
-              },
-              undefined,
-              { shallow: true }
-            );
-          }}
-        >
-          <Panel id="abandoned" key="abandoned" header="Abandoned Dog Policy">
+        {policiesState?.length > 0 && (
+          <Collapse
+            activeKey={activeKey}
+            onChange={(key) => {
+              router.replace(
+                {
+                  pathname: "/policies",
+                  query: { tab: key },
+                },
+                undefined,
+                { shallow: true }
+              );
+            }}
+          >
+            {policiesState.map((policy) => (
+              <Panel id={policy.id} key={policy.id} header={policy.name}>
+                <div dangerouslySetInnerHTML={{ __html: policy.content }} />
+              </Panel>
+            ))}
+            {/* <Panel id="abandoned" key="abandoned" header="Abandoned Dog Policy">
             <BlockQuote large>
               <InfoCircleOutlined />
               <p>It is unfortunate that this policy is necessary.</p>
@@ -120,8 +131,8 @@ const Policies: React.FC<Props> = ({ contentItems }) => {
               abandonment. The owner specifically waives all statutory or legal
               rights to the contrary.
             </p>
-          </Panel>
-          <Panel
+          </Panel> */}
+            {/* <Panel
             header="After Hours Service Policy"
             key="after-hours"
             id="after-hours"
@@ -525,8 +536,9 @@ const Policies: React.FC<Props> = ({ contentItems }) => {
               agrees to be solely responsible for any and all acts or behavior
               of said dog while it is in the care of the kennel.
             </p>
-          </Panel>
-        </Collapse>
+          </Panel> */}
+          </Collapse>
+        )}
       </Content>
     </Layout>
   );
