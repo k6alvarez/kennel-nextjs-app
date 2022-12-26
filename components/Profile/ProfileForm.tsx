@@ -31,7 +31,7 @@ export const ProfileForm = ({
         <BlockQuote>
           <InfoCircleOutlined />
           <p>
-            Please update your profile information below. This information will
+            Let's get started by verifying your contact information. This will
             be used to contact you about your reservations.
           </p>
         </BlockQuote>
@@ -93,7 +93,7 @@ export const ProfileForm = ({
                 router.push(`/profile?tab=pets`, undefined, { shallow: false });
               }}
             >
-              View Pets
+              Manage Pets
             </Button>
           </StepsAction>
         </Fieldset>
