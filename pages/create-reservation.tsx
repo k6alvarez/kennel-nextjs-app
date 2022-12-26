@@ -5,6 +5,7 @@ import { Content } from "../components/ui-kit/Base";
 import { GuestClientForm } from "../components/Reservations/GuestClients/GuestClientForm";
 import { ClientForm } from "../components/Reservations/Clients/ClientForm";
 import { ClientStatusSelection } from "../components/Reservations/ClientStatusSelection";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const Reservation: React.FC = () => {
   const { data: session, status } = useSession();
@@ -23,7 +24,7 @@ const Reservation: React.FC = () => {
     );
   }
 
-  if (clientType.clientType === "") {
+  if (!session && clientType.clientType === "") {
     return (
       <Layout>
         <Content>
@@ -41,12 +42,15 @@ const Reservation: React.FC = () => {
   return (
     <Layout>
       <Content>
-        <ClientStatusSelection
-          onToggle={(type) => {
-            setClientType({ clientType: type });
-          }}
-          clientType={clientType}
-        />
+        {clientType.clientType !== "" && (
+          <button
+            onClick={() => {
+              setClientType({ clientType: "" });
+            }}
+          >
+            <ArrowLeftOutlined /> Back
+          </button>
+        )}
         <h1>Client Reservations</h1>
         {!session || clientType.clientType === "new" ? (
           <GuestClientForm />

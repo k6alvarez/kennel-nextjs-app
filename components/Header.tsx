@@ -25,6 +25,11 @@ const Flex = styled.div`
   margin: ${({ theme }) => theme.space[3]} auto;
   justify-content: space-between;
 
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+    width: max-content;
+    margin: 0;
+  }
+
   button {
     font-size: ${({ theme }) => theme.fontSizes[0]};
     font-size: calc(${({ theme }) => theme.fontSizes[0]} / 1.2);
