@@ -3,13 +3,13 @@ import React from "react";
 import { FlexCards } from "./styles";
 
 export const rateHoliday = (2.0).toFixed(2);
-export const rateDogRoommate = (17.0).toFixed(2);
-export const rateSmRun = (24.0).toFixed(2);
-export const rateLglRun = (26.0).toFixed(2);
-export const rateGiantRun = (30.0).toFixed(2);
-export const rateCatCondo = (18.0).toFixed(2);
-export const rateCatRoom = (22.0).toFixed(2);
-export const rateCatRoommate = (15.0).toFixed(2);
+export const rateDogRoommate = (18.0).toFixed(2);
+export const rateSmRun = (25.0).toFixed(2);
+export const rateLglRun = (27.0).toFixed(2);
+export const rateGiantRun = (32.0).toFixed(2);
+export const rateCatCondo = (19.0).toFixed(2);
+export const rateCatRoom = (23.0).toFixed(2);
+export const rateCatRoommate = (16.0).toFixed(2);
 
 export const rateMedicalCare = (0.5).toFixed(2);
 
