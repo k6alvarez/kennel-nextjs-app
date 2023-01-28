@@ -133,13 +133,6 @@ const MyApp = ({ contentItems, promoItems }) => {
             dangerouslySetInnerHTML={{ __html: missionStatement?.content }}
           />
         )}
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/586iqAqMYl4"
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
       </Content>
     </Layout>
   );
