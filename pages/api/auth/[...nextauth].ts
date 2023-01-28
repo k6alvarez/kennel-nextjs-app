@@ -40,7 +40,6 @@ const options = {
         provider: { server, from },
       }) {
         const { host, origin } = new URL(url);
-        console.log("🚀 ~ file: [...nextauth].ts:43 ~ url", url)
         const transport = createTransport(server);
         await transport.sendMail({
           to: email,
@@ -73,7 +72,6 @@ const options = {
 function html(params: { url: string; host: string; origin: string, email: string, theme?: any }) {
   const { url, host, theme, origin } = params
   const newUrl = new URL(url)
-  console.log("🚀 ~ file: [...nextauth].ts:76 ~ html ~ newUrl", newUrl)
   newUrl.searchParams.delete('callbackUrl')
   newUrl.searchParams.set('callbackUrl', "/profile")
   const brandColor = theme?.primary || "#22d172"

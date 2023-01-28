@@ -54,7 +54,6 @@ export const EditSingleRun = ({ run }) => {
 
   return (
     <Card>
-      {console.log(currentRun)}
       <form onSubmit={handleSubmit}>
         <fieldset disabled={isLoading}>
           <StyledInput
