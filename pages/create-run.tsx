@@ -45,7 +45,7 @@ const CreateRun = ({ user }) => {
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
-  const [wing, setWing] = useState("");
+  const [wing, setWing] = useState("A");
   const [sizeInside, setSizeInside] = useState("");
   const [sizeOutside, setSizeOutside] = useState("");
   const [dailyRate, setDailyRate] = useState("");
