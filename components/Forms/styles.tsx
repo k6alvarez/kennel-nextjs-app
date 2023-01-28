@@ -67,6 +67,7 @@ export const StyledInput = styled.input`
 `;
 
 export const StyledLabel = styled.label`
+  width: 100%;
   color: ${({ theme, error }) =>
     error ? theme.colors.primary : theme.colors.textSecondary};
 

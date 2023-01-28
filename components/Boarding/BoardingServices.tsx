@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Content } from "../ui-kit/Base";
+import { Button, Content } from "../ui-kit/Base";
 import { FlexCards } from "./styles";
-import { Card, Collapse } from "antd";
+import { Card, Collapse, message } from "antd";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { saveContent } from "../Admin/services";
 import { EditForm } from "../Forms/styles";
 import { Tiptap } from "../ui-kit/Tiptap";
+import { TitleText } from "../../pages/policies";
+
+export const deleteService = async (id: string): Promise<void> => {
+  await fetch(`/api/service/${id}`, {
+    method: "DELETE",
+  });
+};
 
 export const BoardingServices = ({
   editMode,
@@ -17,6 +24,18 @@ export const BoardingServices = ({
   isLoading,
   editorStickyTop,
 }) => {
+  const [services, setServices] = useState([]);
+
+  const fetchServices = async () => {
+    const res = await fetch("/api/services");
+    const data = await res.json();
+    setServices(data);
+  };
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
   return (
     <Content editorStickyTop={editorStickyTop}>
       {editMode ? (
@@ -39,6 +58,63 @@ export const BoardingServices = ({
       )}
 
       <Collapse>
+        {services.map((service) => (
+          <Collapse.Panel
+            id={service.name}
+            key={service.id}
+            header={
+              <TitleText>
+                {editMode ? (
+                  <>
+                    {service.name}
+                    <Button
+                      onClick={() => {
+                        deleteService(service.id).then(() => {
+                          message.success("Policy deleted");
+                          setServices(
+                            services.filter((p) => p.id !== service.id)
+                          );
+                        });
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </>
+                ) : (
+                  <>{service.name}</>
+                )}
+              </TitleText>
+            }
+          >
+            {editMode ? (
+              <>
+                <EditForm onSubmit={(e) => e.preventDefault()}>
+                  <Tiptap
+                    content={service?.description}
+                    onSave={(html) => {
+                      const body = {
+                        ...service,
+                        description: html,
+                      };
+                      fetch(`/api/service/${service.id}`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(body),
+                      })
+                        .then(() => {
+                          message.success("Update successful.");
+                        })
+                        .catch((err) => console.log(err));
+                    }}
+                    isLoading={isLoading}
+                  />
+                </EditForm>
+              </>
+            ) : (
+              <div dangerouslySetInnerHTML={{ __html: service.description }} />
+            )}
+          </Collapse.Panel>
+        ))}
         <Collapse.Panel header="Exercise" key="1">
           <p>
             Exercise sessions are offered for clients who wish their dog(s) to
@@ -217,7 +293,7 @@ export const BoardingServices = ({
             freshly laundered bedding on a continual basis. The laundry service
             is required for owner provided bedding. Please be sure to read our{" "}
             <Link href="/policies?tab=bedding">
-              <a>bedding policy</a>
+              <a>bedding service</a>
             </Link>{" "}
             if you plan to provide us with your dogs bed.
           </p>
