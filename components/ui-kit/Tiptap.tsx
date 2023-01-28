@@ -12,8 +12,16 @@ import {
   StrikethroughOutlined,
   UndoOutlined,
   UnorderedListOutlined,
+  YoutubeOutlined,
 } from "@ant-design/icons";
 import { Button } from "./Base";
+import Youtube from "@tiptap/extension-youtube";
+
+const Flex = styled.div`
+  display: flex;
+  width: 100%;
+  gap: ${({ theme }) => theme.space[3]};
+`;
 
 const EditorContentWrapper = styled.div`
   padding: ${({ theme }) => theme.space[1]};
@@ -85,7 +93,7 @@ export const TipTapMenuWrapper = styled.div`
   border-bottom: 2px solid ${({ theme }) => theme.colors.secondary};
 `;
 
-const MenuBar = ({ editor, setLink }) => {
+const MenuBar = ({ editor, setLink, widthRef, heightRef }) => {
   if (!editor) {
     return null;
   }
@@ -188,6 +196,41 @@ const MenuBar = ({ editor, setLink }) => {
       >
         <RedoOutlined />
       </button>
+      <button
+        id="add"
+        onClick={() => {
+          const url = prompt("Enter YouTube URL");
+
+          if (url) {
+            editor.commands.setYoutubeVideo({
+              src: url,
+              width: Math.max(320, parseInt(widthRef.current.value, 10)) || 640,
+              height:
+                Math.max(180, parseInt(heightRef.current.value, 10)) || 480,
+            });
+          }
+        }}
+      >
+        <YoutubeOutlined /> YouTube
+      </button>
+      <Flex>
+        <input
+          id="width"
+          type="hidden"
+          min="320"
+          max="1024"
+          ref={widthRef}
+          placeholder="width"
+        />
+        <input
+          id="height"
+          type="hidden"
+          min="180"
+          max="720"
+          ref={heightRef}
+          placeholder="height"
+        />
+      </Flex>
     </TipTapMenuWrapper>
   );
 };
@@ -198,8 +241,16 @@ export const Tiptap = ({
   isLoading = false,
   buttonText = "Save Changes",
 }) => {
+  const widthRef = React.useRef(null);
+  const heightRef = React.useRef(null);
   const editor = useEditor({
-    extensions: [StarterKit, Link.configure({ openOnClick: false })],
+    extensions: [
+      StarterKit,
+      Link.configure({ openOnClick: false }),
+      Youtube.configure({
+        inline: false,
+      }),
+    ],
     content,
   });
 
@@ -228,9 +279,21 @@ export const Tiptap = ({
       .run();
   }, [editor]);
 
+  React.useEffect(() => {
+    if (widthRef.current && heightRef.current) {
+      widthRef.current.value = 640;
+      heightRef.current.value = 480;
+    }
+  }, [widthRef.current, heightRef.current]);
+
   return (
     <Container>
-      <MenuBar editor={editor} setLink={setLink} />
+      <MenuBar
+        editor={editor}
+        setLink={setLink}
+        widthRef={widthRef}
+        heightRef={heightRef}
+      />
       <EditorContentWrapper>
         <EditorContent editor={editor} />
       </EditorContentWrapper>
