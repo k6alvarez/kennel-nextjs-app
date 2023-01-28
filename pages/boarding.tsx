@@ -19,7 +19,6 @@ import { ThemePreferenceContext } from "./_app";
 import { BoardingServices } from "../components/Boarding/BoardingServices";
 import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
 import { isTimeStampExpired } from "../components/Admin/services";
-import { defaultContent } from ".";
 
 export const TabsListWrapper = styled.div`
   position: relative;
@@ -30,7 +29,7 @@ export const TabsListWrapper = styled.div`
     top: 51px;
     background: ${({ theme }) => theme.colors.white};
     width: 100%;
-    z-index: 2;
+    z-index: 500;
     box-shadow: ${({ theme }) => theme.shadows.light};
   }
 

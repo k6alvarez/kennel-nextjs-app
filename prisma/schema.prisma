@@ -155,6 +155,7 @@ model User {
   PromoItem             PromoItem[]
   Policy                Policy[]
   Question              Question[]
+  PetRun                PetRun[]
 
   @@map(name: "users")
 }
@@ -304,4 +305,24 @@ model Question {
   updatedAt DateTime @updatedAt @map(name: "updated_at")
 
   @@map(name: "questions")
+}
+
+model PetRun {
+  id                 String   @id @default(cuid())
+  createdAt          DateTime @default(now()) @map(name: "created_at")
+  updatedAt          DateTime @updatedAt @map(name: "updated_at")
+  name               String   @unique
+  petType            String   @default(value: "dog")
+  sizeInside         String
+  sizeOutside        String
+  dailyRate          String
+  roommateDailyRate  String
+  holidayPremiumRate String
+  order              String   @default(value: "0")
+  wing               String   @default(value: "A")
+  gallery            String[] @default(value: [])
+  author             User?    @relation(fields: [authorId], references: [id])
+  authorId           String?
+
+  @@map(name: "pet_runs")
 }

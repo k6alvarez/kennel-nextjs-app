@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 
 
-export const RunSizeWrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.secondary};
-  display: flex;
-  justify-content: center;    
-`;
+
+
 
 export const FlexCards = styled.div`
   display: grid;
@@ -15,6 +12,7 @@ export const FlexCards = styled.div`
   padding: ${({ theme }) => theme.space[5]};
   margin-bottom: ${({ theme }) => theme.space[4]};
   background-color: ${({ theme }) => theme.colors.secondary};
+  flex: 1;
 
   .ant-card {
     margin-bottom: 0;

@@ -1,5 +1,5 @@
 export const base = {
-  breakpoints: ["420px", "768px", "1024px", "1280px"],
+  breakpoints: ["420px", "768px", "1050px", "1280px"],
   space: [
     "0px",
     "2px",

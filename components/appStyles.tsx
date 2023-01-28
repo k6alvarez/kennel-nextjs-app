@@ -153,6 +153,7 @@ export const GlobalStyle = createGlobalStyle`
       margin-top: ${({ theme }) => theme.space[0]};
       background-color: ${({ theme }) => theme.colors.primary};
       color: ${({ theme }) => theme.colors.textPrimary};
+      
     }
   }
 

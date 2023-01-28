@@ -1,7 +1,5 @@
-import { InfoCircleOutlined } from "@ant-design/icons";
 import React from "react";
-import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
-import { RunSizes, RunSizesCWing } from "./RunSizes";
+import { RunSizes } from "./RunSizes";
 import { Content } from "../ui-kit/Base";
 import { EditForm } from "../Forms/styles";
 import { Tiptap } from "../ui-kit/Tiptap";
@@ -39,7 +37,7 @@ export const BoardingHome = ({
           <div dangerouslySetInnerHTML={{ __html: content?.content }} />
         )}
       </Content>
-      <RunSizes />
+      <RunSizes filterType="a-b-wing" />
       <Content editorStickyTop={editorStickyTop}>
         {editMode ? (
           <EditForm onSubmit={(e) => e.preventDefault()}>
@@ -61,9 +59,8 @@ export const BoardingHome = ({
             dangerouslySetInnerHTML={{ __html: secondaryContent?.content }}
           />
         )}
-
-        <RunSizesCWing />
       </Content>
+      <RunSizes filterType="c-wing" />
     </>
   );
 };
