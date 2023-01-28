@@ -136,7 +136,7 @@ const Boarding = ({ contentItems, promoItems }) => {
 
   const items = [
     {
-      label: "Boarding",
+      label: "Dog Boarding",
       key: "boarding",
       children: (
         <BoardingHome
@@ -152,7 +152,7 @@ const Boarding = ({ contentItems, promoItems }) => {
       ),
     },
     {
-      label: "We Board Cats",
+      label: "Cat Boarding",
       key: "boarding-cats",
       children: (
         <BoardingCats

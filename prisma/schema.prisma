@@ -156,6 +156,7 @@ model User {
   Policy                Policy[]
   Question              Question[]
   PetRun                PetRun[]
+  Service               Service[]
 
   @@map(name: "users")
 }
@@ -325,4 +326,20 @@ model PetRun {
   authorId           String?
 
   @@map(name: "pet_runs")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+  name        String   @unique
+  description String
+  price       String
+  duration    String
+  dailyLimit  String
+  available   Boolean  @default(true)
+  author      User?    @relation(fields: [authorId], references: [id])
+  authorId    String?
+
+  @@map(name: "services")
 }

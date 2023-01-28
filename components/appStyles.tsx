@@ -68,7 +68,6 @@ export const GlobalStyle = createGlobalStyle`
     margin-top: ${({ theme }) => theme.space[3]};
     line-height: 1;
     padding-left: 0;
-    white-space: nowrap;
   }
 
   input[type="submit"] {

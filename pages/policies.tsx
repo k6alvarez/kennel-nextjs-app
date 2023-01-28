@@ -21,7 +21,7 @@ export const deletePolicy = async (id: string): Promise<void> => {
   });
 };
 
-const TitleText = styled.div`
+export const TitleText = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;

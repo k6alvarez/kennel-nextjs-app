@@ -302,7 +302,7 @@ export const Tiptap = ({
           primary
           onClick={() => {
             const html = editor.getHTML();
-            onSave(html);
+            onSave(html, editor);
           }}
         >
           {isLoading ? (
