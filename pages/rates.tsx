@@ -19,6 +19,7 @@ import { saveContent } from "../components/Admin/services";
 import { EditForm } from "../components/Forms/styles";
 import { Tiptap } from "../components/ui-kit/Tiptap";
 import { defaultContent } from ".";
+import { RunSizes } from "../components/Boarding/RunSizes";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const dates = await prisma.holidayPremiumDates.findMany();
@@ -85,7 +86,7 @@ const Rates: React.FC<Props> = ({ dates, contentItems }) => {
           <div dangerouslySetInnerHTML={{ __html: ratesContent?.content }} />
         )}
 
-        <BoardingRates />
+        <RunSizes />
         {editMode ? (
           <EditForm onSubmit={(e) => e.preventDefault()}>
             <Tiptap
