@@ -31,6 +31,11 @@ export const GlobalStyle = createGlobalStyle`
     }
 
   }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 
   blockquote {
     ${blockquoteStyles}
@@ -38,6 +43,10 @@ export const GlobalStyle = createGlobalStyle`
 
   em {
     ${promoStyles}
+  }
+
+  strong {
+    font-weight: 600;
   }
 
   main, section, article {
