@@ -114,7 +114,14 @@ export const PET_INITIAL_STATE = {
     value: "Small",
     error: null,
     type: "select",
-    options: ["Small", "Large", "Extra Large", "Shared"],
+    options: [
+      "Small",
+      "Large",
+      "Extra Large",
+      "Cat Room",
+      "Cat Condo",
+      "Shared",
+    ],
     label: "Preferred Run Size",
     required: true,
   },
@@ -159,5 +166,54 @@ export const petFormReducer = (
         ...guestFormState,
         [key]: inputState,
       };
+    case "setField": {
+      console.log("setField", payload);
+      const inputState = {
+        ...guestFormState[key],
+        value: payload.value || "",
+        required: payload.required,
+        disabled: payload.disabled,
+      };
+      return {
+        ...guestFormState,
+        [key]: inputState,
+      };
+    }
+    case "setFormForCat": {
+      const preferredRunSize = {
+        ...guestFormState["preferredRunSize"],
+        options: ["Cat Room", "Cat Condo", "Shared"],
+      };
+
+      const bordetellaVaccine = {
+        ...guestFormState["bordetellaVaccine"],
+        required: false,
+        disabled: true,
+      };
+
+      return {
+        ...guestFormState,
+        preferredRunSize,
+        bordetellaVaccine,
+      };
+    }
+    case "setFormForDog": {
+      const preferredRunSize = {
+        ...guestFormState["preferredRunSize"],
+        options: ["Small", "Large", "Extra Large", "Shared"],
+      };
+
+      const bordetellaVaccine = {
+        ...guestFormState["bordetellaVaccine"],
+        required: true,
+        disabled: false,
+      };
+
+      return {
+        ...guestFormState,
+        preferredRunSize,
+        bordetellaVaccine,
+      };
+    }
   }
 };

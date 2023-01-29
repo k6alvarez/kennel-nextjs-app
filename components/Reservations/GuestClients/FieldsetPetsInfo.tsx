@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "antd";
 import styled from "styled-components";
 import { DateTime } from "luxon";
@@ -63,6 +63,18 @@ export const FieldsetPetsInfo = ({
     setPetFormLoading,
     petFormError,
   } = usePetFormContext();
+
+  useEffect(() => {
+    if (petFormState.type.value === "Cat") {
+      petFormDispatch({
+        type: "setFormForCat",
+      });
+    } else {
+      petFormDispatch({
+        type: "setFormForDog",
+      });
+    }
+  }, [petFormState.type.value]);
 
   return (
     <>
