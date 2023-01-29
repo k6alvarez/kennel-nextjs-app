@@ -1,10 +1,10 @@
-import { Button, Collapse, message } from "antd";
+import { Collapse, message } from "antd";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { TitleText } from "../../pages/policies";
 import { saveContent } from "../Admin/services";
 import { EditForm } from "../Forms/styles";
-import { Content } from "../ui-kit/Base";
+import { Button, Content } from "../ui-kit/Base";
 import { Tiptap } from "../ui-kit/Tiptap";
 
 export const BoldText = styled.span`
