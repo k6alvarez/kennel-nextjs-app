@@ -130,12 +130,7 @@ export const PET_INITIAL_STATE = {
     error: null,
     type: "select",
     label: "Feeding",
-    options: [
-      "Client Food",
-      "Iams Eukanuba Adult",
-      "Iams Eukanuba Large Breed Puppy",
-      "Iams Puppy",
-    ],
+    options: ["Client Food", "Redford Naturals Lamb & Brown Rice"],
     required: true,
   },
   feedingCount: {
@@ -167,7 +162,6 @@ export const petFormReducer = (
         [key]: inputState,
       };
     case "setField": {
-      console.log("setField", payload);
       const inputState = {
         ...guestFormState[key],
         value: payload.value || "",
@@ -213,6 +207,28 @@ export const petFormReducer = (
         ...guestFormState,
         preferredRunSize,
         bordetellaVaccine,
+      };
+    }
+    case "setFormForClientFood": {
+      const feedingCount = {
+        ...guestFormState["feedingCount"],
+        label: "Bags Per Feeding",
+      };
+
+      return {
+        ...guestFormState,
+        feedingCount,
+      };
+    }
+    case "setFormForKennelFood": {
+      const feedingCount = {
+        ...guestFormState["feedingCount"],
+        label: "Cups Per Feeding",
+      };
+
+      return {
+        ...guestFormState,
+        feedingCount,
       };
     }
   }
