@@ -68,6 +68,7 @@ export const PromoTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   letter-spacing: 1px;
+  flex: 1;
 
   h2,
   span {
@@ -107,6 +108,7 @@ export const PromoTextWrapper = styled.div`
         ? theme.colors.textSecondary
         : theme.colors.textPrimary};
     box-shadow: ${({ theme }) => theme.shadows.default};
+    height: 100%;
 
     div > div {
       transform: scale(1);

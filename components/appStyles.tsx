@@ -24,6 +24,7 @@ export const GlobalStyle = createGlobalStyle`
   fieldset {
     max-width: 100%;
     margin: 0 auto;
+    height: 100%;
 
     .ant-collapse {
       margin-top: ${({ theme }) => theme.space[4]};
