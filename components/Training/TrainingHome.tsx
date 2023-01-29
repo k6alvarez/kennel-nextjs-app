@@ -39,20 +39,19 @@ export const TrainingHome = ({
         ) : (
           <div dangerouslySetInnerHTML={{ __html: content?.content }} />
         )}
-
-        <Promos
-          delay={defaultDelay * 6}
-          promos={classesPrimary}
-          setPromos={setClassesPrimary}
-          editMode={editMode}
-        />
-        <Promos
-          delay={defaultDelay * 6}
-          promos={classesSecondary}
-          setPromos={setClassesSecondary}
-          editMode={editMode}
-        />
       </Content>
+      <Promos
+        delay={defaultDelay * 6}
+        promos={classesPrimary}
+        setPromos={setClassesPrimary}
+        editMode={editMode}
+      />
+      <Promos
+        delay={defaultDelay * 6}
+        promos={classesSecondary}
+        setPromos={setClassesSecondary}
+        editMode={editMode}
+      />
     </>
   );
 };
