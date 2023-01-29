@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "antd";
 import styled from "styled-components";
 import { DateTime } from "luxon";
@@ -14,6 +14,9 @@ import { PetCard } from "../../Pets/PetCard";
 import { calculateDeposit } from "./services";
 import { PetCards } from "../styles";
 import { PetProps } from "../../../pages/profile";
+import Link from "next/link";
+import { BlockQuote } from "./FormIntro";
+import { InfoCircleOutlined } from "@ant-design/icons";
 
 export const SmallButton = styled.button`
   font-size: ${(props) => `calc(${props.theme.fontSizes[1]} / 1.6)`};
@@ -63,6 +66,30 @@ export const FieldsetPetsInfo = ({
     setPetFormLoading,
     petFormError,
   } = usePetFormContext();
+
+  useEffect(() => {
+    if (petFormState.type.value === "Cat") {
+      petFormDispatch({
+        type: "setFormForCat",
+      });
+    } else {
+      petFormDispatch({
+        type: "setFormForDog",
+      });
+    }
+  }, [petFormState.type.value]);
+
+  useEffect(() => {
+    if (petFormState.feeding.value === "Client Food") {
+      petFormDispatch({
+        type: "setFormForClientFood",
+      });
+    } else {
+      petFormDispatch({
+        type: "setFormForKennelFood",
+      });
+    }
+  }, [petFormState.feeding.value]);
 
   return (
     <>
@@ -125,6 +152,35 @@ export const FieldsetPetsInfo = ({
                 handleChange,
                 setFormLoading: setPetFormLoading,
               })}
+              {petFormState.feeding.value === "Client Food" ? (
+                <Field grow>
+                  <BlockQuote>
+                    <InfoCircleOutlined />
+                    <p>
+                      If you provide food please package each meal in a *Ziploc®
+                      (type) plastic bag (no fold-over sandwich baggies, please)
+                      with each meal clearly labeled with your pet's name. See
+                      our{" "}
+                      <Link href="/policies?tab=Feeding">
+                        <a>feeding policy</a>
+                      </Link>{" "}
+                      for more details.
+                    </p>
+                  </BlockQuote>
+                </Field>
+              ) : (
+                <br />
+              )}
+
+              <Field grow>
+                <p>
+                  Our guests are routinely fed at 9:00 AM. Additional evening
+                  feedings ($.75 per meal) are available upon request. The
+                  evening feeding is provided at 4:00 PM. Food and water are
+                  served in our dishes, so please do not bring dishes.
+                </p>
+              </Field>
+
               <Field grow>
                 <Button
                   disabled={pets.length >= 5}

@@ -114,7 +114,14 @@ export const PET_INITIAL_STATE = {
     value: "Small",
     error: null,
     type: "select",
-    options: ["Small", "Large", "Extra Large", "Shared"],
+    options: [
+      "Small",
+      "Large",
+      "Extra Large",
+      "Cat Room",
+      "Cat Condo",
+      "Shared",
+    ],
     label: "Preferred Run Size",
     required: true,
   },
@@ -123,12 +130,7 @@ export const PET_INITIAL_STATE = {
     error: null,
     type: "select",
     label: "Feeding",
-    options: [
-      "Client Food",
-      "Iams Eukanuba Adult",
-      "Iams Eukanuba Large Breed Puppy",
-      "Iams Puppy",
-    ],
+    options: ["Client Food", "Redford Naturals Lamb & Brown Rice"],
     required: true,
   },
   feedingCount: {
@@ -159,5 +161,75 @@ export const petFormReducer = (
         ...guestFormState,
         [key]: inputState,
       };
+    case "setField": {
+      const inputState = {
+        ...guestFormState[key],
+        value: payload.value || "",
+        required: payload.required,
+        disabled: payload.disabled,
+      };
+      return {
+        ...guestFormState,
+        [key]: inputState,
+      };
+    }
+    case "setFormForCat": {
+      const preferredRunSize = {
+        ...guestFormState["preferredRunSize"],
+        options: ["Cat Room", "Cat Condo", "Shared"],
+      };
+
+      const bordetellaVaccine = {
+        ...guestFormState["bordetellaVaccine"],
+        required: false,
+        disabled: true,
+      };
+
+      return {
+        ...guestFormState,
+        preferredRunSize,
+        bordetellaVaccine,
+      };
+    }
+    case "setFormForDog": {
+      const preferredRunSize = {
+        ...guestFormState["preferredRunSize"],
+        options: ["Small", "Large", "Extra Large", "Shared"],
+      };
+
+      const bordetellaVaccine = {
+        ...guestFormState["bordetellaVaccine"],
+        required: true,
+        disabled: false,
+      };
+
+      return {
+        ...guestFormState,
+        preferredRunSize,
+        bordetellaVaccine,
+      };
+    }
+    case "setFormForClientFood": {
+      const feedingCount = {
+        ...guestFormState["feedingCount"],
+        label: "Bags Per Feeding",
+      };
+
+      return {
+        ...guestFormState,
+        feedingCount,
+      };
+    }
+    case "setFormForKennelFood": {
+      const feedingCount = {
+        ...guestFormState["feedingCount"],
+        label: "Cups Per Feeding",
+      };
+
+      return {
+        ...guestFormState,
+        feedingCount,
+      };
+    }
   }
 };
