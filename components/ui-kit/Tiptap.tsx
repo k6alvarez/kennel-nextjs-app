@@ -16,6 +16,9 @@ import {
 } from "@ant-design/icons";
 import { Button } from "./Base";
 import Youtube from "@tiptap/extension-youtube";
+import Image from "@tiptap/extension-image";
+import { StyledInput } from "../Forms/styles";
+import { message } from "antd";
 
 const Flex = styled.div`
   display: flex;
@@ -93,7 +96,7 @@ export const TipTapMenuWrapper = styled.div`
   border-bottom: 2px solid ${({ theme }) => theme.colors.secondary};
 `;
 
-const MenuBar = ({ editor, setLink, widthRef, heightRef }) => {
+const MenuBar = ({ editor, setLink, addImage, widthRef, heightRef }) => {
   if (!editor) {
     return null;
   }
@@ -213,6 +216,12 @@ const MenuBar = ({ editor, setLink, widthRef, heightRef }) => {
       >
         <YoutubeOutlined /> YouTube
       </button>
+      <StyledInput
+        title="Insert an image to your content."
+        type="file"
+        id="file"
+        onChange={addImage}
+      />
       <Flex>
         <input
           id="width"
@@ -250,6 +259,9 @@ export const Tiptap = ({
       Youtube.configure({
         inline: false,
       }),
+      Image.configure({
+        inline: true,
+      }),
     ],
     content,
   });
@@ -279,6 +291,32 @@ export const Tiptap = ({
       .run();
   }, [editor]);
 
+  const addImage = useCallback(
+    async (e) => {
+      console.log("addImage");
+      e.preventDefault();
+      const file = e.target.files[0];
+      console.log("🚀 ~ file: Tiptap.tsx:298 ~ file", file);
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "gk-app");
+
+      message.loading(`Uploading your image.`);
+      const data = await fetch(
+        "https://api.cloudinary.com/v1_1/dhcv2fdfq/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((res) => res.json());
+
+      if (data.secure_url) {
+        editor.chain().focus().setImage({ src: data.secure_url }).run();
+      }
+    },
+    [editor]
+  );
+
   React.useEffect(() => {
     if (widthRef.current && heightRef.current) {
       widthRef.current.value = 640;
@@ -291,6 +329,7 @@ export const Tiptap = ({
       <MenuBar
         editor={editor}
         setLink={setLink}
+        addImage={addImage}
         widthRef={widthRef}
         heightRef={heightRef}
       />

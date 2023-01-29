@@ -120,7 +120,7 @@ export const PromoTextWrapper = styled.div`
       height: 80vw;
 
       @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-        height: 25vw;
+        height: 30vw;
         background-position: center;
       }
     }
