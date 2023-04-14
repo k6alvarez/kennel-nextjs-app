@@ -78,6 +78,10 @@ export const GlobalStyle = createGlobalStyle`
     margin-top: ${({ theme }) => theme.space[3]};
     line-height: 1;
     padding-left: 0;
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    gap: ${({ theme }) => theme.space[2]};
   }
 
   input[type="submit"] {

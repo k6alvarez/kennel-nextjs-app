@@ -111,7 +111,6 @@ const Profile: React.FC<Props> = ({ user }) => {
       error: null,
       type: "text",
       label: "Unit",
-      required: true,
     },
     city: {
       value: user?.city || "",
@@ -141,9 +140,10 @@ const Profile: React.FC<Props> = ({ user }) => {
       type: "text",
       inputMode: "numeric",
       minLength: 10,
-      maxLength: 11,
+      maxLength: 16,
       label: "Phone",
       required: true,
+      hint: `Format: 123-456-7890`,
     },
     altPhone: {
       value: user?.altPhone || "",
@@ -151,9 +151,9 @@ const Profile: React.FC<Props> = ({ user }) => {
       type: "text",
       inputMode: "numeric",
       minLength: 10,
-      maxLength: 11,
+      maxLength: 16,
       label: "Alt Phone",
-      required: true,
+      hint: `Format: 123-456-7890`,
     },
     emergencyContactName: {
       value: user?.emergencyContactName || "",
@@ -167,9 +167,10 @@ const Profile: React.FC<Props> = ({ user }) => {
       type: "text",
       inputMode: "numeric",
       minLength: 10,
-      maxLength: 11,
+      maxLength: 16,
       label: "Emergency Contact Phone",
       required: true,
+      hint: `Format: 123-456-7890`,
     },
   };
   const [profileFormState, profileFormDispatch] = useReducer(

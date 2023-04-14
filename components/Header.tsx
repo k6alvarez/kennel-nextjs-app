@@ -43,19 +43,20 @@ const AdminLeftNav = styled.div`
 `;
 
 export const StyledNav = styled.nav`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   position: sticky;
   top: 0;
-  justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.primary};
-  padding: ${({ theme }) => theme.space[3]};
+  padding: ${({ theme }) => theme.space[4]};
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 5000;
   a {
     color: ${({ theme }) => theme.colors.textPrimary};
     white-space: nowrap;
 
-    &[data-active="true"] {
+    &[data-active="true"],
+    &:hover {
       text-decoration: underline;
     }
   }
@@ -107,7 +108,7 @@ export const NavWrapper = styled.div`
   display: flex;
   flex-direction: column-reverse !important;
   align-items: center;
-  flex: 1;
+  justify-content: space-between;
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     flex-direction: row !important;
@@ -187,6 +188,8 @@ const Header: React.FC = () => {
 
   let rightNav = null;
 
+  let centerNav = null;
+
   if (status === "loading") {
     leftNav = (
       <div>
@@ -198,23 +201,31 @@ const Header: React.FC = () => {
         <p>Validating session ...</p>
       </div>
     );
+
+    centerNav = (
+      <div className="centerNav">
+        <p>Validating session ...</p>
+      </div>
+    );
   }
 
   if (!session) {
     rightNav = (
       <NavWrapper className="rightNav">
-        {getMainLinks(isActive)}
         <Link href="/api/auth/signin">
           <a data-active={isActive("/signup")}>Log In</a>
         </Link>
       </NavWrapper>
+    );
+
+    centerNav = (
+      <NavWrapper className="centerNav">{getMainLinks(isActive)}</NavWrapper>
     );
   }
 
   if (session) {
     rightNav = (
       <NavWrapper className="rightNav">
-        {getMainLinks(isActive)}
         <Link href="/profile">
           <a data-active={isActive("/profile")}>My Profile</a>
         </Link>
@@ -230,28 +241,29 @@ const Header: React.FC = () => {
             Log Out
           </button>
         </Flex>
+        {loggedInUser?.permissions.includes("ADMIN") && (
+          <Flex>
+            <button
+              onClick={() => {
+                setEditMode(!editMode);
+              }}
+            >
+              Admin Mode {editMode ? "On" : "Off"}
+            </button>
+          </Flex>
+        )}
       </NavWrapper>
     );
 
-    if (loggedInUser?.permissions.includes("ADMIN")) {
-      leftNav = (
-        <AdminLeftNav>
-          <LeftNav toggleDrawer={toggleDrawer} />
-          <button
-            onClick={() => {
-              setEditMode(!editMode);
-            }}
-          >
-            Admin Mode {editMode ? "On" : "Off"}
-          </button>
-        </AdminLeftNav>
-      );
-    }
+    centerNav = (
+      <NavWrapper className="centerNav">{getMainLinks(isActive)}</NavWrapper>
+    );
   }
 
   return (
     <StyledNav currentTheme={currentTheme}>
       {leftNav}
+      {centerNav}
       {rightNav}
       <Drawer
         title={

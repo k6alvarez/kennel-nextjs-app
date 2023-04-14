@@ -24,7 +24,7 @@ export const Fieldset = styled.fieldset`
   max-width: 100%;
 
   @media (min-width: ${({ theme }) => theme.breakpoints[3]}) {
-    max-width: 70%;
+    max-width: 96%;
   }
 `;
 
@@ -42,7 +42,8 @@ export const Field = styled.div`
 `;
 
 export const Hint = styled.span`
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme, variant }) =>
+    variant === "neutral" ? theme.colors.textSecondary : theme.colors.primary};
   font-size: ${({ theme }) => theme.fontSizes[0]};
   width: 100%;
   padding: ${({ theme }) => theme.space[2]} 0;

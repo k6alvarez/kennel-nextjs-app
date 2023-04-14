@@ -8,6 +8,8 @@ import {
   StyledSelect,
   PreviewWrapper,
 } from "./styles";
+import { useEffect, useRef, useState } from "react";
+import { animated, useSpring } from "react-spring";
 
 export interface InputProps
   extends React.InputHTMLAttributes<
@@ -30,6 +32,7 @@ export interface InputProps
   rows?: string;
   maxWidth?: string;
   cancelAutoFocus?: boolean;
+  hint?: string;
 }
 
 export interface renderFormFieldProps {
@@ -48,6 +51,14 @@ export const renderFormFields = ({
   setFormLoading,
 }: renderFormFieldProps) => {
   return Object.entries(initialState).map(([key, _value], i) => {
+    const [focused, setFocused] = useState(false);
+    const onFocus = () => setFocused(true);
+    const onBlur = () => setFocused(false);
+    const hintProps = useSpring({
+      opacity: focused ? 1 : 0,
+      transform: focused ? "translateY(0px)" : "translateY(5px)",
+      config: { mass: 1, tension: 500, friction: 50 },
+    });
     const field = state[key];
     const onChange = (e) => {
       if (e.target.id === "isClosed") {
@@ -67,6 +78,11 @@ export const renderFormFields = ({
         {field?.type !== "checkbox" && (
           <StyledLabel htmlFor={key} error={field?.error || false}>
             {`${field?.label}${field?.required ? "*" : ""}`}
+            {focused && field?.hint && (
+              <animated.div style={hintProps}>
+                <Hint variant="neutral">({field?.hint})</Hint>
+              </animated.div>
+            )}
           </StyledLabel>
         )}
 
@@ -185,6 +201,8 @@ export const renderFormFields = ({
               value={field?.value}
               error={field?.error}
               disabled={field?.disabled}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           )}
 

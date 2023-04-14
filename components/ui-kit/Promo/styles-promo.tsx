@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-export const headerHt = "47px";
+export const headerHt = "84px";
 
 export const PromoFooter = styled.div`
   display: flex;
