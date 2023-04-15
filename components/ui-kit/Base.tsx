@@ -149,7 +149,6 @@ export const GridItemText = styled.div``;
 export const GridItems = styled.div`
   display: flex;
   flex-direction: column;
-  margin: ${({ theme }) => theme.space[4]} 0;
   justify-content: space-between;
   overflow: hidden;
 
@@ -161,12 +160,20 @@ export const GridItems = styled.div`
 
   @media (min-width: ${(props) => props.theme.breakpoints[2]}) {
     flex-direction: row;
+    padding: ${({ theme }) => theme.space[6]};
+    gap: ${({ theme }) => theme.space[6]};
+  }
+
+  fieldset {
+    margin: 0;
+    padding: 0;
+    width: 100%;
   }
 `;
 
 export const GridItem = styled.div`
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vw;
   background-image: url(${({ img }) => (img ? img : "")});
   background-color: ${({ theme, bg }) => theme.colors[bg] || theme.colors.nav};
@@ -184,7 +191,7 @@ export const GridItem = styled.div`
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-    width: ${({ size }) => (size ? size : "25vw")};
+    width: 100%;
     height: ${({ size }) => (size ? size : "25vw")};
   }
 `;

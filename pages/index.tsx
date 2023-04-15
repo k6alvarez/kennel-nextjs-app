@@ -81,6 +81,7 @@ const MyApp = ({ contentItems, promoItems }) => {
         setPromos={setHomePromos}
         contentItem={homePromoTitle}
         setContentItem={setHomePromoTitle}
+        sliderMode
       />
       <Content>
         {editMode ? (
@@ -109,6 +110,7 @@ const MyApp = ({ contentItems, promoItems }) => {
         promos={homeCallouts}
         setPromos={setHomeCallouts}
         editMode={editMode}
+        transparent
       />
       <Content>
         {editMode ? (

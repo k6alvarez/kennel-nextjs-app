@@ -22,17 +22,31 @@ export const LogoName = styled.h2`
   text-align: center;
   padding-right: 20px;
 
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  padding: 0;
+
   @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-    font-size: ${({ theme }) => theme.fontSizes[3]};
+    font-size: ${({ theme }) => theme.fontSizes[6]};
   }
   a {
     text-decoration: none;
     color: ${({ theme }) => theme.colors.textPrimary};
+
+    &:hover {
+      text-decoration: none !important;
+    }
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
     padding-right: 0;
     margin-left: 0;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+    justify-content: start;
   }
 `;
 export const LogoDesc = styled.div`

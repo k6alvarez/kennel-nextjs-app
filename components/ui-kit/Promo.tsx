@@ -32,6 +32,7 @@ export const Promo = ({
   animate = true,
   contentItem = null,
   setContentItem = undefined,
+  sliderMode = false,
 }) => {
   const { currentTheme, breakpoints, editMode } = useContext(
     ThemePreferenceContext
@@ -73,56 +74,49 @@ export const Promo = ({
   };
 
   return (
-    <PromoWrapper currentTheme={currentTheme}>
-      <PromoText>
-        <animated.div
-          style={{ ...props, height: mobileScreen ? "180px" : "320px" }}
-        >
-          <>
-            <LogoOne size={7} />
-            <Crest scale={0.6} />
-          </>
-        </animated.div>
-      </PromoText>
-      {editMode && contentItem?.content ? (
-        <EditForm onSubmit={(e) => e.preventDefault()}>
-          <Tiptap
-            content={contentItem.content}
-            onSave={onSave}
-            isLoading={isLoading}
+    <>
+      <PromoWrapper currentTheme={currentTheme}>
+        {editMode && contentItem?.content && (
+          <EditForm onSubmit={(e) => e.preventDefault()}>
+            <Tiptap
+              content={contentItem.content}
+              onSave={onSave}
+              isLoading={isLoading}
+            />
+          </EditForm>
+        )}
+
+        {!editMode && contentItem?.content && (
+          <animated.div style={fadeInPt1}>
+            <PromoTitleWrapper>
+              <>
+                {children ? (
+                  children
+                ) : (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: contentItem?.content,
+                    }}
+                  />
+                )}
+              </>
+            </PromoTitleWrapper>
+          </animated.div>
+        )}
+
+        {promos.length > 0 && (
+          <Promos
+            animate={animate}
+            transparent
+            delay={defaultDelay * 4}
+            editMode={editMode}
+            promos={promos}
+            setPromos={setPromos}
+            noFlexGrow
+            sliderMode={sliderMode}
           />
-        </EditForm>
-      ) : (
-        <animated.div style={fadeInPt1}>
-          <PromoTitleWrapper>
-            <>
-              {children ? (
-                children
-              ) : (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: contentItem?.content,
-                  }}
-                />
-              )}
-            </>
-          </PromoTitleWrapper>
-        </animated.div>
-      )}
-
-      {promos.length > 0 && (
-        <Promos
-          animate={animate}
-          transparent
-          delay={defaultDelay * 4}
-          editMode={editMode}
-          promos={promos}
-          setPromos={setPromos}
-          noMargin
-          noFlexGrow
-        />
-      )}
-
+        )}
+      </PromoWrapper>
       {showFooter && (
         <PromoFooter>
           <p>9172 East K Ave, Galesburg MI, 49053</p>
@@ -146,6 +140,6 @@ export const Promo = ({
           </ul>
         </PromoFooter>
       )}
-    </PromoWrapper>
+    </>
   );
 };

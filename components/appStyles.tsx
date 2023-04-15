@@ -6,7 +6,7 @@ import {
   naturalEarth,
 } from "../components/ui-kit/Theme";
 import { blockquoteStyles } from "./Reservations/GuestClients/FormIntro";
-import { promoStyles } from "./ui-kit/Promo/styles-promo";
+import { headerHt, promoStyles } from "./ui-kit/Promo/styles-promo";
 
 export const themesMap = {
   light,
@@ -78,6 +78,10 @@ export const GlobalStyle = createGlobalStyle`
     margin-top: ${({ theme }) => theme.space[3]};
     line-height: 1;
     padding-left: 0;
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    gap: ${({ theme }) => theme.space[2]};
   }
 
   input[type="submit"] {
@@ -126,6 +130,7 @@ export const GlobalStyle = createGlobalStyle`
 
   .ant-drawer-header {
     background-color: ${({ theme }) => theme.colors.primary};
+    min-height: ${headerHt};
     .ant-drawer-title h2, .anticon-close {
       color: ${({ theme }) => theme.colors.textPrimary};
     }
@@ -145,12 +150,8 @@ export const GlobalStyle = createGlobalStyle`
       position: relative;
       margin: 0;
       padding: ${({ theme }) => theme.space[4]};
-      border-bottom: 1px solid ${({ theme }) => theme.colors.secondary};
+      border-top: 1px solid ${({ theme }) => theme.colors.secondary};
       color: ${({ theme }) => theme.colors.textSecondary};
-
-      &:last-of-type {
-        border-top: 1px solid ${({ theme }) => theme.colors.secondary};
-      }
 
       &[data-active="true"] {
         color: ${({ theme }) => theme.colors.primary};
@@ -218,6 +219,10 @@ export const GlobalStyle = createGlobalStyle`
   .ant-checkbox-inner {
     transform: scale(1.5);
     transform-origin: top;
+  }
+
+  .ant-carousel {
+    width: 100%;
   }
 
 `;

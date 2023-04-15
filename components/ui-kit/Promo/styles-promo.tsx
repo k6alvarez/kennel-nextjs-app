@@ -1,14 +1,15 @@
 import styled, { css } from "styled-components";
 
-export const headerHt = "47px";
+export const headerHt = "84px";
 
 export const PromoFooter = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${(props) => props.theme.fontSizes[2]};
   padding: 0 ${(props) => props.theme.space[4]};
-  margin-top: ${(props) => props.theme.space[4]};
 
   ul {
     display: flex;
@@ -18,7 +19,7 @@ export const PromoFooter = styled.div`
   }
 
   a {
-    color: ${(props) => props.theme.colors.textPrimary};
+    color: ${(props) => props.theme.colors.textSecondary};
 
     &:hover {
       color: ${(props) => props.theme.colors.inputFocus};
@@ -26,7 +27,9 @@ export const PromoFooter = styled.div`
   }
 
   p {
+    color: ${(props) => props.theme.colors.textSecondary};
     font-size: ${({ theme }) => theme.fontSizes[0]};
+    margin: 0;
   }
 `;
 
@@ -37,15 +40,13 @@ export const PromoWrapper = styled.div`
     currentTheme === "livelySoothing"
       ? theme.colors.textSecondary
       : theme.colors.textPrimary};
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.space[2]};
-  padding-top: ${({ theme }) => theme.space[4]};
-  font-size: ${({ theme }) => theme.fontSizes[1]};
+  font-size: ${({ theme }) => theme.fontSizes[2]};
   line-height: 1.2;
-  min-height: calc(100vh - ${headerHt});
 
   p {
     margin-bottom: ${({ theme }) => theme.space[4]};
@@ -53,10 +54,15 @@ export const PromoWrapper = styled.div`
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
     font-size: ${({ theme }) => theme.fontSizes[2]};
+    grid-template-columns: 1fr 1fr;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     font-size: ${({ theme }) => theme.fontSizes[4]};
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[4]}) {
+    font-size: ${({ theme }) => theme.fontSizes[6]};
   }
 `;
 
@@ -163,15 +169,18 @@ export const PromoPics = styled.div`
         ? theme.colors.primaryDark
         : theme.colors.secondary
       : "transparent"};
-  padding: 0 ${({ theme }) => theme.space[4]};
 `;
 
 export const PromoTitleWrapper = styled.div`
-  width: 90vw;
   margin: 0 auto;
   text-align: center;
-  margin-bottom: ${({ theme }) => theme.space[4]};
+  padding: ${({ theme }) => theme.space[4]};
   flex: 1;
+  max-width: 80%;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 export const PromoText = styled.div`
@@ -202,6 +211,14 @@ export const promoStyles = css`
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     font-size: ${({ theme }) => theme.fontSizes[6]};
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[4]}) {
+    font-size: ${({ theme }) => theme.fontSizes[7]};
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[5]}) {
+    font-size: ${({ theme }) => theme.fontSizes[8]};
   }
 `;
 
