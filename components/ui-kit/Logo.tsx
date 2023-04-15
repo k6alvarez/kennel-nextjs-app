@@ -50,7 +50,7 @@ const Flex = styled.div`
 export const LogoOne = ({ size }: { size?: number }) => {
   return (
     <Flex>
-      <Image width={44} height={48} src="/images/ShieldOutline.png" />
+      <Image width={50} height={54} src="/images/ShieldOutline.png" />
       <Wrapper size={size}>
         <span>Gillette Kennels</span>
         <Slogan size={size}>

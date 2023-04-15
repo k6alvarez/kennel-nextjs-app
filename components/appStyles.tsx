@@ -6,7 +6,7 @@ import {
   naturalEarth,
 } from "../components/ui-kit/Theme";
 import { blockquoteStyles } from "./Reservations/GuestClients/FormIntro";
-import { promoStyles } from "./ui-kit/Promo/styles-promo";
+import { headerHt, promoStyles } from "./ui-kit/Promo/styles-promo";
 
 export const themesMap = {
   light,
@@ -130,6 +130,7 @@ export const GlobalStyle = createGlobalStyle`
 
   .ant-drawer-header {
     background-color: ${({ theme }) => theme.colors.primary};
+    min-height: ${headerHt};
     .ant-drawer-title h2, .anticon-close {
       color: ${({ theme }) => theme.colors.textPrimary};
     }

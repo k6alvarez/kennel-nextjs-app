@@ -29,11 +29,15 @@ export const LogoName = styled.h2`
   padding: 0;
 
   @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-    font-size: ${({ theme }) => theme.fontSizes[3]};
+    font-size: ${({ theme }) => theme.fontSizes[6]};
   }
   a {
     text-decoration: none;
     color: ${({ theme }) => theme.colors.textPrimary};
+
+    &:hover {
+      text-decoration: none !important;
+    }
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {

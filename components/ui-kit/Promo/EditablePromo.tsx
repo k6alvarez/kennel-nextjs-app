@@ -29,10 +29,11 @@ export const EditablePromo = ({
       key={promo.id}
       style={{
         ...props,
-        margin: noMargin ? "2rem 0" : "2rem 1rem",
+        // margin: noMargin ? "2rem 0" : "2rem 1rem",
         display: noMargin ? "flex" : "initial",
         justifyContent: noMargin ? "center" : "initial",
-        width: noMargin ? "100%" : "calc(100% - 2rem)",
+        // width: noMargin ? "100%" : "calc(100% - 2rem)",
+        width: "100%",
       }}
     >
       <fieldset disabled={isLoading}>

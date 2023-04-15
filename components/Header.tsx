@@ -125,6 +125,10 @@ export const NavWrapper = styled.div`
 
     a:first-child {
       border-bottom: 1px solid ${({ theme }) => theme.colors.secondary};
+
+      @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+        border-bottom: none;
+      }
     }
   }
 
