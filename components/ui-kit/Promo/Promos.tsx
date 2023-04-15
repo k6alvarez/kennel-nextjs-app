@@ -3,6 +3,8 @@ import { GridItems } from "../Base";
 import { PromoPics } from "./styles-promo";
 import { ThemePreferenceContext } from "../../../pages/_app";
 import { EditablePromo } from "./EditablePromo";
+import { Carousel } from "antd";
+import styled from "styled-components";
 
 interface PromosProps {
   editMode: boolean;
@@ -21,7 +23,23 @@ interface PromosProps {
   noMargin?: boolean;
   animate?: boolean;
   noFlexGrow?: boolean;
+  sliderMode?: boolean;
 }
+
+const Container = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+`;
+
+const contentStyle: React.CSSProperties = {
+  height: "100%",
+  color: "#fff",
+  textAlign: "center",
+  background: "#364d79",
+};
 
 export const Promos = ({
   transparent,
@@ -30,37 +48,60 @@ export const Promos = ({
   editMode = false,
   setPromos = undefined,
   variant = "row",
-  noMargin = false,
   noFlexGrow = false,
+  sliderMode = false,
 }: PromosProps) => {
   const { currentTheme } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
   return (
-    <PromoPics
-      transparent={transparent}
-      currentTheme={currentTheme}
-      flex={noFlexGrow ? "unset" : "1"}
-    >
-      <GridItems variant={variant}>
-        {promos.map((promo, i) => (
-          <EditablePromo
-            noMargin={noMargin}
-            delay={delay}
-            promo={promo}
-            updatePromo={(newPromo) => {
-              const newPromos = [...promos];
-              newPromos[i] = newPromo;
-              setPromos(newPromos);
-            }}
-            editMode={editMode}
-            currentTheme={currentTheme}
-            i={i}
-            key={i}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-          />
-        ))}
-      </GridItems>
-    </PromoPics>
+    <Container>
+      {sliderMode ? (
+        <Carousel autoplay dots={false} autoplaySpeed={5000} fade>
+          {promos.map((promo, i) => (
+            <EditablePromo
+              delay={delay}
+              promo={promo}
+              updatePromo={(newPromo) => {
+                const newPromos = [...promos];
+                newPromos[i] = newPromo;
+                setPromos(newPromos);
+              }}
+              editMode={editMode}
+              currentTheme={currentTheme}
+              i={i}
+              key={i}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+          ))}
+        </Carousel>
+      ) : (
+        <PromoPics
+          transparent={transparent}
+          currentTheme={currentTheme}
+          flex={noFlexGrow ? "unset" : "1"}
+        >
+          <GridItems variant={variant}>
+            {promos.map((promo, i) => (
+              <EditablePromo
+                delay={delay}
+                promo={promo}
+                updatePromo={(newPromo) => {
+                  const newPromos = [...promos];
+                  newPromos[i] = newPromo;
+                  setPromos(newPromos);
+                }}
+                editMode={editMode}
+                currentTheme={currentTheme}
+                i={i}
+                key={i}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+              />
+            ))}
+          </GridItems>
+        </PromoPics>
+      )}
+    </Container>
   );
 };

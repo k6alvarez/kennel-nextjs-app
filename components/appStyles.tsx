@@ -221,4 +221,8 @@ export const GlobalStyle = createGlobalStyle`
     transform-origin: top;
   }
 
+  .ant-carousel {
+    width: 100%;
+  }
+
 `;

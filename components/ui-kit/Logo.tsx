@@ -47,10 +47,20 @@ const Flex = styled.div`
   align-items: center;
 `;
 
-export const LogoOne = ({ size }: { size?: number }) => {
+export const LogoOne = ({
+  size,
+  crestSize = 50,
+}: {
+  size?: number;
+  crestSize?: number;
+}) => {
   return (
     <Flex>
-      <Image width={50} height={54} src="/images/ShieldOutline.png" />
+      <Image
+        width={crestSize}
+        height={crestSize + 4}
+        src="/images/ShieldOutline.png"
+      />
       <Wrapper size={size}>
         <span>Gillette Kennels</span>
         <Slogan size={size}>

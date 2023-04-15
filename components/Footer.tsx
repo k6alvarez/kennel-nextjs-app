@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { ThemePreferenceContext } from "../pages/_app";
 import { BusinessHoursList } from "./Admin/BusinessHoursList";
 import { getBusinessHours } from "./Admin/services";
-import { Crest } from "./Navigation/LogoLinks";
 import { RouteLink } from "./Navigation/RouteLink";
 import { LogoOne } from "./ui-kit/Logo";
 
@@ -122,8 +121,7 @@ export const Footer = () => {
       <Flex>
         <RouteLink activeClassName="active" href="/">
           <a>
-            <LogoOne size={7} />
-            <Crest />
+            <LogoOne size={7} crestSize={80} />
           </a>
         </RouteLink>
         <div>
@@ -148,13 +146,13 @@ export const Footer = () => {
           </Flex>
         </div>
       </Flex>
-      <iframe
+      {/* <iframe
         width="100%"
         height="520"
         frameBorder="0"
         src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJpRxZd7uaF4gR7V1wVGncMpE&key=AIzaSyCZDOY0IiSO7q2u1PYLNN8rekYbU3-ZMm4&zoom=11"
         allowFullScreen
-      />
+      /> */}
       <FooterBottom>
         <span>
           <CopyrightCircleOutlined /> {date.getFullYear()}&nbsp;

@@ -160,6 +160,8 @@ export const GridItems = styled.div`
 
   @media (min-width: ${(props) => props.theme.breakpoints[2]}) {
     flex-direction: row;
+    padding: ${({ theme }) => theme.space[6]};
+    gap: ${({ theme }) => theme.space[6]};
   }
 
   fieldset {

@@ -32,6 +32,7 @@ export const Promo = ({
   animate = true,
   contentItem = null,
   setContentItem = undefined,
+  sliderMode = false,
 }) => {
   const { currentTheme, breakpoints, editMode } = useContext(
     ThemePreferenceContext
@@ -111,8 +112,8 @@ export const Promo = ({
             editMode={editMode}
             promos={promos}
             setPromos={setPromos}
-            noMargin
             noFlexGrow
+            sliderMode={sliderMode}
           />
         )}
       </PromoWrapper>
