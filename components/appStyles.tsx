@@ -149,12 +149,8 @@ export const GlobalStyle = createGlobalStyle`
       position: relative;
       margin: 0;
       padding: ${({ theme }) => theme.space[4]};
-      border-bottom: 1px solid ${({ theme }) => theme.colors.secondary};
+      border-top: 1px solid ${({ theme }) => theme.colors.secondary};
       color: ${({ theme }) => theme.colors.textSecondary};
-
-      &:last-of-type {
-        border-top: 1px solid ${({ theme }) => theme.colors.secondary};
-      }
 
       &[data-active="true"] {
         color: ${({ theme }) => theme.colors.primary};

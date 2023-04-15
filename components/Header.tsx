@@ -43,14 +43,19 @@ const AdminLeftNav = styled.div`
 `;
 
 export const StyledNav = styled.nav`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
   position: sticky;
   top: 0;
   background-color: ${({ theme }) => theme.colors.primary};
   padding: ${({ theme }) => theme.space[4]};
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 5000;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
   a {
     color: ${({ theme }) => theme.colors.textPrimary};
     white-space: nowrap;
@@ -105,17 +110,22 @@ export const StyledNav = styled.nav`
 `;
 
 export const NavWrapper = styled.div`
-  display: flex;
+  display: none;
   flex-direction: column-reverse !important;
   align-items: center;
   justify-content: space-between;
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     flex-direction: row !important;
+    display: flex;
   }
 
   &:last-child {
     justify-content: flex-end;
+
+    a:first-child {
+      border-bottom: 1px solid ${({ theme }) => theme.colors.secondary};
+    }
   }
 
   a {
@@ -278,6 +288,7 @@ const Header: React.FC = () => {
         open={open}
       >
         {rightNav}
+        <NavWrapper className="rightNav">{getMainLinks(isActive)}</NavWrapper>
       </Drawer>
     </StyledNav>
   );
