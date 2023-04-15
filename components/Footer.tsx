@@ -58,6 +58,7 @@ export const LetterSpacedText = styled.p`
   text-transform: ${({ textTransform }) =>
     textTransform ? textTransform : "capitalize"};
   letter-spacing: 1px;
+  text-align: center;
 `;
 
 export const BusinessWrapper = styled.div`

@@ -10,6 +10,7 @@ const RunSizeWrapper = styled.div`
   grid-gap: ${({ theme }) => theme.space[5]};
   padding: ${({ theme }) => theme.space[5]};
   width: 100%;
+  margin: ${({ theme }) => theme.space[5]} 0;
 `;
 
 const getFilteredData = (data, filterType) => {

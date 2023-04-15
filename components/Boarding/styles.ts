@@ -10,7 +10,7 @@ export const FlexCards = styled.div`
   
   gap: ${({ theme }) => theme.space[6]};
   padding: ${({ theme }) => theme.space[5]};
-  margin-bottom: ${({ theme }) => theme.space[4]};
+  margin-bottom: ${({ theme }) => theme.space[5]};
   background-color: ${({ theme }) => theme.colors.secondary};
   flex: 1;
 
