@@ -247,6 +247,7 @@ const MenuBar = ({ editor, setLink, addImage, widthRef, heightRef }) => {
 export const Tiptap = ({
   content,
   onSave = undefined,
+  onchange = undefined,
   isLoading = false,
   buttonText = "Save Changes",
 }) => {
@@ -264,6 +265,9 @@ export const Tiptap = ({
       }),
     ],
     content,
+    onUpdate: ({ editor }) => {
+      onchange && onchange(editor.getHTML());
+    },
   });
 
   const setLink = useCallback(() => {

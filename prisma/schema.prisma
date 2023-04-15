@@ -158,6 +158,8 @@ model User {
   PetRun                PetRun[]
   Service               Service[]
   MedicalIssue          MedicalIssue[]
+  AppSetting            AppSetting[]
+  DesignToken           DesignToken[]
 
   @@map(name: "users")
 }
@@ -359,4 +361,48 @@ model MedicalIssue {
   authorId    String?
 
   @@map(name: "medical_issues")
+}
+
+model AppSetting {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  title     String?
+  subtitle  String?
+  logo      String?
+  favicon   String?
+  facebook  String?
+  instagram String?
+  twitter   String?
+  youtube   String?
+  google    String?
+  yelp      String?
+  updatedAt DateTime @updatedAt @map("updated_at")
+  authorId  String?
+  slogan    String?
+  author    User?    @relation(fields: [authorId], references: [id])
+
+  @@map("app_settings")
+}
+
+model DesignToken {
+  id               String   @id @default(cuid())
+  name             String   @unique
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  authorId         String?
+  author           User?    @relation(fields: [authorId], references: [id])
+  primary          String?
+  primaryDark      String?
+  secondaryLight   String?
+  secondary        String?
+  white            String?
+  secondaryDark    String?
+  nav              String?
+  border           String?
+  textPrimary      String?
+  textSecondary    String?
+  inputFocus       String?
+  inputDisabled    String?
+  inputPlaceholder String?
+
+  @@map("design_tokens")
 }

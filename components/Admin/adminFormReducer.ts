@@ -46,6 +46,18 @@ export const BUSINESS_HOURS_INITIAL_STATE = {
     },
 }
 
+export const FORM_THEME_SETTINGS_INITIAL_STATE = {
+    name: {
+        value: "",
+        error: null,
+        type: "text",
+        label: "Primary Color",
+        grow: true,
+        cancelAutoFocus: true,
+    },
+}
+
+
 export const HOLIDAY_AND_PREMIUM_DAYS_INITIAL_STATE = {
     type: {
         value: "Premium",

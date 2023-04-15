@@ -10,6 +10,8 @@ import {
 } from "./styles";
 import { useEffect, useRef, useState } from "react";
 import { animated, useSpring } from "react-spring";
+import { Editor } from "@tiptap/react";
+import { Tiptap } from "../ui-kit/Tiptap";
 
 export interface InputProps
   extends React.InputHTMLAttributes<
@@ -42,13 +44,15 @@ export interface renderFormFieldProps {
   };
   handleChange: (arg0: string, arg1: any) => any;
   setFormLoading?: (arg0: boolean) => any;
+  editor?: Editor;
 }
 
 export const renderFormFields = ({
   initialState,
   state,
   handleChange,
-  setFormLoading,
+  setFormLoading = () => {},
+  editor = null,
 }: renderFormFieldProps) => {
   return Object.entries(initialState).map(([key, _value], i) => {
     const [focused, setFocused] = useState(false);
@@ -68,7 +72,7 @@ export const renderFormFields = ({
       }
     };
 
-    const autoFocus = i === 0 && !field.cancelAutoFocus;
+    const autoFocus = i === 0 && !field?.cancelAutoFocus;
     const requiredField = field?.required || false;
 
     let imgLoading = false;
@@ -146,16 +150,9 @@ export const renderFormFields = ({
         )}
 
         {field?.type === "textarea" && (
-          <StyledTextarea
-            onChange={onChange}
-            value={field?.value}
-            id={key}
-            autoFocus={autoFocus}
-            error={field?.error}
-            disabled={field?.disabled}
-            placeholder={field?.placeholder}
-            rows={field?.rows}
-            maxWidth={field?.maxWidth}
+          <Tiptap
+            content={editor}
+            onchange={(html) => handleChange(key, html)}
           />
         )}
 
