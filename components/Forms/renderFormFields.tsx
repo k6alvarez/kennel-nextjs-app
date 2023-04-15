@@ -183,10 +183,32 @@ export const renderFormFields = ({
           </Checkbox>
         )}
 
+        {field?.type === "time" && (
+          <StyledInput
+            autoFocus={autoFocus}
+            onChange={onChange}
+            type={field?.type || "text"}
+            inputMode={field?.inputMode || "text"}
+            minLength={field?.minLength}
+            maxLength={field?.maxLength}
+            min={field?.min}
+            pattern={field?.pattern}
+            required={requiredField}
+            id={key}
+            value={field?.value}
+            error={field?.error}
+            disabled={field?.disabled}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            step="600"
+          />
+        )}
+
         {field?.type !== "textarea" &&
           field?.type !== "select" &&
           field?.type !== "file" &&
-          field?.type !== "checkbox" && (
+          field?.type !== "checkbox" &&
+          field?.type !== "time" && (
             <StyledInput
               autoFocus={autoFocus}
               onChange={onChange}
