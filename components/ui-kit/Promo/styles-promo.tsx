@@ -45,7 +45,7 @@ export const PromoWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.space[2]};
-  font-size: ${({ theme }) => theme.fontSizes[1]};
+  font-size: ${({ theme }) => theme.fontSizes[2]};
   line-height: 1.2;
 
   p {
@@ -59,6 +59,10 @@ export const PromoWrapper = styled.div`
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     font-size: ${({ theme }) => theme.fontSizes[4]};
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[4]}) {
+    font-size: ${({ theme }) => theme.fontSizes[6]};
   }
 `;
 
@@ -172,6 +176,7 @@ export const PromoTitleWrapper = styled.div`
   text-align: center;
   padding: ${({ theme }) => theme.space[4]};
   flex: 1;
+  max-width: 80%;
 
   p:last-child {
     margin-bottom: 0;
@@ -206,6 +211,14 @@ export const promoStyles = css`
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     font-size: ${({ theme }) => theme.fontSizes[6]};
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[4]}) {
+    font-size: ${({ theme }) => theme.fontSizes[7]};
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[5]}) {
+    font-size: ${({ theme }) => theme.fontSizes[8]};
   }
 `;
 

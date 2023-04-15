@@ -1,5 +1,5 @@
 export const base = {
-  breakpoints: ["420px", "768px", "1050px", "1280px"],
+  breakpoints: ["420px", "768px", "1050px", "1280px", "1440px", "1920px"],
   space: [
     "0px",
     "2px",
@@ -25,6 +25,7 @@ export const base = {
     "2rem",
     "2.4rem",
     "3rem",
+    "3.6rem",
   ],
   shadows: {
     default: "0px 2px 4px rgba(0, 0, 0, 0.5)",
