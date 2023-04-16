@@ -246,6 +246,7 @@ const Boarding = ({ contentItems, promoItems }) => {
         setPromos={setBoardingPromos}
         contentItem={boardingPromoTitle || { content: "" }}
         setContentItem={setBoardingPromoTitle}
+        sliderMode
       />
       <TabsListWrapper>
         <Tabs

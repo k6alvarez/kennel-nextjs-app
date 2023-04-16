@@ -210,6 +210,7 @@ const Training = ({ contentItems, promoItems }) => {
         setPromos={setTrainingPromos}
         contentItem={trainingPromoTitle || { content: "" }}
         setContentItem={setTrainingPromoTitle}
+        sliderMode
       />
       <TabsListWrapper>
         <Tabs
