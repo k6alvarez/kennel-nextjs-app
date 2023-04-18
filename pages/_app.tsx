@@ -77,19 +77,11 @@ export const INITIAL_APP_SETTINGS_FORM_STATE = {
   },
 };
 
-export const INITIAL_THEME_SETTINGS_FORM_STATE = {
-  primary: {
-    value: "",
-    error: null,
-    type: "text",
-    label: "Primary Color",
-  },
-};
-
 const App = ({ Component, pageProps }: AppProps) => {
   const [editMode, setEditMode] = useState(false);
 
   const [currentTheme, setCurrentTheme] = useState("light");
+
   const theme = { ...base, colors: themesMap[currentTheme] };
 
   const [guestFormError, setGuestFormError] = useState(undefined);
@@ -137,11 +129,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     INITIAL_APP_SETTINGS_FORM_STATE
   );
 
-  const [formStateThemeSettings, formThemeAppSettingsDispatch] = useReducer(
-    formReducer,
-    INITIAL_THEME_SETTINGS_FORM_STATE
-  );
-
   const [appSettings, setAppSettings] = useState({
     name: "My App",
     slogan: "Your app slogan goes here",
@@ -155,8 +142,6 @@ const App = ({ Component, pageProps }: AppProps) => {
           setAppSettings,
           formStateAppSettings,
           formAppSettingsDispatch,
-          formStateThemeSettings,
-          formThemeAppSettingsDispatch,
         }}
       >
         <ThemePreferenceContext.Provider

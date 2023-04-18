@@ -18,6 +18,8 @@ const FooterWrapper = styled.footer`
   top: 100%;
   width: 100%;
   font-size: ${({ theme }) => theme.fontSizes[0]};
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 
   a {
     color: ${({ theme, currentTheme }) =>
@@ -36,8 +38,8 @@ const Flex = styled.div`
   justify-content: center;
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-    flex-direction: row;
-    justify-content: space-around;
+    /* flex-direction: row;
+    justify-content: space-around; */
     align-items: ${({ align }) => (align ? align : "flex-start")};
   }
 `;
@@ -119,6 +121,13 @@ export const Footer = () => {
   const { currentTheme } = React.useContext(ThemePreferenceContext);
   return (
     <FooterWrapper currentTheme={currentTheme}>
+      <iframe
+        width="100%"
+        height="520"
+        frameBorder="0"
+        src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJpRxZd7uaF4gR7V1wVGncMpE&key=AIzaSyCZDOY0IiSO7q2u1PYLNN8rekYbU3-ZMm4&zoom=11"
+        allowFullScreen
+      />
       <Flex>
         <RouteLink activeClassName="active" href="/">
           <a>
@@ -147,13 +156,7 @@ export const Footer = () => {
           </Flex>
         </div>
       </Flex>
-      {/* <iframe
-        width="100%"
-        height="520"
-        frameBorder="0"
-        src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJpRxZd7uaF4gR7V1wVGncMpE&key=AIzaSyCZDOY0IiSO7q2u1PYLNN8rekYbU3-ZMm4&zoom=11"
-        allowFullScreen
-      /> */}
+
       <FooterBottom>
         <span>
           <CopyrightCircleOutlined /> {date.getFullYear()}&nbsp;

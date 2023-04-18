@@ -62,7 +62,7 @@ export const AppSettingsForm = () => {
           },
           editor,
         })}
-        <input type="submit" value="Save" />
+        <input type="submit" value="Save App Settings" />
       </fieldset>
     </form>
   );

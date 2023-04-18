@@ -4,11 +4,10 @@ import {
   StyledLabel,
   StyledInput,
   Hint,
-  StyledTextarea,
   StyledSelect,
   PreviewWrapper,
 } from "./styles";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { animated, useSpring } from "react-spring";
 import { Editor } from "@tiptap/react";
 import { Tiptap } from "../ui-kit/Tiptap";
@@ -35,6 +34,7 @@ export interface InputProps
   maxWidth?: string;
   cancelAutoFocus?: boolean;
   hint?: string;
+  hidden?: boolean;
 }
 
 export interface renderFormFieldProps {
@@ -76,6 +76,10 @@ export const renderFormFields = ({
     const requiredField = field?.required || false;
 
     let imgLoading = false;
+
+    if (field?.hidden) {
+      return <input type="hidden" name={key} value={field?.value} />;
+    }
 
     return (
       <Field key={key} grow={field?.grow}>
@@ -222,6 +226,7 @@ export const renderFormFields = ({
               disabled={field?.disabled}
               onFocus={onFocus}
               onBlur={onBlur}
+              hidden={field?.hidden}
             />
           )}
 

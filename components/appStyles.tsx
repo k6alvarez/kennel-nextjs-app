@@ -28,8 +28,13 @@ export const GlobalStyle = createGlobalStyle`
 
     .ant-collapse {
       margin-top: ${({ theme }) => theme.space[4]};
-    }
+    }    
 
+  }
+
+  .ant-collapse-content-box fieldset {
+    margin: 0;
+    width: 100%;
   }
   
   img {

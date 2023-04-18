@@ -73,14 +73,20 @@ export type PetProps = {
 
 type Props = {
   user: User | null;
+  appSettings: string;
 };
 
 const Profile: React.FC<Props> = ({ user, appSettings }) => {
   const router = useRouter();
   const { tab } = router.query;
   const [profileTab, setProfileTab] = useState("profile");
-  const { setAppSettings, formAppSettingsDispatch } =
-    useContext(AppSettingsContext);
+  const {
+    setAppSettings,
+    formAppSettingsDispatch,
+    themeSettings,
+    formThemeAppSettingsDispatch,
+    setThemeSettings,
+  } = useContext(AppSettingsContext);
 
   const { breakpoints } = useContext(ThemePreferenceContext);
   const size: Size = useWindowSize();
@@ -196,10 +202,6 @@ const Profile: React.FC<Props> = ({ user, appSettings }) => {
   useEffect(() => {
     if (appSettings) {
       const appSetting = JSON.parse(appSettings)[0];
-      console.log(
-        "🚀 ~ file: profile.tsx:200 ~ useEffect ~ appSetting:",
-        appSetting
-      );
 
       appSetting &&
         Object.keys(appSetting).forEach((key) => {

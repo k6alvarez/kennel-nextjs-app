@@ -2,7 +2,6 @@ import { Collapse } from "antd";
 import React from "react";
 import { FormBusinessHours } from "./FormBusinessHours";
 import { HolidayPremiumDates } from "./FormHolidayPremiumDates";
-import { FormThemeSettings } from "./FormThemeSettings";
 import { AppSettingsForm } from "./AppSettingsForm";
 
 export const AdminTab = () => {
@@ -18,9 +17,6 @@ export const AdminTab = () => {
         </Collapse.Panel>
         <Collapse.Panel header="Regular Business Hours" key="2">
           <FormBusinessHours />
-        </Collapse.Panel>
-        <Collapse.Panel header="Theme Settings" key="3">
-          <FormThemeSettings />
         </Collapse.Panel>
       </Collapse>
     </>
