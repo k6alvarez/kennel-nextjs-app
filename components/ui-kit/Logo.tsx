@@ -49,7 +49,7 @@ const Flex = styled.div`
 
 export const LogoOne = ({
   size,
-  crestSize = 50,
+  crestSize = 55,
 }: {
   size?: number;
   crestSize?: number;

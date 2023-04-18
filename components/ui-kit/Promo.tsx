@@ -4,9 +4,7 @@ import { animated, config, useSpring } from "react-spring";
 import { ThemePreferenceContext } from "../../pages/_app";
 import { saveContent } from "../Admin/services";
 import { EditForm } from "../Forms/styles";
-import { Crest } from "../Navigation/LogoLinks";
 import { Size, useWindowSize } from "./hooks/useWindowSize";
-import { LogoOne } from "./Logo";
 import { Promos } from "./Promo/Promos";
 import {
   PromoWrapper,

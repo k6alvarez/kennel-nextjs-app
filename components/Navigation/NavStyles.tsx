@@ -1,18 +1,5 @@
 import styled from "styled-components";
 
-export const CrestLogo = styled.img`
-  position: absolute;
-  top: 20px;
-  left: 22px;
-  width: 72%;
-  filter: grayscale(100%);
-
-  @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
-    top: 35px;
-    left: 42px;
-  }
-`;
-
 export const LogoName = styled.h2`
   font-family: "Dancing_Script", sans-serif;
   font-size: ${({ theme }) => theme.fontSizes[2]};

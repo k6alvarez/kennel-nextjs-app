@@ -6,6 +6,7 @@ import { BusinessHoursList } from "./Admin/BusinessHoursList";
 import { getBusinessHours } from "./Admin/services";
 import { RouteLink } from "./Navigation/RouteLink";
 import { LogoOne } from "./ui-kit/Logo";
+import Link from "next/link";
 
 const FooterWrapper = styled.footer`
   position: absolute;
@@ -13,11 +14,10 @@ const FooterWrapper = styled.footer`
   width: 100%;
   font-size: ${({ theme }) => theme.fontSizes[0]};
   display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: ${({ theme }) => theme.space[4]};
+  grid-template-areas: "map" "info" "bottom";
 
-  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-    grid-template-columns: 1fr 2fr;
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+    grid-template-areas: "map info" "bottom bottom";
   }
 
   a {
@@ -28,38 +28,56 @@ const FooterWrapper = styled.footer`
   }
 `;
 
-const Flex = styled.div`
+const FooterInfo = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: ${({ theme }) => theme.space[4]};
-  gap: ${({ theme }) => theme.space[4]};
   align-items: center;
-  justify-content: center;
+  background-color: ${({ theme, currentTheme }) => {
+    if (currentTheme === "naturalEarth") {
+      return theme.colors.primary;
+    } else {
+      return theme.colors.secondary;
+    }
+  }};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  padding: ${({ theme }) => theme.space[4]};
+  justify-content: space-evenly;
+  grid-area: info;
 `;
 
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  justify-items: end;
-  /* margin-bottom: ${({ theme }) => theme.space[4]};
-  gap: ${({ theme }) => theme.space[4]};
-  align-items: center;
-  justify-content: center; */
-`;
-
-const FooterBottom = styled.div`
+const Flex = styled.div`
   display: flex;
-  justify-content: flex-start;
+  background-color: ${({ theme, currentTheme }) => {
+    if (currentTheme === "naturalEarth") {
+      return theme.colors.primary;
+    } else {
+      return theme.colors.secondary;
+    }
+  }};
+  padding: ${({ theme }) => theme.space[4]};
+  justify-content: space-evenly;
+`;
+
+const FlexColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/ 1.2)`};
-  line-height: 1;
+
+  a {
+    text-align: center;
+  }
 `;
 
 export const LetterSpacedText = styled.p`
   margin: 0;
   font-weight: ${({ bold }) => (bold ? 400 : 300)};
   font-size: ${({ theme, fs }) =>
-    `calc(${fs ? theme.fontSizes[fs] : theme.fontSizes[0]} / 1.1)`};
+    `calc(${fs ? theme.fontSizes[fs] : theme.fontSizes[1]})`};
   text-transform: ${({ textTransform }) =>
     textTransform ? textTransform : "capitalize"};
   letter-spacing: 1px;
@@ -111,11 +129,12 @@ export const Copy = styled.span`
 `;
 
 const Frame = styled.div`
-  padding: ${({ theme }) => theme.space[4]};
   background-color: ${({ theme }) => theme.colors.secondary};
+  grid-area: map;
   iframe {
     border: 0;
     max-width: 100%;
+    min-height: 250px;
   }
 `;
 
@@ -136,45 +155,62 @@ export const Footer = () => {
       <Frame>
         <iframe
           width="100%"
-          height="334"
+          height="100%"
           frameBorder="0"
           src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJpRxZd7uaF4gR7V1wVGncMpE&key=AIzaSyCZDOY0IiSO7q2u1PYLNN8rekYbU3-ZMm4&zoom=11"
           allowFullScreen
         />
       </Frame>
-      {/* <RouteLink activeClassName="active" href="/">
-          <a>
-            <LogoOne size={7} crestSize={80} />
-          </a>
-        </RouteLink> */}
-      <BusinessHoursList businessHours={businessHours} />
-      {/* <Flex align="center">
-          <a href="http://canineprofessionals.com/" target="_blank">
-            <img
-              src="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1670006065/gk-app/memberiacp.gif"
-              width="140"
-              height="126"
-            />
-          </a>
-          <a
-            href="https://www.bbb.org/western-michigan/business-reviews/pet-training/gillette-kennels-in-galesburg-mi-8000795#sealclick"
-            target="_blank"
-          >
-            <img
-              alt="Click for the BBB Business Review of this Pet Training in Galesburg MI"
-              src="https://seal-westernmichigan.bbb.org/seals/blue-seal-250-52-gillettekennels-8000795.png"
-            />
-          </a>
-        </Flex> */}
+      <FooterInfo>
+        <BusinessHoursList businessHours={businessHours} />
 
-      <FooterBottom>
-        <span>
-          <CopyrightCircleOutlined /> {date.getFullYear()}&nbsp;
-        </span>
-        <span>
-          <Copy>Gillette Kennels. All rights reserved.</Copy>
-        </span>
-      </FooterBottom>
+        <FlexColumn>
+          <FlexColumn>
+            <h1>Additional Info</h1>
+            <Link href="/terms-and-conditions">
+              <a>Terms and Conditions</a>
+            </Link>
+            <Link href="/privacy-policy">
+              <a>Privacy Policy</a>
+            </Link>
+          </FlexColumn>
+          <Flex
+            style={{
+              alignItems: "center",
+            }}
+          >
+            <a href="http://canineprofessionals.com/" target="_blank">
+              <img
+                src="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1670006065/gk-app/memberiacp.gif"
+                width="140"
+                height="126"
+              />
+            </a>
+            <a
+              href="https://www.bbb.org/western-michigan/business-reviews/pet-training/gillette-kennels-in-galesburg-mi-8000795#sealclick"
+              target="_blank"
+            >
+              <img
+                alt="Click for the BBB Business Review of this Pet Training in Galesburg MI"
+                src="https://seal-westernmichigan.bbb.org/seals/blue-seal-250-52-gillettekennels-8000795.png"
+              />
+            </a>
+          </Flex>
+          <RouteLink activeClassName="active" href="/">
+            <a>
+              <LogoOne size={3} crestSize={50} />
+            </a>
+          </RouteLink>
+          <div>
+            <span>
+              <CopyrightCircleOutlined /> {date.getFullYear()}&nbsp;
+            </span>
+            <span>
+              <Copy>Gillette Kennels. All rights reserved.</Copy>
+            </span>
+          </div>
+        </FlexColumn>
+      </FooterInfo>
     </FooterWrapper>
   );
 };
