@@ -102,7 +102,7 @@ const MenuBar = ({ editor, setLink, addImage, widthRef, heightRef }) => {
   }
 
   return (
-    <TipTapMenuWrapper>
+    <TipTapMenuWrapper className="tiptapmenuWrapper">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
