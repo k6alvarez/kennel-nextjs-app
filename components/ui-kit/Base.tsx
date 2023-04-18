@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { EditForm } from "../Forms/styles";
 import { headerHt } from "./Promo/styles-promo";
-import { TipTapMenuWrapper } from "./Tiptap";
 
 export const Content = styled.article`
   padding: ${({ theme }) => theme.space[4]};
@@ -26,7 +25,7 @@ export const Content = styled.article`
         error ? theme.colors.primary : theme.colors.textSecondary};
   }
 
-  ${TipTapMenuWrapper} {
+  .tiptapmenuWrapper {
     position: sticky;
     top: ${({ editorStickyTop }) =>
       editorStickyTop ? editorStickyTop : headerHt};

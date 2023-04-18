@@ -4,6 +4,7 @@ import { GridItems } from "../ui-kit/Base";
 export const Wrapper = styled.div`
   padding: ${(props) => props.theme.space[5]};
   background-color: ${(props) => props.theme.colors.secondary};
+  margin: ${(props) => props.theme.space[5]} 0;
 
   .ant-card {
     margin: 0;

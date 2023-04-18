@@ -35,19 +35,12 @@ const Flex = styled.div`
     font-size: calc(${({ theme }) => theme.fontSizes[0]} / 1.2);
   }
 `;
-
-const AdminLeftNav = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-`;
-
 export const StyledNav = styled.nav`
   display: flex;
   position: sticky;
   top: 0;
   background-color: ${({ theme }) => theme.colors.primary};
-  padding: ${({ theme }) => theme.space[4]};
+  padding: ${({ theme }) => theme.space[3]};
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 5000;
 

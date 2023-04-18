@@ -46,9 +46,21 @@ export const BUSINESS_HOURS_INITIAL_STATE = {
     },
 }
 
+export const FORM_THEME_SETTINGS_INITIAL_STATE = {
+    name: {
+        value: "",
+        error: null,
+        type: "text",
+        label: "Primary Color",
+        grow: true,
+        cancelAutoFocus: true,
+    },
+}
+
+
 export const HOLIDAY_AND_PREMIUM_DAYS_INITIAL_STATE = {
     type: {
-        value: "Holiday",
+        value: "Premium",
         error: null,
         type: "select",
         label: "Date Type",
@@ -82,30 +94,35 @@ export const HOLIDAY_AND_PREMIUM_DAYS_INITIAL_STATE = {
         label: "Closed All Day",
         required: false,
         grow: true,
+        disabled: true,
     },
     timeOpen: {
         value: "",
         error: null,
         label: "Open Time",
         type: "time",
+        disabled: true,
     },
     timeClose: {
         value: "",
         error: null,
         label: "Close Time",
         type: "time",
+        disabled: true,
     },
     breakClose: {
         value: "",
         error: null,
         label: "Lunch Close Time",
         type: "time",
+        disabled: true,
     },
     breakOpen: {
         value: "",
         error: null,
         label: "Lunch Open Time",
         type: "time",
+        disabled: true,
     },
 };
 

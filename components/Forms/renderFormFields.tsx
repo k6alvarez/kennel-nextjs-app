@@ -4,12 +4,13 @@ import {
   StyledLabel,
   StyledInput,
   Hint,
-  StyledTextarea,
   StyledSelect,
   PreviewWrapper,
 } from "./styles";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { animated, useSpring } from "react-spring";
+import { Editor } from "@tiptap/react";
+import { Tiptap } from "../ui-kit/Tiptap";
 
 export interface InputProps
   extends React.InputHTMLAttributes<
@@ -33,6 +34,7 @@ export interface InputProps
   maxWidth?: string;
   cancelAutoFocus?: boolean;
   hint?: string;
+  hidden?: boolean;
 }
 
 export interface renderFormFieldProps {
@@ -42,13 +44,15 @@ export interface renderFormFieldProps {
   };
   handleChange: (arg0: string, arg1: any) => any;
   setFormLoading?: (arg0: boolean) => any;
+  editor?: Editor;
 }
 
 export const renderFormFields = ({
   initialState,
   state,
   handleChange,
-  setFormLoading,
+  setFormLoading = () => {},
+  editor = null,
 }: renderFormFieldProps) => {
   return Object.entries(initialState).map(([key, _value], i) => {
     const [focused, setFocused] = useState(false);
@@ -68,10 +72,14 @@ export const renderFormFields = ({
       }
     };
 
-    const autoFocus = i === 0 && !field.cancelAutoFocus;
+    const autoFocus = i === 0 && !field?.cancelAutoFocus;
     const requiredField = field?.required || false;
 
     let imgLoading = false;
+
+    if (field?.hidden) {
+      return <input type="hidden" name={key} value={field?.value} />;
+    }
 
     return (
       <Field key={key} grow={field?.grow}>
@@ -146,16 +154,9 @@ export const renderFormFields = ({
         )}
 
         {field?.type === "textarea" && (
-          <StyledTextarea
-            onChange={onChange}
-            value={field?.value}
-            id={key}
-            autoFocus={autoFocus}
-            error={field?.error}
-            disabled={field?.disabled}
-            placeholder={field?.placeholder}
-            rows={field?.rows}
-            maxWidth={field?.maxWidth}
+          <Tiptap
+            content={editor}
+            onchange={(html) => handleChange(key, html)}
           />
         )}
 
@@ -183,10 +184,32 @@ export const renderFormFields = ({
           </Checkbox>
         )}
 
+        {field?.type === "time" && (
+          <StyledInput
+            autoFocus={autoFocus}
+            onChange={onChange}
+            type={field?.type || "text"}
+            inputMode={field?.inputMode || "text"}
+            minLength={field?.minLength}
+            maxLength={field?.maxLength}
+            min={field?.min}
+            pattern={field?.pattern}
+            required={requiredField}
+            id={key}
+            value={field?.value}
+            error={field?.error}
+            disabled={field?.disabled}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            step="600"
+          />
+        )}
+
         {field?.type !== "textarea" &&
           field?.type !== "select" &&
           field?.type !== "file" &&
-          field?.type !== "checkbox" && (
+          field?.type !== "checkbox" &&
+          field?.type !== "time" && (
             <StyledInput
               autoFocus={autoFocus}
               onChange={onChange}
@@ -203,6 +226,7 @@ export const renderFormFields = ({
               disabled={field?.disabled}
               onFocus={onFocus}
               onBlur={onBlur}
+              hidden={field?.hidden}
             />
           )}
 

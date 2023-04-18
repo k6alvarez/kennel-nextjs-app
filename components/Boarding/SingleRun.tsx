@@ -6,6 +6,12 @@ import { LetterSpacedText } from "../Footer";
 import { base } from "../ui-kit/Theme";
 import { EditSingleRun } from "./EditSingleRun";
 
+const Flex = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: ${({ theme }) => theme.space[4]};
+`;
+
 export const RunItem = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,6 +26,7 @@ export const ZIndex = styled.div`
   position: relative;
   z-index: ${({ zIndex }) => zIndex};
   display: ${({ positionIndex }) => (positionIndex === 0 ? "block" : "none")};
+  text-align: center;
 `;
 export const SingleRun = ({ run, editMode }) => {
   return (
@@ -28,7 +35,13 @@ export const SingleRun = ({ run, editMode }) => {
         <EditSingleRun run={run} />
       ) : (
         <Card>
-          <p>{run.name}</p>
+          <p
+            style={{
+              textAlign: "center",
+            }}
+          >
+            {run.name}
+          </p>
           {run.gallery.length > 0 && (
             <Image.PreviewGroup>
               {run.gallery.map((image, i) => {
@@ -45,65 +58,69 @@ export const SingleRun = ({ run, editMode }) => {
             </Image.PreviewGroup>
           )}
 
-          {run.sizeInside && (
-            <DetailItem>
-              <LetterSpacedText fs={base.fontSizes[3]}>
-                Inside:
-              </LetterSpacedText>
-              <LetterSpacedText
-                textTransform="lowercase"
-                fs={base.fontSizes[3]}
-                bold
-              >
-                {run.sizeInside}
-              </LetterSpacedText>
-            </DetailItem>
-          )}
+          <Flex>
+            {run.sizeInside && (
+              <DetailItem>
+                <LetterSpacedText fs={base.fontSizes[3]}>
+                  Inside:
+                </LetterSpacedText>
+                <LetterSpacedText
+                  textTransform="lowercase"
+                  fs={base.fontSizes[3]}
+                  bold
+                >
+                  {run.sizeInside}
+                </LetterSpacedText>
+              </DetailItem>
+            )}
 
-          {run.sizeOutside && (
-            <DetailItem>
-              <LetterSpacedText fs={base.fontSizes[3]}>
-                Outside:
-              </LetterSpacedText>
-              <LetterSpacedText
-                textTransform="lowercase"
-                fs={base.fontSizes[3]}
-                bold
-              >
-                {run.sizeOutside}
-              </LetterSpacedText>
-            </DetailItem>
-          )}
+            {run.sizeOutside && (
+              <DetailItem>
+                <LetterSpacedText fs={base.fontSizes[3]}>
+                  Outside:
+                </LetterSpacedText>
+                <LetterSpacedText
+                  textTransform="lowercase"
+                  fs={base.fontSizes[3]}
+                  bold
+                >
+                  {run.sizeOutside}
+                </LetterSpacedText>
+              </DetailItem>
+            )}
+          </Flex>
 
-          {run.dailyRate && (
-            <DetailItem>
-              <LetterSpacedText fs={base.fontSizes[3]}>
-                Daily Rates:
-              </LetterSpacedText>
-              <LetterSpacedText
-                textTransform="lowercase"
-                fs={base.fontSizes[3]}
-                bold
-              >
-                ${run.dailyRate}
-              </LetterSpacedText>
-            </DetailItem>
-          )}
+          <Flex>
+            {run.dailyRate && (
+              <DetailItem>
+                <LetterSpacedText fs={base.fontSizes[3]}>
+                  Daily Rates:
+                </LetterSpacedText>
+                <LetterSpacedText
+                  textTransform="lowercase"
+                  fs={base.fontSizes[3]}
+                  bold
+                >
+                  ${run.dailyRate}
+                </LetterSpacedText>
+              </DetailItem>
+            )}
 
-          {run.roommateDailyRate && (
-            <DetailItem>
-              <LetterSpacedText fs={base.fontSizes[3]}>
-                Each Roommate Daily Rate:
-              </LetterSpacedText>
-              <LetterSpacedText
-                textTransform="lowercase"
-                fs={base.fontSizes[3]}
-                bold
-              >
-                ${run.roommateDailyRate}
-              </LetterSpacedText>
-            </DetailItem>
-          )}
+            {run.roommateDailyRate && (
+              <DetailItem>
+                <LetterSpacedText fs={base.fontSizes[3]}>
+                  Each Roommate Daily Rate:
+                </LetterSpacedText>
+                <LetterSpacedText
+                  textTransform="lowercase"
+                  fs={base.fontSizes[3]}
+                  bold
+                >
+                  ${run.roommateDailyRate}
+                </LetterSpacedText>
+              </DetailItem>
+            )}
+          </Flex>
 
           {run.holidayPremiumRate && (
             <DetailItem>

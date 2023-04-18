@@ -24,11 +24,64 @@ import {
 import { PetFormProvider } from "../components/Pets/formContext";
 
 export const ThemePreferenceContext = createContext(null);
+export const AppSettingsContext = createContext(null);
+export const INITIAL_APP_SETTINGS_FORM_STATE = {
+  name: {
+    value: "",
+    error: null,
+    type: "textarea",
+    label: "App Name",
+    required: true,
+  },
+  logo: {
+    value: "",
+    error: null,
+    type: "file",
+    label: "Logo",
+  },
+  facebook: {
+    value: "",
+    error: null,
+    type: "text",
+    label: "Facebook Page URL",
+  },
+  instagram: {
+    value: "",
+    error: null,
+    type: "text",
+    label: "Instagram Account URL",
+  },
+  twitter: {
+    value: "",
+    error: null,
+    type: "text",
+    label: "Twitter Account URL",
+  },
+  youtube: {
+    value: "",
+    error: null,
+    type: "text",
+    label: "YouTube Channel URL",
+  },
+  google: {
+    value: "",
+    error: null,
+    type: "text",
+    label: "Google URL",
+  },
+  yelp: {
+    value: "",
+    error: null,
+    type: "text",
+    label: "Yelp URL",
+  },
+};
 
 const App = ({ Component, pageProps }: AppProps) => {
   const [editMode, setEditMode] = useState(false);
 
   const [currentTheme, setCurrentTheme] = useState("light");
+
   const theme = { ...base, colors: themesMap[currentTheme] };
 
   const [guestFormError, setGuestFormError] = useState(undefined);
@@ -52,76 +105,114 @@ const App = ({ Component, pageProps }: AppProps) => {
     PET_INITIAL_STATE
   );
 
+  const formReducer = (
+    formState: any,
+    { type = "inputChange", key = undefined, payload = undefined }: any
+  ) => {
+    switch (type) {
+      case "inputChange":
+        const inputState = {
+          ...formState[key],
+          value: payload.newValue,
+          error: payload.error,
+          disabled: payload.disabled,
+        };
+        return {
+          ...formState,
+          [key]: inputState,
+        };
+    }
+  };
+
+  const [formStateAppSettings, formAppSettingsDispatch] = useReducer(
+    formReducer,
+    INITIAL_APP_SETTINGS_FORM_STATE
+  );
+
+  const [appSettings, setAppSettings] = useState({
+    name: "My App",
+    slogan: "Your app slogan goes here",
+  });
+
   return (
     <SessionProvider session={pageProps.session}>
-      <ThemePreferenceContext.Provider
+      <AppSettingsContext.Provider
         value={{
-          currentTheme,
-          setCurrentTheme,
-          breakpoints: theme.breakpoints,
-          editMode,
-          setEditMode,
+          appSettings,
+          setAppSettings,
+          formStateAppSettings,
+          formAppSettingsDispatch,
         }}
       >
-        <ThemeProvider theme={theme}>
-          <ClientFormProvider
-            value={{
-              clientFormState,
-              handleChange: (name: string, newValue: any) => {
-                const error = null;
-                clientFormDispatch({
-                  key: name,
-                  payload: { newValue, error },
-                });
-              },
-              clientFormDispatch,
-              clientFormError,
-              setClientFormError,
-              clientFormLoading,
-              setClientFormLoading,
-            }}
-          >
-            <GuestFormProvider
+        <ThemePreferenceContext.Provider
+          value={{
+            currentTheme,
+            setCurrentTheme,
+            breakpoints: theme.breakpoints,
+            editMode,
+            setEditMode,
+          }}
+        >
+          <ThemeProvider theme={theme}>
+            <ClientFormProvider
               value={{
-                guestFormState,
+                clientFormState,
                 handleChange: (name: string, newValue: any) => {
                   const error = null;
-                  guestFormDispatch({
+                  clientFormDispatch({
                     key: name,
                     payload: { newValue, error },
                   });
                 },
-                guestFormDispatch,
-                guestFormError,
-                setGuestFormError,
-                guestFormLoading,
-                setGuestFormLoading,
+                clientFormDispatch,
+                clientFormError,
+                setClientFormError,
+                clientFormLoading,
+                setClientFormLoading,
               }}
             >
-              <PetFormProvider
+              <GuestFormProvider
                 value={{
-                  petFormState,
+                  guestFormState,
                   handleChange: (name: string, newValue: any) => {
                     const error = null;
-                    petFormDispatch({
+                    guestFormDispatch({
                       key: name,
                       payload: { newValue, error },
                     });
                   },
-                  petFormDispatch,
-                  petFormError,
-                  setPetFormError,
-                  petFormLoading,
-                  setPetFormLoading,
+                  guestFormDispatch,
+                  guestFormError,
+                  setGuestFormError,
+                  guestFormLoading,
+                  setGuestFormLoading,
                 }}
               >
-                <GlobalStyle />
-                <Component {...pageProps} />
-              </PetFormProvider>
-            </GuestFormProvider>
-          </ClientFormProvider>
-        </ThemeProvider>
-      </ThemePreferenceContext.Provider>
+                <PetFormProvider
+                  value={{
+                    petFormState,
+                    handleChange: (name: string, newValue: any) => {
+                      const error = null;
+                      petFormDispatch({
+                        key: name,
+                        payload: { newValue, error },
+                      });
+                    },
+                    petFormDispatch,
+                    petFormError,
+                    setPetFormError,
+                    petFormLoading,
+                    setPetFormLoading,
+                  }}
+                >
+                  <GlobalStyle />
+                  <Component {...pageProps} />
+                </PetFormProvider>
+              </GuestFormProvider>
+            </ClientFormProvider>
+          </ThemeProvider>
+        </ThemePreferenceContext.Provider>
+      </AppSettingsContext.Provider>
     </SessionProvider>
   );
 };

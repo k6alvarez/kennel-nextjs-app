@@ -102,7 +102,7 @@ const MenuBar = ({ editor, setLink, addImage, widthRef, heightRef }) => {
   }
 
   return (
-    <TipTapMenuWrapper>
+    <TipTapMenuWrapper className="tiptapmenuWrapper">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -247,6 +247,7 @@ const MenuBar = ({ editor, setLink, addImage, widthRef, heightRef }) => {
 export const Tiptap = ({
   content,
   onSave = undefined,
+  onchange = undefined,
   isLoading = false,
   buttonText = "Save Changes",
 }) => {
@@ -264,6 +265,9 @@ export const Tiptap = ({
       }),
     ],
     content,
+    onUpdate: ({ editor }) => {
+      onchange && onchange(editor.getHTML());
+    },
   });
 
   const setLink = useCallback(() => {
@@ -293,10 +297,8 @@ export const Tiptap = ({
 
   const addImage = useCallback(
     async (e) => {
-      console.log("addImage");
       e.preventDefault();
       const file = e.target.files[0];
-      console.log("🚀 ~ file: Tiptap.tsx:298 ~ file", file);
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", "gk-app");
