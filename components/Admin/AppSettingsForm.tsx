@@ -1,6 +1,5 @@
 import { message } from "antd";
 import React, { useContext } from "react";
-import appSettings from "../../pages/app-settings";
 
 import {
   AppSettingsContext,
@@ -11,7 +10,7 @@ import { renderFormFields } from "../Forms/renderFormFields";
 
 export const AppSettingsForm = () => {
   const {
-    appSettings: appSettingsContext,
+    appSettings,
     formStateAppSettings,
     setAppSettings,
     formAppSettingsDispatch,
@@ -29,11 +28,11 @@ export const AppSettingsForm = () => {
           return acc;
         }, {});
 
-        if (appSettingsContext.id) {
+        if (appSettings.id) {
           generalFormUpdate({
-            apiUrl: `/api/app-setting/${appSettingsContext.id}`,
+            apiUrl: `/api/app-setting/${appSettings.id}`,
             body,
-            formSubmitCallback: () => {
+            formSubmitCallback: (res) => {
               setAppSettings({ ...appSettings, ...body });
               message.success("Content updated successfully");
             },
@@ -42,7 +41,7 @@ export const AppSettingsForm = () => {
           generalFormUpdate({
             apiUrl: "/api/app-setting/",
             body,
-            formSubmitCallback: () => {
+            formSubmitCallback: (res) => {
               setAppSettings({ ...appSettings, ...body });
               message.success("Content created successfully");
             },

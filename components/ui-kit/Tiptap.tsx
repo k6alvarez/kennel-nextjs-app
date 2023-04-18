@@ -297,10 +297,8 @@ export const Tiptap = ({
 
   const addImage = useCallback(
     async (e) => {
-      console.log("addImage");
       e.preventDefault();
       const file = e.target.files[0];
-      console.log("🚀 ~ file: Tiptap.tsx:298 ~ file", file);
       const formData = new FormData();
       formData.append("file", file);
       formData.append("upload_preset", "gk-app");

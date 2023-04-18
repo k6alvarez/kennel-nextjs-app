@@ -6,7 +6,7 @@ import { DownOutlined } from "@ant-design/icons";
 import { getSession, useSession } from "next-auth/react";
 import { User } from "@prisma/client";
 import prisma from "../lib/prisma";
-import { ThemePreferenceContext } from "./_app";
+import { AppSettingsContext, ThemePreferenceContext } from "./_app";
 import Layout from "../components/Layout";
 import { Content } from "../components/ui-kit/Base";
 import { profileFormReducer } from "../components/Profile/profileFormReducer";
@@ -18,9 +18,16 @@ import { statesArray } from "../components/Reservations/formInitialState";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
+  const appSettings = await prisma.appSetting.findMany({});
   if (!session) {
     res.statusCode = 403;
-    return { props: { reservations: [], guestReservations: [] } };
+    return {
+      props: {
+        reservations: [],
+        guestReservations: [],
+        appSettings: JSON.stringify(appSettings),
+      },
+    };
   }
 
   const user = await prisma.user.findUnique({
@@ -30,6 +37,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   return {
     props: {
       user: JSON.parse(JSON.stringify(user)),
+      appSettings: JSON.stringify(appSettings),
       revalidate: 10,
     },
   };
@@ -67,10 +75,12 @@ type Props = {
   user: User | null;
 };
 
-const Profile: React.FC<Props> = ({ user }) => {
+const Profile: React.FC<Props> = ({ user, appSettings }) => {
   const router = useRouter();
   const { tab } = router.query;
   const [profileTab, setProfileTab] = useState("profile");
+  const { setAppSettings, formAppSettingsDispatch } =
+    useContext(AppSettingsContext);
 
   const { breakpoints } = useContext(ThemePreferenceContext);
   const size: Size = useWindowSize();
@@ -182,6 +192,29 @@ const Profile: React.FC<Props> = ({ user }) => {
   useEffect(() => {
     setProfileTab(tab as string);
   }, [tab]);
+
+  useEffect(() => {
+    if (appSettings) {
+      const appSetting = JSON.parse(appSettings)[0];
+      console.log(
+        "🚀 ~ file: profile.tsx:200 ~ useEffect ~ appSetting:",
+        appSetting
+      );
+
+      appSetting &&
+        Object.keys(appSetting).forEach((key) => {
+          formAppSettingsDispatch({
+            key,
+            payload: {
+              newValue: appSetting[key] || "",
+              error: null,
+            },
+          });
+        });
+
+      appSetting && setAppSettings({ ...appSetting });
+    }
+  }, [appSettings]);
 
   if (status === "loading") {
     return <Layout>Loading ...</Layout>;
