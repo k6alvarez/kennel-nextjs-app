@@ -1,15 +1,12 @@
-import { Card } from "antd";
 import styled from "styled-components";
 import { DateTime } from "luxon";
 import React from "react";
 import { LetterSpacedText } from "../Footer";
-import { Wrapper } from "../Pets/styles";
 
-const StyledWrapper = styled(Wrapper)`
+const StyledWrapper = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
-  padding: 1rem;
   width: 90vw;
   .ant-card {
     width: 100%;
@@ -28,45 +25,44 @@ export const BusinessHoursList = ({ businessHours, center = false }) => {
   }
   return (
     <StyledWrapper center={center}>
-      <Card>
-        {businessHours?.map((hourObj) => (
-          <div key={hourObj.id}>
-            <LetterSpacedText bold textTransform="uppercase">
-              {hourObj.name}
+      <h1>Business Hours</h1>
+      {businessHours?.map((hourObj) => (
+        <div key={hourObj.id}>
+          <LetterSpacedText bold textTransform="uppercase">
+            {hourObj.name}
+          </LetterSpacedText>
+          {hourObj.isClosed && <LetterSpacedText>Closed</LetterSpacedText>}
+          {hourObj.timeOpen && (
+            <LetterSpacedText>
+              <span>
+                Hours:{" "}
+                {DateTime.fromISO(hourObj.timeOpen as string).toLocaleString(
+                  DateTime.TIME_SIMPLE
+                )}{" "}
+                -{" "}
+                {DateTime.fromISO(hourObj.timeClose as string).toLocaleString(
+                  DateTime.TIME_SIMPLE
+                )}
+              </span>
             </LetterSpacedText>
-            {hourObj.isClosed && <LetterSpacedText>Closed</LetterSpacedText>}
-            {hourObj.timeOpen && (
-              <LetterSpacedText>
-                <span>
-                  Hours:{" "}
-                  {DateTime.fromISO(hourObj.timeOpen as string).toLocaleString(
-                    DateTime.TIME_SIMPLE
-                  )}{" "}
-                  -{" "}
-                  {DateTime.fromISO(hourObj.timeClose as string).toLocaleString(
-                    DateTime.TIME_SIMPLE
-                  )}
-                </span>
-              </LetterSpacedText>
-            )}
-            {hourObj.breakOpen && (
-              <LetterSpacedText>
-                <span>
-                  Closed:{" "}
-                  {DateTime.fromISO(
-                    hourObj.breakClose as string
-                  ).toLocaleString(DateTime.TIME_SIMPLE)}{" "}
-                  -{" "}
-                  {DateTime.fromISO(hourObj.breakOpen as string).toLocaleString(
-                    DateTime.TIME_SIMPLE
-                  )}
-                </span>
-              </LetterSpacedText>
-            )}
-            <br />
-          </div>
-        ))}
-      </Card>
+          )}
+          {hourObj.breakOpen && (
+            <LetterSpacedText>
+              <span>
+                Closed:{" "}
+                {DateTime.fromISO(hourObj.breakClose as string).toLocaleString(
+                  DateTime.TIME_SIMPLE
+                )}{" "}
+                -{" "}
+                {DateTime.fromISO(hourObj.breakOpen as string).toLocaleString(
+                  DateTime.TIME_SIMPLE
+                )}
+              </span>
+            </LetterSpacedText>
+          )}
+          <br />
+        </div>
+      ))}
     </StyledWrapper>
   );
 };
