@@ -150,7 +150,6 @@ export const GridItems = styled.div`
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  gap: ${({ theme }) => theme.space[4]};
 
   @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
     flex-direction: ${({ breakMobile }) => (breakMobile ? "column" : "row")};

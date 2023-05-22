@@ -16,8 +16,6 @@ import { FieldsetPetsInfo } from "../GuestClients/FieldsetPetsInfo";
 import { BlockQuote } from "../GuestClients/FormIntro";
 import { ReservationSummary } from "../ReservationSummary";
 import { WarningOutlined } from "@ant-design/icons";
-import { renderFormFields } from "../../Forms/renderFormFields";
-import { Fieldset, Fields } from "../../Forms/styles";
 
 export const createReservationDraft = async (
   e: React.SyntheticEvent,
@@ -134,15 +132,11 @@ export const ClientForm = ({ session }) => {
     {
       title: "Boarding",
       content: (
-        <Fieldset>
-          <Fields>
-            {renderFormFields({
-              initialState: INITIAL_RESERVATION_STATE,
-              state: clientFormState,
-              handleChange,
-            })}
-          </Fields>
-        </Fieldset>
+        <FieldsetClientInfo
+          initialState={INITIAL_RESERVATION_STATE}
+          state={clientFormState}
+          handleChange={handleChange}
+        />
       ),
     },
     {
@@ -182,92 +176,82 @@ export const ClientForm = ({ session }) => {
         Let's get started with your boarding reservation. Verify your details
         below.
       </p>
-      {!clientFormLoading && (
-        <form>
-          <Steps current={current}>
-            {formSteps.map((item) => (
-              <Step key={item.title} title={item.title} />
-            ))}
-          </Steps>
-          <StepsContent>{formSteps[current].content}</StepsContent>
-          {clientFormError && (
-            <BlockQuote large>
-              <WarningOutlined />
-              <p>{clientFormError}</p>
-            </BlockQuote>
+      <form>
+        <Steps current={current}>
+          {formSteps.map((item) => (
+            <Step key={item.title} title={item.title} />
+          ))}
+        </Steps>
+        <StepsContent>{formSteps[current].content}</StepsContent>
+        {clientFormError && (
+          <BlockQuote large>
+            <WarningOutlined />
+            <p>{clientFormError}</p>
+          </BlockQuote>
+        )}
+        <StepsAction>
+          {current > 0 && (
+            <Button type="button" onClick={() => prev({ current, setCurrent })}>
+              Previous
+            </Button>
           )}
-          <StepsAction>
-            {current > 0 && (
-              <Button
-                type="button"
-                onClick={() => prev({ current, setCurrent })}
-              >
-                Previous
-              </Button>
-            )}
 
-            {current < formSteps.length - 1 && (
-              <Button
-                type="button"
-                onClick={() => {
-                  if (clientFormState.pets.length === 0 && current === 2) {
-                    setClientFormError(
-                      "Please add a pet to continue with your reservation request."
-                    );
-                  } else {
-                    setClientFormError("");
-                  }
+          {current < formSteps.length - 1 && (
+            <Button
+              type="button"
+              onClick={() => {
+                if (clientFormState.pets.length === 0 && current === 2) {
+                  setClientFormError(
+                    "Please add a pet to continue with your reservation request."
+                  );
+                  return;
+                } else {
+                  setClientFormError("");
+                }
 
-                  if (current < 2) {
-                    const fieldsValid = guestFormFieldsValid(
-                      {
-                        currentFormSection: current,
-                      },
-                      {
-                        state: clientFormState,
-                        dispatch: clientFormDispatch,
-                      }
-                    );
-                    if (fieldsValid) {
-                      next({ current, setCurrent });
-                    } else {
-                      setClientFormError(
-                        "Please verify all required fields are filled out."
-                      );
+                if (current < 2) {
+                  const fieldsValid = guestFormFieldsValid(
+                    {
+                      currentFormSection: current,
+                    },
+                    {
+                      state: clientFormState,
+                      dispatch: clientFormDispatch,
                     }
-                  } else {
-                    next({ current, setCurrent });
-                  }
-                }}
-                disabled={clientFormLoading}
-              >
-                Next
-              </Button>
-            )}
+                  );
+                  next({ current, setCurrent });
+                } else {
+                  next({ current, setCurrent });
+                }
+              }}
+              disabled={clientFormLoading}
+            >
+              Next
+            </Button>
+          )}
 
-            {current === 3 && (
-              <Button
-                type="button"
-                primary
-                onClick={() => {
-                  setClientFormLoading(true);
-                  createReservationDraft(undefined, {
-                    state: clientFormState,
-                    setFormError: setClientFormError,
-                    dispatch: clientFormDispatch,
-                    apiPath: "/api/reservation",
-                  }).then(() => {
-                    setClientFormLoading(false);
-                  });
-                }}
-                disabled={clientFormLoading}
-              >
-                Submit Reservation
-              </Button>
-            )}
-          </StepsAction>
-        </form>
-      )}
+          {current === 3 && (
+            <Button
+              type="button"
+              primary
+              onClick={() => {
+                setClientFormLoading(true);
+                createReservationDraft(undefined, {
+                  state: clientFormState,
+                  setFormError: setClientFormError,
+                  dispatch: clientFormDispatch,
+                  apiPath: "/api/reservation",
+                }).then(() => {
+                  setClientFormLoading(false);
+                });
+              }}
+              disabled={clientFormLoading}
+            >
+              Submit Reservation
+            </Button>
+          )}
+        </StepsAction>
+      </form>
     </>
   );
 };
