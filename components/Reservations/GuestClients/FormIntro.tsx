@@ -57,13 +57,6 @@ export const FormIntroGuest = () => {
         </Link>
         .
       </p>
-
-      <p>
-        <Link href="/api/auth/signin">
-          <a>Create an online profile</a>
-        </Link>
-        <span> or continue to book your reservation as a new client.</span>
-      </p>
     </div>
   );
 };
