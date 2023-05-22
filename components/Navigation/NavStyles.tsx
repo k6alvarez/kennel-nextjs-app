@@ -183,7 +183,7 @@ export const BadgeStyles = `
 .rect-box {
     position: absolute;
     left: 18px;
-    top: 75px;
+    top: 51px;
     z-index: 2222;
     width: 248px;
     height: 140px;
