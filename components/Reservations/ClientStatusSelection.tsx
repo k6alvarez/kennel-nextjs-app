@@ -1,16 +1,69 @@
 import { UserAddOutlined, UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import { EditForm } from "../Forms/styles";
+import { Tiptap } from "../ui-kit/Tiptap";
+import { ThemePreferenceContext } from "../../pages/_app";
+import { saveContent } from "../Admin/services";
+import { EditablePromo } from "../ui-kit/Promo/EditablePromo";
+import { Content } from "../ui-kit/Base";
+import { headerHt } from "../ui-kit/Promo/styles-promo";
+
+const ImageOverlay = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.border};
+  opacity: 0.4;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
+const ImageBanner = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - ${headerHt});
+  background-image: url(${({ src }) => src});
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  color: ${({ theme }) => theme.colors.white};
+  text-shadow: ${({ theme }) => theme.shadows.dark};
+
+  h1 {
+    color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => `calc(${theme.fontSizes[6]})`};
+    justify-content: center;
+  }
+
+  p {
+    font-size: ${({ theme }) => `calc(${theme.fontSizes[3]})`};
+    font-weight: bold;
+  }
+
+  h4 {
+    color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => `calc(${theme.fontSizes[7]})`};
+  }
+`;
 
 const Flex = styled.div`
   display: flex;
   flex-direction: ${(props) => props.f || "column"};
 
-  gap: ${({ theme }) => theme.space[6]};
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+  gap: ${({ theme }) => theme.space[6]};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     flex-direction: ${(props) => props.f || "row"};
   }
 
@@ -18,32 +71,30 @@ const Flex = styled.div`
   a {
     font-size: ${({ theme }) => `calc(${theme.fontSizes[4]})`};
     text-align: center;
-    height: 25vw;
-    min-width: 25vw;
-    padding: ${({ theme }) => theme.space[4]};
+    padding: ${({ theme }) => theme.space[4]} ${({ theme }) => theme.space[6]};
     margin: 0 auto;
     box-shadow: ${({ theme }) => theme.shadows.default};
-    background-color: ${({ theme }) => theme.colors.secondary};
-    color: ${({ theme }) => theme.colors.textSecondary};
+    background-color: ${({ theme }) => theme.colors.primary};
+    border-radius: 20px;
+    color: ${({ theme }) => theme.colors.textPrimary};
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-shadow: none;
+    transition: all 0.1s ease-in-out;
 
     span {
       font-size: ${({ theme }) => `calc(${theme.fontSizes[5]})`};
     }
 
+    p {
+      color: ${({ theme }) => theme.colors.white};
+    }
+
     &[data-active="true"],
     :hover {
-      background-color: ${({ theme }) => theme.colors.primary};
-      color: ${({ theme }) => theme.colors.white};
-      transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-
-      span,
-      p {
-        color: ${({ theme }) => theme.colors.white};
-      }
+      transform: scale(1.08);
     }
   }
 `;
@@ -52,48 +103,93 @@ const HintText = styled.p`
   font-size: ${({ theme }) => `calc(${theme.fontSizes[1]})`};
   color: ${({ theme }) => theme.colors.textSecondary};
 `;
-export const ClientStatusSelection = ({ onToggle, clientType }) => {
+export const ClientStatusSelection = ({
+  onToggle,
+  clientType,
+  reservationWelcome,
+  setReservationWelcome,
+  bannerImage,
+  setBannerImage,
+}) => {
+  const { editMode, currentTheme } = useContext(ThemePreferenceContext);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <>
-      <h1>Welcome to our pet boarding facility!</h1>
-      <p>
-        To ensure the safety and health of all our guests, we require that pets
-        are up to date on their vaccinations before their stay. For dogs, we
-        require the DHLPP, Rabies, and Bordetella vaccines, while cats must have
-        the FVRCP, Leukemia, and Rabies vaccines. We kindly ask that you make
-        your reservation at least 2 weeks in advance of your arrival and note
-        that reservations made through our system are not confirmed until you
-        receive an email or phone confirmation from us. Thank you for
-        considering us for your pet's boarding needs.
-      </p>
-      <p>Please tell us if your are a new or existing client.</p>
-      <Flex>
-        <Flex f="column">
-          <button
-            data-active={clientType.clientType === "new"}
-            onClick={() => {
-              onToggle("new");
+      {editMode && bannerImage.id ? (
+        <>
+          <EditablePromo
+            promo={bannerImage}
+            updatePromo={(newPromo) => {
+              setBannerImage(newPromo);
             }}
-          >
-            <p>
-              <UserAddOutlined /> New Client
-            </p>
-            <HintText>A new client has never boarded with us before.</HintText>
-          </button>
-        </Flex>
-        <Flex f="column">
-          <Link href="/auth/signin?status=existingClient">
-            <a data-active={clientType.clientType === "existing"}>
-              <p>
-                <UserOutlined /> Existing Client
-              </p>
-              <HintText>
-                An existing client has boarded with us in the past.
-              </HintText>
-            </a>
-          </Link>
-        </Flex>
-      </Flex>
+            editMode={editMode}
+            currentTheme={currentTheme}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+          />
+          {reservationWelcome.id && (
+            <EditForm onSubmit={(e) => e.preventDefault()}>
+              <Tiptap
+                content={reservationWelcome?.content || { content: "" }}
+                onSave={(html) => {
+                  setReservationWelcome({
+                    content: html,
+                  });
+                  saveContent({
+                    apiPath: `/api/content-item/${reservationWelcome.id}`,
+                    html,
+                    setLoading: setIsLoading,
+                  });
+                }}
+                isLoading={isLoading}
+              />
+            </EditForm>
+          )}
+        </>
+      ) : (
+        <ImageBanner src={bannerImage?.image}>
+          <ImageOverlay />
+          <Content>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: reservationWelcome?.content,
+              }}
+            />
+          </Content>
+          <Content>
+            <h4>New or Existing Client?</h4>
+            <Flex>
+              <Flex f="column">
+                <button
+                  data-active={clientType.clientType === "new"}
+                  onClick={() => {
+                    onToggle("new");
+                  }}
+                >
+                  <p>
+                    <UserAddOutlined /> New Clients
+                  </p>
+                  <HintText>
+                    A new client has never boarded with us before.
+                  </HintText>
+                </button>
+              </Flex>
+              <Flex f="column">
+                <Link href="/auth/signin?status=existingClient">
+                  <a data-active={clientType.clientType === "existing"}>
+                    <p>
+                      <UserOutlined /> Existing Clients
+                    </p>
+                    <HintText>
+                      An existing client has boarded with us in the past.
+                    </HintText>
+                  </a>
+                </Link>
+              </Flex>
+            </Flex>
+          </Content>
+        </ImageBanner>
+      )}
     </>
   );
 };

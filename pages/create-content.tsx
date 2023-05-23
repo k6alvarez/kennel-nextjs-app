@@ -108,6 +108,7 @@ const CreateContent = ({ user }) => {
             <option value="POLICIES">Policies</option>
             <option value="RATES">Rates</option>
             <option value="CONTACT">Contact</option>
+            <option value="RESERVATIONS">Reservations</option>
           </select>
           <label htmlFor="content">Content</label>
           <textarea

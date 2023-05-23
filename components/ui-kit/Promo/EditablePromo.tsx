@@ -7,8 +7,8 @@ import { EditLinkedImage } from "./EditLinkedImage";
 export const EditablePromo = ({
   promo,
   updatePromo,
-  i,
-  delay,
+  i = 0,
+  delay = 0,
   editMode,
   currentTheme,
   isLoading,

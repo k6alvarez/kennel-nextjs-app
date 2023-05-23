@@ -72,8 +72,12 @@ export const Content = styled.article`
 
   h4 {
     font-weight: bold;
-    font-size: ${({ theme }) => theme.fontSizes[1]};
+    font-size: ${({ theme }) => theme.fontSizes[6]};
+    justify-content: center;
+    text-align: center;
+    font-family: ${({ theme }) => theme.fonts.heading};
     letter-spacing: 1px;
+    line-height: 2;
     margin: 0;
   }
 
@@ -178,7 +182,7 @@ export const GridItem = styled.div`
   background-image: url(${({ img }) => (img ? img : "")});
   background-color: ${({ theme, bg }) => theme.colors[bg] || theme.colors.nav};
   background-size: cover;
-  background-position: top center;
+  background-position: center;
   box-shadow: ${({ theme }) => theme.shadows.default};
   color: ${({ theme, color }) => theme.colors[color] || theme.colors.text};
 
@@ -204,7 +208,7 @@ export const GridItemTitle = styled.p`
   font-size: ${({ theme }) => theme.fontSizes[2]};
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.textPrimary};
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  text-shadow: ${({ theme }) => theme.shadows.light};
   text-align: center;
   text-transform: capitalize;
   position: absolute;

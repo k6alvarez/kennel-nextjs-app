@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Layout from "../components/Layout";
 import { useSession } from "next-auth/react";
 import { Content } from "../components/ui-kit/Base";
@@ -6,12 +6,49 @@ import { GuestClientForm } from "../components/Reservations/GuestClients/GuestCl
 import { ClientForm } from "../components/Reservations/Clients/ClientForm";
 import { ClientStatusSelection } from "../components/Reservations/ClientStatusSelection";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import prisma from "../lib/prisma";
+import { GetServerSideProps } from "next";
+import { ThemePreferenceContext } from "./_app";
 
-const Reservation: React.FC = () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const page = "RESERVATIONS";
+  const contentItems = await prisma.contentItem.findMany({
+    where: {
+      page,
+    },
+  });
+
+  const promoItems = await prisma.promoItem.findMany({
+    where: {
+      page,
+    },
+  });
+
+  return {
+    props: {
+      contentItems: JSON.stringify(contentItems),
+      promoItems: JSON.stringify(promoItems),
+    },
+  };
+};
+
+const Reservation = ({ contentItems, promoItems }) => {
+  const parsedContentItems = JSON.parse(contentItems);
+  const parsedPromoItems = JSON.parse(promoItems);
   const { data: session, status } = useSession();
   const [clientType, setClientType] = useState({
     clientType: "",
   });
+
+  const { editMode } = useContext(ThemePreferenceContext);
+
+  const [reservationWelcome, setReservationWelcome] = useState(
+    parsedContentItems.find((item) => item.name === "reservationWelcome")
+  );
+
+  const [bannerImage, setBannerImage] = useState(
+    parsedPromoItems.find((item) => item.name === "bannerImage")
+  );
 
   if (status === "loading") {
     return (
@@ -24,17 +61,19 @@ const Reservation: React.FC = () => {
     );
   }
 
-  if (!session && clientType.clientType === "") {
+  if ((!session && clientType.clientType === "") || editMode) {
     return (
       <Layout>
-        <Content>
-          <ClientStatusSelection
-            onToggle={(type) => {
-              setClientType({ clientType: type });
-            }}
-            clientType={clientType}
-          />
-        </Content>
+        <ClientStatusSelection
+          onToggle={(type) => {
+            setClientType({ clientType: type });
+          }}
+          clientType={clientType}
+          reservationWelcome={reservationWelcome}
+          setReservationWelcome={setReservationWelcome}
+          bannerImage={bannerImage}
+          setBannerImage={setBannerImage}
+        />
       </Layout>
     );
   }
