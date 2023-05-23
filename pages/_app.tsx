@@ -134,6 +134,18 @@ const App = ({ Component, pageProps }: AppProps) => {
     slogan: "Your app slogan goes here",
   });
 
+  // save edit mode to local storage and check when app loads if it's true
+  React.useEffect(() => {
+    const editMode = localStorage.getItem("gk_editMode");
+    if (editMode === "true") {
+      setEditMode(true);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem("gk_editMode", editMode.toString());
+  }, [editMode]);
+
   return (
     <SessionProvider session={pageProps.session}>
       <AppSettingsContext.Provider

@@ -1,7 +1,11 @@
 import { UserAddOutlined, UserOutlined } from "@ant-design/icons";
 import Link from "next/link";
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import { EditForm } from "../Forms/styles";
+import { Tiptap } from "../ui-kit/Tiptap";
+import { ThemePreferenceContext } from "../../pages/_app";
+import { saveContent } from "../Admin/services";
 
 const Flex = styled.div`
   display: flex;
@@ -52,21 +56,40 @@ const HintText = styled.p`
   font-size: ${({ theme }) => `calc(${theme.fontSizes[1]})`};
   color: ${({ theme }) => theme.colors.textSecondary};
 `;
-export const ClientStatusSelection = ({ onToggle, clientType }) => {
+export const ClientStatusSelection = ({
+  onToggle,
+  clientType,
+  reservationWelcome,
+  setReservationWelcome,
+}) => {
+  const { editMode } = useContext(ThemePreferenceContext);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <>
-      <h1>Welcome to our pet boarding facility!</h1>
-      <p>
-        To ensure the safety and health of all our guests, we require that pets
-        are up to date on their vaccinations before their stay. For dogs, we
-        require the DHLPP, Rabies, and Bordetella vaccines, while cats must have
-        the FVRCP, Leukemia, and Rabies vaccines. We kindly ask that you make
-        your reservation at least 2 weeks in advance of your arrival and note
-        that reservations made through our system are not confirmed until you
-        receive an email or phone confirmation from us. Thank you for
-        considering us for your pet's boarding needs.
-      </p>
-      <p>Please tell us if your are a new or existing client.</p>
+      {editMode && reservationWelcome.id ? (
+        <EditForm onSubmit={(e) => e.preventDefault()}>
+          <Tiptap
+            content={reservationWelcome?.content || { content: "" }}
+            onSave={(html) => {
+              setReservationWelcome({
+                content: html,
+              });
+              saveContent({
+                apiPath: `/api/content-item/${reservationWelcome.id}`,
+                html,
+                setLoading: setIsLoading,
+              });
+            }}
+            isLoading={isLoading}
+          />
+        </EditForm>
+      ) : (
+        <div
+          dangerouslySetInnerHTML={{ __html: reservationWelcome?.content }}
+        />
+      )}
+
+      <h4>Please tell us if your are a new or existing client.</h4>
       <Flex>
         <Flex f="column">
           <button

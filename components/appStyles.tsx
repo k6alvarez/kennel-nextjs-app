@@ -1,12 +1,46 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, css } from "styled-components";
 import {
   light,
   dark,
   livelySoothing,
   naturalEarth,
 } from "../components/ui-kit/Theme";
-import { blockquoteStyles } from "./Reservations/GuestClients/FormIntro";
 import { headerHt, promoStyles } from "./ui-kit/Promo/styles-promo";
+
+const blockquoteStyles = css`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  font-size: ${({ theme, large }) =>
+    large ? theme.fontSizes[2] : theme.fontSizes[1]};
+  line-height: 1.6;
+  margin-top: ${(props) => props.theme.space[4]};
+  margin-bottom: ${(props) => props.theme.space[4]};
+  position: relative;
+
+  padding: 0.5rem 1rem;
+  background-color: ${(props) => props.theme.colors.secondaryDark};
+  box-shadow: ${({ theme }) => theme.shadows.light};
+
+  &::before {
+    content: "";
+    background: ${({ theme }) => theme.colors.primary};
+    width: 3px;
+    height: 100%;
+    left: 0;
+    position: absolute;
+  }
+
+  p {
+    margin: ${(props) => props.theme.space[4]};
+  }
+
+  svg {
+    font-size: ${({ theme }) => theme.fontSizes[6]};
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`;
 
 export const themesMap = {
   light,

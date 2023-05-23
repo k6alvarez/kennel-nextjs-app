@@ -23,6 +23,7 @@ enum ContentPages {
   POLICIES
   RATES
   CONTACT
+  RESERVATIONS
 }
 
 model Pet {

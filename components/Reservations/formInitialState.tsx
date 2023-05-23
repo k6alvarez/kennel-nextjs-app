@@ -146,6 +146,7 @@ export const INITIAL_USER_STATE = {
     type: "text",
     inputMode: "tel",
     label: "Emergency Contact Phone",
+    hint: `Format: 123-456-7890`,
     required: true,
   },
 };

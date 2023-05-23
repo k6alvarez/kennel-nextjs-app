@@ -72,8 +72,12 @@ export const Content = styled.article`
 
   h4 {
     font-weight: bold;
-    font-size: ${({ theme }) => theme.fontSizes[1]};
+    font-size: ${({ theme }) => theme.fontSizes[6]};
+    justify-content: center;
+    text-align: center;
+    font-family: ${({ theme }) => theme.fonts.heading};
     letter-spacing: 1px;
+    line-height: 2;
     margin: 0;
   }
 
