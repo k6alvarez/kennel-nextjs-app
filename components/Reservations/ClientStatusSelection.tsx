@@ -115,18 +115,20 @@ export const ClientStatusSelection = ({
   const [isLoading, setIsLoading] = useState(false);
   return (
     <>
-      {editMode && bannerImage?.id ? (
+      {editMode && (bannerImage?.id || reservationWelcome?.id) ? (
         <>
-          <EditablePromo
-            promo={bannerImage}
-            updatePromo={(newPromo) => {
-              setBannerImage(newPromo);
-            }}
-            editMode={editMode}
-            currentTheme={currentTheme}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-          />
+          {bannerImage?.id && (
+            <EditablePromo
+              promo={bannerImage}
+              updatePromo={(newPromo) => {
+                setBannerImage(newPromo);
+              }}
+              editMode={editMode}
+              currentTheme={currentTheme}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+          )}
           {reservationWelcome?.id && (
             <EditForm onSubmit={(e) => e.preventDefault()}>
               <Tiptap
