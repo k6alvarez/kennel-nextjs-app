@@ -14,7 +14,7 @@ const ImageOverlay = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.border};
-  opacity: 0.3;
+  opacity: 0.4;
   position: absolute;
   top: 0;
   left: 0;
@@ -32,7 +32,7 @@ const ImageBanner = styled.div`
   background-repeat: no-repeat;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-direction: column;
   color: ${({ theme }) => theme.colors.white};
   text-shadow: ${({ theme }) => theme.shadows.dark};
@@ -58,10 +58,12 @@ const Flex = styled.div`
   display: flex;
   flex-direction: ${(props) => props.f || "column"};
 
-  gap: ${({ theme }) => theme.space[6]};
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+  gap: ${({ theme }) => theme.space[6]};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     flex-direction: ${(props) => props.f || "row"};
   }
 
@@ -79,6 +81,8 @@ const Flex = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-shadow: none;
+    transition: all 0.1s ease-in-out;
 
     span {
       font-size: ${({ theme }) => `calc(${theme.fontSizes[5]})`};
@@ -90,14 +94,7 @@ const Flex = styled.div`
 
     &[data-active="true"],
     :hover {
-      background-color: ${({ theme }) => theme.colors.primary};
-      color: ${({ theme }) => theme.colors.textPrimary};
-      transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
-
-      span,
-      p {
-        color: ${({ theme }) => theme.colors.white};
-      }
+      transform: scale(1.08);
     }
   }
 `;
@@ -160,7 +157,7 @@ export const ClientStatusSelection = ({
             />
           </Content>
           <Content>
-            <h4>Please tell us if your are a new or existing client.</h4>
+            <h4>New or Existing Client?</h4>
             <Flex>
               <Flex f="column">
                 <button
