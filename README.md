@@ -1,6 +1,6 @@
-# Boomers Studio Web App Template
+# Gillette Kennels Web App
 
-This repository is the boilerplate setup for a fullstack web app with authentication.
+This repository is the setup for the fullstack web app with authentication.
 App is built with Next.js, Prisma, PostgreSQL, and deployed to Vercel.
 
 Technologies used:
