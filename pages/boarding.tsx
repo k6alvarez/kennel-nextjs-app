@@ -19,6 +19,7 @@ import { ThemePreferenceContext } from "./_app";
 import { BoardingServices } from "../components/Boarding/BoardingServices";
 import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
 import { isTimeStampExpired } from "../components/Admin/services";
+import { headerHt } from "../components/ui-kit/Promo/styles-promo";
 
 export const TabsListWrapper = styled.div`
   position: relative;
@@ -26,7 +27,7 @@ export const TabsListWrapper = styled.div`
   .ant-tabs-nav {
     position: sticky;
 
-    top: 75px;
+    top: ${headerHt};
     background: ${({ theme }) => theme.colors.white};
     width: 100%;
     z-index: 500;

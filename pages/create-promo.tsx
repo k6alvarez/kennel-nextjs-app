@@ -114,6 +114,7 @@ const CreatePromo = ({ user }) => {
             <option value="POLICIES">Policies</option>
             <option value="RATES">Rates</option>
             <option value="CONTACT">Contact</option>
+            <option value="RESERVATIONS">Reservations</option>
           </select>
           <label htmlFor="promoGroup">
             Group Name - Items will be grouped together by their group name.

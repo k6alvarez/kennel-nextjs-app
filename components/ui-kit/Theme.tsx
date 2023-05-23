@@ -30,6 +30,7 @@ export const base = {
   shadows: {
     default: "0px 2px 4px rgba(0, 0, 0, 0.5)",
     light: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+    dark: "0px 2px 4px rgba(0, 0, 0, 0.8)",
   },
 };
 

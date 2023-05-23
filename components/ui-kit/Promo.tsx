@@ -8,7 +8,6 @@ import { Size, useWindowSize } from "./hooks/useWindowSize";
 import { Promos } from "./Promo/Promos";
 import {
   PromoWrapper,
-  PromoText,
   PromoTitleWrapper,
   PromoFooter,
 } from "./Promo/styles-promo";
@@ -32,17 +31,9 @@ export const Promo = ({
   setContentItem = undefined,
   sliderMode = false,
 }) => {
-  const { currentTheme, breakpoints, editMode } = useContext(
-    ThemePreferenceContext
-  );
+  const { currentTheme, editMode } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
 
-  const props = useSpring({
-    from: { opacity: animate ? 0 : 1 },
-    to: { opacity: 1 },
-    delay: animate ? defaultDelay : 0,
-    config: config.slow,
-  });
   const fadeInPt1 = useSpring({
     from: {
       opacity: animate ? 0 : 1,
@@ -56,7 +47,6 @@ export const Promo = ({
   });
 
   const size: Size = useWindowSize();
-  const mobileScreen = size.width < parseInt(breakpoints[0]);
 
   const onSave = (html) => {
     setIsLoading(true);

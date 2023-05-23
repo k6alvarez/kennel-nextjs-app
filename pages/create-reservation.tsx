@@ -18,15 +18,23 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
   });
 
+  const promoItems = await prisma.promoItem.findMany({
+    where: {
+      page,
+    },
+  });
+
   return {
     props: {
       contentItems: JSON.stringify(contentItems),
+      promoItems: JSON.stringify(promoItems),
     },
   };
 };
 
-const Reservation = ({ contentItems }) => {
+const Reservation = ({ contentItems, promoItems }) => {
   const parsedContentItems = JSON.parse(contentItems);
+  const parsedPromoItems = JSON.parse(promoItems);
   const { data: session, status } = useSession();
   const [clientType, setClientType] = useState({
     clientType: "",
@@ -36,6 +44,10 @@ const Reservation = ({ contentItems }) => {
 
   const [reservationWelcome, setReservationWelcome] = useState(
     parsedContentItems.find((item) => item.name === "reservationWelcome")
+  );
+
+  const [bannerImage, setBannerImage] = useState(
+    parsedPromoItems.find((item) => item.name === "bannerImage")
   );
 
   if (status === "loading") {
@@ -52,16 +64,16 @@ const Reservation = ({ contentItems }) => {
   if ((!session && clientType.clientType === "") || editMode) {
     return (
       <Layout>
-        <Content>
-          <ClientStatusSelection
-            onToggle={(type) => {
-              setClientType({ clientType: type });
-            }}
-            clientType={clientType}
-            reservationWelcome={reservationWelcome}
-            setReservationWelcome={setReservationWelcome}
-          />
-        </Content>
+        <ClientStatusSelection
+          onToggle={(type) => {
+            setClientType({ clientType: type });
+          }}
+          clientType={clientType}
+          reservationWelcome={reservationWelcome}
+          setReservationWelcome={setReservationWelcome}
+          bannerImage={bannerImage}
+          setBannerImage={setBannerImage}
+        />
       </Layout>
     );
   }
