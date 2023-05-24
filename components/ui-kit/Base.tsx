@@ -197,6 +197,7 @@ export const GridItem = styled.div`
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     width: 100%;
+    background-position: center 20%;
     height: ${({ size }) => (size ? size : "33vh")};
   }
 `;
