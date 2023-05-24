@@ -4,7 +4,6 @@ import { animated, config, useSpring } from "react-spring";
 import { ThemePreferenceContext } from "../../pages/_app";
 import { saveContent } from "../Admin/services";
 import { EditForm } from "../Forms/styles";
-import { Size, useWindowSize } from "./hooks/useWindowSize";
 import { Promos } from "./Promo/Promos";
 import {
   PromoWrapper,
@@ -12,6 +11,7 @@ import {
   PromoFooter,
 } from "./Promo/styles-promo";
 import { Tiptap } from "./Tiptap";
+import { EditImageOnly } from "./Promo/EditImageOnly";
 
 export const CONTENT_ITEMS_INITIAL_STATE = {
   name: "homePagePromoTitle",
@@ -30,6 +30,7 @@ export const Promo = ({
   contentItem = null,
   setContentItem = undefined,
   sliderMode = false,
+  bannerMode = false,
 }) => {
   const { currentTheme, editMode } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,8 +47,6 @@ export const Promo = ({
     reset: true,
   });
 
-  const size: Size = useWindowSize();
-
   const onSave = (html) => {
     setIsLoading(true);
     saveContent({
@@ -63,7 +62,7 @@ export const Promo = ({
 
   return (
     <>
-      <PromoWrapper currentTheme={currentTheme}>
+      <PromoWrapper currentTheme={currentTheme} bannerMode={bannerMode}>
         {editMode && contentItem?.content && (
           <EditForm onSubmit={(e) => e.preventDefault()}>
             <Tiptap
@@ -75,7 +74,12 @@ export const Promo = ({
         )}
 
         {!editMode && contentItem?.content && (
-          <animated.div style={fadeInPt1}>
+          <animated.div
+            style={{
+              ...fadeInPt1,
+              alignSelf: "center",
+            }}
+          >
             <PromoTitleWrapper>
               <>
                 {children ? (
@@ -102,6 +106,7 @@ export const Promo = ({
             setPromos={setPromos}
             noFlexGrow
             sliderMode={sliderMode}
+            bannerMode={bannerMode}
           />
         )}
       </PromoWrapper>

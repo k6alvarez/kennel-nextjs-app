@@ -31,6 +31,7 @@ export const base = {
     default: "0px 2px 4px rgba(0, 0, 0, 0.5)",
     light: "0px 2px 4px rgba(0, 0, 0, 0.2)",
     dark: "0px 2px 4px rgba(0, 0, 0, 0.8)",
+    extraDark: "0px 2px 4px rgba(0, 0, 0, 1)",
   },
 };
 

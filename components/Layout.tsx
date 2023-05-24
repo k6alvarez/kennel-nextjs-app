@@ -10,7 +10,6 @@ const PageWrapper = styled.div`
   min-height: 100vh;
 
   h1 {
-    font-size: ${({ theme }) => theme.fontSizes[4]};
     margin: ${({ theme }) => theme.space[3]} 0;
 
     button {

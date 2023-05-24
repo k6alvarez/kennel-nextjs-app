@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import message from "antd/lib/message";
 import { StyledInput, StyledLabel } from "../../Forms/styles";
 import { GridItem } from "../Base";
+import { animated, config, useSpring } from "react-spring";
 
 const EditModeContainer = styled.div`
   background-color: ${(props) => props.theme.colors.white};
+  color: ${(props) => props.theme.colors.textSecondary};
   padding: ${(props) => props.theme.space[3]};
+  font-size: ${(props) => props.theme.fontSizes[0]};
 `;
 
 const Flex = styled.div`
@@ -36,20 +39,45 @@ const Flex = styled.div`
   }
 `;
 
+const GridItemAnimated = animated(GridItem);
+
 export const EditImageOnly = ({
   editMode,
   promo,
   updatePromo,
   isLoading,
   setIsLoading,
+  bannerMode = false,
 }) => {
+  const [fromPos, setFromPos] = useState(`${bannerMode ? "50%" : "30%"}`);
+  const [toPos, setToPos] = useState(`${bannerMode ? "50%" : "80%"}`);
+  const duration = 50000;
+
+  const springProps = useSpring({
+    from: { backgroundPosition: `50% ${fromPos}` },
+    to: { backgroundPosition: `50% ${toPos}` },
+    config: { ...config.molasses, duration: duration },
+  });
+
   if (!promo) return null;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFromPos(toPos);
+      setToPos(fromPos);
+    }, duration);
+    return () => clearInterval(interval);
+  }, [fromPos, toPos]);
 
   return (
     <>
       {editMode ? (
         <Flex>
-          <GridItem size={promo.size} img={promo.image} />
+          <GridItem
+            size={promo.size}
+            img={promo.image}
+            bannerMode={bannerMode}
+          />
           <EditModeContainer>
             <p>Current image url: {promo.image}</p>
             <label htmlFor="size">Size</label>
@@ -59,10 +87,10 @@ export const EditImageOnly = ({
               value={promo.size}
               onChange={(e) => updatePromo({ ...promo, size: e.target.value })}
             >
-              <option value="">Auto</option>
-              <option value="20vw">Small</option>
-              <option value="30vw">Medium</option>
-              <option value="40vw">Large</option>
+              <option value="">Default</option>
+              <option value="33vh">Small</option>
+              <option value="50vh">Medium</option>
+              <option value="75vh">Large</option>
             </select>
             <StyledInput
               type={"file"}
@@ -125,7 +153,12 @@ export const EditImageOnly = ({
         </Flex>
       ) : (
         <>
-          <GridItem size={promo.size} img={promo.image} />
+          <GridItemAnimated
+            style={springProps}
+            size={promo.size}
+            img={promo.image}
+            bannerMode={bannerMode}
+          />
         </>
       )}
     </>

@@ -42,9 +42,9 @@ export const PromoWrapper = styled.div`
       : theme.colors.textPrimary};
   display: grid;
   grid-template-columns: 1fr;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
-  gap: ${({ theme }) => theme.space[2]};
+  gap: ${({ theme, bannerMode }) => (bannerMode ? "0" : theme.space[2])};
   font-size: ${({ theme }) => theme.fontSizes[2]};
   line-height: 1.2;
 
@@ -54,7 +54,8 @@ export const PromoWrapper = styled.div`
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
     font-size: ${({ theme }) => theme.fontSizes[2]};
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: ${({ bannerMode }) =>
+      bannerMode ? "1fr" : "1fr 1fr"};
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
