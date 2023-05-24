@@ -13,12 +13,13 @@ export const EditablePromo = ({
   currentTheme,
   isLoading,
   setIsLoading,
+  bannerMode = false,
 }) => {
   const props = useSpring({
     to: { opacity: 1, transform: "scale(1)" },
     from: {
       opacity: 0,
-      transform: `scale(0)`,
+      transform: `scale(0.9)`,
     },
     delay: delay + i * 180,
     config: config.slow,
@@ -48,6 +49,7 @@ export const EditablePromo = ({
             updatePromo={updatePromo}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
+            bannerMode={bannerMode}
           />
         )}
       </fieldset>

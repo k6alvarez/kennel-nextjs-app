@@ -61,8 +61,12 @@ const MyApp = ({ contentItems, promoItems }) => {
   );
 
   const [homePromoTitle, setHomePromoTitle] = useState(
-    parsedContentItems.find((item) => item.name === "homePromoTitle")
+    parsedContentItems.find((item) => item.name === "homePromoTitle") || []
   );
+
+  const [homeBanner, setHomeBanner] = useState([
+    parsedPromoItems.find((item) => item.name === "homeBanner"),
+  ]);
 
   useEffect(() => {
     if (isTimeStampExpired(expiry)) {
@@ -72,8 +76,18 @@ const MyApp = ({ contentItems, promoItems }) => {
     }
   }, []);
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Layout>
+      <Promo
+        animate={shouldAnimate}
+        promos={homeBanner}
+        setPromos={setHomeBanner}
+        bannerMode
+      />
       <Promo
         animate={shouldAnimate}
         showFooter

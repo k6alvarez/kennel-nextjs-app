@@ -56,7 +56,8 @@ export const Content = styled.article`
 
   h1 {
     font-weight: bold;
-    font-size: ${({ theme }) => theme.fontSizes[5]};
+    font-size: ${({ theme }) => theme.fontSizes[6]};
+    font-family: ${({ theme }) => theme.fonts.heading};
   }
 
   h2 {
@@ -158,13 +159,13 @@ export const GridItems = styled.div`
 
   @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
     flex-direction: ${({ breakMobile }) => (breakMobile ? "column" : "row")};
-    padding: ${({ breakMobile, theme }) =>
-      breakMobile ? theme.space[4] : "0"};
+    padding: ${({ breakMobile, theme, bannerMode }) =>
+      breakMobile && !bannerMode ? theme.space[4] : "0"};
   }
 
   @media (min-width: ${(props) => props.theme.breakpoints[2]}) {
     flex-direction: row;
-    padding: ${({ theme }) => theme.space[6]};
+    padding: ${({ theme, bannerMode }) => (bannerMode ? "0" : theme.space[6])};
     gap: ${({ theme }) => theme.space[6]};
   }
 
@@ -179,7 +180,7 @@ export const GridItem = styled.div`
   position: relative;
   width: 100%;
   height: 33vh;
-  min-height: 300px;
+  min-height: ${({ bannerMode }) => (bannerMode ? "500px" : "300px")};
   background-image: url(${({ img }) => (img ? img : "")});
   background-color: ${({ theme, bg }) => theme.colors[bg] || theme.colors.nav};
   background-size: cover;
@@ -199,6 +200,7 @@ export const GridItem = styled.div`
     width: 100%;
     background-position: center 20%;
     height: ${({ size }) => (size ? size : "33vh")};
+    min-height: ${({ bannerMode }) => (bannerMode ? "500px" : "350px")};
   }
 `;
 

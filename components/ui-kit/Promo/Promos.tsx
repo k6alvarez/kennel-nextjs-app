@@ -24,6 +24,7 @@ interface PromosProps {
   animate?: boolean;
   noFlexGrow?: boolean;
   sliderMode?: boolean;
+  bannerMode?: boolean;
 }
 
 const Container = styled.div`
@@ -43,6 +44,7 @@ export const Promos = ({
   variant = "row",
   noFlexGrow = false,
   sliderMode = false,
+  bannerMode = false,
 }: PromosProps) => {
   const { currentTheme } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -74,7 +76,7 @@ export const Promos = ({
           currentTheme={currentTheme}
           flex={noFlexGrow ? "unset" : "1"}
         >
-          <GridItems variant={variant}>
+          <GridItems variant={variant} bannerMode={bannerMode}>
             {promos.map((promo, i) => (
               <EditablePromo
                 delay={delay}
@@ -90,6 +92,7 @@ export const Promos = ({
                 key={i}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
+                bannerMode={bannerMode}
               />
             ))}
           </GridItems>
