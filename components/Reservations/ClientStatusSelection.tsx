@@ -14,7 +14,7 @@ const ImageOverlay = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.border};
-  opacity: 0.4;
+  opacity: 0.6;
   position: absolute;
   top: 0;
   left: 0;
@@ -35,17 +35,24 @@ const ImageBanner = styled.div`
   justify-content: space-evenly;
   flex-direction: column;
   color: ${({ theme }) => theme.colors.white};
-  text-shadow: ${({ theme }) => theme.shadows.dark};
+  text-shadow: ${({ theme }) => theme.shadows.extraDark};
 
   h1 {
     color: ${({ theme }) => theme.colors.white};
-    font-size: ${({ theme }) => `calc(${theme.fontSizes[6]})`};
+    font-size: ${({ theme }) => `calc(${theme.fontSizes[8]})`};
+    font-family: ${({ theme }) => theme.fonts.heading};
     justify-content: center;
+    text-align: center;
   }
 
   p {
-    font-size: ${({ theme }) => `calc(${theme.fontSizes[3]})`};
+    font-size: ${({ theme }) => `calc(${theme.fontSizes[1]})`};
     font-weight: bold;
+    letter-spacing: 0.1rem;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+      font-size: ${({ theme }) => `calc(${theme.fontSizes[3]})`};
+    }
   }
 
   h4 {

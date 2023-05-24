@@ -42,7 +42,7 @@ export const PromoWrapper = styled.div`
       : theme.colors.textPrimary};
   display: grid;
   grid-template-columns: 1fr;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   gap: ${({ theme }) => theme.space[2]};
   font-size: ${({ theme }) => theme.fontSizes[2]};

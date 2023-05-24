@@ -178,7 +178,8 @@ export const GridItems = styled.div`
 export const GridItem = styled.div`
   position: relative;
   width: 100%;
-  height: 100vw;
+  height: 33vh;
+  min-height: 300px;
   background-image: url(${({ img }) => (img ? img : "")});
   background-color: ${({ theme, bg }) => theme.colors[bg] || theme.colors.nav};
   background-size: cover;
@@ -194,9 +195,9 @@ export const GridItem = styled.div`
     margin-right: 0;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     width: 100%;
-    height: ${({ size }) => (size ? size : "25vw")};
+    height: ${({ size }) => (size ? size : "33vh")};
   }
 `;
 

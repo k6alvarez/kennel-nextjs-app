@@ -59,10 +59,10 @@ export const EditImageOnly = ({
               value={promo.size}
               onChange={(e) => updatePromo({ ...promo, size: e.target.value })}
             >
-              <option value="">Auto</option>
-              <option value="20vw">Small</option>
-              <option value="30vw">Medium</option>
-              <option value="40vw">Large</option>
+              <option value="">Default</option>
+              <option value="33vh">Small</option>
+              <option value="50vh">Medium</option>
+              <option value="75vh">Large</option>
             </select>
             <StyledInput
               type={"file"}

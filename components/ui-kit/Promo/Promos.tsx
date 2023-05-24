@@ -29,17 +29,10 @@ interface PromosProps {
 const Container = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   overflow: hidden;
 `;
-
-const contentStyle: React.CSSProperties = {
-  height: "100%",
-  color: "#fff",
-  textAlign: "center",
-  background: "#364d79",
-};
 
 export const Promos = ({
   transparent,

@@ -75,7 +75,12 @@ export const Promo = ({
         )}
 
         {!editMode && contentItem?.content && (
-          <animated.div style={fadeInPt1}>
+          <animated.div
+            style={{
+              ...fadeInPt1,
+              alignSelf: "center",
+            }}
+          >
             <PromoTitleWrapper>
               <>
                 {children ? (
