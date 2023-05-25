@@ -11,6 +11,8 @@ import { EditForm } from "../components/Forms/styles";
 import { Tiptap } from "../components/ui-kit/Tiptap";
 import { ThemePreferenceContext } from "./_app";
 import { isTimeStampExpired, saveContent } from "../components/Admin/services";
+import { FacebookOutlined, InstagramOutlined } from "@ant-design/icons";
+import { PromoFooter } from "../components/ui-kit/Promo/styles-promo";
 
 export const defaultContent = {
   content: "",
@@ -87,10 +89,55 @@ const MyApp = ({ contentItems, promoItems }) => {
         promos={homeBanner}
         setPromos={setHomeBanner}
         bannerMode
+        // showFooter={
+        //   <PromoFooter>
+        //     <p>9172 East K Ave, Galesburg MI, 49053</p>
+        //     <ul>
+        //       <li>
+        //         <a
+        //           target="_blank"
+        //           href="https://www.facebook.com/gillettekennels1/"
+        //         >
+        //           <FacebookOutlined />
+        //         </a>
+        //       </li>
+        //       <li>
+        //         <a
+        //           target="_blank"
+        //           href="https://www.instagram.com/gillettekennels/"
+        //         >
+        //           <InstagramOutlined />
+        //         </a>
+        //       </li>
+        //     </ul>
+        //   </PromoFooter>
+        // }
       />
       <Promo
         animate={shouldAnimate}
-        showFooter
+        showFooter={
+          <PromoFooter>
+            <p>9172 East K Ave, Galesburg MI, 49053</p>
+            <ul>
+              <li>
+                <a
+                  target="_blank"
+                  href="https://www.facebook.com/gillettekennels1/"
+                >
+                  <FacebookOutlined />
+                </a>
+              </li>
+              <li>
+                <a
+                  target="_blank"
+                  href="https://www.instagram.com/gillettekennels/"
+                >
+                  <InstagramOutlined />
+                </a>
+              </li>
+            </ul>
+          </PromoFooter>
+        }
         promos={homePromos}
         setPromos={setHomePromos}
         contentItem={homePromoTitle}
