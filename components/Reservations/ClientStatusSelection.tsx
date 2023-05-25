@@ -146,7 +146,7 @@ export const ClientStatusSelection = ({
                   });
                   saveContent({
                     apiPath: `/api/content-item/${reservationWelcome.id}`,
-                    html,
+                    payload: { content: html },
                     setLoading: setIsLoading,
                   });
                 }}

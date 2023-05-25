@@ -85,7 +85,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   strong {
-    font-weight: 600;
+    font-weight: bold;
   }
 
   main, section, article {

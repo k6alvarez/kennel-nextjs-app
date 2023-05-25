@@ -155,7 +155,7 @@ const MyApp = ({ contentItems, promoItems }) => {
                 });
                 saveContent({
                   apiPath: `/api/content-item/${homeContent.id}`,
-                  html,
+                  payload: { content: html },
                   setLoading: setIsLoading,
                 });
               }}
@@ -183,7 +183,7 @@ const MyApp = ({ contentItems, promoItems }) => {
                   content: html,
                 });
                 saveContent({
-                  html,
+                  payload: { content: html },
                   apiPath: `/api/content-item/${missionStatement.id}`,
                   setLoading: setIsLoading,
                 });

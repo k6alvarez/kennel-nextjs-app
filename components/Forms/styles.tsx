@@ -4,7 +4,7 @@ export const EditForm = styled.form`
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.textSecondary};
   max-width: 80vw;
-  margin: ${({ theme }) => theme.space[4]} 0;
+  margin: 0 0 ${({ theme }) => theme.space[4]} 0;
 `;
 
 export const Fields = styled.div`

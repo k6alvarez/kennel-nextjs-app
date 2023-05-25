@@ -23,7 +23,7 @@ export const BoardingSchool = ({
             onSave={(html) => {
               setContent({ content: html });
               saveContent({
-                html,
+                payload: { content: html },
                 apiPath: `/api/content-item/${content.id}`,
                 setLoading: setIsLoading,
               });

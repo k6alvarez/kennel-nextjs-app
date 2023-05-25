@@ -46,7 +46,7 @@ export const BoardingServices = ({
               setContent({ content: html });
               saveContent({
                 apiPath: `/api/content-item/${content.id}`,
-                html,
+                payload: { content: html },
                 setLoading: setIsLoading,
               });
             }}

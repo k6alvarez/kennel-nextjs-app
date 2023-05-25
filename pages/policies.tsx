@@ -1,17 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Collapse, message } from "antd";
+import { Collapse } from "antd";
 import styled from "styled-components";
 import Layout from "../components/Layout";
-import { Button, Content } from "../components/ui-kit/Base";
+import { Content } from "../components/ui-kit/Base";
 
 import { useRouter } from "next/router";
-import Link from "next/link";
 import prisma from "../lib/prisma";
 import { GetServerSideProps } from "next";
-import { saveContent } from "../components/Admin/services";
-import { EditForm } from "../components/Forms/styles";
-import { Tiptap } from "../components/ui-kit/Tiptap";
 import { ThemePreferenceContext } from "./_app";
+import { PolicyPanelHeader } from "../components/Policies/PolicyPanelHeader";
+import { PolicyContent } from "../components/Policies/PolicyContent";
+import { PolicyPageContent } from "../components/Policies/PolicyPageContent";
 
 const { Panel } = Collapse;
 
@@ -27,8 +26,8 @@ export const TitleText = styled.div`
   justify-content: space-between;
 
   button {
-    margin: 0;
-    padding: ${(props) => props.theme.space[1]};
+    margin: 0 ${(props) => props.theme.space[4]};
+    padding: 0 ${(props) => props.theme.space[2]};
     font-size: calc(${(props) => props.theme.fontSizes[1]} / 1.2);
   }
 `;
@@ -81,35 +80,16 @@ const Policies = ({ contentItems, policies = undefined }) => {
   return (
     <Layout>
       <Content>
-        {editMode ? (
-          <EditForm onSubmit={(e) => e.preventDefault()}>
-            <Tiptap
-              content={policiesContent?.content || { content: "" }}
-              onSave={(html) => {
-                setPoliciesContent({ content: html });
-                saveContent({
-                  apiPath: `/api/content-item/${policiesContent.id}`,
-                  html,
-                  setLoading: setIsLoading,
-                });
-              }}
-              isLoading={isLoading}
-            />
-          </EditForm>
-        ) : (
-          <div dangerouslySetInnerHTML={{ __html: policiesContent?.content }} />
-        )}
-        {editMode && (
-          <p>
-            Add more policies at{" "}
-            <Link href={"/create-policy"}>
-              <a>create policies</a>
-            </Link>{" "}
-            page.
-          </p>
-        )}
+        <PolicyPageContent
+          editMode={editMode}
+          policiesContent={policiesContent}
+          setPoliciesContent={setPoliciesContent}
+          setIsLoading={setIsLoading}
+          isLoading={isLoading}
+        />
         {policiesState?.length > 0 && (
           <Collapse
+            accordion
             activeKey={activeKey}
             onChange={(key) => {
               router.replace(
@@ -122,64 +102,39 @@ const Policies = ({ contentItems, policies = undefined }) => {
               );
             }}
           >
-            {policiesState.map((policy) => (
-              <Panel
-                id={policy.name}
-                key={policy.name}
-                header={
-                  <TitleText>
-                    {editMode ? (
-                      <>
-                        {policy.name}{" "}
-                        <Button
-                          onClick={() => {
-                            deletePolicy(policy.id).then(() => {
-                              message.success("Policy deleted");
-                              setPoliciesState(
-                                policiesState.filter((p) => p.id !== policy.id)
-                              );
-                            });
-                          }}
-                        >
-                          Delete
-                        </Button>
-                      </>
-                    ) : (
-                      <>{policy.name}</>
-                    )}
-                  </TitleText>
-                }
-              >
-                {editMode ? (
-                  <>
-                    <EditForm onSubmit={(e) => e.preventDefault()}>
-                      <Tiptap
-                        content={policy?.content || { content: "" }}
-                        onSave={(html) => {
-                          setPoliciesContent(() => {
-                            const policies = policiesState.map((p) => {
-                              if (p.id === policy.id) {
-                                return { ...p, content: html };
-                              }
-                              return p;
-                            });
-                            setPoliciesState(policies);
-                          });
-                          saveContent({
-                            apiPath: `/api/policy/${policy.id}`,
-                            html,
-                            setLoading: setIsLoading,
-                          });
-                        }}
-                        isLoading={isLoading}
-                      />
-                    </EditForm>
-                  </>
-                ) : (
-                  <div dangerouslySetInnerHTML={{ __html: policy.content }} />
-                )}
-              </Panel>
-            ))}
+            {policiesState.map((policy) => {
+              const [editedPolicyName, setEditedPolicyName] = useState({
+                name: "",
+                id: "",
+              });
+              return (
+                <Panel
+                  id={policy.name}
+                  key={policy.name}
+                  header={
+                    <PolicyPanelHeader
+                      editMode={editMode}
+                      policiesState={policiesState}
+                      setPoliciesState={setPoliciesState}
+                      policy={policy}
+                      editedPolicyName={editedPolicyName}
+                      setEditedPolicyName={setEditedPolicyName}
+                    />
+                  }
+                >
+                  <PolicyContent
+                    policy={policy}
+                    editMode={editMode}
+                    setPoliciesContent={setPoliciesContent}
+                    setPoliciesState={setPoliciesState}
+                    policiesState={policiesState}
+                    editedPolicyName={editedPolicyName}
+                    setIsLoading={setIsLoading}
+                    isLoading={isLoading}
+                  />
+                </Panel>
+              );
+            })}
           </Collapse>
         )}
       </Content>

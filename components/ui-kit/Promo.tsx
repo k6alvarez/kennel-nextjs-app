@@ -45,7 +45,7 @@ export const Promo = ({
     setIsLoading(true);
     saveContent({
       apiPath: `/api/content-item/${contentItem.id}`,
-      html,
+      payload: { content: html },
     })
       .then(() => {
         setIsLoading(false);
