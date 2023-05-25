@@ -11,7 +11,6 @@ import {
   PromoFooter,
 } from "./Promo/styles-promo";
 import { Tiptap } from "./Tiptap";
-import { EditImageOnly } from "./Promo/EditImageOnly";
 
 export const CONTENT_ITEMS_INITIAL_STATE = {
   name: "homePagePromoTitle",
