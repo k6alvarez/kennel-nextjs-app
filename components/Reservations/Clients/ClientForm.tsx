@@ -4,7 +4,7 @@ import Router from "next/router";
 import { message, Steps } from "antd";
 import { StepsContent, StepsAction } from "../styles";
 import { Button } from "../../ui-kit/Base";
-import { guestFormFieldsValid, next, prev } from "../helpers";
+import { boardingFormValidator, next, prev } from "../helpers";
 import { useClientFormContext } from "../formContext";
 import {
   INITIAL_RESERVATION_STATE,
@@ -15,7 +15,11 @@ import { getPets, getUser } from "../../Pets/services";
 import { FieldsetPetsInfo } from "../GuestClients/FieldsetPetsInfo";
 import { BlockQuote } from "../GuestClients/FormIntro";
 import { ReservationSummary } from "../ReservationSummary";
-import { WarningOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  WarningOutlined,
+} from "@ant-design/icons";
 import { renderFormFields } from "../../Forms/renderFormFields";
 import { Fieldset, Fields } from "../../Forms/styles";
 
@@ -202,24 +206,26 @@ export const ClientForm = ({ session }) => {
                 type="button"
                 onClick={() => prev({ current, setCurrent })}
               >
-                Previous
+                <ArrowLeftOutlined /> Go back to {formSteps[current - 1].title}
               </Button>
             )}
 
             {current < formSteps.length - 1 && (
               <Button
                 type="button"
-                onClick={() => {
+                onClick={(e) => {
                   if (clientFormState.pets.length === 0 && current === 2) {
+                    e.preventDefault();
                     setClientFormError(
                       "Please add a pet to continue with your reservation request."
                     );
+                    return;
                   } else {
                     setClientFormError("");
                   }
 
                   if (current < 2) {
-                    const fieldsValid = guestFormFieldsValid(
+                    const fieldsValid = boardingFormValidator(
                       {
                         currentFormSection: current,
                       },
@@ -241,7 +247,8 @@ export const ClientForm = ({ session }) => {
                 }}
                 disabled={clientFormLoading}
               >
-                Next
+                Continue to {formSteps[current + 1].title}{" "}
+                <ArrowRightOutlined />
               </Button>
             )}
 

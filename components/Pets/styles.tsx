@@ -29,9 +29,9 @@ export const StyledGridItems = styled(GridItems)`
 export const CardTitle = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-direction: column;
   gap: ${(props) => props.theme.space[4]};
-  margin-bottom: ${(props) => props.theme.space[4]};
 
   button {
     margin: 0;

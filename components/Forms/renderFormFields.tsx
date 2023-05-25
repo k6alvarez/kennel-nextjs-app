@@ -7,10 +7,9 @@ import {
   StyledSelect,
   PreviewWrapper,
 } from "./styles";
-import { useState } from "react";
-import { animated, useSpring } from "react-spring";
 import { Editor } from "@tiptap/react";
 import { Tiptap } from "../ui-kit/Tiptap";
+import { LoadingOutlined } from "@ant-design/icons";
 
 function formatFileSize(bytes) {
   const kilobyte = 1024;
@@ -141,29 +140,23 @@ export const renderFormFields = ({
               accept="image/* , .pdf"
             />
 
-            <PreviewWrapper>
-              {imgLoading && (
-                <Image
-                  src="/images/loading.gif"
-                  alt="loading"
-                  width={50}
-                  height={50}
-                />
-              )}
-              {field?.value && !field?.value.endsWith("pdf") && (
-                <Image
-                  src={field?.value}
-                  alt="Picture of the author"
-                  width={200}
-                  height={200}
-                />
-              )}
-              {field?.value && field?.value.endsWith("pdf") && (
-                <a href={field?.value} target="_blank">
-                  PDF Uploaded - Click to View
-                </a>
-              )}
-            </PreviewWrapper>
+            {field?.value && (
+              <PreviewWrapper>
+                {!field?.value.endsWith("pdf") && (
+                  <Image
+                    src={field?.value}
+                    alt="Picture of the author"
+                    width={200}
+                    height={200}
+                  />
+                )}
+                {field?.value.endsWith("pdf") && (
+                  <a href={field?.value} target="_blank">
+                    PDF Uploaded - Click to View
+                  </a>
+                )}
+              </PreviewWrapper>
+            )}
           </>
         )}
 

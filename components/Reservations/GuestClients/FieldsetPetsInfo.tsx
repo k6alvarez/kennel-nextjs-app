@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card } from "antd";
+import { Card, Collapse } from "antd";
 import styled from "styled-components";
 import { DateTime } from "luxon";
 import { renderFormFields } from "../../Forms/renderFormFields";
@@ -124,7 +124,8 @@ export const FieldsetPetsInfo = ({
               </span>
             </Card>
           )}
-
+        </PetCards>
+        <PetCards>
           {pets?.map((pet, i) => {
             return (
               <PetCard
@@ -152,7 +153,7 @@ export const FieldsetPetsInfo = ({
                 handleChange,
                 setFormLoading: setPetFormLoading,
               })}
-              {petFormState.feeding.value === "Client Food" ? (
+              {petFormState.feeding.value === "Client Food" && (
                 <Field grow>
                   <BlockQuote>
                     <InfoCircleOutlined />
@@ -168,8 +169,6 @@ export const FieldsetPetsInfo = ({
                     </p>
                   </BlockQuote>
                 </Field>
-              ) : (
-                <br />
               )}
 
               <Field grow>

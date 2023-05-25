@@ -148,21 +148,48 @@ export const createGuestReservationDraft = async (
 
 export const defaultShadow = "0 0 10px 0 rgba(0,0,0,0.1)";
 
+const getDesiredInfo = ({ petInfo, desiredKeys }) => {
+  Object.keys(petInfo).forEach((key) => {
+    if (!desiredKeys.includes(key)) {
+      delete petInfo[key];
+    }
+  });
+};
+
 export const petInfoOnly = (pet) => {
+  const desiredKeys = ["image", "age", "breed", "color", "gender", "type"];
   const petInfo = structuredClone(pet);
-  delete petInfo.largeImage;
-  delete petInfo.smallImage;
-  delete petInfo.id;
-  delete petInfo.__typename;
-  delete petInfo.createdAt;
-  delete petInfo.updatedAt;
-  delete petInfo.ownerId;
-  delete petInfo.owner;
-  delete petInfo.vaccinationsLargeImage;
-  delete petInfo.image;
-  delete petInfo.guestReservationId;
-  delete petInfo.reservationId;
-  delete petInfo.name;
+  getDesiredInfo({ petInfo, desiredKeys });
+
+  return petInfo;
+};
+
+export const vaccinationInfoOnly = (pet) => {
+  const desiredKeys = [
+    "vet",
+    "vaccinations",
+    "bordetellaVaccine",
+    "distemperVaccine",
+    "parvoVirusesVaccine",
+    "rabiesVaccine",
+  ];
+  const petInfo = structuredClone(pet);
+  getDesiredInfo({ petInfo, desiredKeys });
+
+  return petInfo;
+};
+
+export const boardingInfoOnly = (pet) => {
+  const desiredKeys = [
+    "feeding",
+    "feedingCount",
+    "preferredRunSize",
+    "weight",
+    "fixed",
+  ];
+  const petInfo = structuredClone(pet);
+  getDesiredInfo({ petInfo, desiredKeys });
+
   return petInfo;
 };
 

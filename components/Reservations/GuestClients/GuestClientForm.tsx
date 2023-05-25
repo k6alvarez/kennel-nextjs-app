@@ -7,7 +7,7 @@ import { FieldsetPetsInfo } from "./FieldsetPetsInfo";
 import { Button } from "../../ui-kit/Base";
 import { StepsContent, StepsAction } from "../styles";
 import { FieldSetPaymentInfo } from "./FieldSetPaymentInfo";
-import { next, prev, guestFormFieldsValid } from "../helpers";
+import { next, prev, boardingFormValidator } from "../helpers";
 import {
   createGuestReservationDraft,
   deleteGuestPet,
@@ -127,7 +127,7 @@ export const GuestClientForm = () => {
                 }
 
                 if (current < 2) {
-                  const fieldsValid = guestFormFieldsValid(
+                  const fieldsValid = boardingFormValidator(
                     {
                       currentFormSection: current,
                     },

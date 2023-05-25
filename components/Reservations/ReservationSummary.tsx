@@ -13,6 +13,15 @@ const Flex = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    align-self: center;
+  }
+`;
+
 export const getFormattedValue = (field) => {
   return field.type === "date" || field.type === "time" ? (
     <>
@@ -43,8 +52,8 @@ export const getFormattedValue = (field) => {
 export const ReservationSummary = ({ state, pets }) => {
   const getState = typeof state === "object" ? Object.keys(state) : state;
   return (
-    <div>
-      <h1>Reservation Summary</h1>
+    <Wrapper>
+      <h2>Reservation Summary</h2>
       <Flex>
         {state &&
           getState.map((key, i) => {
@@ -68,9 +77,9 @@ export const ReservationSummary = ({ state, pets }) => {
       </Flex>
       {pets && (
         <>
-          <h1>
+          <h2>
             {pets.length} {pets.length > 1 ? "Pets" : "Pet"} Boarded
-          </h1>
+          </h2>
           {pets.map((pet, i) => {
             return (
               <div key={`${pet.id}-${i}`}>
@@ -100,6 +109,6 @@ export const ReservationSummary = ({ state, pets }) => {
           })}
         </>
       )}
-    </div>
+    </Wrapper>
   );
 };
