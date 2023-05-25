@@ -200,7 +200,7 @@ export const GridItem = styled.div`
     width: 100%;
     background-position: center 20%;
     height: ${({ size }) => (size ? size : "33vh")};
-    min-height: ${({ bannerMode }) => (bannerMode ? "500px" : "350px")};
+    min-height: ${({ bannerMode }) => (bannerMode ? "40vh" : "350px")};
   }
 `;
 

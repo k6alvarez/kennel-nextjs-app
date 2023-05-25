@@ -79,7 +79,7 @@ export const getBusinessHours = async () => {
 
 export const saveContent = async ({
     apiPath,
-    html,
+    payload,
     setLoading = undefined,
 }) => {
     setLoading && setLoading(true);
@@ -87,11 +87,13 @@ export const saveContent = async ({
         await fetch(apiPath, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ content: html }),
+            body: JSON.stringify(payload),
         });
+        message.success("Content saved successfully");
         setLoading && setLoading(false);
     } catch (error) {
         console.error(error);
+        message.error("We're sorry, something went wrong. Please try again.");
         setLoading && setLoading(false);
     }
 };

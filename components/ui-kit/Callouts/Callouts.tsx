@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { useSpring, config, animated } from "react-spring";
 import { GridItem } from "../Base";
-import { PromoTextWrapper, ImageZoomWrapper } from "../Promo/styles-promo";
+import { ImageZoomWrapper } from "../Promo/styles-promo";
 
 export const Callouts = ({ promos, delay = 200 }) => {
   return (
@@ -36,29 +36,6 @@ export const Callouts = ({ promos, delay = 200 }) => {
                 </div>
               </a>
             </Link>
-            {/* {promo.link ? (
-              <PromoTextWrapper hasLink={!!promo.link}>
-                <Link href={promo.link}>
-                  <a>
-                    <ImageZoomWrapper>
-                      <GridItem img={promo.image} />
-                    </ImageZoomWrapper>
-                    <div>
-                      {promo.title ? <h2>{promo.title}</h2> : null}
-                      {promo.description ? (
-                        <span>{promo.description}</span>
-                      ) : null}
-                    </div>
-                  </a>
-                </Link>
-              </PromoTextWrapper>
-            ) : (
-              <>
-                <GridItem size={promo.size} img={promo.image} />
-                {promo.title ? <h2>{promo.title}</h2> : null}
-                {promo.description ? <span>{promo.description}</span> : null}
-              </>
-            )} */}
           </animated.div>
         );
       })}

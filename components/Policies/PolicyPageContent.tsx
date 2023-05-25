@@ -1,32 +1,26 @@
-import { InfoCircleOutlined } from "@ant-design/icons";
-import { Card } from "antd";
 import Link from "next/link";
 import React from "react";
 import { saveContent } from "../Admin/services";
 import { EditForm } from "../Forms/styles";
-import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
-import { Content } from "../ui-kit/Base";
 import { Tiptap } from "../ui-kit/Tiptap";
-import { FlexCards } from "./styles";
 
-export const BoardingVaccinations = ({
+export const PolicyPageContent = ({
   editMode,
-  content,
-  setContent,
+  policiesContent,
+  setPoliciesContent,
   setIsLoading,
   isLoading,
-  editorStickyTop,
 }) => {
   return (
-    <Content editorStickyTop={editorStickyTop}>
+    <>
       {editMode ? (
         <EditForm onSubmit={(e) => e.preventDefault()}>
           <Tiptap
-            content={content?.content || { content: "" }}
+            content={policiesContent?.content || { content: "" }}
             onSave={(html) => {
-              setContent({ content: html });
+              setPoliciesContent({ content: html });
               saveContent({
-                apiPath: `/api/content-item/${content.id}`,
+                apiPath: `/api/content-item/${policiesContent.id}`,
                 payload: { content: html },
                 setLoading: setIsLoading,
               });
@@ -35,8 +29,17 @@ export const BoardingVaccinations = ({
           />
         </EditForm>
       ) : (
-        <div dangerouslySetInnerHTML={{ __html: content?.content }} />
+        <div dangerouslySetInnerHTML={{ __html: policiesContent?.content }} />
       )}
-    </Content>
+      {editMode && (
+        <blockquote>
+          Add more policies at&nbsp;
+          <Link href={"/create-policy"}>
+            <a>create policies</a>
+          </Link>
+          &nbsp;page.
+        </blockquote>
+      )}
+    </>
   );
 };

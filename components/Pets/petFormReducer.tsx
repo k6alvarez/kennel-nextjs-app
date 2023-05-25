@@ -107,7 +107,7 @@ export const PET_INITIAL_STATE = {
     value: "",
     error: null,
     type: "text",
-    label: "Vet",
+    label: "Veterinarian",
     required: true,
   },
   preferredRunSize: {

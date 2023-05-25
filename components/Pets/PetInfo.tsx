@@ -22,6 +22,8 @@ const Value = styled.span`
 
 const Pair = styled.div`
   white-space: nowrap;
+  display: flex;
+  gap: ${(props) => props.theme.space[2]};
 
   a {
     font-size: ${(props) => props.theme.fontSizes[0]};
@@ -39,49 +41,57 @@ const Flex = styled.div`
 `;
 
 const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  display: flex;
+  justify-content: space-between;
+  gap: ${(props) => props.theme.space[4]};
 `;
 
-export const PetInfo = ({ pet }) => {
+export const PetInfo = ({ pet, children = undefined }) => {
   return (
     <Wrapper>
-      {Object.keys(pet).map((key, i) => {
-        return (
-          <Pair key={key + "-" + i}>
-            {key === "image" && isValidHttpUrl(pet[key]) && (
-              <Avatar shape="square" size={100} alt="example" src={pet[key]} />
-            )}
-            <Key>{PET_INITIAL_STATE[key]?.label}</Key>: <br />
-            {key === "vaccinations" ? (
-              <a href={pet[key]} target="_blank">
-                <LinkOutlined /> View Vaccinations
-              </a>
-            ) : (
-              <Value>
-                {PET_INITIAL_STATE[key]?.type === "date" ? (
-                  <div>
-                    {DateTime.local() > DateTime.fromISO(pet[key]) ? (
-                      <Flex>
-                        {DateTime.fromISO(pet[key]).toLocaleString(
-                          DateTime.DATE_MED
-                        )}
-                        <Tag color="red">Vaccine Expired</Tag>
-                      </Flex>
-                    ) : (
-                      DateTime.fromISO(pet[key]).toLocaleString(
-                        DateTime.DATE_MED
-                      )
-                    )}
-                  </div>
-                ) : (
-                  pet[key]
-                )}
-              </Value>
-            )}
-          </Pair>
-        );
-      })}
+      <div>
+        {Object.keys(pet).map((key, i) => {
+          return (
+            <Pair key={key + "-" + i}>
+              {key !== "image" && (
+                <>
+                  <Key>{PET_INITIAL_STATE[key]?.label}:</Key>
+                  {key === "vaccinations" ? (
+                    <a href={pet[key]} target="_blank">
+                      <LinkOutlined /> View Vaccinations
+                    </a>
+                  ) : (
+                    <Value>
+                      {PET_INITIAL_STATE[key]?.type === "date" ? (
+                        <div>
+                          {DateTime.local() > DateTime.fromISO(pet[key]) ? (
+                            <>
+                              <Tag color="red">
+                                {" "}
+                                {DateTime.fromISO(pet[key]).toLocaleString(
+                                  DateTime.DATE_MED
+                                )}{" "}
+                                Expired
+                              </Tag>
+                            </>
+                          ) : (
+                            DateTime.fromISO(pet[key]).toLocaleString(
+                              DateTime.DATE_MED
+                            )
+                          )}
+                        </div>
+                      ) : (
+                        pet[key]
+                      )}
+                    </Value>
+                  )}
+                </>
+              )}
+            </Pair>
+          );
+        })}
+      </div>
+      {children}
     </Wrapper>
   );
 };

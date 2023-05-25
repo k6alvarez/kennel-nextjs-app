@@ -43,15 +43,17 @@ export const FormIntroGuest = () => {
   return (
     <div>
       <p>
-        A $25.00 per run deposit is required for new client reservations. You
-        can pay the deposit using debit or credit cards online. The deposit will
-        be applied to your pets stay and will reduce your total amount due. This
-        deposit is non-refundable but may be applied to another reservation upon
-        at least a 24-hour cancellation notice.
+        Please note that for new client reservations, we require an
+        administrative fee of $25.00 per run, which functions as a deposit. You
+        have the convenience of paying this fee online using debit or credit
+        cards. The deposit will be credited towards your pet's stay, effectively
+        reducing your total amount due. It's important to note that this deposit
+        is non-refundable; however, if you provide a cancellation notice of at
+        least 24 hours, it can be applied to a future reservation.
       </p>
       <p>
-        Furthermore, when you submit the deposit payment you atest that you have
-        read, understand, and agree to our{" "}
+        Additionally, by submitting the deposit payment, you are acknowledging
+        that you have read, understood, and agreed to our{" "}
         <Link href="/policies">
           <a>policies</a>
         </Link>

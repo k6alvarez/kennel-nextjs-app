@@ -1,17 +1,11 @@
-import { FacebookOutlined, InstagramOutlined } from "@ant-design/icons";
 import React, { useContext, useState } from "react";
 import { animated, config, useSpring } from "react-spring";
 import { ThemePreferenceContext } from "../../pages/_app";
 import { saveContent } from "../Admin/services";
 import { EditForm } from "../Forms/styles";
 import { Promos } from "./Promo/Promos";
-import {
-  PromoWrapper,
-  PromoTitleWrapper,
-  PromoFooter,
-} from "./Promo/styles-promo";
+import { PromoWrapper, PromoTitleWrapper } from "./Promo/styles-promo";
 import { Tiptap } from "./Tiptap";
-import { EditImageOnly } from "./Promo/EditImageOnly";
 
 export const CONTENT_ITEMS_INITIAL_STATE = {
   name: "homePagePromoTitle",
@@ -25,7 +19,7 @@ export const Promo = ({
   promos = [],
   setPromos = undefined,
   children = undefined,
-  showFooter = false,
+  showFooter = null,
   animate = true,
   contentItem = null,
   setContentItem = undefined,
@@ -51,7 +45,7 @@ export const Promo = ({
     setIsLoading(true);
     saveContent({
       apiPath: `/api/content-item/${contentItem.id}`,
-      html,
+      payload: { content: html },
     })
       .then(() => {
         setIsLoading(false);
@@ -110,29 +104,7 @@ export const Promo = ({
           />
         )}
       </PromoWrapper>
-      {showFooter && (
-        <PromoFooter>
-          <p>9172 East K Ave, Galesburg MI, 49053</p>
-          <ul>
-            <li>
-              <a
-                target="_blank"
-                href="https://www.facebook.com/gillettekennels1/"
-              >
-                <FacebookOutlined />
-              </a>
-            </li>
-            <li>
-              <a
-                target="_blank"
-                href="https://www.instagram.com/gillettekennels/"
-              >
-                <InstagramOutlined />
-              </a>
-            </li>
-          </ul>
-        </PromoFooter>
-      )}
+      {showFooter && <>{showFooter}</>}
     </>
   );
 };

@@ -6,7 +6,11 @@ import {
 import { Card, Avatar } from "antd";
 import React, { useState } from "react";
 import { PetProps } from "../../pages/profile";
-import { petInfoOnly } from "../Reservations/GuestClients/services";
+import {
+  boardingInfoOnly,
+  petInfoOnly,
+  vaccinationInfoOnly,
+} from "../Reservations/GuestClients/services";
 import { Button } from "../ui-kit/Base";
 import { PetInfo } from "./PetInfo";
 import { isValidHttpUrl } from "./services";
@@ -38,15 +42,20 @@ export const PetCard = ({
       key: "pet",
       tab: "Pet Info",
     },
+    {
+      key: "vaccines",
+      tab: "Vaccines",
+    },
+    {
+      key: "boarding",
+      tab: "Boarding",
+    },
   ];
 
   return (
     <Card
       title={
         <CardTitle>
-          {isValidHttpUrl(pet.image) && (
-            <Avatar shape="square" size={80} alt="example" src={pet.image} />
-          )}
           {toggle ? (
             <Button
               primary={petSelected}
@@ -68,6 +77,9 @@ export const PetCard = ({
               <CheckCircleOutlined />
               {pet.name}
             </h4>
+          )}
+          {isValidHttpUrl(pet.image) && (
+            <Avatar shape="square" size={50} alt="example" src={pet.image} />
           )}
         </CardTitle>
       }
@@ -101,7 +113,17 @@ export const PetCard = ({
         onTab1Change(key);
       }}
     >
-      {activeTabKey1 === "pet" && <PetInfo pet={petInfoOnly(pet)} />}
+      {activeTabKey1 === "pet" && (
+        <PetInfo pet={petInfoOnly(pet)}>
+          {isValidHttpUrl(pet.image) && (
+            <Avatar shape="square" size={150} alt="example" src={pet.image} />
+          )}
+        </PetInfo>
+      )}
+      {activeTabKey1 === "vaccines" && (
+        <PetInfo pet={vaccinationInfoOnly(pet)} />
+      )}
+      {activeTabKey1 === "boarding" && <PetInfo pet={boardingInfoOnly(pet)} />}
     </Card>
   );
 };

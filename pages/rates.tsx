@@ -74,7 +74,7 @@ const Rates: React.FC<Props> = ({ dates, contentItems }) => {
                 setRatesContent({ content: html });
                 saveContent({
                   apiPath: `/api/content-item/${ratesContent.id}`,
-                  html,
+                  payload: { content: html },
                   setLoading: setIsLoading,
                 });
               }}
@@ -95,7 +95,7 @@ const Rates: React.FC<Props> = ({ dates, contentItems }) => {
                 setRatesHolidayContent({ content: html });
                 saveContent({
                   apiPath: `/api/content-item/${ratesHolidayContent.id}`,
-                  html,
+                  payload: { content: html },
                   setLoading: setIsLoading,
                 });
               }}
@@ -118,7 +118,7 @@ const Rates: React.FC<Props> = ({ dates, contentItems }) => {
                 setRatesDiscountContent({ content: html });
                 saveContent({
                   apiPath: `/api/content-item/${ratesDiscountContent.id}`,
-                  html,
+                  payload: { content: html },
                   setLoading: setIsLoading,
                 });
               }}
@@ -175,7 +175,7 @@ const Rates: React.FC<Props> = ({ dates, contentItems }) => {
                 setRatesAdditionalContent({ content: html });
                 saveContent({
                   apiPath: `/api/content-item/${ratesAdditionalContent.id}`,
-                  html,
+                  payload: { content: html },
                   setLoading: setIsLoading,
                 });
               }}

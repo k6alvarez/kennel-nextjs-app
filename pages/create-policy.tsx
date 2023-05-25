@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import { Content } from "../components/ui-kit/Base";
 import { getSession, useSession } from "next-auth/react";
 import { LoadingOutlined, LockOutlined } from "@ant-design/icons";
-import { EditForm } from "../components/Forms/styles";
+import { EditForm, StyledInput, StyledLabel } from "../components/Forms/styles";
 import { Tiptap } from "../components/ui-kit/Tiptap";
 import prisma from "../lib/prisma";
 import { GetServerSideProps } from "next";
@@ -67,21 +67,19 @@ const CreatePolicy = ({ user }) => {
     <Layout>
       <Content>
         <h1>Create New Policy</h1>
-        <label htmlFor="name">Name of Policy</label>
-        <input
+        <StyledLabel htmlFor="name">Name of Policy</StyledLabel>
+        <StyledInput
           autoFocus
           onChange={(e) => setName(e.target.value)}
           type="text"
           value={name}
           id="name"
         />
-        <br />
-        <br />
-        <label htmlFor="content">Policy Description</label>
+        <StyledLabel htmlFor="content">Policy Description</StyledLabel>
         <EditForm onSubmit={(e) => e.preventDefault()}>
           <Tiptap
             content={content}
-            onSave={(html) => {
+            onSave={(html, editor) => {
               const body = { name, content: html };
               fetch("/api/policy", {
                 method: "POST",
@@ -90,7 +88,9 @@ const CreatePolicy = ({ user }) => {
               })
                 .then(() => {
                   resetForm();
+                  editor.commands.setContent("");
                   message.success("Policy Created Successfully");
+                  document.getElementById("name").focus();
                 })
                 .catch((err) => console.log(err));
             }}

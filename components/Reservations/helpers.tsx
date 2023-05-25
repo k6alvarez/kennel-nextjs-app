@@ -41,6 +41,12 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
         key: field[0],
         payload: { newValue: fieldFromState.value, error },
       });
+
+      document.getElementById(field[0]).focus();
+      document
+        .getElementById(field[0])
+        .scrollIntoView({ behavior: "smooth", block: "center" });
+
       return false;
     }
 
@@ -167,7 +173,7 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
   return true;
 };
 
-export const guestFormFieldsValid = (
+export const boardingFormValidator = (
   { currentFormSection },
   { state, dispatch }
 ) => {

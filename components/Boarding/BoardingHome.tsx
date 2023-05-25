@@ -26,7 +26,7 @@ export const BoardingHome = ({
                 setContent({ content: html });
                 saveContent({
                   apiPath: `/api/content-item/${content.id}`,
-                  html,
+                  payload: { content: html },
                   setLoading: setIsLoading,
                 });
               }}
@@ -47,7 +47,7 @@ export const BoardingHome = ({
                 setSecondaryContent({ content: html });
                 saveContent({
                   apiPath: `/api/content-item/${secondaryContent.id}`,
-                  html,
+                  payload: { content: html },
                   setLoading: setIsLoading,
                 });
               }}
