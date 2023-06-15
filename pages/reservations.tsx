@@ -56,7 +56,6 @@ export const reservations = ({ reservations }) => {
 
   return (
     <Layout>
-      {console.log(data)}
       <Table columns={columns} dataSource={data} />
     </Layout>
   );

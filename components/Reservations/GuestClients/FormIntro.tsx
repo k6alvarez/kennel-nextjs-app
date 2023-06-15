@@ -41,7 +41,7 @@ export const BlockQuote = styled.blockquote``;
 
 export const FormIntroGuest = () => {
   return (
-    <div>
+    <>
       <p>
         Please note that for new client reservations, we require an
         administrative fee of $25.00 per run, which functions as a deposit. You
@@ -59,6 +59,6 @@ export const FormIntroGuest = () => {
         </Link>
         .
       </p>
-    </div>
+    </>
   );
 };

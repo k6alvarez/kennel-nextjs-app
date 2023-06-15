@@ -16,6 +16,7 @@ import { Image, Tag } from "antd";
 
 import { DateTime } from "luxon";
 import { LetterSpacedText } from "../../components/Footer";
+import { BlockQuote } from "../../components/Reservations/GuestClients/FormIntro";
 
 export const DetailItem = styled.div`
   margin-bottom: ${({ theme }) => theme.space[4]};
@@ -144,7 +145,7 @@ const Reservation = ({ reservation }) => {
             })}
           </span>
         </h1>
-        <p>
+        <BlockQuote>
           {reservation.confirmed ? (
             <>Your reservation has been confirmed.</>
           ) : (
@@ -153,7 +154,7 @@ const Reservation = ({ reservation }) => {
               confirmation email from us.
             </>
           )}
-        </p>
+        </BlockQuote>
       </Content>
       <Content maxWidth="900px" cardWrapper fs="0">
         <Card
