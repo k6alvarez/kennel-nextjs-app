@@ -19,6 +19,7 @@ export const StyledGridItems = styled(GridItems)`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  padding: ${(props) => props.theme.space[5]};
 
   @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
     display: grid;

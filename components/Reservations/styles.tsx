@@ -15,16 +15,12 @@ export const StepsContent = styled.div`
 `;
 
 export const PetCards = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  background-color: ${(props) => props.theme.colors.secondary};
+  display: flex;
+  align-items: stretch;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.space[4]};
+  padding: ${({ theme }) => theme.space[4]};
 
-  gap: ${(props) => props.theme.space[3]};
-  padding: ${(props) => props.theme.space[4]};
-  padding-bottom: 0;
   margin-bottom: ${(props) => props.theme.space[4]};
-
-  .ant-card {
-    font-size: ${(props) => props.theme.fontSizes[0]};
-  }
 `;

@@ -3,7 +3,7 @@ import {
   DeleteOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
-import { Card, Avatar } from "antd";
+import { Card, Avatar, Image } from "antd";
 import React, { useState } from "react";
 import { PetProps } from "../../pages/profile";
 import {
@@ -15,6 +15,47 @@ import { Button } from "../ui-kit/Base";
 import { PetInfo } from "./PetInfo";
 import { isValidHttpUrl } from "./services";
 import { CardTitle } from "./styles";
+
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch;
+  width: 250px;
+  height: 250px;
+
+  > button {
+    flex: 1;
+    font-size: ${(props) => props.theme.fontSizes[4]};
+
+    margin: 0;
+
+    .ant-avatar-string {
+      font-size: ${(props) => props.theme.fontSizes[4]};
+      text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+`;
+
+const StyledBanner = styled.p`
+  position: absolute;
+  margin: 0;
+  z-index: 1;
+  top: 0%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -0%);
+  background-color: ${({ primary, hasImage }) =>
+    primary && hasImage
+      ? `rgba(70, 8, 31, 1);`
+      : hasImage
+      ? `rgba(0, 0, 0, 0.5);`
+      : `rgba(0, 0, 0, 0.5);`};
+  color: ${(props) => props.theme.colors.textPrimary};
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+  text-transform: capitalize;
+`;
 
 interface PetCardProps {
   pet: PetProps;
@@ -53,77 +94,116 @@ export const PetCard = ({
   ];
 
   return (
-    <Card
-      title={
-        <CardTitle>
-          {toggle ? (
-            <Button
-              primary={petSelected}
-              type="button"
-              onClick={() => toggle(pet)}
-            >
-              {petSelected ? (
-                <>
-                  <CheckCircleOutlined /> {pet.name}
-                </>
-              ) : (
-                <>
-                  <PlusCircleOutlined /> {pet.name}
-                </>
-              )}
-            </Button>
+    <Container>
+      {toggle ? (
+        <Button primary={petSelected} type="button" onClick={() => toggle(pet)}>
+          {petSelected ? (
+            <StyledBanner primary hasImage={isValidHttpUrl(pet.image)}>
+              <CheckCircleOutlined /> {pet.name}
+            </StyledBanner>
           ) : (
-            <h4>
-              <CheckCircleOutlined />
-              {pet.name}
-            </h4>
+            <StyledBanner>
+              <PlusCircleOutlined /> {pet.name}
+            </StyledBanner>
           )}
-          {isValidHttpUrl(pet.image) && (
-            <Avatar shape="square" size={50} alt="example" src={pet.image} />
+          {isValidHttpUrl(pet.image) ? (
+            <Image
+              src={
+                isValidHttpUrl(pet.image)
+                  ? pet.image
+                  : "/images/ShieldOutline.png"
+              }
+              alt={pet.name}
+              preview={false}
+              style={{ width: "100%", height: "100%" }}
+            />
+          ) : (
+            <Avatar size={100}>
+              {pet.name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")}
+            </Avatar>
           )}
-        </CardTitle>
-      }
-      extra={
-        <CardTitle>
-          {onDelete && (
-            <button
-              type="button"
-              onClick={() => {
-                onDelete(pet.id);
-              }}
-            >
-              <DeleteOutlined /> Remove Pet
-            </button>
-          )}
-          {onUpdate && (
-            <button
-              type="button"
-              onClick={() => {
-                onUpdate(pet.id);
-              }}
-            >
-              <DeleteOutlined /> Update Pet
-            </button>
-          )}
-        </CardTitle>
-      }
-      tabList={tabList}
-      activeTabKey={activeTabKey1}
-      onTabChange={(key) => {
-        onTab1Change(key);
-      }}
-    >
-      {activeTabKey1 === "pet" && (
-        <PetInfo pet={petInfoOnly(pet)}>
-          {isValidHttpUrl(pet.image) && (
-            <Avatar shape="square" size={150} alt="example" src={pet.image} />
-          )}
-        </PetInfo>
+        </Button>
+      ) : (
+        <h4>
+          <CheckCircleOutlined />
+          {pet.name}
+        </h4>
       )}
-      {activeTabKey1 === "vaccines" && (
-        <PetInfo pet={vaccinationInfoOnly(pet)} />
-      )}
-      {activeTabKey1 === "boarding" && <PetInfo pet={boardingInfoOnly(pet)} />}
-    </Card>
+    </Container>
+    // <Card
+    //   title={
+    //     <CardTitle>
+    //       {toggle ? (
+    //         <Button
+    //           primary={petSelected}
+    //           type="button"
+    //           onClick={() => toggle(pet)}
+    //         >
+    //           {petSelected ? (
+    //             <>
+    //               <CheckCircleOutlined /> {pet.name}
+    //             </>
+    //           ) : (
+    //             <>
+    //               <PlusCircleOutlined /> {pet.name}
+    //             </>
+    //           )}
+    //         </Button>
+    //       ) : (
+    //         <h4>
+    //           <CheckCircleOutlined />
+    //           {pet.name}
+    //         </h4>
+    //       )}
+    //       {isValidHttpUrl(pet.image) && (
+    //         <Avatar shape="square" size={50} alt="example" src={pet.image} />
+    //       )}
+    //     </CardTitle>
+    //   }
+    //   extra={
+    //     <CardTitle>
+    //       {onDelete && (
+    //         <button
+    //           type="button"
+    //           onClick={() => {
+    //             onDelete(pet.id);
+    //           }}
+    //         >
+    //           <DeleteOutlined /> Remove Pet
+    //         </button>
+    //       )}
+    //       {onUpdate && (
+    //         <button
+    //           type="button"
+    //           onClick={() => {
+    //             onUpdate(pet.id);
+    //           }}
+    //         >
+    //           <DeleteOutlined /> Update Pet
+    //         </button>
+    //       )}
+    //     </CardTitle>
+    //   }
+    //   tabList={tabList}
+    //   activeTabKey={activeTabKey1}
+    //   onTabChange={(key) => {
+    //     onTab1Change(key);
+    //   }}
+    // >
+    //   {activeTabKey1 === "pet" && (
+    //     <PetInfo pet={petInfoOnly(pet)}>
+    //       {isValidHttpUrl(pet.image) && (
+    //         <Avatar shape="square" size={150} alt="example" src={pet.image} />
+    //       )}
+    //     </PetInfo>
+    //   )}
+    //   {activeTabKey1 === "vaccines" && (
+    //     <PetInfo pet={vaccinationInfoOnly(pet)} />
+    //   )}
+    //   {activeTabKey1 === "boarding" && <PetInfo pet={boardingInfoOnly(pet)} />}
+    // </Card>
   );
 };

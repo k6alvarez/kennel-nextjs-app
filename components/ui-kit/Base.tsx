@@ -222,6 +222,7 @@ export const GridItemTitle = styled.p`
 `;
 
 export const Button = styled.button`
+  position: relative;
   margin-top: ${({ theme }) => theme.space[4]};
   padding: ${({ theme }) => theme.space[3]};
   font-size: ${({ theme }) => theme.fontSizes[1]};
@@ -235,6 +236,15 @@ export const Button = styled.button`
 
   &:disabled {
     cursor: not-allowed;
+  }
+
+  .ant-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 `;
 export const SplitHeader = styled.h1`
