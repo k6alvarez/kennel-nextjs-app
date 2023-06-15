@@ -12,14 +12,16 @@ import {
 import { PET_INITIAL_STATE } from "../../components/Pets/petFormReducer";
 import { isImageURL, isValidHttpUrl } from "../../components/Pets/services";
 import { FileOutlined } from "@ant-design/icons";
-import { Image, Tag } from "antd";
+import { Image, List, Tag } from "antd";
 
 import { DateTime } from "luxon";
 import { LetterSpacedText } from "../../components/Footer";
 import { BlockQuote } from "../../components/Reservations/GuestClients/FormIntro";
+import { getFormattedValue } from "../../components/Reservations/ReservationSummary";
+import { base } from "../../components/ui-kit/Theme";
 
 export const DetailItem = styled.div`
-  margin-bottom: ${({ theme }) => theme.space[4]};
+  margin: ${({ theme }) => theme.space[0]} 0;
 `;
 
 const Flex = styled.div`
@@ -52,6 +54,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
           altPhone: true,
           emergencyContactName: true,
           emergencyContactPhone: true,
+          image: true,
         },
       },
       pets: true,
@@ -118,6 +121,37 @@ export const getFieldGroupValues = (
 };
 
 const Reservation = ({ reservation }) => {
+  const getDataSource = (
+    fieldGroup: {
+      [x: string]: any;
+    },
+    reservation: any
+  ) => {
+    const dataSource = Object.entries(reservation)
+      .filter((key) => {
+        const field = fieldGroup[key[0]];
+        if (field) {
+          return field.label !== "Image" && field.label !== "Large Image";
+        }
+      })
+      .map((key, i) => {
+        const field = fieldGroup[key[0]];
+
+        return (
+          <DetailItem key={key + "-" + i}>
+            <LetterSpacedText fs={base.fontSizes[1]} bold>
+              {field.label}
+            </LetterSpacedText>
+            <LetterSpacedText as="div" fs={base.fontSizes[2]}>
+              <span>{getFormattedValue(field)}</span>
+            </LetterSpacedText>
+          </DetailItem>
+        );
+      });
+
+    return dataSource;
+  };
+
   if (!reservation) {
     return (
       <Layout>
@@ -156,9 +190,10 @@ const Reservation = ({ reservation }) => {
           )}
         </BlockQuote>
       </Content>
-      <Content maxWidth="900px" cardWrapper fs="0">
-        <Card
-          title={
+      <Content maxWidth="900px" fs="0">
+        <List
+          size="large"
+          header={
             <Flex>
               <h2>Reservation Details</h2>
               {reservation.confirmed ? (
@@ -168,17 +203,19 @@ const Reservation = ({ reservation }) => {
               )}
             </Flex>
           }
-        >
-          <Grid>
-            {Object.entries(reservation).map(([key, value]: any) =>
-              getFieldGroupValues(INITIAL_RESERVATION_STATE, key, value)
-            )}
-          </Grid>
-        </Card>
+          bordered
+          dataSource={getDataSource(INITIAL_RESERVATION_STATE, reservation)}
+          renderItem={(item) => (
+            <List.Item className="ant-list-50">
+              {item}
+              {console.log()}
+            </List.Item>
+          )}
+        />
 
         {reservation.pets.map((pet) => {
           return (
-            <Card title={<h2>{pet.name}</h2>} key={pet.id}>
+            <List key={pet.id} header={<h2>{pet.name}</h2>} bordered>
               {pet.image && (
                 <Image
                   src={pet.image}
@@ -188,22 +225,14 @@ const Reservation = ({ reservation }) => {
                 />
               )}
 
-              <Grid>
+              <DetailItem>
                 {Object.entries(pet).map(([key, value]: any) =>
                   getFieldGroupValues(PET_INITIAL_STATE, key, value)
                 )}
-              </Grid>
-            </Card>
+              </DetailItem>
+            </List>
           );
         })}
-
-        <Card title={<h2>Owner Details</h2>}>
-          <Grid>
-            {Object.entries(reservation.author).map(([key, value]: any) =>
-              getFieldGroupValues(INITIAL_USER_STATE, key, value)
-            )}
-          </Grid>
-        </Card>
       </Content>
     </Layout>
   );

@@ -264,4 +264,28 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
   }
 
+  .ant-list {
+    margin: ${({ theme }) => theme.space[4]} 0;
+  }
+
+  .ant-list-items {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: stretch;    
+  }
+  
+  .ant-list-item {
+    flex: 1;
+    white-space: nowrap;
+    min-width: 26%;
+    justify-content: center;
+    align-items: start;
+    font-size: ${({ theme }) => theme.fontSizes[0]};
+
+    &.ant-list-50 {
+      min-width: 50%;
+    }
+  }
+
 `;

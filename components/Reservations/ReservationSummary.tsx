@@ -5,13 +5,7 @@ import { base } from "../ui-kit/Theme";
 import styled from "styled-components";
 import { DateTime } from "luxon";
 import { PET_INITIAL_STATE } from "../Pets/petFormReducer";
-import Link from "next/link";
-import { LinkOutlined } from "@ant-design/icons";
-import { Image } from "antd";
-const Flex = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-`;
+import { Divider, Image, List } from "antd";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,9 +14,16 @@ const Wrapper = styled.div`
   h2 {
     align-self: center;
   }
+
+  h4 {
+    text-transform: capitalize;
+    font-size: ${(props) => props.theme.fontSizes[3]};
+  }
 `;
 
 export const getFormattedValue = (field) => {
+  if (field.value === "") return "n/a";
+
   return field.type === "date" || field.type === "time" ? (
     <>
       {field.type === "date" &&
@@ -53,62 +54,68 @@ export const ReservationSummary = ({ state, pets }) => {
   const getState = typeof state === "object" ? Object.keys(state) : state;
   return (
     <Wrapper>
-      <h2>Reservation Summary</h2>
-      <Flex>
-        {state &&
-          getState.map((key, i) => {
+      <Divider>
+        <h2>Reservation Summary</h2>
+      </Divider>
+
+      <List
+        size="small"
+        header={<h4>Owner Details</h4>}
+        bordered
+        dataSource={getState
+          .filter((key) => {
             const field = state[key];
-
+            if (!field.value && key === "pets") return false;
+            return true;
+          })
+          .map((key) => {
+            const field = state[key];
             if (!field.value && key === "pets") return null;
-
             return (
-              <DetailItem key={key + "-" + i}>
-                <LetterSpacedText fs={base.fontSizes[1]}>
+              <DetailItem key={key}>
+                <LetterSpacedText fs={base.fontSizes[1]} bold>
                   {field.label}
                 </LetterSpacedText>
                 {key !== "pets" && (
-                  <LetterSpacedText as="div" fs={base.fontSizes[2]} bold>
+                  <LetterSpacedText as="div" fs={base.fontSizes[2]}>
                     {getFormattedValue(field)}
                   </LetterSpacedText>
                 )}
               </DetailItem>
             );
           })}
-      </Flex>
-      {pets && (
-        <>
-          <h2>
-            {pets.length} {pets.length > 1 ? "Pets" : "Pet"} Boarded
-          </h2>
-          {pets.map((pet, i) => {
-            return (
-              <div key={`${pet.id}-${i}`}>
-                <h2>{pet.name}</h2>
-                <Flex>
-                  {Object.entries(PET_INITIAL_STATE).map(([key, value]) => {
-                    return (
-                      pet[key] && (
-                        <DetailItem key={pet.id + "-" + key}>
-                          <LetterSpacedText fs={base.fontSizes[1]} bold>
-                            {PET_INITIAL_STATE[key].label}
-                          </LetterSpacedText>
-                          <LetterSpacedText as="div" fs={base.fontSizes[2]}>
-                            {getFormattedValue({
-                              value: pet[key],
-                              type: PET_INITIAL_STATE[key].type,
-                            })}
-                          </LetterSpacedText>
-                        </DetailItem>
-                      )
-                    );
-                    return i;
-                  })}
-                </Flex>
-              </div>
-            );
-          })}
-        </>
-      )}
+        renderItem={(item) => <List.Item>{item}</List.Item>}
+      />
+
+      <Divider>
+        <h2>Pets Boarded</h2>
+      </Divider>
+
+      {pets &&
+        pets.length > 0 &&
+        pets.map((pet, i) => (
+          <List
+            size="small"
+            header={<h4>{pet.name}</h4>}
+            bordered
+            dataSource={Object.entries(PET_INITIAL_STATE).map(([key]) => {
+              return (
+                <DetailItem key={pet.id + "-" + key}>
+                  <LetterSpacedText fs={base.fontSizes[1]} bold>
+                    {PET_INITIAL_STATE[key].label}
+                  </LetterSpacedText>
+                  <LetterSpacedText as="div" fs={base.fontSizes[2]}>
+                    {getFormattedValue({
+                      value: pet[key],
+                      type: PET_INITIAL_STATE[key].type,
+                    })}
+                  </LetterSpacedText>
+                </DetailItem>
+              );
+            })}
+            renderItem={(item) => <List.Item>{item}</List.Item>}
+          />
+        ))}
     </Wrapper>
   );
 };
