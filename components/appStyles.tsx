@@ -275,17 +275,32 @@ export const GlobalStyle = createGlobalStyle`
     justify-content: stretch;    
   }
   
+  .ant-list-header {
+    text-transform: capitalize;
+  }
+
   .ant-list-item {
     flex: 1;
     white-space: nowrap;
-    min-width: 26%;
+    min-width: 100%;
     justify-content: center;
     align-items: start;
     font-size: ${({ theme }) => theme.fontSizes[0]};
 
-    &.ant-list-50 {
-      min-width: 50%;
-    }
-  }
+    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+      min-width: 50%; 
 
+      &.ant-list-50 {
+        min-width: 50%;
+      }
+    }
+
+    @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+      min-width: 26%; 
+
+      &.ant-list-50 {
+        min-width: 50%;
+      }
+    } 
+  }
 `;

@@ -189,8 +189,6 @@ const Reservation = ({ reservation }) => {
             </>
           )}
         </BlockQuote>
-      </Content>
-      <Content maxWidth="900px" fs="0">
         <List
           size="large"
           header={
@@ -206,31 +204,48 @@ const Reservation = ({ reservation }) => {
           bordered
           dataSource={getDataSource(INITIAL_RESERVATION_STATE, reservation)}
           renderItem={(item) => (
-            <List.Item className="ant-list-50">
-              {item}
-              {console.log()}
-            </List.Item>
+            <List.Item className="ant-list-50">{item}</List.Item>
           )}
         />
 
         {reservation.pets.map((pet) => {
           return (
-            <List key={pet.id} header={<h2>{pet.name}</h2>} bordered>
-              {pet.image && (
-                <Image
-                  src={pet.image}
-                  alt={`Picture of ${pet.name}`}
-                  width={200}
-                  height={200}
-                />
-              )}
+            <List
+              key={pet.id}
+              size="large"
+              header={
+                <Flex>
+                  <h2>{pet.name}</h2>
+                </Flex>
+              }
+              bordered
+              dataSource={Object.entries(pet)
+                .filter((key) => {
+                  const field = PET_INITIAL_STATE[key[0]];
+                  if (field) {
+                    return field.label !== "Large Image";
+                  }
+                })
+                .map((key, i) => {
+                  const field = PET_INITIAL_STATE[key[0]];
 
-              <DetailItem>
-                {Object.entries(pet).map(([key, value]: any) =>
-                  getFieldGroupValues(PET_INITIAL_STATE, key, value)
-                )}
-              </DetailItem>
-            </List>
+                  return (
+                    <DetailItem key={key + "-" + i}>
+                      <LetterSpacedText fs={base.fontSizes[1]} bold>
+                        {field.label}
+                      </LetterSpacedText>
+                      <LetterSpacedText as="div" fs={base.fontSizes[2]}>
+                        {isValidHttpUrl(pet[key[0]]) ? (
+                          <Image src={pet[key[0]]} width={100} height={100} />
+                        ) : (
+                          <span>{pet[key[0]] || "n/a"}</span>
+                        )}
+                      </LetterSpacedText>
+                    </DetailItem>
+                  );
+                })}
+              renderItem={(item) => <List.Item>{item}</List.Item>}
+            />
           );
         })}
       </Content>

@@ -10,7 +10,7 @@ export const Content = styled.article`
   background-color: ${({ theme, cardWrapper }) =>
     cardWrapper ? theme.colors.secondaryDark : "inherit"};
 
-  @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
+  @media (min-width: ${(props) => props.theme.breakpoints[2]}) {
     padding: ${({ theme, cardWrapper }) =>
       cardWrapper
         ? `${theme.space[4]}`
