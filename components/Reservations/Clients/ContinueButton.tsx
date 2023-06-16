@@ -64,7 +64,7 @@ export const ContinueButton = ({
           }}
           disabled={formError}
         >
-          Next <ArrowRightOutlined />
+          Next <ArrowRightOutlined rev={undefined} />
         </Button>
       )}
     </>

@@ -255,7 +255,7 @@ const Boarding = ({ contentItems, promoItems }) => {
           activeKey={activeKey}
           tabPosition={"top"}
           size={mobileScreen ? "small" : "large"}
-          moreIcon={<DownOutlined />}
+          moreIcon={<DownOutlined rev={undefined} />}
           style={{
             fontSize: "inherit",
           }}

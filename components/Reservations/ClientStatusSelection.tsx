@@ -176,7 +176,7 @@ export const ClientStatusSelection = ({
                   }}
                 >
                   <p>
-                    <UserAddOutlined /> New Clients
+                    <UserAddOutlined rev={undefined} /> New Clients
                   </p>
                   <HintText>
                     A new client has never boarded with us before.
@@ -187,7 +187,7 @@ export const ClientStatusSelection = ({
                 <Link href="/auth/signin?status=existingClient">
                   <a data-active={clientType.clientType === "existing"}>
                     <p>
-                      <UserOutlined /> Existing Clients
+                      <UserOutlined rev={undefined} /> Existing Clients
                     </p>
                     <HintText>
                       An existing client has boarded with us in the past.

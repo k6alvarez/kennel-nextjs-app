@@ -207,7 +207,8 @@ export const Footer = () => {
           </RouteLink>
           <div>
             <span>
-              <CopyrightCircleOutlined /> {date.getFullYear()}&nbsp;
+              <CopyrightCircleOutlined rev={undefined} /> {date.getFullYear()}
+              &nbsp;
             </span>
             <span>
               <Copy>Gillette Kennels. All rights reserved.</Copy>

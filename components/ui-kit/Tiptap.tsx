@@ -108,21 +108,21 @@ const MenuBar = ({ editor, setLink, addImage, widthRef, heightRef }) => {
         disabled={!editor.can().chain().focus().toggleBold().run()}
         className={editor.isActive("bold") ? "is-active" : ""}
       >
-        <BoldOutlined />
+        <BoldOutlined rev={undefined} />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         className={editor.isActive("italic") ? "is-active" : ""}
       >
-        <ItalicOutlined />
+        <ItalicOutlined rev={undefined} />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
         className={editor.isActive("strike") ? "is-active" : ""}
       >
-        <StrikethroughOutlined />
+        <StrikethroughOutlined rev={undefined} />
       </button>
       <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
         clear marks
@@ -158,13 +158,13 @@ const MenuBar = ({ editor, setLink, addImage, widthRef, heightRef }) => {
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         className={editor.isActive("bulletList") ? "is-active" : ""}
       >
-        <UnorderedListOutlined />
+        <UnorderedListOutlined rev={undefined} />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
         className={editor.isActive("orderedList") ? "is-active" : ""}
       >
-        <OrderedListOutlined />
+        <OrderedListOutlined rev={undefined} />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
@@ -191,13 +191,13 @@ const MenuBar = ({ editor, setLink, addImage, widthRef, heightRef }) => {
         onClick={() => editor.chain().focus().undo().run()}
         disabled={!editor.can().chain().focus().undo().run()}
       >
-        <UndoOutlined />
+        <UndoOutlined rev={undefined} />
       </button>
       <button
         onClick={() => editor.chain().focus().redo().run()}
         disabled={!editor.can().chain().focus().redo().run()}
       >
-        <RedoOutlined />
+        <RedoOutlined rev={undefined} />
       </button>
       <button
         id="add"
@@ -214,7 +214,7 @@ const MenuBar = ({ editor, setLink, addImage, widthRef, heightRef }) => {
           }
         }}
       >
-        <YoutubeOutlined /> YouTube
+        <YoutubeOutlined rev={undefined} /> YouTube
       </button>
       <StyledInput
         title="Insert an image to your content."
@@ -348,7 +348,7 @@ export const Tiptap = ({
         >
           {isLoading ? (
             <span>
-              <LoadingOutlined /> Saving
+              <LoadingOutlined rev={undefined} /> Saving
             </span>
           ) : (
             buttonText

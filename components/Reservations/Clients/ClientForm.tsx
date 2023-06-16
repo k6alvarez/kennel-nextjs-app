@@ -120,7 +120,7 @@ export const ClientForm = ({ user }) => {
           <StepsContent>{formSteps[current].content}</StepsContent>
           {clientFormError && (
             <BlockQuote large>
-              <WarningOutlined />
+              <WarningOutlined rev={undefined} />
               <p>{clientFormError}</p>
             </BlockQuote>
           )}

@@ -272,7 +272,7 @@ const Profile: React.FC<Props> = ({ user, appSettings }) => {
           activeKey={typeof tab === "string" ? tab : profileTab}
           tabPosition={mobileScreen ? "top" : "left"}
           size={mobileScreen ? "small" : "large"}
-          moreIcon={<DownOutlined />}
+          moreIcon={<DownOutlined rev={undefined} />}
           style={{
             fontSize: "inherit",
           }}

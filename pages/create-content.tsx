@@ -58,7 +58,7 @@ const CreateContent = ({ user }) => {
       <Layout>
         <Content>
           <div>
-            <LoadingOutlined /> Loading...
+            <LoadingOutlined rev={undefined} /> Loading...
           </div>
         </Content>
       </Layout>
@@ -70,7 +70,7 @@ const CreateContent = ({ user }) => {
       <Layout>
         <Content>
           <h1>
-            <LockOutlined /> Restricted Area
+            <LockOutlined rev={undefined} /> Restricted Area
           </h1>
           <div>You need to be authenticated to view this page.</div>
         </Content>

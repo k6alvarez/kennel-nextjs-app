@@ -98,7 +98,7 @@ const MyApp = ({ contentItems, promoItems }) => {
         //           target="_blank"
         //           href="https://www.facebook.com/gillettekennels1/"
         //         >
-        //           <FacebookOutlined />
+        //           <FacebookOutlined rev={undefined} />
         //         </a>
         //       </li>
         //       <li>
@@ -106,7 +106,7 @@ const MyApp = ({ contentItems, promoItems }) => {
         //           target="_blank"
         //           href="https://www.instagram.com/gillettekennels/"
         //         >
-        //           <InstagramOutlined />
+        //           <InstagramOutlined rev={undefined} />
         //         </a>
         //       </li>
         //     </ul>
@@ -124,7 +124,7 @@ const MyApp = ({ contentItems, promoItems }) => {
                   target="_blank"
                   href="https://www.facebook.com/gillettekennels1/"
                 >
-                  <FacebookOutlined />
+                  <FacebookOutlined rev={undefined} />
                 </a>
               </li>
               <li>
@@ -132,7 +132,7 @@ const MyApp = ({ contentItems, promoItems }) => {
                   target="_blank"
                   href="https://www.instagram.com/gillettekennels/"
                 >
-                  <InstagramOutlined />
+                  <InstagramOutlined rev={undefined} />
                 </a>
               </li>
             </ul>

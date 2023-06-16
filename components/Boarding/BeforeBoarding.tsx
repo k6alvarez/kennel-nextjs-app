@@ -37,7 +37,7 @@ export const BeforeBoarding = ({
       )}
 
       {/* <BlockQuote large>
-        <InfoCircleOutlined />
+        <InfoCircleOutlined rev={undefined} />
         <p>
           It is extremely important to socialize your dog to a boarding kennel
           at a young age.
@@ -91,7 +91,7 @@ export const BeforeBoarding = ({
         page.
       </p>
       <BlockQuote large>
-        <InfoCircleOutlined />
+        <InfoCircleOutlined rev={undefined} />
         <p>
           If you decide to use our kennel please be advised that all dogs must
           be leashed when on the premises. This is important because other

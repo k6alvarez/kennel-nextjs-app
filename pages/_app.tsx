@@ -1,7 +1,6 @@
 import React, { useState, createContext, useReducer } from "react";
 import { SessionProvider } from "next-auth/react";
 import { AppProps } from "next/app";
-import "antd/dist/antd.css";
 import "../styles/reset.css";
 import "../styles/fonts.css";
 import { ThemeProvider } from "styled-components";

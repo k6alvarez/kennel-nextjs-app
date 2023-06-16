@@ -78,7 +78,7 @@ const CreatePromo = ({ user }) => {
       <Layout>
         <Content>
           <h1>
-            <LockOutlined /> Restricted Area
+            <LockOutlined rev={undefined} /> Restricted Area
           </h1>
           <div>You need to be authenticated to view this page.</div>
         </Content>

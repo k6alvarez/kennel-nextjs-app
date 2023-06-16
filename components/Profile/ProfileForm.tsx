@@ -29,7 +29,7 @@ export const ProfileForm = ({
       <p>{getUserName(user)}</p>
       {requiredFieldsCheck({ profileFormState }) && (
         <BlockQuote>
-          <InfoCircleOutlined />
+          <InfoCircleOutlined rev={undefined} />
           <p>
             Let's get started by verifying your contact information. This will
             be used to contact you about your reservations.

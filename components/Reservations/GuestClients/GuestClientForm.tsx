@@ -102,7 +102,7 @@ export const GuestClientForm = () => {
         <StepsContent>{formSteps[current].content}</StepsContent>
         {guestFormError && (
           <BlockQuote>
-            <WarningOutlined />
+            <WarningOutlined rev={undefined} />
             <p>{guestFormError}</p>
           </BlockQuote>
         )}

@@ -58,7 +58,7 @@ export const PetInfo = ({ pet, children = undefined }) => {
                   <Key>{PET_INITIAL_STATE[key]?.label}:</Key>
                   {key === "vaccinations" ? (
                     <a href={pet[key]} target="_blank">
-                      <LinkOutlined /> View Vaccinations
+                      <LinkOutlined rev={undefined} /> View Vaccinations
                     </a>
                   ) : (
                     <Value>

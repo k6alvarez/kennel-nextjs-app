@@ -8,7 +8,7 @@ export const GoBackButton = ({ current, setCurrent }) => {
     <>
       {current > 0 && (
         <Button type="button" onClick={() => prev({ current, setCurrent })}>
-          <ArrowLeftOutlined /> Back
+          <ArrowLeftOutlined rev={undefined} /> Back
         </Button>
       )}
     </>

@@ -98,11 +98,11 @@ export const PetCard = ({
         <Button primary={petSelected} type="button" onClick={() => toggle(pet)}>
           {petSelected ? (
             <StyledBanner primary hasImage={isValidHttpUrl(pet.image)}>
-              <CheckCircleOutlined /> {pet.name}
+              <CheckCircleOutlined rev={undefined} /> {pet.name}
             </StyledBanner>
           ) : (
             <StyledBanner>
-              <PlusCircleOutlined /> {pet.name}
+              <PlusCircleOutlined rev={undefined} /> {pet.name}
             </StyledBanner>
           )}
           {isValidHttpUrl(pet.image) ? (
@@ -127,7 +127,7 @@ export const PetCard = ({
         </Button>
       ) : (
         <h4>
-          <CheckCircleOutlined />
+          <CheckCircleOutlined rev={undefined} />
           {pet.name}
         </h4>
       )} */}
@@ -143,17 +143,17 @@ export const PetCard = ({
                 >
                   {petSelected ? (
                     <>
-                      <CheckCircleOutlined /> {pet.name}
+                      <CheckCircleOutlined rev={undefined} /> {pet.name}
                     </>
                   ) : (
                     <>
-                      <PlusCircleOutlined /> {pet.name}
+                      <PlusCircleOutlined rev={undefined} /> {pet.name}
                     </>
                   )}
                 </Button>
               ) : (
                 <h4>
-                  <CheckCircleOutlined />
+                  <CheckCircleOutlined rev={undefined} />
                   {pet.name}
                 </h4>
               )}
@@ -168,7 +168,7 @@ export const PetCard = ({
                     onDelete(pet.id);
                   }}
                 >
-                  <DeleteOutlined /> Remove Pet
+                  <DeleteOutlined rev={undefined} /> Remove Pet
                 </button>
               )}
               {onUpdate && (
@@ -178,7 +178,7 @@ export const PetCard = ({
                     onUpdate(pet.id);
                   }}
                 >
-                  <DeleteOutlined /> Update Pet
+                  <DeleteOutlined rev={undefined} /> Update Pet
                 </button>
               )}
             </CardTitle>
