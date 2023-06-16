@@ -77,7 +77,7 @@ export const ContinueButton = ({
           }}
           disabled={clientFormLoading}
         >
-          Continue to {formSteps[current + 1].title} <ArrowRightOutlined />
+          Next <ArrowRightOutlined />
         </Button>
       )}
     </>

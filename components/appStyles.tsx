@@ -239,6 +239,11 @@ export const GlobalStyle = createGlobalStyle`
     align-items: center;
   }
 
+  .ant-card {
+    flex: 1 1 100%;
+    min-width: 33vw;
+  }
+
   .ant-checkbox-wrapper {
     display: flex;
     align-items: center;

@@ -19,6 +19,16 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
   });
 
+  if (!session) {
+    return {
+      props: {
+        contentItems: JSON.stringify(contentItems),
+        promoItems: JSON.stringify([]),
+        user: null,
+      },
+    };
+  }
+
   const user = await prisma.user.findUnique({
     where: { email: session.user.email },
   });

@@ -36,7 +36,7 @@ export const CardTitle = styled.div`
 
   button {
     margin: 0;
-    min-width: max-content;
+    min-width: 100%;
   }
 
   > a {

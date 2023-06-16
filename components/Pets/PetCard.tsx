@@ -22,8 +22,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: stretch;
-  width: 250px;
-  height: 250px;
+  flex: 1;
 
   > button {
     flex: 1;
@@ -95,7 +94,7 @@ export const PetCard = ({
 
   return (
     <Container>
-      {toggle ? (
+      {/* {toggle ? (
         <Button primary={petSelected} type="button" onClick={() => toggle(pet)}>
           {petSelected ? (
             <StyledBanner primary hasImage={isValidHttpUrl(pet.image)}>
@@ -131,79 +130,85 @@ export const PetCard = ({
           <CheckCircleOutlined />
           {pet.name}
         </h4>
-      )}
+      )} */}
+      <>
+        <Card
+          title={
+            <CardTitle>
+              {toggle ? (
+                <Button
+                  primary={petSelected}
+                  type="button"
+                  onClick={() => toggle(pet)}
+                >
+                  {petSelected ? (
+                    <>
+                      <CheckCircleOutlined /> {pet.name}
+                    </>
+                  ) : (
+                    <>
+                      <PlusCircleOutlined /> {pet.name}
+                    </>
+                  )}
+                </Button>
+              ) : (
+                <h4>
+                  <CheckCircleOutlined />
+                  {pet.name}
+                </h4>
+              )}
+            </CardTitle>
+          }
+          extra={
+            <CardTitle>
+              {onDelete && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onDelete(pet.id);
+                  }}
+                >
+                  <DeleteOutlined /> Remove Pet
+                </button>
+              )}
+              {onUpdate && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onUpdate(pet.id);
+                  }}
+                >
+                  <DeleteOutlined /> Update Pet
+                </button>
+              )}
+            </CardTitle>
+          }
+          tabList={tabList}
+          activeTabKey={activeTabKey1}
+          onTabChange={(key) => {
+            onTab1Change(key);
+          }}
+        >
+          {activeTabKey1 === "pet" && (
+            <PetInfo pet={petInfoOnly(pet)}>
+              {isValidHttpUrl(pet.image) && (
+                <Avatar
+                  shape="square"
+                  size={150}
+                  alt="example"
+                  src={pet.image}
+                />
+              )}
+            </PetInfo>
+          )}
+          {activeTabKey1 === "vaccines" && (
+            <PetInfo pet={vaccinationInfoOnly(pet)} />
+          )}
+          {activeTabKey1 === "boarding" && (
+            <PetInfo pet={boardingInfoOnly(pet)} />
+          )}
+        </Card>
+      </>
     </Container>
-    // <Card
-    //   title={
-    //     <CardTitle>
-    //       {toggle ? (
-    //         <Button
-    //           primary={petSelected}
-    //           type="button"
-    //           onClick={() => toggle(pet)}
-    //         >
-    //           {petSelected ? (
-    //             <>
-    //               <CheckCircleOutlined /> {pet.name}
-    //             </>
-    //           ) : (
-    //             <>
-    //               <PlusCircleOutlined /> {pet.name}
-    //             </>
-    //           )}
-    //         </Button>
-    //       ) : (
-    //         <h4>
-    //           <CheckCircleOutlined />
-    //           {pet.name}
-    //         </h4>
-    //       )}
-    //       {isValidHttpUrl(pet.image) && (
-    //         <Avatar shape="square" size={50} alt="example" src={pet.image} />
-    //       )}
-    //     </CardTitle>
-    //   }
-    //   extra={
-    //     <CardTitle>
-    //       {onDelete && (
-    //         <button
-    //           type="button"
-    //           onClick={() => {
-    //             onDelete(pet.id);
-    //           }}
-    //         >
-    //           <DeleteOutlined /> Remove Pet
-    //         </button>
-    //       )}
-    //       {onUpdate && (
-    //         <button
-    //           type="button"
-    //           onClick={() => {
-    //             onUpdate(pet.id);
-    //           }}
-    //         >
-    //           <DeleteOutlined /> Update Pet
-    //         </button>
-    //       )}
-    //     </CardTitle>
-    //   }
-    //   tabList={tabList}
-    //   activeTabKey={activeTabKey1}
-    //   onTabChange={(key) => {
-    //     onTab1Change(key);
-    //   }}
-    // >
-    //   {activeTabKey1 === "pet" && (
-    //     <PetInfo pet={petInfoOnly(pet)}>
-    //       {isValidHttpUrl(pet.image) && (
-    //         <Avatar shape="square" size={150} alt="example" src={pet.image} />
-    //       )}
-    //     </PetInfo>
-    //   )}
-    //   {activeTabKey1 === "vaccines" && (
-    //     <PetInfo pet={vaccinationInfoOnly(pet)} />
-    //   )}
-    //   {activeTabKey1 === "boarding" && <PetInfo pet={boardingInfoOnly(pet)} />}
-    // </Card>
   );
 };
