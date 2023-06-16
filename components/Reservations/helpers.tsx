@@ -18,10 +18,12 @@ import { Image } from "antd";
 
 export const next = ({ current, setCurrent }) => {
   setCurrent(current + 1);
+  window.scrollTo(0, 0);
 };
 
 export const prev = ({ current, setCurrent }) => {
   setCurrent(current - 1);
+  window.scrollTo(0, 0);
 };
 
 export const fieldValidator = ({ fields, state, dispatch }) => {

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Layout from "../components/Layout";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { Content } from "../components/ui-kit/Base";
 import { GuestClientForm } from "../components/Reservations/GuestClients/GuestClientForm";
 import { ClientForm } from "../components/Reservations/Clients/ClientForm";
@@ -11,12 +11,23 @@ import { GetServerSideProps } from "next";
 import { ThemePreferenceContext } from "./_app";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getSession({ req });
   const page = "RESERVATIONS";
   const contentItems = await prisma.contentItem.findMany({
     where: {
       page,
     },
   });
+
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email },
+  });
+
+  // replace user null values with empty strings
+  const userWithEmptyStrings = Object.keys(user).reduce((object, key) => {
+    object[key] = user[key] === null ? "" : user[key];
+    return object;
+  }, {});
 
   const promoItems = await prisma.promoItem.findMany({
     where: {
@@ -26,13 +37,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
   return {
     props: {
+      user: JSON.parse(JSON.stringify(userWithEmptyStrings)),
       contentItems: JSON.stringify(contentItems),
       promoItems: JSON.stringify(promoItems),
     },
   };
 };
 
-const Reservation = ({ contentItems, promoItems }) => {
+const Reservation = ({ contentItems, promoItems, user }) => {
   const parsedContentItems = JSON.parse(contentItems);
   const parsedPromoItems = JSON.parse(promoItems);
   const { data: session, status } = useSession();
@@ -94,7 +106,7 @@ const Reservation = ({ contentItems, promoItems }) => {
         {!session || clientType.clientType === "new" ? (
           <GuestClientForm />
         ) : (
-          <ClientForm session={session} />
+          <ClientForm user={user} />
         )}
       </Content>
     </Layout>

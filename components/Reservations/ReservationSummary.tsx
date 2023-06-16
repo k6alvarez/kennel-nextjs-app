@@ -96,6 +96,7 @@ export const ReservationSummary = ({ state, pets }) => {
         pets.length > 0 &&
         pets.map((pet, i) => (
           <List
+            key={i}
             size="small"
             header={<h4>{pet.name}</h4>}
             bordered

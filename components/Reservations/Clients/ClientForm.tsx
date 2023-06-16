@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Steps } from "antd";
 import { StepsContent, StepsAction } from "../styles";
-import { Button } from "../../ui-kit/Base";
-import { boardingFormValidator, next, prev } from "../helpers";
 import { useClientFormContext } from "../formContext";
 import {
   INITIAL_RESERVATION_STATE,
@@ -13,26 +11,22 @@ import { getPets, getUser } from "../../Pets/services";
 import { FieldsetPetsInfo } from "../GuestClients/FieldsetPetsInfo";
 import { BlockQuote } from "../GuestClients/FormIntro";
 import { ReservationSummary } from "../ReservationSummary";
-import {
-  ArrowLeftOutlined,
-  ArrowRightOutlined,
-  WarningOutlined,
-} from "@ant-design/icons";
+import { WarningOutlined } from "@ant-design/icons";
 import { renderFormFields } from "../../Forms/renderFormFields";
 import { Fieldset, Fields } from "../../Forms/styles";
-import { createReservationDraft } from "../services";
+import { GoBackButton } from "./GoBackButton";
+import { SubmitReservationButton } from "./SubmitReservationButton";
+import { ContinueButton } from "./ContinueButton";
 
 const { Step } = Steps;
 
-export const ClientForm = ({ session }) => {
+export const ClientForm = ({ user }) => {
   const {
     clientFormState,
     handleChange,
     clientFormDispatch,
     clientFormError,
-    setClientFormError,
     clientFormLoading,
-    setClientFormLoading,
   } = useClientFormContext();
 
   const [current, setCurrent] = useState(0);
@@ -40,21 +34,16 @@ export const ClientForm = ({ session }) => {
   const [pets, setPets] = useState([]);
 
   useEffect(() => {
-    if (session) {
-      getUser()
-        .then((user) => {
-          clientFormDispatch({
-            type: "setUpClientForm",
-            payload: {
-              user,
-            },
-          });
-        })
-        .then(() => {
-          getPets().then((pets) => {
-            setPets(pets);
-          });
-        });
+    if (user) {
+      clientFormDispatch({
+        type: "setUpClientForm",
+        payload: {
+          user,
+        },
+      });
+      getPets().then((pets) => {
+        setPets(pets);
+      });
     }
   }, []);
 
@@ -135,77 +124,20 @@ export const ClientForm = ({ session }) => {
             </BlockQuote>
           )}
           <StepsAction>
-            {current > 0 && (
-              <Button
-                type="button"
-                onClick={() => prev({ current, setCurrent })}
-              >
-                <ArrowLeftOutlined /> Go back to {formSteps[current - 1].title}
-              </Button>
-            )}
+            <GoBackButton
+              current={current}
+              setCurrent={setCurrent}
+              formSteps={formSteps}
+            />
 
-            {current < formSteps.length - 1 && (
-              <Button
-                type="button"
-                onClick={(e) => {
-                  if (clientFormState.pets.length === 0 && current === 2) {
-                    e.preventDefault();
-                    setClientFormError(
-                      "Please add a pet to continue with your reservation request."
-                    );
-                    return;
-                  } else {
-                    setClientFormError("");
-                  }
+            <ContinueButton
+              current={current}
+              setCurrent={setCurrent}
+              formSteps={formSteps}
+              sessionUser={user}
+            />
 
-                  if (current < 2) {
-                    const fieldsValid = boardingFormValidator(
-                      {
-                        currentFormSection: current,
-                      },
-                      {
-                        state: clientFormState,
-                        dispatch: clientFormDispatch,
-                      }
-                    );
-                    if (fieldsValid) {
-                      next({ current, setCurrent });
-                    } else {
-                      setClientFormError(
-                        "Please verify all required fields are filled out."
-                      );
-                    }
-                  } else {
-                    next({ current, setCurrent });
-                  }
-                }}
-                disabled={clientFormLoading}
-              >
-                Continue to {formSteps[current + 1].title}{" "}
-                <ArrowRightOutlined />
-              </Button>
-            )}
-
-            {current === 3 && (
-              <Button
-                type="button"
-                primary
-                onClick={() => {
-                  setClientFormLoading(true);
-                  createReservationDraft(undefined, {
-                    state: clientFormState,
-                    setFormError: setClientFormError,
-                    dispatch: clientFormDispatch,
-                    apiPath: "/api/reservation",
-                  }).then(() => {
-                    setClientFormLoading(false);
-                  });
-                }}
-                disabled={clientFormLoading}
-              >
-                Submit Reservation
-              </Button>
-            )}
+            <SubmitReservationButton current={current} />
           </StepsAction>
         </form>
       )}
