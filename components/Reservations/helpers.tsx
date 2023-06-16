@@ -9,6 +9,12 @@ import {
   timeBreakClose,
   timeBreakOpen,
 } from "./formInitialState";
+import { Reservation, Pet } from "@prisma/client";
+import { DetailItem } from "../../pages/reservation/[id]";
+import { LetterSpacedText } from "../Footer";
+import { isValidHttpUrl } from "../Pets/services";
+import { base } from "../ui-kit/Theme";
+import { Image } from "antd";
 
 export const next = ({ current, setCurrent }) => {
   setCurrent(current + 1);
@@ -185,4 +191,41 @@ export const boardingFormValidator = (
   const currentSection = Object.entries(sectionInputs[currentFormSection]);
 
   return fieldValidator({ fields: currentSection, state, dispatch });
+};
+
+export const getDataSource = (
+  fieldGroup: {
+    [x: string]: {
+      label: string;
+    };
+  },
+  source: Reservation | Pet
+) => {
+  const dataSource = Object.entries(source)
+    .filter((key) => {
+      let field = fieldGroup[key[0]];
+
+      if (field) {
+        return field.label !== "Image" && field.label !== "Large Image";
+      }
+    })
+    .map((key, i) => {
+      const field = fieldGroup[key[0]];
+
+      return (
+        <DetailItem key={key + "-" + i}>
+          <LetterSpacedText fs={base.fontSizes[1]} bold>
+            {field.label}
+          </LetterSpacedText>
+          <LetterSpacedText as="div" fs={base.fontSizes[2]}>
+            {isValidHttpUrl(source[key[0]]) ? (
+              <Image src={source[key[0]]} width={100} height={100} />
+            ) : (
+              <span>{source[key[0]] || "n/a"}</span>
+            )}
+          </LetterSpacedText>
+        </DetailItem>
+      );
+    });
+  return dataSource;
 };

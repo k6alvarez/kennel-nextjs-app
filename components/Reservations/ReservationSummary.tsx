@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { DateTime } from "luxon";
 import { PET_INITIAL_STATE } from "../Pets/petFormReducer";
 import { Divider, Image, List } from "antd";
+import { getDataSource } from "./helpers";
 
 const Wrapper = styled.div`
   display: flex;
@@ -98,21 +99,7 @@ export const ReservationSummary = ({ state, pets }) => {
             size="small"
             header={<h4>{pet.name}</h4>}
             bordered
-            dataSource={Object.entries(PET_INITIAL_STATE).map(([key]) => {
-              return (
-                <DetailItem key={pet.id + "-" + key}>
-                  <LetterSpacedText fs={base.fontSizes[1]} bold>
-                    {PET_INITIAL_STATE[key].label}
-                  </LetterSpacedText>
-                  <LetterSpacedText as="div" fs={base.fontSizes[2]}>
-                    {getFormattedValue({
-                      value: pet[key],
-                      type: PET_INITIAL_STATE[key].type,
-                    })}
-                  </LetterSpacedText>
-                </DetailItem>
-              );
-            })}
+            dataSource={getDataSource(PET_INITIAL_STATE, pet)}
             renderItem={(item) => <List.Item>{item}</List.Item>}
           />
         ))}

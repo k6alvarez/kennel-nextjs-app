@@ -23,7 +23,6 @@ export const clientFormReducer = (
           pets: [...pets, petToggled],
         };
       }
-
     case "formDraftCreated":
       return {
         ...clientFormState,
@@ -39,7 +38,6 @@ export const clientFormReducer = (
         }
       });
       return { ...updatedFormState };
-
     case "inputChange":
       const inputState = {
         ...clientFormState[key],

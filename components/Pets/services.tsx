@@ -85,7 +85,14 @@ export const getPets = async () => {
 export const getUser = async () => {
   const res = await fetch("/api/user");
   const user = await res.json();
-  return user;
+
+  // loop through user object and replace null values with empty strings
+  const userReplaceNull = Object.keys(user).reduce((acc, key) => {
+    acc[key] = user[key] === null ? "" : user[key];
+    return acc;
+  }, {});
+
+  return userReplaceNull;
 };
 
 export const isValidHttpUrl = (string) => {

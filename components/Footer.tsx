@@ -26,6 +26,10 @@ const FooterWrapper = styled.footer`
         ? theme.colors.textPrimary
         : theme.colors.textSecondary};
   }
+
+  h1 {
+    font-family: ${({ theme }) => theme.fonts.heading};
+  }
 `;
 
 const FooterInfo = styled.div`
