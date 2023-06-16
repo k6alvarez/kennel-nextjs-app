@@ -19,11 +19,17 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
   });
 
+  const promoItems = await prisma.promoItem.findMany({
+    where: {
+      page,
+    },
+  });
+
   if (!session) {
     return {
       props: {
         contentItems: JSON.stringify(contentItems),
-        promoItems: JSON.stringify([]),
+        promoItems: JSON.stringify(promoItems),
         user: null,
       },
     };
@@ -38,12 +44,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     object[key] = user[key] === null ? "" : user[key];
     return object;
   }, {});
-
-  const promoItems = await prisma.promoItem.findMany({
-    where: {
-      page,
-    },
-  });
 
   return {
     props: {
@@ -103,15 +103,6 @@ const Reservation = ({ contentItems, promoItems, user }) => {
   return (
     <Layout>
       <Content>
-        {clientType.clientType !== "" && (
-          <button
-            onClick={() => {
-              setClientType({ clientType: "" });
-            }}
-          >
-            <ArrowLeftOutlined /> Back
-          </button>
-        )}
         <h1>Client Reservations</h1>
         {!session || clientType.clientType === "new" ? (
           <GuestClientForm />

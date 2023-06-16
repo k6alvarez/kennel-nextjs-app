@@ -175,6 +175,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                     key: name,
                     payload: { newValue, error },
                   });
+                  setClientFormError(null);
                 },
                 clientFormDispatch,
                 clientFormError,
@@ -192,6 +193,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                       key: name,
                       payload: { newValue, error },
                     });
+                    setGuestFormError(null);
                   },
                   guestFormDispatch,
                   guestFormError,

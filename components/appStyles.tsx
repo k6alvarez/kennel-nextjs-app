@@ -242,6 +242,7 @@ export const GlobalStyle = createGlobalStyle`
   .ant-card {
     flex: 1 1 100%;
     min-width: 33vw;
+    max-width: 50vw;
   }
 
   .ant-checkbox-wrapper {

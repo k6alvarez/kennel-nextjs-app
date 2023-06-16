@@ -7,7 +7,7 @@ import {
   INITIAL_USER_STATE,
 } from "../formInitialState";
 import { FieldsetClientInfo } from "../FieldsetFromState";
-import { getPets, getUser } from "../../Pets/services";
+import { getPets } from "../../Pets/services";
 import { FieldsetPetsInfo } from "../GuestClients/FieldsetPetsInfo";
 import { BlockQuote } from "../GuestClients/FormIntro";
 import { ReservationSummary } from "../ReservationSummary";
@@ -26,6 +26,7 @@ export const ClientForm = ({ user }) => {
     handleChange,
     clientFormDispatch,
     clientFormError,
+    setClientFormError,
     clientFormLoading,
   } = useClientFormContext();
 
@@ -124,17 +125,27 @@ export const ClientForm = ({ user }) => {
             </BlockQuote>
           )}
           <StepsAction>
-            <GoBackButton
-              current={current}
-              setCurrent={setCurrent}
-              formSteps={formSteps}
-            />
+            <GoBackButton current={current} setCurrent={setCurrent} />
 
             <ContinueButton
               current={current}
               setCurrent={setCurrent}
               formSteps={formSteps}
-              sessionUser={user}
+              formError={clientFormError}
+              formState={clientFormState}
+              formDispatch={clientFormDispatch}
+              setFormError={setClientFormError}
+              fieldsValidCallback={() => {
+                const shouldUpdateUser = current === 0;
+                if (shouldUpdateUser) {
+                  clientFormDispatch({
+                    type: "updateUser",
+                    payload: {
+                      user,
+                    },
+                  });
+                }
+              }}
             />
 
             <SubmitReservationButton current={current} />

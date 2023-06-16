@@ -4,10 +4,8 @@ import { BlockQuote, FormIntroGuest } from "./FormIntro";
 import { useGuestFormContext } from "../formContext";
 import { FieldsetClientInfo } from "../FieldsetFromState";
 import { FieldsetPetsInfo } from "./FieldsetPetsInfo";
-import { Button } from "../../ui-kit/Base";
 import { StepsContent, StepsAction } from "../styles";
 import { FieldSetPaymentInfo } from "./FieldSetPaymentInfo";
-import { next, prev, boardingFormValidator } from "../helpers";
 import {
   createGuestReservationDraft,
   deleteGuestPet,
@@ -18,6 +16,8 @@ import {
   INITIAL_RESERVATION_STATE,
 } from "../formInitialState";
 import { WarningOutlined } from "@ant-design/icons";
+import { GoBackButton } from "../Clients/GoBackButton";
+import { ContinueButton } from "../Clients/ContinueButton";
 
 const { Step } = Steps;
 
@@ -107,62 +107,31 @@ export const GuestClientForm = () => {
           </BlockQuote>
         )}
         <StepsAction>
-          {current > 0 && (
-            <Button type="button" onClick={() => prev({ current, setCurrent })}>
-              Previous
-            </Button>
-          )}
+          <GoBackButton current={current} setCurrent={setCurrent} />
 
-          {current < formSteps.length - 1 && (
-            <Button
-              type="button"
-              onClick={() => {
-                if (pets.length === 0 && current === 2) {
-                  setGuestFormError(
-                    "Please add a pet to continue with your reservation request."
-                  );
-                  return;
-                } else {
-                  setGuestFormError("");
-                }
-
-                if (current < 2) {
-                  const fieldsValid = boardingFormValidator(
-                    {
-                      currentFormSection: current,
-                    },
-                    {
-                      state: guestFormState,
-                      dispatch: guestFormDispatch,
-                    }
-                  );
-
-                  if (fieldsValid) {
-                    const draftCreated = guestFormState.reservationId;
-                    if (!draftCreated) {
-                      setGuestFormLoading(true);
-                      createGuestReservationDraft(undefined, {
-                        state: guestFormState,
-                        setFormError: setGuestFormError,
-                        dispatch: guestFormDispatch,
-                        apiPath: "/api/guest-reservation",
-                      }).then(() => {
-                        setGuestFormLoading(false);
-                        next({ current, setCurrent });
-                      });
-                    } else {
-                      next({ current, setCurrent });
-                    }
-                  }
-                } else {
-                  next({ current, setCurrent });
-                }
-              }}
-              disabled={guestFormLoading}
-            >
-              Next
-            </Button>
-          )}
+          <ContinueButton
+            current={current}
+            setCurrent={setCurrent}
+            formSteps={formSteps}
+            formState={guestFormState}
+            formError={guestFormError}
+            formDispatch={guestFormDispatch}
+            setFormError={setGuestFormError}
+            fieldsValidCallback={() => {
+              const draftCreated = guestFormState.reservationId;
+              if (!draftCreated) {
+                setGuestFormLoading(true);
+                createGuestReservationDraft(undefined, {
+                  state: guestFormState,
+                  setFormError: setGuestFormError,
+                  dispatch: guestFormDispatch,
+                  apiPath: "/api/guest-reservation",
+                }).then(() => {
+                  setGuestFormLoading(false);
+                });
+              }
+            }}
+          />
         </StepsAction>
       </form>
     </>

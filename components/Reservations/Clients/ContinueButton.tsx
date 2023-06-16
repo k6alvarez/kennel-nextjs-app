@@ -1,5 +1,4 @@
 import React from "react";
-import { useClientFormContext } from "../formContext";
 import { Button } from "../../ui-kit/Base";
 import { boardingFormValidator, next } from "../helpers";
 import { ArrowRightOutlined } from "@ant-design/icons";
@@ -8,26 +7,22 @@ export const ContinueButton = ({
   current,
   formSteps,
   setCurrent,
-  sessionUser,
+  formState,
+  formDispatch,
+  formError,
+  setFormError,
+  fieldsValidCallback = undefined,
 }) => {
-  const {
-    clientFormState,
-    clientFormDispatch,
-    clientFormError,
-    setClientFormError,
-    clientFormLoading,
-  } = useClientFormContext();
-
-  const petsNotAdded = clientFormState.pets.length === 0 && current === 2;
+  const petsNotAdded = formState.pets.length === 0 && current === 2;
   const checkPetsAdded = (e) => {
     if (petsNotAdded) {
       e.preventDefault();
-      setClientFormError(
+      setFormError(
         "Please add a pet to continue with your reservation request."
       );
       return;
     } else {
-      setClientFormError("");
+      setFormError("");
     }
   };
 
@@ -37,24 +32,16 @@ export const ContinueButton = ({
         currentFormSection: current,
       },
       {
-        state: clientFormState,
-        dispatch: clientFormDispatch,
+        state: formState,
+        dispatch: formDispatch,
       }
     );
 
     if (fieldsValid) {
-      const shouldUpdateUser = current === 0;
-      if (shouldUpdateUser) {
-        clientFormDispatch({
-          type: "updateUser",
-          payload: {
-            user: sessionUser,
-          },
-        });
-      }
+      fieldsValidCallback && fieldsValidCallback();
       next({ current, setCurrent });
     } else {
-      setClientFormError("Please verify all required fields are filled out.");
+      setFormError("Please verify all required fields are filled out.");
     }
   };
 
@@ -75,7 +62,7 @@ export const ContinueButton = ({
             checkPetsAdded(e);
             handleContinue();
           }}
-          disabled={clientFormLoading}
+          disabled={formError}
         >
           Next <ArrowRightOutlined />
         </Button>

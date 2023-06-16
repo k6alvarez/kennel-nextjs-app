@@ -174,10 +174,19 @@ export const petFormReducer = (
       };
     }
     case "setFormForCat": {
-      const preferredRunSize = {
+      const pets = payload.pets || [];
+
+      let preferredRunSize = {
         ...guestFormState["preferredRunSize"],
         options: ["Cat Room", "Cat Condo", "Shared"],
       };
+      // if pets contains less than 2 cats remove shared option
+      if (pets.filter((pet: any) => pet.type === "Cat").length < 2) {
+        preferredRunSize = {
+          ...guestFormState["preferredRunSize"],
+          options: ["Cat Room", "Cat Condo"],
+        };
+      }
 
       const bordetellaVaccine = {
         ...guestFormState["bordetellaVaccine"],
@@ -192,10 +201,20 @@ export const petFormReducer = (
       };
     }
     case "setFormForDog": {
-      const preferredRunSize = {
+      const pets = payload.pets || [];
+
+      let preferredRunSize = {
         ...guestFormState["preferredRunSize"],
         options: ["Small", "Large", "Extra Large", "Shared"],
       };
+
+      // if pets contains less than 2 dogs remove shared option
+      if (pets.filter((pet: any) => pet.type === "Dog").length < 2) {
+        preferredRunSize = {
+          ...guestFormState["preferredRunSize"],
+          options: ["Small", "Large", "Extra Large"],
+        };
+      }
 
       const bordetellaVaccine = {
         ...guestFormState["bordetellaVaccine"],
