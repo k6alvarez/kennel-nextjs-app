@@ -78,8 +78,8 @@ export const FieldSetPaymentInfo = ({ pets }) => {
       {depositConfirmed && (
         <>
           <p>
-            <Loading3QuartersOutlined spin /> Your deposit was successful. One
-            moment while we save your reservation.
+            <Loading3QuartersOutlined spin rev={undefined} /> Your deposit was
+            successful. One moment while we save your reservation.
           </p>
         </>
       )}

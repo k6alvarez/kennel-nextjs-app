@@ -12,7 +12,11 @@ export const LeftNav = ({ toggleDrawer }) => {
     <div className="leftNav">
       <GlobalStyle />
 
-      <MenuOutlined className="mobileNav" onClick={toggleDrawer} />
+      <MenuOutlined
+        className="mobileNav"
+        onClick={toggleDrawer}
+        rev={undefined}
+      />
 
       <LogoName>
         <RouteLink activeClassName="active" href="/">
