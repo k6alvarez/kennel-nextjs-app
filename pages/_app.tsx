@@ -146,6 +146,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [editMode]);
 
   return (
+    // @ts-ignore
     <SessionProvider session={pageProps.session}>
       <AppSettingsContext.Provider
         value={{
