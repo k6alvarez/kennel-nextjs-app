@@ -277,6 +277,10 @@ export const GlobalStyle = createGlobalStyle`
   
   .ant-list-header {
     text-transform: capitalize;
+    position: sticky;
+    top: ${headerHt};
+    background: ${({ theme }) => theme.colors.white};
+    z-index: 1;
   }
 
   .ant-list-item {

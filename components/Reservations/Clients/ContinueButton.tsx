@@ -13,6 +13,7 @@ export const ContinueButton = ({
   const {
     clientFormState,
     clientFormDispatch,
+    clientFormError,
     setClientFormError,
     clientFormLoading,
   } = useClientFormContext();
@@ -43,7 +44,6 @@ export const ContinueButton = ({
 
     if (fieldsValid) {
       const shouldUpdateUser = current === 0;
-
       if (shouldUpdateUser) {
         clientFormDispatch({
           type: "updateUser",
@@ -62,7 +62,7 @@ export const ContinueButton = ({
     if (current < 2) {
       validateFields();
     } else {
-      next({ current, setCurrent });
+      !petsNotAdded && next({ current, setCurrent });
     }
   };
 

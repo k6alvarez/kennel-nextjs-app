@@ -9,6 +9,7 @@ export const TotalDeposit = styled.p`
 export const StepsAction = styled.div`
   display: flex;
   gap: ${({ theme }) => theme.space[4]};
+  margin: ${({ theme }) => theme.space[5]} 0 ${({ theme }) => theme.space[8]} 0;
 `;
 export const StepsContent = styled.div`
   width: 100%;
