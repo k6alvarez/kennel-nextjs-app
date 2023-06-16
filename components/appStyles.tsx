@@ -206,10 +206,6 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  .ant-drawer-content {
-    
-  }
-
   .ant-drawer .rightNav {
     display: flex;
     flex-direction: column;
