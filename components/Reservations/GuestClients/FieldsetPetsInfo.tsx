@@ -137,15 +137,8 @@ export const FieldsetPetsInfo = ({
             );
           })}
         </PetCards>
-        <Collapse>
-          <Collapse.Panel
-            header={
-              <>
-                <InfoCircleOutlined rev={undefined} /> Add a pet
-              </>
-            }
-            key="1"
-          >
+        <Collapse expandIcon={() => <InfoCircleOutlined rev={undefined} />}>
+          <Collapse.Panel header={<>Add a pet</>} key="1">
             <>
               {pets.length < 5 ? (
                 <>

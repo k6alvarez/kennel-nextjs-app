@@ -1,12 +1,11 @@
 import { LinkOutlined } from "@ant-design/icons";
-import { Avatar, Tag } from "antd";
+import { Tag } from "antd";
 import { DateTime } from "luxon";
-import Image from "next/image";
+
 import React from "react";
 import styled from "styled-components";
-import { FlexCards } from "../Boarding/styles";
+
 import { PET_INITIAL_STATE } from "./petFormReducer";
-import { isValidHttpUrl } from "./services";
 
 const Key = styled.span`
   font-size: ${(props) => props.theme.fontSizes[0]};
@@ -24,19 +23,10 @@ const Pair = styled.div`
   white-space: nowrap;
   display: flex;
   gap: ${(props) => props.theme.space[2]};
+  margin-bottom: ${(props) => props.theme.space[2]};
 
   a {
     font-size: ${(props) => props.theme.fontSizes[0]};
-  }
-`;
-
-const Flex = styled.div`
-  display: flex;
-  gap: ${(props) => props.theme.space[3]};
-
-  .ant-tag {
-    padding: 2px 4px;
-    font-size: ${(props) => `calc(${props.theme.fontSizes[0]}/1.5)`};
   }
 `;
 

@@ -62,7 +62,6 @@ export const ContinueButton = ({
             checkPetsAdded(e);
             handleContinue();
           }}
-          disabled={formError}
         >
           Next <ArrowRightOutlined rev={undefined} />
         </Button>

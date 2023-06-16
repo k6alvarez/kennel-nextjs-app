@@ -239,10 +239,22 @@ export const GlobalStyle = createGlobalStyle`
     align-items: center;
   }
 
+  .ant-collapse-expand-icon .anticon.anticon-info-circle.ant-collapse-arrow {
+    font-size: ${({ theme }) => theme.fontSizes[3]};
+  }
+
+  .ant-collapse>.ant-collapse-item >.ant-collapse-header {
+    align-items: center;
+  }
+
   .ant-card {
-    flex: 1 1 100%;
-    min-width: 33vw;
-    max-width: 50vw;
+    flex: 1;
+    width: 100%;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+      width: 25vw;
+      max-width: 25vw;  
+    }
   }
 
   .ant-checkbox-wrapper {
@@ -281,7 +293,7 @@ export const GlobalStyle = createGlobalStyle`
     justify-content: stretch;    
   }
   
-  .ant-list-header {
+  .ant-list-bordered .ant-list-header {
     text-transform: capitalize;
     position: sticky;
     top: ${headerHt};
@@ -289,7 +301,7 @@ export const GlobalStyle = createGlobalStyle`
     z-index: 1;
   }
 
-  .ant-list-item {
+  .ant-list .ant-list-item {
     flex: 1;
     white-space: nowrap;
     min-width: 100%;
