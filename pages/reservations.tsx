@@ -7,7 +7,7 @@ import Layout from "../components/Layout";
 import { getSession, useSession } from "next-auth/react";
 import { Content } from "../components/ui-kit/Base";
 
-import { Button, Divider, Tabs, Tag } from "antd";
+import { Button, Divider, Tabs, Tag, message } from "antd";
 import { VirtualTable } from "../components/ui-kit/Table/VirtualTable";
 import { headerHt } from "../components/ui-kit/Promo/styles-promo";
 import styled from "styled-components";
@@ -87,18 +87,32 @@ const columnsUsers = [
     render: (actions, item) => (
       <>
         <Button
+          type="primary"
           size="small"
           onClick={() => {
             const updateReservation = async () => {
-              const response = await fetch(`/api/reservation/${item.id}`, {
-                method: "PUT",
-                body: JSON.stringify({
-                  id: item.id,
-                  confirmed: true,
-                }),
-              });
+              console.log(item);
+              const reservationApiName =
+                item.reservationType === "user"
+                  ? "reservation"
+                  : "guest-reservation";
+              const response = await fetch(
+                `/api/${reservationApiName}/${item.id}`,
+                {
+                  method: "PUT",
+                  body: JSON.stringify({
+                    id: item.id,
+                    confirmed: true,
+                    userId: item.userId,
+                    reservationEmail: item.email,
+                  }),
+                }
+              );
+
               if (response.ok) {
                 location.reload();
+              } else {
+                message.error("Something went wrong. Please try again.");
               }
             };
             updateReservation();
@@ -164,6 +178,7 @@ export const reservations = ({ reservations, guestReservations, user }) => {
     return {
       key: reservation.id,
       id: reservation.id,
+      reservationType: "user",
       confirmed: reservation.confirmed ? "confirmed" : "not confirmed",
       arrivalDate: reservation.arrivalDate,
       departureDate: reservation.departureDate,
@@ -181,6 +196,7 @@ export const reservations = ({ reservations, guestReservations, user }) => {
     return {
       key: reservation.id,
       id: reservation.id,
+      reservationType: "guest",
       arrivalDate: reservation.arrivalDate,
       departureDate: reservation.departureDate,
       createdAt: reservation.createdAt,
