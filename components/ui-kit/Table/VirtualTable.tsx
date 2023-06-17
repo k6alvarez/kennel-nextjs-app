@@ -4,6 +4,22 @@ import classNames from "classnames";
 import ResizeObserver from "rc-resize-observer";
 import React, { useEffect, useRef, useState } from "react";
 import { VariableSizeGrid as Grid } from "react-window";
+import styled from "styled-components";
+
+const CellContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: ${({ theme }) => theme.space[2]};
+
+  button {
+    margin: 0;
+  }
+`;
 
 export const VirtualTable = <RecordType extends object>(
   props: TableProps<RecordType>
@@ -88,7 +104,7 @@ export const VirtualTable = <RecordType extends object>(
           rowIndex: number;
           style: React.CSSProperties;
         }) => (
-          <div
+          <CellContainer
             className={classNames("virtual-table-cell", {
               "virtual-table-cell-last":
                 columnIndex === mergedColumns.length - 1,
@@ -99,6 +115,9 @@ export const VirtualTable = <RecordType extends object>(
               padding: "4px 8px",
               borderBottom: "1px solid #e8e8e8",
               background: rowIndex % 2 ? "#fafafa" : "#fff",
+              display: "flex",
+              justifyContent: "start",
+              alignItems: "center",
             }}
           >
             {
@@ -114,7 +133,7 @@ export const VirtualTable = <RecordType extends object>(
                     (mergedColumns as any)[columnIndex].dataIndex
                   ]
             }
-          </div>
+          </CellContainer>
         )}
       </Grid>
     );

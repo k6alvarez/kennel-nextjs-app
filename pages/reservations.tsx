@@ -5,12 +5,14 @@ import { GetServerSideProps } from "next";
 import Layout from "../components/Layout";
 
 import { getSession, useSession } from "next-auth/react";
-import { Button, Content } from "../components/ui-kit/Base";
+import { Content } from "../components/ui-kit/Base";
 
-import { Tabs, Tag } from "antd";
+import { Button, Divider, Tabs, Tag } from "antd";
 import { VirtualTable } from "../components/ui-kit/Table/VirtualTable";
 import { headerHt } from "../components/ui-kit/Promo/styles-promo";
 import styled from "styled-components";
+import { DateTime } from "luxon";
+import Link from "next/link";
 
 const Wrapper = styled.div`
   padding: 0 20px;
@@ -33,14 +35,59 @@ const columnsUsers = [
     title: "Status",
     dataIndex: "confirmed",
     key: "confirmed",
-    render: (confirmed, item) => (
+    render: (confirmed) => (
       <Flex>
         <Tag color={confirmed === "confirmed" ? "green" : "red"}>
           {confirmed}
         </Tag>
+      </Flex>
+    ),
+  },
+  {
+    title: "Arrival Date",
+    dataIndex: "arrivalDate",
+    key: "arrivalDate",
+    render: (arrivalDate) =>
+      DateTime.fromISO(arrivalDate).toLocaleString(DateTime.DATE_FULL),
+  },
+  {
+    title: "Departure Date",
+    dataIndex: "departureDate",
+    key: "departureDate",
+    render: (departureDate) =>
+      DateTime.fromISO(departureDate).toLocaleString(DateTime.DATE_FULL),
+  },
+
+  {
+    title: "Owner Name",
+    dataIndex: "name",
+    key: "name",
+    render: (name, item) => (
+      <span>
+        {name} {item.lastName}
+      </span>
+    ),
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
+    render: (email) => <a href={`mailto:${email}`}>{email}</a>,
+  },
+
+  {
+    title: "Pets",
+    dataIndex: "pets",
+    key: "pets",
+  },
+  {
+    title: "Actions",
+    dataIndex: "actions",
+    key: "actions",
+    render: (actions, item) => (
+      <>
         <Button
-          small
-          primary
+          size="small"
           onClick={() => {
             const updateReservation = async () => {
               const response = await fetch(`/api/reservation/${item.id}`, {
@@ -59,39 +106,12 @@ const columnsUsers = [
         >
           Confirm
         </Button>
-      </Flex>
+        <Divider type="vertical" />
+        <Link href={`/reservation/${item.id}`}>
+          <Button size="small">View</Button>
+        </Link>
+      </>
     ),
-  },
-  {
-    title: "Arrival Date",
-    dataIndex: "arrivalDate",
-    key: "arrivalDate",
-  },
-  {
-    title: "Departure Date",
-    dataIndex: "departureDate",
-    key: "departureDate",
-  },
-  {
-    title: "Date Created",
-    dataIndex: "createdAt",
-    key: "createdAt",
-  },
-  {
-    title: "Owner Name",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
-    title: "Email",
-    dataIndex: "email",
-    key: "email",
-  },
-
-  {
-    title: "Pets",
-    dataIndex: "pets",
-    key: "pets",
   },
 ];
 
@@ -149,6 +169,7 @@ export const reservations = ({ reservations, guestReservations, user }) => {
       departureDate: reservation.departureDate,
       createdAt: reservation.createdAt,
       name: reservation.author.name,
+      lastName: reservation.author.lastName,
       email: reservation.author.email,
       pets: reservation.pets.map((pet, i) => {
         return pet.name + (i < reservation.pets.length - 1 ? ", " : "");
@@ -165,6 +186,7 @@ export const reservations = ({ reservations, guestReservations, user }) => {
       createdAt: reservation.createdAt,
       confirmed: reservation.confirmed ? "confirmed" : "not confirmed",
       name: reservation.name,
+      lastName: reservation.lastName,
       email: reservation.email,
       pets: reservation.pets.map((pet, i) => {
         return pet.name + (i < reservation.pets.length - 1 ? ", " : "");
