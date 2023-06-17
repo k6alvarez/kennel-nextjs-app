@@ -5,7 +5,7 @@ import { themesMap } from '../../../components/appStyles';
 
 // PUT /api/guest-reservation/:id
 export default async function handle(req, res) {
-  const petsAdded = req.body.pets.for
+  const petsAdded = req.body.pets
   const reservationId = req.body.reservationId;
   delete req.body.reservationId
   delete req.body.pets

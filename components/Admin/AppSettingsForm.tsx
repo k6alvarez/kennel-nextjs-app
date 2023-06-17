@@ -34,6 +34,12 @@ export const AppSettingsForm = () => {
             body,
             formSubmitCallback: (res) => {
               setAppSettings({ ...appSettings, ...body });
+
+              if (res && res.error) {
+                message.error("Something went wrong. Please try again.");
+                return;
+              }
+
               message.success("Content updated successfully");
             },
           });
@@ -43,6 +49,11 @@ export const AppSettingsForm = () => {
             body,
             formSubmitCallback: (res) => {
               setAppSettings({ ...appSettings, ...body });
+
+              if (res && res.error) {
+                message.error("Something went wrong. Please try again.");
+                return;
+              }
               message.success("Content created successfully");
             },
           });

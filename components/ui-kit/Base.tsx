@@ -224,8 +224,9 @@ export const GridItemTitle = styled.p`
 export const Button = styled.button`
   position: relative;
   margin-top: ${({ theme }) => theme.space[4]};
-  padding: ${({ theme }) => theme.space[3]};
-  font-size: ${({ theme }) => theme.fontSizes[1]};
+  padding: ${({ theme, small }) => (small ? theme.space[2] : theme.space[3])};
+  font-size: ${({ theme, small }) =>
+    small ? theme.fontSizes[0] : theme.fontSizes[1]};
   background-color: ${({ theme, primary }) =>
     primary ? theme.colors.primary : theme.colors.secondary};
   color: ${({ theme, primary }) =>

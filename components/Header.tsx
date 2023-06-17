@@ -186,7 +186,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     if (session) {
       getUser().then((user) => {
-        setLoggedInUser(user);
+        setLoggedInUser(user as User);
       });
     }
   }, [session]);

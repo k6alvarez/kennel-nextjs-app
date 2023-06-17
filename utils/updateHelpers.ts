@@ -4,13 +4,17 @@ export const generalFormUpdate = async ({
     formSubmitCallback,
 }) => {
     try {
-        await fetch(`${apiUrl}`, {
+        const res = await fetch(`${apiUrl}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
         });
+        const data = await res.json();
 
-        formSubmitCallback && formSubmitCallback();
+        if (!res.ok) {
+            throw new Error(data.message || "Something went wrong");
+        }
+        formSubmitCallback && formSubmitCallback(data);
     } catch (error) {
         console.error(error);
     }
