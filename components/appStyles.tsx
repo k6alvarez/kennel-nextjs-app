@@ -321,4 +321,9 @@ export const GlobalStyle = createGlobalStyle`
       }
     } 
   }
+
+  .virtual-table .ant-table-container:before,
+  .virtual-table .ant-table-container:after {
+    display: none;
+  }
 `;
