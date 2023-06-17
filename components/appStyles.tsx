@@ -226,13 +226,26 @@ export const GlobalStyle = createGlobalStyle`
     font-size: ${({ theme }) => theme.fontSizes[2]};
   }
 
+
+  .ant-modal-content {
+    font-family: ${({ theme }) => theme.fonts.body};
+  }
+
   .ant-tag {
-    padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[3]};
+    padding: ${({ theme }) => theme.space[1]} ${({ theme }) => theme.space[2]};
     font-family: "Lato", sans-serif;
+    font-size: calc(${({ theme }) => theme.fontSizes[0]} / 1.6);
+    font-weight: 600;
     text-transform: uppercase;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .ant-badge {    
+    font-family: "Lato", sans-serif;
+    font-size: calc(${({ theme }) => theme.fontSizes[0]} / 1.6);
+    font-weight: 600;
   }
 
   .ant-collapse-expand-icon .anticon.anticon-info-circle.ant-collapse-arrow {
@@ -245,12 +258,6 @@ export const GlobalStyle = createGlobalStyle`
 
   .ant-card {
     flex: 1;
-    width: 100%;
-
-    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-      width: 25vw;
-      max-width: 25vw;  
-    }
   }
 
   .ant-checkbox-wrapper {

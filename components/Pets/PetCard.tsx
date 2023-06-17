@@ -1,10 +1,12 @@
 import {
   CheckCircleOutlined,
   DeleteOutlined,
+  EditFilled,
   PlusCircleOutlined,
+  WarningOutlined,
 } from "@ant-design/icons";
-import { Card, Avatar, Image } from "antd";
-import React, { useState } from "react";
+import { Card, Avatar, Badge, Button as AntButton, Modal } from "antd";
+import React, { useEffect, useState } from "react";
 import { PetProps } from "../../pages/profile";
 import {
   boardingInfoOnly,
@@ -17,6 +19,8 @@ import { isValidHttpUrl } from "./services";
 import { CardTitle } from "./styles";
 
 import styled from "styled-components";
+import { DateTime } from "luxon";
+import { UserPetEditForm } from "../Forms/UserPetEditForm";
 
 const Container = styled.div`
   display: flex;
@@ -37,24 +41,19 @@ const Container = styled.div`
   }
 `;
 
-const StyledBanner = styled.p`
-  position: absolute;
-  margin: 0;
-  z-index: 1;
-  top: 0%;
-  left: 50%;
-  width: 100%;
-  transform: translate(-50%, -0%);
-  background-color: ${({ primary, hasImage }) =>
-    primary && hasImage
-      ? `rgba(70, 8, 31, 1);`
-      : hasImage
-      ? `rgba(0, 0, 0, 0.5);`
-      : `rgba(0, 0, 0, 0.5);`};
-  color: ${(props) => props.theme.colors.textPrimary};
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
-  text-transform: capitalize;
-`;
+const vaccinationsExpired = (pet: PetProps) => {
+  const isParvoExpired = DateTime.fromISO(pet.parvoVirusesVaccine).diffNow();
+  const isDistemperExpired = DateTime.fromISO(pet.distemperVaccine).diffNow();
+  const isBordetellaExpired = DateTime.fromISO(pet.bordetellaVaccine).diffNow();
+  const isRabiesExpired = DateTime.fromISO(pet.rabiesVaccine).diffNow();
+
+  return (
+    isParvoExpired.milliseconds < 0 ||
+    isDistemperExpired.milliseconds < 0 ||
+    isBordetellaExpired.milliseconds < 0 ||
+    isRabiesExpired.milliseconds < 0
+  );
+};
 
 interface PetCardProps {
   pet: PetProps;
@@ -92,49 +91,32 @@ export const PetCard = ({
     },
   ];
 
+  useEffect(() => {
+    if (vaccinationsExpired(pet)) {
+      setActiveTabKey1("vaccines");
+    }
+  }, [pet]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <Container>
-      {/* {toggle ? (
-        <Button primary={petSelected} type="button" onClick={() => toggle(pet)}>
-          {petSelected ? (
-            <StyledBanner primary hasImage={isValidHttpUrl(pet.image)}>
-              <CheckCircleOutlined /> {pet.name}
-            </StyledBanner>
-          ) : (
-            <StyledBanner>
-              <PlusCircleOutlined /> {pet.name}
-            </StyledBanner>
-          )}
-          {isValidHttpUrl(pet.image) ? (
-            <Image
-              src={
-                isValidHttpUrl(pet.image)
-                  ? pet.image
-                  : "/images/ShieldOutline.png"
-              }
-              alt={pet.name}
-              preview={false}
-              style={{ width: "100%", height: "100%" }}
-            />
-          ) : (
-            <Avatar size={100}>
-              {pet.name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")}
-            </Avatar>
-          )}
-        </Button>
-      ) : (
-        <h4>
-          <CheckCircleOutlined />
-          {pet.name}
-        </h4>
-      )} */}
-      <>
-        <Card
-          title={
-            <CardTitle>
+      <Card
+        title={
+          <CardTitle>
+            <div>
               {toggle ? (
                 <Button
                   primary={petSelected}
@@ -152,63 +134,75 @@ export const PetCard = ({
                   )}
                 </Button>
               ) : (
-                <h4>
-                  <CheckCircleOutlined />
-                  {pet.name}
-                </h4>
+                <p>{pet.name}</p>
               )}
-            </CardTitle>
-          }
-          extra={
-            <CardTitle>
-              {onDelete && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onDelete(pet.id);
-                  }}
-                >
-                  <DeleteOutlined /> Remove Pet
-                </button>
+            </div>
+            <div>
+              {vaccinationsExpired(pet) && (
+                <Badge count="Vaccinations Expired" />
               )}
-              {onUpdate && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onUpdate(pet.id);
-                  }}
-                >
-                  <DeleteOutlined /> Update Pet
-                </button>
-              )}
-            </CardTitle>
-          }
-          tabList={tabList}
-          activeTabKey={activeTabKey1}
-          onTabChange={(key) => {
-            onTab1Change(key);
-          }}
-        >
-          {activeTabKey1 === "pet" && (
-            <PetInfo pet={petInfoOnly(pet)}>
-              {isValidHttpUrl(pet.image) && (
-                <Avatar
-                  shape="square"
-                  size={150}
-                  alt="example"
-                  src={pet.image}
-                />
-              )}
-            </PetInfo>
-          )}
-          {activeTabKey1 === "vaccines" && (
-            <PetInfo pet={vaccinationInfoOnly(pet)} />
-          )}
-          {activeTabKey1 === "boarding" && (
-            <PetInfo pet={boardingInfoOnly(pet)} />
-          )}
-        </Card>
-      </>
+            </div>
+          </CardTitle>
+        }
+        extra={
+          <CardTitle>
+            {onDelete && (
+              <button
+                type="button"
+                onClick={() => {
+                  onDelete(pet.id);
+                }}
+              >
+                <DeleteOutlined /> Remove Pet
+              </button>
+            )}
+            {onUpdate && (
+              <button
+                type="button"
+                onClick={() => {
+                  onUpdate(pet.id);
+                }}
+              >
+                <DeleteOutlined /> Update Pet
+              </button>
+            )}
+          </CardTitle>
+        }
+        tabList={tabList}
+        activeTabKey={activeTabKey1}
+        onTabChange={(key) => {
+          onTab1Change(key);
+        }}
+        tabBarExtraContent={
+          <>
+            <AntButton type="primary" onClick={showModal}>
+              Edit Pet
+            </AntButton>
+            <Modal
+              title={<CardTitle>Edit {pet.name}</CardTitle>}
+              open={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}
+            >
+              <UserPetEditForm pet={pet} />
+            </Modal>
+          </>
+        }
+      >
+        {activeTabKey1 === "pet" && (
+          <PetInfo pet={petInfoOnly(pet)}>
+            {isValidHttpUrl(pet.image) && (
+              <Avatar shape="square" size={150} alt="example" src={pet.image} />
+            )}
+          </PetInfo>
+        )}
+        {activeTabKey1 === "vaccines" && (
+          <PetInfo pet={vaccinationInfoOnly(pet)} />
+        )}
+        {activeTabKey1 === "boarding" && (
+          <PetInfo pet={boardingInfoOnly(pet)} />
+        )}
+      </Card>
     </Container>
   );
 };

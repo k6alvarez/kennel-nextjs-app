@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   }
 
   .ant-card-body {
-    min-height: 230px;
+    min-height: 285px;
   }
 `;
 
@@ -19,11 +19,10 @@ export const StyledGridItems = styled(GridItems)`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding: ${(props) => props.theme.space[5]};
 
   @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   }
 `;
 
@@ -33,6 +32,11 @@ export const CardTitle = styled.div`
   justify-content: space-between;
   flex-direction: column;
   gap: ${(props) => props.theme.space[4]};
+
+  p {
+    text-transform: capitalize;
+    margin: 0;
+  }
 
   button {
     margin: 0;

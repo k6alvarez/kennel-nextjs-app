@@ -6,32 +6,25 @@ import styled from "styled-components";
 import { PET_INITIAL_STATE } from "./petFormReducer";
 
 const Key = styled.span`
-  font-size: ${(props) => props.theme.fontSizes[0]};
-  text-transform: capitalize;
   font-weight: bold;
   white-space: pre-wrap;
 `;
 
-const Value = styled.span`
-  font-size: ${(props) => props.theme.fontSizes[0]};
-  text-transform: capitalize;
-`;
+const Value = styled.span``;
 
 const Pair = styled.div`
   white-space: nowrap;
   display: flex;
-  gap: ${(props) => props.theme.space[2]};
-  margin-bottom: ${(props) => props.theme.space[2]};
-
-  a {
-    font-size: ${(props) => props.theme.fontSizes[0]};
-  }
+  gap: ${(props) => props.theme.space[3]};
+  margin-bottom: ${(props) => props.theme.space[4]};
+  font-size: calc(${(props) => props.theme.fontSizes[0]} / 1.2);
+  text-transform: capitalize;
 `;
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: ${(props) => props.theme.space[4]};
+  gap: ${(props) => props.theme.space[5]};
 `;
 
 export const PetInfo = ({ pet, children = undefined }) => {
