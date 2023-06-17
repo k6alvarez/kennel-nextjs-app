@@ -8,7 +8,6 @@ import { themesMap } from "../../../components/appStyles";
 export default async function handle(req, res) {
     const reservationId = req.query.id;
     const reservationEmail = JSON.parse(req.body).reservationEmail;
-    console.log("🚀 ~ file: [id].ts:11 ~ handle ~ reservationEmail:", reservationEmail)
     const session = await getSession({ req });
     const data = JSON.parse(req.body);
     delete data.reservationEmail;

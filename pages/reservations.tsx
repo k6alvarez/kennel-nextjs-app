@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import prisma from "../lib/prisma";
 import { GetServerSideProps } from "next";
 
@@ -89,9 +89,9 @@ const columnsUsers = [
         <Button
           type="primary"
           size="small"
+          disabled={item.confirmed === "confirmed"}
           onClick={() => {
             const updateReservation = async () => {
-              console.log(item);
               const reservationApiName =
                 item.reservationType === "user"
                   ? "reservation"
@@ -110,7 +110,7 @@ const columnsUsers = [
               );
 
               if (response.ok) {
-                location.reload();
+                message.success("Reservation confirmed");
               } else {
                 message.error("Something went wrong. Please try again.");
               }
@@ -174,7 +174,7 @@ export const reservations = ({ reservations, guestReservations, user }) => {
   // const parsedUser = JSON.parse(user);
   const { data: session } = useSession();
 
-  const dataUsersKeyOnly = reservations.map((reservation, index) => {
+  const dataUsers = reservations.map((reservation, index) => {
     return {
       key: reservation.id,
       id: reservation.id,
@@ -191,6 +191,8 @@ export const reservations = ({ reservations, guestReservations, user }) => {
       }),
     };
   });
+
+  const [dataUsersKeyOnly, setDataUsersKeyOnly] = useState(dataUsers);
 
   const dataGuestsKeyOnly = guestReservations.map((reservation, index) => {
     return {
