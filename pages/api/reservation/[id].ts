@@ -42,7 +42,6 @@ export default async function handle(req, res) {
             where: { id: reservationId },
             data: { ...data },
         });
-        console.log("reservationEmail", reservationEmail)
 
         if (data.confirmed) {
             await transport.sendMail({
