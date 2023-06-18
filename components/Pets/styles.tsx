@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { GridItems } from "../ui-kit/Base";
 
 export const Wrapper = styled.div`
-  padding: ${(props) => props.theme.space[5]};
+  padding: ${(props) => props.theme.space[3]};
   background-color: ${(props) => props.theme.colors.secondary};
   margin: ${(props) => props.theme.space[5]} 0;
 
@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   }
 
   .ant-card-body {
-    min-height: 285px;
+    min-height: 230px;
   }
 `;
 

@@ -79,6 +79,8 @@ export const renderFormFields = ({
     };
 
     const autoFocus = i === 0 && !field?.cancelAutoFocus;
+    const requiredIfImageMissingValue =
+      field?.type === "image" && !field?.value;
     const requiredField = field?.required || false;
 
     let imgLoading = false;
@@ -135,7 +137,7 @@ export const renderFormFields = ({
                 }
               }}
               error={field?.error || false}
-              required={requiredField}
+              required={requiredField && requiredIfImageMissingValue}
               disabled={field?.disabled}
               accept="image/* , .pdf"
             />
@@ -145,7 +147,7 @@ export const renderFormFields = ({
                 {!field?.value.endsWith("pdf") && (
                   <Image
                     src={field?.value}
-                    alt="Picture of the author"
+                    alt={`Picture of ${field?.label}`}
                     width={200}
                     height={200}
                   />

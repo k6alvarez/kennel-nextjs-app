@@ -4,6 +4,8 @@ import { Button, SplitHeader } from "../ui-kit/Base";
 import { ClientPets } from "./ClientPets";
 import { PetForm } from "./PetForm";
 import { getPets } from "./services";
+import { InfoCircleOutlined } from "@ant-design/icons";
+import { Collapse } from "antd";
 export const PetsTab = () => {
   const [pets, setPets] = useState([]);
   const [formLoading, setFormLoading] = useState(false);
@@ -25,12 +27,15 @@ export const PetsTab = () => {
         </Button>
       </SplitHeader>
       <ClientPets pets={pets} />
-      <h1>Add New Pet</h1>
-      <PetForm
-        formLoading={formLoading}
-        setFormLoading={setFormLoading}
-        formSuccessCallback={fetchClientPets}
-      />
+      <Collapse expandIcon={() => <InfoCircleOutlined />}>
+        <Collapse.Panel header={<>Add a pet</>} key="1">
+          <PetForm
+            formLoading={formLoading}
+            setFormLoading={setFormLoading}
+            formSuccessCallback={fetchClientPets}
+          />
+        </Collapse.Panel>
+      </Collapse>
     </>
   );
 };
