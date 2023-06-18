@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import prisma from "../lib/prisma";
 import { GetServerSideProps } from "next";
 
@@ -7,12 +7,19 @@ import Layout from "../components/Layout";
 import { getSession, useSession } from "next-auth/react";
 import { Content } from "../components/ui-kit/Base";
 
-import { Button, Divider, Tabs, Tag, message } from "antd";
+import { Button, Divider, Tabs, Tag, Tooltip, message } from "antd";
 import { VirtualTable } from "../components/ui-kit/Table/VirtualTable";
 import { headerHt } from "../components/ui-kit/Promo/styles-promo";
 import styled from "styled-components";
 import { DateTime } from "luxon";
 import Link from "next/link";
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  CheckOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
+import { useRouter } from "next/router";
 
 const Wrapper = styled.div`
   padding: 0 20px;
@@ -29,105 +36,6 @@ const Flex = styled.div`
     margin: 0;
   }
 `;
-
-const columnsUsers = [
-  {
-    title: "Status",
-    dataIndex: "confirmed",
-    key: "confirmed",
-    render: (confirmed) => (
-      <Flex>
-        <Tag color={confirmed === "confirmed" ? "green" : "red"}>
-          {confirmed}
-        </Tag>
-      </Flex>
-    ),
-  },
-  {
-    title: "Arrival Date",
-    dataIndex: "arrivalDate",
-    key: "arrivalDate",
-    render: (arrivalDate) =>
-      DateTime.fromISO(arrivalDate).toLocaleString(DateTime.DATE_FULL),
-  },
-  {
-    title: "Departure Date",
-    dataIndex: "departureDate",
-    key: "departureDate",
-    render: (departureDate) =>
-      DateTime.fromISO(departureDate).toLocaleString(DateTime.DATE_FULL),
-  },
-
-  {
-    title: "Owner Name",
-    dataIndex: "name",
-    key: "name",
-    render: (name, item) => (
-      <span>
-        {name} {item.lastName}
-      </span>
-    ),
-  },
-  {
-    title: "Email",
-    dataIndex: "email",
-    key: "email",
-    render: (email) => <a href={`mailto:${email}`}>{email}</a>,
-  },
-
-  {
-    title: "Pets",
-    dataIndex: "pets",
-    key: "pets",
-  },
-  {
-    title: "Actions",
-    dataIndex: "actions",
-    key: "actions",
-    render: (actions, item) => (
-      <>
-        <Button
-          type="primary"
-          size="small"
-          disabled={item.confirmed === "confirmed"}
-          onClick={() => {
-            const updateReservation = async () => {
-              const reservationApiName =
-                item.reservationType === "user"
-                  ? "reservation"
-                  : "guest-reservation";
-              const response = await fetch(
-                `/api/${reservationApiName}/${item.id}`,
-                {
-                  method: "PUT",
-                  body: JSON.stringify({
-                    id: item.id,
-                    confirmed: true,
-                    userId: item.userId,
-                    reservationEmail: item.email,
-                  }),
-                }
-              );
-
-              if (response.ok) {
-                message.success("Reservation confirmed");
-              } else {
-                message.error("Something went wrong. Please try again.");
-              }
-            };
-            updateReservation();
-          }}
-        >
-          Confirm
-        </Button>
-        <Divider type="vertical" />
-        <Link href={`/reservation/${item.id}`}>
-          <Button size="small">View</Button>
-        </Link>
-      </>
-    ),
-  },
-];
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -169,9 +77,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 };
 
 export const reservations = ({ reservations, guestReservations, user }) => {
-  // const parsedReservations = JSON.parse(reservations);
-  // const parsedGuestReservations = JSON.parse(guestReservations);
-  // const parsedUser = JSON.parse(user);
+  const router = useRouter();
+  const { tab } = router.query;
+  const [activeKey, setActiveKey] = useState("reservations");
+  const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
 
   const dataUsers = reservations.map((reservation, index) => {
@@ -186,9 +95,7 @@ export const reservations = ({ reservations, guestReservations, user }) => {
       name: reservation.author.name,
       lastName: reservation.author.lastName,
       email: reservation.author.email,
-      pets: reservation.pets.map((pet, i) => {
-        return pet.name + (i < reservation.pets.length - 1 ? ", " : "");
-      }),
+      pets: reservation.pets,
     };
   });
 
@@ -206,17 +113,146 @@ export const reservations = ({ reservations, guestReservations, user }) => {
       name: reservation.name,
       lastName: reservation.lastName,
       email: reservation.email,
-      pets: reservation.pets.map((pet, i) => {
-        return pet.name + (i < reservation.pets.length - 1 ? ", " : "");
-      }),
+      pets: reservation.pets,
     };
   });
+
+  const columnsUsers = [
+    {
+      title: "Status",
+      dataIndex: "confirmed",
+      key: "confirmed",
+      render: (confirmed) => (
+        <Flex>
+          <Tag color={confirmed === "confirmed" ? "green" : "red"}>
+            {confirmed}
+          </Tag>
+        </Flex>
+      ),
+    },
+    {
+      title: "Reservation Dates",
+      dataIndex: "arrivalDate",
+      key: "arrivalDate",
+      render: (arrivalDate, item) => {
+        return (
+          <span>
+            <ArrowRightOutlined />
+            {DateTime.fromISO(arrivalDate).toLocaleString(DateTime.DATE_FULL)}
+            <br />
+            <ArrowLeftOutlined />
+            {DateTime.fromISO(item.departureDate).toLocaleString(
+              DateTime.DATE_FULL
+            )}
+          </span>
+        );
+      },
+    },
+    {
+      title: "Owner Name & Pets",
+      dataIndex: "name",
+      key: "name",
+      render: (name, item) => (
+        <span>
+          {name} {item.lastName}
+          <br />
+          <Tooltip
+            title={item.pets.map((pet, i) => {
+              return pet.name + (i < item.pets.length - 1 ? ", " : "");
+            })}
+          >
+            {item.pets.length} Pets
+          </Tooltip>
+        </span>
+      ),
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: (email) => <a href={`mailto:${email}`}>{email}</a>,
+    },
+
+    {
+      title: "Actions",
+      dataIndex: "actions",
+      key: "actions",
+      render: (actions, item) => (
+        <>
+          <Button
+            type="primary"
+            size="small"
+            icon={<CheckOutlined />}
+            loading={loading}
+            disabled={item.confirmed === "confirmed"}
+            onClick={() => {
+              setLoading(true);
+              const updateReservation = async () => {
+                const reservationApiName =
+                  item.reservationType === "user"
+                    ? "reservation"
+                    : "guest-reservation";
+                const response = await fetch(
+                  `/api/${reservationApiName}/${item.id}`,
+                  {
+                    method: "PUT",
+                    body: JSON.stringify({
+                      id: item.id,
+                      confirmed: true,
+                      userId: item.userId,
+                      reservationEmail: item.email,
+                    }),
+                  }
+                );
+
+                // update state to re-render table
+                const newData = dataUsersKeyOnly.map((data) => {
+                  if (data.id === item.id) {
+                    return { ...data, confirmed: "confirmed" };
+                  }
+                  return data;
+                });
+                setDataUsersKeyOnly(newData);
+
+                if (response.ok) {
+                  message.success("Reservation confirmed");
+                } else {
+                  message.error("Something went wrong. Please try again.");
+                }
+                setLoading(false);
+              };
+              updateReservation();
+            }}
+          >
+            Confirm
+          </Button>
+          <Divider type="vertical" />
+          <Link
+            href={`/${
+              item.reservationType === "user" ? "reservation" : "res-guest"
+            }/${item.id}`}
+          >
+            <Button icon={<EyeOutlined />} size="small">
+              View
+            </Button>
+          </Link>
+        </>
+      ),
+    },
+  ];
+
+  useEffect(() => {
+    if (tab) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setActiveKey(tab as string);
+    }
+  }, [tab]);
 
   if (!session) {
     return (
       <Layout>
         <Content>
-          <h1>Pending Reservations</h1>
+          <h1>Acess Denied</h1>
           <div>You need to be authenticated to view this page.</div>
         </Content>
       </Layout>
@@ -228,10 +264,15 @@ export const reservations = ({ reservations, guestReservations, user }) => {
       <Wrapper>
         {user?.permissions?.includes("ADMIN") ? (
           <main>
+            <Content>
+              <h1>Reservations</h1>
+            </Content>
             <Tabs
+              defaultActiveKey="reservations"
+              activeKey={activeKey}
               items={[
                 {
-                  key: "1",
+                  key: "reservations",
                   label: "User Reservations",
                   children: (
                     <>
@@ -246,7 +287,7 @@ export const reservations = ({ reservations, guestReservations, user }) => {
                   ),
                 },
                 {
-                  key: "2",
+                  key: "guest-reservations",
                   label: "Guest Reservations",
                   children: (
                     <>
@@ -261,6 +302,12 @@ export const reservations = ({ reservations, guestReservations, user }) => {
                   ),
                 },
               ]}
+              onTabClick={(key) => {
+                router.replace(`/reservations?tab=${key}`, undefined, {
+                  shallow: true,
+                });
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
             />
           </main>
         ) : (

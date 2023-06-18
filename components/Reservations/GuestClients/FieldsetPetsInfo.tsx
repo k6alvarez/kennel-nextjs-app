@@ -31,6 +31,7 @@ interface FieldsetPetsInfoProps {
   apiPath: any;
   toggle?: (pet: PetProps) => void;
   onDelete?: (petId: string) => void;
+  refetchPets?: () => void;
 }
 
 export const FieldsetPetsInfo = ({
@@ -41,6 +42,7 @@ export const FieldsetPetsInfo = ({
   apiPath,
   toggle,
   onDelete,
+  refetchPets,
 }: FieldsetPetsInfoProps) => {
   const {
     petFormState,
@@ -128,6 +130,7 @@ export const FieldsetPetsInfo = ({
                 onDelete={onDelete}
                 key={pet + "-" + i}
                 pet={pet}
+                refetchPets={refetchPets}
                 petSelected={
                   formState.pets instanceof Array
                     ? formState.pets.includes(pet)

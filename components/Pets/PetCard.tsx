@@ -60,6 +60,7 @@ interface PetCardProps {
   toggle?: any;
   onDelete?: (petId: string) => void;
   onUpdate?: (petId: string) => void;
+  refetchPets?: () => void;
 }
 
 export const PetCard = ({
@@ -68,9 +69,9 @@ export const PetCard = ({
   onDelete,
   onUpdate,
   petSelected,
+  refetchPets,
 }: PetCardProps) => {
   const [activeTabKey1, setActiveTabKey1] = useState<string>("pet");
-  const [activePet, setCurrentPet] = useState<PetProps>(pet);
 
   const onTab1Change = (key: string) => {
     setActiveTabKey1(key);
@@ -91,21 +92,15 @@ export const PetCard = ({
     },
   ];
 
-  useEffect(() => {
-    if (vaccinationsExpired(activePet)) {
-      setActiveTabKey1("vaccines");
-    }
-  }, [activePet]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = (data) => {
+  const handleOk = (_data) => {
     setIsModalOpen(false);
-    setCurrentPet(data);
+    refetchPets && refetchPets();
   };
 
   return (
@@ -119,25 +114,25 @@ export const PetCard = ({
                   primary={petSelected}
                   type="button"
                   onClick={() => {
-                    toggle(activePet);
+                    toggle(pet);
                   }}
                 >
                   {petSelected ? (
                     <>
-                      <CheckCircleOutlined /> {activePet.name}
+                      <CheckCircleOutlined /> {pet.name}
                     </>
                   ) : (
                     <>
-                      <PlusCircleOutlined /> {activePet.name}
+                      <PlusCircleOutlined /> {pet.name}
                     </>
                   )}
                 </Button>
               ) : (
-                <span>{activePet.name}</span>
+                <span>{pet.name}</span>
               )}
             </div>
             <div>
-              {vaccinationsExpired(activePet) && (
+              {vaccinationsExpired(pet) && (
                 <Badge count="Vaccinations Expired" />
               )}
             </div>
@@ -178,23 +173,23 @@ export const PetCard = ({
               Edit Pet
             </AntButton>
             <Modal
-              title={<CardTitle>Edit {activePet.name}</CardTitle>}
+              title={<CardTitle>Edit {pet.name}</CardTitle>}
               open={isModalOpen}
               onCancel={() => setIsModalOpen(false)}
               footer={null}
               width={"1000px"}
             >
-              <UserPetEditForm pet={activePet} callback={handleOk} />
+              <UserPetEditForm pet={pet} callback={handleOk} />
             </Modal>
           </>
         }
       >
-        {activeTabKey1 === "pet" && <PetInfo pet={petInfoOnly(activePet)} />}
+        {activeTabKey1 === "pet" && <PetInfo pet={petInfoOnly(pet)} />}
         {activeTabKey1 === "vaccines" && (
-          <PetInfo pet={vaccinationInfoOnly(activePet)} />
+          <PetInfo pet={vaccinationInfoOnly(pet)} />
         )}
         {activeTabKey1 === "boarding" && (
-          <PetInfo pet={boardingInfoOnly(activePet)} />
+          <PetInfo pet={boardingInfoOnly(pet)} />
         )}
       </Card>
     </Container>

@@ -34,6 +34,11 @@ export const ClientForm = ({ user }) => {
 
   const [pets, setPets] = useState([]);
 
+  const updatePets = () =>
+    getPets().then((pets) => {
+      setPets(pets);
+    });
+
   useEffect(() => {
     if (user) {
       clientFormDispatch({
@@ -42,9 +47,8 @@ export const ClientForm = ({ user }) => {
           user,
         },
       });
-      getPets().then((pets) => {
-        setPets(pets);
-      });
+
+      updatePets();
     }
   }, []);
 
@@ -81,6 +85,7 @@ export const ClientForm = ({ user }) => {
           setPets={setPets}
           formState={clientFormState}
           formDispatch={clientFormDispatch}
+          refetchPets={updatePets}
           apiPath="/api/pet"
           toggle={(pet) => {
             clientFormDispatch({
@@ -89,6 +94,7 @@ export const ClientForm = ({ user }) => {
                 pet,
               },
             });
+            setClientFormError(null);
           }}
         />
       ),
