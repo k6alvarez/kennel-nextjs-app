@@ -112,6 +112,7 @@ export const FieldsetPetsInfo = ({
       }).then(() => {
         window.scrollTo(0, 0);
         setPetFormLoading(false);
+        setPetFormError(undefined);
       });
     }
     setPetFormLoading(false);
@@ -127,6 +128,7 @@ export const FieldsetPetsInfo = ({
             {pets?.map((pet, i) => {
               return (
                 <PetCard
+                  apiPath={apiPath}
                   toggle={toggle}
                   onDelete={onDelete}
                   key={pet + "-" + i}

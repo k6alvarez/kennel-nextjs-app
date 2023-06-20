@@ -8,9 +8,14 @@ export default async function handle(req, res) {
       where: { id: petId },
     });
     res.json(guestPet);
-  } else {
-    throw new Error(
-      `The HTTP ${req.method} method is not supported at this route.`
-    );
+  }
+
+  if (req.method === "PUT") {
+    const data = JSON.parse(req.body);
+    const guestPet = await prisma.guestPet.update({
+      where: { id: petId },
+      data,
+    });
+    res.json(guestPet);
   }
 }

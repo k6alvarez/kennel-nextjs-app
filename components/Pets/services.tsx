@@ -141,11 +141,13 @@ export const handleGeneralUpdate = async ({
     });
     const data = await res.json();
     if (data.error) {
-      throw new Error("Something went wrong. Please try again.");
+      setFormError("Something went wrong. Please try again.");
+      console.error(data.error);
     }
     formSuccessCallback(data);
   } catch (error) {
-    setFormError(error.message);
+    setFormError("Something went wrong. Please try again.");
+    console.error(error);
   }
   setFormLoading(false);
 };

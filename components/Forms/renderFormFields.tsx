@@ -138,7 +138,7 @@ export const renderFormFields = ({
               }}
               error={field?.error || false}
               required={requiredField && requiredIfImageMissingValue}
-              disabled={field?.disabled}
+              disabled={field?.disabled || imgLoading}
               accept="image/* , .pdf"
             />
 

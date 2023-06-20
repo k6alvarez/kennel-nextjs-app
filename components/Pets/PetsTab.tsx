@@ -33,6 +33,7 @@ export const PetsTab = () => {
             formLoading={formLoading}
             setFormLoading={setFormLoading}
             formSuccessCallback={fetchClientPets}
+            pets={pets}
           />
         </Collapse.Panel>
       </Collapse>

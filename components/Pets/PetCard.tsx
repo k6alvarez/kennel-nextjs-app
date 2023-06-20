@@ -18,7 +18,6 @@ import { CardTitle } from "./styles";
 
 import styled from "styled-components";
 import { DateTime } from "luxon";
-import { UserPetEditForm } from "../Forms/UserPetEditForm";
 
 const Container = styled.div`
   display: flex;
@@ -61,6 +60,7 @@ interface PetCardProps {
   onDelete?: (petId: string) => void;
   onUpdate?: (petId: string) => void;
   refetchPets?: () => void;
+  apiPath?: string;
 }
 
 export const PetCard = ({
@@ -70,6 +70,7 @@ export const PetCard = ({
   onUpdate,
   petSelected,
   refetchPets,
+  apiPath,
 }: PetCardProps) => {
   const [activeTabKey1, setActiveTabKey1] = useState<string>("pet");
 
@@ -179,7 +180,7 @@ export const PetCard = ({
               footer={null}
               width={"1000px"}
             >
-              <UserPetEditForm pet={pet} callback={handleOk} />
+              <p>pet edit</p>
             </Modal>
           </>
         }

@@ -131,7 +131,11 @@ export const ClientForm = ({ user }) => {
             </BlockQuote>
           )}
           <StepsAction>
-            <GoBackButton current={current} setCurrent={setCurrent} />
+            <GoBackButton
+              setFormError={setClientFormError}
+              current={current}
+              setCurrent={setCurrent}
+            />
 
             <ContinueButton
               current={current}

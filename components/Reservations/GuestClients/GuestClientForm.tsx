@@ -70,6 +70,9 @@ export const GuestClientForm = () => {
             deleteGuestPet(petId).then(() => {
               setPets(pets.filter((pet) => pet.id !== petId));
             });
+            guestFormDispatch({
+              type: "resetForm",
+            });
           }}
           apiPath="/api/guest-pet"
         />
@@ -107,7 +110,11 @@ export const GuestClientForm = () => {
           </BlockQuote>
         )}
         <StepsAction>
-          <GoBackButton current={current} setCurrent={setCurrent} />
+          <GoBackButton
+            setFormError={setGuestFormError}
+            current={current}
+            setCurrent={setCurrent}
+          />
 
           <ContinueButton
             current={current}

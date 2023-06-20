@@ -13,7 +13,8 @@ export const ContinueButton = ({
   setFormError,
   fieldsValidCallback = undefined,
 }) => {
-  const petsNotAdded = formState.pets.length === 0 && current === 2;
+  const petsNotAdded = !formState.pets.length && current === 2;
+
   const checkPetsAdded = (e) => {
     if (petsNotAdded) {
       e.preventDefault();
