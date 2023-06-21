@@ -55,7 +55,7 @@ export const PET_INITIAL_STATE = {
     error: null,
     type: "file",
     label: "Vaccinations Upload",
-    required: true,
+    required: false,
   },
   distemperVaccine: {
     value: "",

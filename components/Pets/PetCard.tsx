@@ -18,6 +18,7 @@ import { CardTitle } from "./styles";
 
 import styled from "styled-components";
 import { DateTime } from "luxon";
+import { UserPetEditForm } from "../Reservations/UserPetEditForm";
 
 const Container = styled.div`
   display: flex;
@@ -180,7 +181,11 @@ export const PetCard = ({
               footer={null}
               width={"1000px"}
             >
-              <p>pet edit</p>
+              <UserPetEditForm
+                apiPath={apiPath}
+                pet={pet}
+                callback={handleOk}
+              />
             </Modal>
           </>
         }
