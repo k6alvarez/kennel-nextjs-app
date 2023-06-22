@@ -46,12 +46,16 @@ const ImageBanner = styled.div`
   }
 
   p {
-    font-size: ${({ theme }) => `calc(${theme.fontSizes[1]})`};
+    font-size: ${({ theme }) => `calc(${theme.fontSizes[0]})`};
     font-weight: bold;
     letter-spacing: 0.1rem;
 
-    @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
-      font-size: ${({ theme }) => `calc(${theme.fontSizes[3]})`};
+    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+      font-size: ${({ theme }) => `calc(${theme.fontSizes[1]})`};
+    }
+
+    @media (min-width: ${({ theme }) => theme.breakpoints[3]}) {
+      font-size: ${({ theme }) => `calc(${theme.fontSizes[2]})`};
     }
   }
 
@@ -107,7 +111,7 @@ const Flex = styled.div`
 `;
 
 const HintText = styled.p`
-  font-size: ${({ theme }) => `calc(${theme.fontSizes[1]})`};
+  font-size: ${({ theme }) => `calc(${theme.fontSizes[0]})`};
   color: ${({ theme }) => theme.colors.textSecondary};
 `;
 export const ClientStatusSelection = ({

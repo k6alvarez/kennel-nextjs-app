@@ -3,7 +3,7 @@ import { EditForm } from "../Forms/styles";
 import { headerHt } from "./Promo/styles-promo";
 
 export const Content = styled.article`
-  padding: ${({ theme }) => theme.space[4]};
+  padding: ${({ theme }) => theme.space[6]};
   max-width: 100%;
   margin: 0 auto;
   position: relative;

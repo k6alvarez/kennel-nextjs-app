@@ -175,12 +175,16 @@ export const PromoPics = styled.div`
 export const PromoTitleWrapper = styled.div`
   margin: 0 auto;
   text-align: center;
-  padding: ${({ theme }) => theme.space[4]};
+  padding: ${({ theme }) => theme.space[6]};
   flex: 1;
   max-width: 80%;
 
   p:last-child {
     margin-bottom: 0;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+    padding: ${({ theme }) => theme.space[4]};
   }
 `;
 
