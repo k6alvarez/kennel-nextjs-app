@@ -11,8 +11,7 @@ export default async function handle(req, res) {
   }
 
   if (req.method === "PUT") {
-    const data = JSON.parse(req.body);
-    console.log("🚀 ~ file: [id].tsx:15 ~ handle ~ data:", data);
+    const data = req.body;
     const guestPet = await prisma.guestPet.update({
       where: { id: petId },
       data,

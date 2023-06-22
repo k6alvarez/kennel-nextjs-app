@@ -3,8 +3,8 @@ import {
   DeleteOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
-import { Card, Avatar, Badge, Button as AntButton, Modal, message } from "antd";
-import React, { useEffect, useState } from "react";
+import { Card, Badge, Button as AntButton, Modal } from "antd";
+import React, { useState } from "react";
 import { PetProps } from "../../pages/profile";
 import {
   boardingInfoOnly,
@@ -13,12 +13,12 @@ import {
 } from "../Reservations/GuestClients/services";
 import { Button } from "../ui-kit/Base";
 import { PetInfo } from "./PetInfo";
-import { isValidHttpUrl } from "./services";
 import { CardTitle } from "./styles";
 
 import styled from "styled-components";
 import { DateTime } from "luxon";
 import { UserPetEditForm } from "../Reservations/UserPetEditForm";
+import { useGuestFormContext } from "../Reservations/formContext";
 
 const Container = styled.div`
   display: flex;
@@ -62,6 +62,7 @@ interface PetCardProps {
   onUpdate?: (petId: string) => void;
   refetchPets?: () => void;
   apiPath?: string;
+  setPets?: React.Dispatch<React.SetStateAction<PetProps[]>>;
 }
 
 export const PetCard = ({
@@ -72,8 +73,18 @@ export const PetCard = ({
   petSelected,
   refetchPets,
   apiPath,
+  setPets,
 }: PetCardProps) => {
   const [activeTabKey1, setActiveTabKey1] = useState<string>("pet");
+  const {
+    guestFormState,
+    guestFormDispatch,
+    setGuestFormError,
+    handleChange,
+    guestFormError,
+    setGuestFormLoading,
+    guestFormLoading,
+  } = useGuestFormContext();
 
   const onTab1Change = (key: string) => {
     setActiveTabKey1(key);
@@ -100,9 +111,29 @@ export const PetCard = ({
     setIsModalOpen(true);
   };
 
-  const handleOk = (_data) => {
+  const handleOk = (data) => {
     setIsModalOpen(false);
+    //logged in clients
     refetchPets && refetchPets();
+
+    //guest clients
+    if (setPets) {
+      setPets((prev) =>
+        prev.map((pet) => {
+          if (pet.id === data.id) {
+            return data;
+          }
+          return pet;
+        })
+      );
+
+      guestFormDispatch({
+        type: "togglePet",
+        payload: {
+          pet: data,
+        },
+      });
+    }
   };
 
   return (

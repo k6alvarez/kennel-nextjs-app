@@ -131,6 +131,7 @@ export const FieldsetPetsInfo = ({
                   apiPath={apiPath}
                   toggle={toggle}
                   onDelete={onDelete}
+                  setPets={setPets}
                   key={pet + "-" + i}
                   pet={pet}
                   refetchPets={refetchPets}

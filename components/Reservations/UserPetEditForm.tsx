@@ -5,6 +5,7 @@ import { message } from "antd";
 import { handleGeneralUpdate } from "../Pets/services";
 import { Error, Fields, Fieldset } from "../Forms/styles";
 import { renderFormFields } from "../Forms/renderFormFields";
+import { Button } from "../ui-kit/Base";
 
 export const UserPetEditForm = ({ pet, callback, apiPath = "/api/pet" }) => {
   const [formLoading, setFormLoading] = useState(false);
@@ -15,7 +16,6 @@ export const UserPetEditForm = ({ pet, callback, apiPath = "/api/pet" }) => {
     const petKeys = Object.keys(initialState);
     petKeys.forEach((key) => {
       initialState[key].value = pet[key];
-      console.log("pet[key]", pet[key]);
     });
 
     return initialState;
@@ -92,44 +92,44 @@ export const UserPetEditForm = ({ pet, callback, apiPath = "/api/pet" }) => {
 
   return (
     <div>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setFormLoading(true);
-
-          handleGeneralUpdate({
-            e,
-            initialFormState: PET_INITIAL_STATE,
-            formState,
-            setFormLoading,
-            setFormError,
-            formSuccessCallback: (data) => {
-              message.success("Pet updated successfully");
-              callback && callback(data);
+      <Error>{formError}</Error>
+      <Fieldset disabled={formLoading}>
+        <Fields>
+          {renderFormFields({
+            initialState: PET_INITIAL_STATE,
+            state: formState,
+            handleChange: (name: string, newValue: any) => {
+              const error = null;
+              formDispatch({
+                key: name,
+                payload: { newValue, error },
+              });
             },
-            apiPath: `${apiPath}/${pet.id}`,
-          });
-        }}
-      >
-        <Error>{formError}</Error>
-        <Fieldset disabled={formLoading}>
-          <Fields>
-            {renderFormFields({
-              initialState: PET_INITIAL_STATE,
-              state: formState,
-              handleChange: (name: string, newValue: any) => {
-                const error = null;
-                formDispatch({
-                  key: name,
-                  payload: { newValue, error },
-                });
+            setFormLoading: () => {},
+          })}
+        </Fields>
+        <Button
+          primary
+          type="button"
+          onClick={(e) => {
+            setFormLoading(true);
+            handleGeneralUpdate({
+              e,
+              initialFormState: PET_INITIAL_STATE,
+              formState,
+              setFormLoading,
+              setFormError,
+              formSuccessCallback: (data) => {
+                message.success("Pet updated successfully");
+                callback && callback(data);
               },
-              setFormLoading: () => {},
-            })}
-          </Fields>
-          <input type="submit" value="Update Pet" />
-        </Fieldset>
-      </form>
+              apiPath: `${apiPath}/${pet.id}`,
+            });
+          }}
+        >
+          Update Pet
+        </Button>
+      </Fieldset>
     </div>
   );
 };
