@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Steps } from "antd";
 import { BlockQuote, FormIntroGuest } from "./FormIntro";
 import { useGuestFormContext } from "../formContext";
@@ -70,6 +70,9 @@ export const GuestClientForm = () => {
             deleteGuestPet(petId).then(() => {
               setPets(pets.filter((pet) => pet.id !== petId));
             });
+            guestFormDispatch({
+              type: "resetForm",
+            });
           }}
           apiPath="/api/guest-pet"
         />
@@ -107,7 +110,11 @@ export const GuestClientForm = () => {
           </BlockQuote>
         )}
         <StepsAction>
-          <GoBackButton current={current} setCurrent={setCurrent} />
+          <GoBackButton
+            setFormError={setGuestFormError}
+            current={current}
+            setCurrent={setCurrent}
+          />
 
           <ContinueButton
             current={current}
@@ -117,6 +124,7 @@ export const GuestClientForm = () => {
             formError={guestFormError}
             formDispatch={guestFormDispatch}
             setFormError={setGuestFormError}
+            pets={pets}
             fieldsValidCallback={() => {
               const draftCreated = guestFormState.reservationId;
               if (!draftCreated) {

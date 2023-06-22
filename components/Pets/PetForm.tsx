@@ -9,6 +9,7 @@ export const PetForm = ({
   formSuccessCallback = undefined,
   formLoading,
   setFormLoading,
+  pets,
 }) => {
   const {
     petFormState,

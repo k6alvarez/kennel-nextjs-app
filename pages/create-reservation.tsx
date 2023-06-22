@@ -61,6 +61,7 @@ const Reservation = ({ contentItems, promoItems, user }) => {
   const [clientType, setClientType] = useState({
     clientType: "",
   });
+  const isNewClient = !session || clientType.clientType === "new";
 
   const { editMode } = useContext(ThemePreferenceContext);
 
@@ -104,11 +105,7 @@ const Reservation = ({ contentItems, promoItems, user }) => {
     <Layout>
       <Content>
         <h1>Client Reservations</h1>
-        {!session || clientType.clientType === "new" ? (
-          <GuestClientForm />
-        ) : (
-          <ClientForm user={user} />
-        )}
+        {isNewClient ? <GuestClientForm /> : <ClientForm user={user} />}
       </Content>
     </Layout>
   );

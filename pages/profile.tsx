@@ -80,13 +80,8 @@ const Profile: React.FC<Props> = ({ user, appSettings }) => {
   const router = useRouter();
   const { tab } = router.query;
   const [profileTab, setProfileTab] = useState("profile");
-  const {
-    setAppSettings,
-    formAppSettingsDispatch,
-    themeSettings,
-    formThemeAppSettingsDispatch,
-    setThemeSettings,
-  } = useContext(AppSettingsContext);
+  const { setAppSettings, formAppSettingsDispatch } =
+    useContext(AppSettingsContext);
 
   const { breakpoints } = useContext(ThemePreferenceContext);
   const size: Size = useWindowSize();

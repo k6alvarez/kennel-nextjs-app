@@ -2,15 +2,19 @@ import prisma from '../../../lib/prisma';
 
 // DELETE /api/pet/:id
 export default async function handle(req, res) {
-  const postId = req.query.id;
+  const petId = req.query.id;
   if (req.method === 'DELETE') {
     const pet = await prisma.pet.delete({
-      where: { id: postId },
+      where: { id: petId },
     });
     res.json(pet);
-  } else {
-    throw new Error(
-      `The HTTP ${req.method} method is not supported at this route.`,
-    );
+  }
+
+  if (req.method === 'PUT') {
+    const pet = await prisma.pet.update({
+      where: { id: petId },
+      data: req.body,
+    });
+    res.json(pet);
   }
 }

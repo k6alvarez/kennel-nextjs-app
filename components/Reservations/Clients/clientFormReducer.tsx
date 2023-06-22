@@ -9,8 +9,9 @@ export const clientFormReducer = (
       const petToggled = payload.pet;
       let pets = clientFormState.pets;
       const petCheck = pets.filter((pet: any) => {
-        return petToggled.id === pet.id;
+        return petToggled.id == pet.id;
       });
+
       if (petCheck.length > 0) {
         pets = pets.filter((pet) => {
           return pet.id !== petToggled.id;
