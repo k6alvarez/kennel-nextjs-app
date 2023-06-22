@@ -135,34 +135,28 @@ export const PetCard = ({
       <Card
         title={
           <CardTitle>
-            <div>
-              {toggle ? (
-                <Button
-                  primary={petSelected}
-                  type="button"
-                  onClick={() => {
-                    toggle(pet);
-                  }}
-                >
-                  {petSelected ? (
-                    <>
-                      <CheckCircleOutlined /> {pet.name}
-                    </>
-                  ) : (
-                    <>
-                      <PlusCircleOutlined /> {pet.name}
-                    </>
-                  )}
-                </Button>
-              ) : (
-                <span>{pet.name}</span>
-              )}
-            </div>
-            <div>
-              {vaccinationsExpired(pet) && (
-                <Badge count="Vaccinations Expired" />
-              )}
-            </div>
+            {toggle ? (
+              <Button
+                primary={petSelected}
+                type="button"
+                onClick={() => {
+                  toggle(pet);
+                }}
+              >
+                {petSelected ? (
+                  <>
+                    <CheckCircleOutlined /> {pet.name}
+                  </>
+                ) : (
+                  <>
+                    <PlusCircleOutlined /> {pet.name}
+                  </>
+                )}
+              </Button>
+            ) : (
+              <span>{pet.name}</span>
+            )}
+            {vaccinationsExpired(pet) && <Badge count="Vaccinations Expired" />}
           </CardTitle>
         }
         extra={

@@ -31,7 +31,11 @@ export const BoardingDetails = ({ pets, formState }) => {
         </p>
         <p>
           <span>Deposit amount due:</span>
-          <span>{calculateDeposit(formState.pets)}</span>
+          <span>
+            {calculateDeposit(
+              formState.pets.length > 0 ? formState.pets : pets
+            )}
+          </span>
         </p>
       </Flex>
       <Flex>

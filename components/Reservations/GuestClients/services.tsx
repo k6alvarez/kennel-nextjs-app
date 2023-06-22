@@ -195,8 +195,8 @@ export const boardingInfoOnly = (pet) => {
 
 export const calculateDeposit = (pets) => {
   let deposit = 0;
-  const getPets = typeof pets === "object" ? Object.keys(pets) : pets;
-  getPets.map((pet) => {
+
+  pets.map((pet) => {
     if (pet.preferredRunSize === "Small") {
       return (deposit += 25);
     } else if (pet.preferredRunSize === "Large") {

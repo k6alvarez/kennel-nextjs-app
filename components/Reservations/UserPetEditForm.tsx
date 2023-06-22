@@ -3,7 +3,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import { PET_INITIAL_STATE } from "../Pets/petFormReducer";
 import { message } from "antd";
 import { handleGeneralUpdate } from "../Pets/services";
-import { Error, Fields, Fieldset } from "../Forms/styles";
+import { Error, Field, Fields, Fieldset } from "../Forms/styles";
 import { renderFormFields } from "../Forms/renderFormFields";
 import { Button } from "../ui-kit/Base";
 
@@ -108,27 +108,29 @@ export const UserPetEditForm = ({ pet, callback, apiPath = "/api/pet" }) => {
             setFormLoading: () => {},
           })}
         </Fields>
-        <Button
-          primary
-          type="button"
-          onClick={(e) => {
-            setFormLoading(true);
-            handleGeneralUpdate({
-              e,
-              initialFormState: PET_INITIAL_STATE,
-              formState,
-              setFormLoading,
-              setFormError,
-              formSuccessCallback: (data) => {
-                message.success("Pet updated successfully");
-                callback && callback(data);
-              },
-              apiPath: `${apiPath}/${pet.id}`,
-            });
-          }}
-        >
-          Update Pet
-        </Button>
+        <Field>
+          <Button
+            primary
+            type="button"
+            onClick={(e) => {
+              setFormLoading(true);
+              handleGeneralUpdate({
+                e,
+                initialFormState: PET_INITIAL_STATE,
+                formState,
+                setFormLoading,
+                setFormError,
+                formSuccessCallback: (data) => {
+                  message.success("Pet updated successfully");
+                  callback && callback(data);
+                },
+                apiPath: `${apiPath}/${pet.id}`,
+              });
+            }}
+          >
+            Update Pet
+          </Button>
+        </Field>
       </Fieldset>
     </div>
   );

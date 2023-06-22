@@ -39,7 +39,7 @@ export default async function handle(req, res) {
                 console.log(
                     'There is a unique constraint violation, a new user cannot be created with this email'
                 )
-                res.status(409).send("There is a unique constraint violation, a new user cannot be created with this email");
+                res.status(409).send("A new user cannot be created with this email.");
             }
         }
         throw e
