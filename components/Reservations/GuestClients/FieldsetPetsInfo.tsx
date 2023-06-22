@@ -31,6 +31,7 @@ interface FieldsetPetsInfoProps {
   apiPath: any;
   toggle?: (pet: PetProps) => void;
   onDelete?: (petId: string) => void;
+  refetchPets?: () => void;
 }
 
 export const FieldsetPetsInfo = ({
@@ -41,6 +42,7 @@ export const FieldsetPetsInfo = ({
   apiPath,
   toggle,
   onDelete,
+  refetchPets,
 }: FieldsetPetsInfoProps) => {
   const {
     petFormState,
@@ -110,6 +112,7 @@ export const FieldsetPetsInfo = ({
       }).then(() => {
         window.scrollTo(0, 0);
         setPetFormLoading(false);
+        setPetFormError(undefined);
       });
     }
     setPetFormLoading(false);
@@ -120,77 +123,77 @@ export const FieldsetPetsInfo = ({
       <Error>{petFormError}</Error>
       <Fieldset disabled={petFormLoading}>
         <BoardingDetails pets={pets} formState={formState} />
-        <PetCards>
-          {pets?.map((pet, i) => {
-            return (
-              <PetCard
-                toggle={toggle}
-                onDelete={onDelete}
-                key={pet + "-" + i}
-                pet={pet}
-                petSelected={
-                  formState.pets instanceof Array
-                    ? formState.pets.includes(pet)
-                    : Object.keys(formState.pets).includes(pet.id)
-                }
-              />
-            );
-          })}
-        </PetCards>
+        {pets.length > 0 && (
+          <PetCards>
+            {pets?.map((pet, i) => {
+              return (
+                <PetCard
+                  apiPath={apiPath}
+                  toggle={toggle}
+                  onDelete={onDelete}
+                  setPets={setPets}
+                  key={pet + "-" + i}
+                  pet={pet}
+                  refetchPets={refetchPets}
+                  petSelected={
+                    formState.pets instanceof Array
+                      ? formState.pets.includes(pet)
+                      : Object.keys(formState.pets).includes(pet.id)
+                  }
+                />
+              );
+            })}
+          </PetCards>
+        )}
         <Collapse expandIcon={() => <InfoCircleOutlined />}>
           <Collapse.Panel header={<>Add a pet</>} key="1">
             <>
               {pets.length < 5 ? (
-                <>
-                  <Divider>
-                    <h2>Add More Pets</h2>
-                  </Divider>
-                  <Fields>
-                    {renderFormFields({
-                      initialState: PET_INITIAL_STATE,
-                      state: petFormState,
-                      handleChange,
-                      setFormLoading: setPetFormLoading,
-                    })}
-                    {petFormState.feeding.value === "Client Food" && (
-                      <Field grow>
-                        <BlockQuote>
-                          <InfoCircleOutlined />
-                          <p>
-                            If you provide food please package each meal in a
-                            *Ziploc® (type) plastic bag (no fold-over sandwich
-                            baggies, please) with each meal clearly labeled with
-                            your pet's name. See our{" "}
-                            <Link href="/policies?tab=Feeding">
-                              <a>feeding policy</a>
-                            </Link>{" "}
-                            for more details.
-                          </p>
-                        </BlockQuote>
-                      </Field>
-                    )}
-
+                <Fields>
+                  {renderFormFields({
+                    initialState: PET_INITIAL_STATE,
+                    state: petFormState,
+                    handleChange,
+                    setFormLoading: setPetFormLoading,
+                  })}
+                  {petFormState.feeding.value === "Client Food" && (
                     <Field grow>
-                      <p>
-                        Our guests are routinely fed at 9:00 AM. Additional
-                        evening feedings ($.75 per meal) are available upon
-                        request. The evening feeding is provided at 4:00 PM.
-                        Food and water are served in our dishes, so please do
-                        not bring dishes.
-                      </p>
+                      <BlockQuote>
+                        <InfoCircleOutlined />
+                        <p>
+                          If you provide food please package each meal in a
+                          *Ziploc® (type) plastic bag (no fold-over sandwich
+                          baggies, please) with each meal clearly labeled with
+                          your pet's name. See our{" "}
+                          <Link href="/policies?tab=Feeding">
+                            <a>feeding policy</a>
+                          </Link>{" "}
+                          for more details.
+                        </p>
+                      </BlockQuote>
                     </Field>
+                  )}
 
-                    <Field grow>
-                      <Button
-                        disabled={pets.length >= 5}
-                        onClick={handleAddPet}
-                        primary
-                      >
-                        Add Pet
-                      </Button>
-                    </Field>
-                  </Fields>
-                </>
+                  <Field grow>
+                    <p>
+                      Our guests are routinely fed at 9:00 AM. Additional
+                      evening feedings ($.75 per meal) are available upon
+                      request. The evening feeding is provided at 4:00 PM. Food
+                      and water are served in our dishes, so please do not bring
+                      dishes.
+                    </p>
+                  </Field>
+
+                  <Field grow>
+                    <Button
+                      disabled={pets.length >= 5}
+                      onClick={handleAddPet}
+                      primary
+                    >
+                      Add Pet
+                    </Button>
+                  </Field>
+                </Fields>
               ) : (
                 <p>
                   You have reached the maximum number of pets allowed for

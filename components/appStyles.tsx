@@ -242,6 +242,12 @@ export const GlobalStyle = createGlobalStyle`
     align-items: center;
   }
 
+  .ant-collapse-expand-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .ant-badge {    
     font-family: "Lato", sans-serif;
     font-size: calc(${({ theme }) => theme.fontSizes[0]} / 1.6);

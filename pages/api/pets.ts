@@ -13,7 +13,10 @@ export default async function handle(req, res) {
     });
     const pets = await prisma.pet.findMany({
         where: { ownerId: user.id },
+        orderBy: {
+            createdAt: 'desc'
+        }
     });
 
     res.json(pets)
-  }
+}

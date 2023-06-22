@@ -20,7 +20,6 @@ export const createReservationDraft = async (
     delete cloneState["emergencyContactName"];
     delete cloneState["emergencyContactPhone"];
     delete cloneState["howHear"];
-    message.loading("Sending reservation request.", 1);
     const data = Object.entries(cloneState).map(([key, _value]) => {
         return {
             [key]: state[key].value !== undefined ? state[key].value : state[key],
@@ -62,6 +61,7 @@ export const createReservationDraft = async (
                 await Router.push("/reservation/[id]", `/reservation/${res.id}`);
             });
     } catch (error) {
+        message.error("Something went wrong. Please try again.");
         console.error(error);
     }
 };

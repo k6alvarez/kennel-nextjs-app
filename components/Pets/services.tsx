@@ -110,3 +110,44 @@ export const isValidHttpUrl = (string) => {
 export const isImageURL = (url) => {
   return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
 };
+
+export const handleGeneralUpdate = async ({
+  e,
+  formState,
+  setFormLoading,
+  setFormError,
+  formSuccessCallback,
+  apiPath,
+  initialFormState,
+}) => {
+  e.preventDefault();
+  setFormLoading(true);
+  Object;
+
+  let dataToUpdate = {};
+
+  for (const key in formState) {
+    if (key in initialFormState) {
+      dataToUpdate[key] = formState[key].value;
+    }
+  }
+  try {
+    const res = await fetch(apiPath, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dataToUpdate),
+    });
+    const data = await res.json();
+    if (data.error) {
+      setFormError("Something went wrong. Please try again.");
+      console.error(data.error);
+    }
+    formSuccessCallback(data);
+  } catch (error) {
+    setFormError("Something went wrong. Please try again.");
+    console.error(error);
+  }
+  setFormLoading(false);
+};
