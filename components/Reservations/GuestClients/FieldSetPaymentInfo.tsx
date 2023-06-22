@@ -4,10 +4,7 @@ import { useGuestFormContext } from "../formContext";
 import { BlockQuote } from "./FormIntro";
 import { guestFormUpdate } from "./services";
 import { TotalDeposit } from "../styles";
-import {
-  InfoCircleOutlined,
-  Loading3QuartersOutlined,
-} from "@ant-design/icons";
+import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { ReservationSummary } from "../ReservationSummary";
 
 const getDepositTotal = (pets) => {
@@ -61,6 +58,7 @@ export const FieldSetPaymentInfo = ({ pets }) => {
           transactionTotal="25.00"
           onConfirm={(results) => {
             setDepositConfirmed(true);
+
             guestFormDispatch({
               type: "depositConfirmed",
               payload: {
@@ -69,6 +67,7 @@ export const FieldSetPaymentInfo = ({ pets }) => {
                 depositDate: results.create_time,
                 depositId: results.id,
                 depositLink: results.links[0].href,
+                id: guestFormState.reservationId,
               },
             });
           }}

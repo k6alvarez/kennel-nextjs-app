@@ -18,6 +18,7 @@ import Link from "next/link";
 import { BlockQuote } from "./FormIntro";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { BoardingDetails } from "./BoardingDetails";
+import { useGuestFormContext } from "../formContext";
 
 export const SmallButton = styled.button`
   font-size: ${(props) => `calc(${props.theme.fontSizes[1]} / 1.6)`};
@@ -53,6 +54,8 @@ export const FieldsetPetsInfo = ({
     setPetFormLoading,
     petFormError,
   } = usePetFormContext();
+
+  const { setGuestFormError } = useGuestFormContext();
 
   useEffect(() => {
     if (petFormState.type.value === "Cat") {
@@ -113,6 +116,7 @@ export const FieldsetPetsInfo = ({
         window.scrollTo(0, 0);
         setPetFormLoading(false);
         setPetFormError(undefined);
+        setGuestFormError(undefined);
       });
     }
     setPetFormLoading(false);
