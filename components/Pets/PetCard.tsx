@@ -76,15 +76,7 @@ export const PetCard = ({
   setPets,
 }: PetCardProps) => {
   const [activeTabKey1, setActiveTabKey1] = useState<string>("pet");
-  const {
-    guestFormState,
-    guestFormDispatch,
-    setGuestFormError,
-    handleChange,
-    guestFormError,
-    setGuestFormLoading,
-    guestFormLoading,
-  } = useGuestFormContext();
+  const { guestFormDispatch, setGuestFormError } = useGuestFormContext();
 
   const onTab1Change = (key: string) => {
     setActiveTabKey1(key);
@@ -133,6 +125,8 @@ export const PetCard = ({
           pet: data,
         },
       });
+
+      setGuestFormError(null);
     }
   };
 

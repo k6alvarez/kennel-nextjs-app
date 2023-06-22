@@ -124,6 +124,7 @@ export const GuestClientForm = () => {
             formError={guestFormError}
             formDispatch={guestFormDispatch}
             setFormError={setGuestFormError}
+            pets={pets}
             fieldsValidCallback={() => {
               const draftCreated = guestFormState.reservationId;
               if (!draftCreated) {

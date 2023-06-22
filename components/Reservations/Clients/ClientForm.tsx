@@ -145,6 +145,7 @@ export const ClientForm = ({ user }) => {
               formState={clientFormState}
               formDispatch={clientFormDispatch}
               setFormError={setClientFormError}
+              pets={pets}
               fieldsValidCallback={() => {
                 const shouldUpdateUser = current === 0;
                 if (shouldUpdateUser) {
