@@ -10,50 +10,48 @@ export const deleteGuestPet = async (id: string): Promise<void> => {
 export const guestFormUpdate = async (e, { state, dispatch, setFormError }) => {
   e?.preventDefault();
   message.loading("Sending reservation request.", 1);
+  try {
+    const data = Object.entries(state).map(([key, _value]) => {
+      return {
+        [key]: state[key].value !== undefined ? state[key].value : state[key],
+      };
+    });
 
-  // const data = Object.entries(state).map(([key, _value]) => {
-  //   return {
-  //     [key]: state[key].value !== undefined ? state[key].value : state[key],
-  //   };
-  // });
-  // console.log("🚀 ~ file: services.tsx:18 ~ data ~ data:", data);
-  // delete data["pets"];
-  // delete data["id"];
-  // delete data["reservationId"];
-
-  // try {
-  //   await fetch(`/api/guest-reservation/${state.id}`, {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(state),
-  //   })
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then(async (res) => {
-  //       if (res.errors) {
-  //         const validationError =
-  //           "Something went wrong. Please try again or contact us for assistance.";
-  //         Object.entries(res.errors).forEach(([key, value]) => {
-  //           dispatch({
-  //             key: key,
-  //             payload: {
-  //               newValue: state[key].value,
-  //               error: value,
-  //             },
-  //           });
-  //         });
-  //         setFormError(validationError);
-  //       }
-  //       message.success("Reservation request submitted successfully.");
-  //       dispatch({
-  //         type: "resetForm",
-  //       });
-  //       await Router.push("/res-guest/[id]", `/res-guest/${res.id}`);
-  //     });
-  // } catch (error) {
-  //   console.error(error);
-  // }
+    await fetch(`/api/guest-reservation/${state.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Object.assign({}, ...data)),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then(async (res) => {
+        if (res.errors) {
+          const validationError =
+            "Something went wrong. Please try again or contact us for assistance.";
+          Object.entries(res.errors).forEach(([key, value]) => {
+            dispatch({
+              key: key,
+              payload: {
+                newValue: state[key].value,
+                error: value,
+              },
+            });
+          });
+          setFormError(validationError);
+        }
+        message.success("Reservation request submitted successfully.");
+        dispatch({
+          type: "resetForm",
+        });
+        await Router.push("/res-guest/[id]", `/res-guest/${res.id}`);
+      });
+  } catch (error) {
+    message.error(
+      "Something went wrong. Please try again or contact us for assistance."
+    );
+    console.error(error);
+  }
 };
 
 export const guestFormSubmit = async (

@@ -106,7 +106,7 @@ export const GuestClientForm = () => {
         {guestFormError && (
           <BlockQuote>
             <WarningOutlined />
-            <p>{guestFormError}</p>
+            <span>{guestFormError}</span>
           </BlockQuote>
         )}
         <StepsAction>

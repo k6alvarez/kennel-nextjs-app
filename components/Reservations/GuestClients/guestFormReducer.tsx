@@ -34,7 +34,6 @@ export const guestFormReducer = (
         ...payload,
       };
     case "depositConfirmed":
-      console.log("depositConfirmed", guestFormState);
       return { ...guestFormState, ...payload };
     case "resetForm":
       return { ...INITIAL_STATE };

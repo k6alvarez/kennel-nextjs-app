@@ -68,6 +68,7 @@ export const FieldSetPaymentInfo = ({ pets }) => {
                 depositId: results.id,
                 depositLink: results.links[0].href,
                 id: guestFormState.reservationId,
+                pets,
               },
             });
           }}

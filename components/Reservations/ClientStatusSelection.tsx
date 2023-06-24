@@ -9,6 +9,7 @@ import { saveContent } from "../Admin/services";
 import { EditablePromo } from "../ui-kit/Promo/EditablePromo";
 import { Content } from "../ui-kit/Base";
 import { headerHt } from "../ui-kit/Promo/styles-promo";
+import { Promo } from "../ui-kit/Promo";
 
 const ImageOverlay = styled.div`
   width: 100%;
@@ -122,24 +123,12 @@ export const ClientStatusSelection = ({
   bannerImage,
   setBannerImage,
 }) => {
-  const { editMode, currentTheme } = useContext(ThemePreferenceContext);
+  const { editMode } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
   return (
     <>
-      {editMode && (bannerImage?.id || reservationWelcome?.id) ? (
+      {editMode && reservationWelcome?.id ? (
         <>
-          {bannerImage?.id && (
-            <EditablePromo
-              promo={bannerImage}
-              updatePromo={(newPromo) => {
-                setBannerImage(newPromo);
-              }}
-              editMode={editMode}
-              currentTheme={currentTheme}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
-            />
-          )}
           {reservationWelcome?.id && (
             <EditForm onSubmit={(e) => e.preventDefault()}>
               <Tiptap
@@ -160,8 +149,7 @@ export const ClientStatusSelection = ({
           )}
         </>
       ) : (
-        <ImageBanner src={bannerImage?.image}>
-          <ImageOverlay />
+        <>
           <Content>
             <div
               dangerouslySetInnerHTML={{
@@ -201,7 +189,7 @@ export const ClientStatusSelection = ({
               </Flex>
             </Flex>
           </Content>
-        </ImageBanner>
+        </>
       )}
     </>
   );
