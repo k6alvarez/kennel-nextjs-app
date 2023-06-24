@@ -1,4 +1,8 @@
-import { CopyrightCircleOutlined } from "@ant-design/icons";
+import {
+  CopyrightCircleOutlined,
+  FacebookOutlined,
+  InstagramOutlined,
+} from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ThemePreferenceContext } from "../pages/_app";
@@ -7,6 +11,7 @@ import { getBusinessHours } from "./Admin/services";
 import { RouteLink } from "./Navigation/RouteLink";
 import { LogoOne } from "./ui-kit/Logo";
 import Link from "next/link";
+import { PromoFooter } from "./ui-kit/Promo/styles-promo";
 
 const FooterWrapper = styled.footer`
   position: absolute;
@@ -36,13 +41,8 @@ const FooterInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${({ theme, currentTheme }) => {
-    if (currentTheme === "naturalEarth") {
-      return theme.colors.primary;
-    } else {
-      return theme.colors.secondary;
-    }
-  }};
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.white};
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     flex-direction: row;
@@ -155,66 +155,89 @@ export const Footer = () => {
   const date = new Date();
   const { currentTheme } = React.useContext(ThemePreferenceContext);
   return (
-    <FooterWrapper currentTheme={currentTheme}>
-      <Frame>
-        <iframe
-          width="100%"
-          height="100%"
-          frameBorder="0"
-          src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJpRxZd7uaF4gR7V1wVGncMpE&key=AIzaSyCZDOY0IiSO7q2u1PYLNN8rekYbU3-ZMm4&zoom=11"
-          allowFullScreen
-        />
-      </Frame>
-      <FooterInfo>
-        <BusinessHoursList businessHours={businessHours} />
-
-        <FlexColumn>
-          <FlexColumn>
-            <h1>Additional Info</h1>
-            <Link href="/terms-and-conditions">
-              <a>Terms and Conditions</a>
-            </Link>
-            <Link href="/privacy-policy">
-              <a>Privacy Policy</a>
-            </Link>
-          </FlexColumn>
-          <Flex
-            style={{
-              alignItems: "center",
-            }}
-          >
-            <a href="http://canineprofessionals.com/" target="_blank">
-              <img
-                src="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1670006065/gk-app/memberiacp.gif"
-                width="140"
-                height="126"
-              />
-            </a>
+    <>
+      <PromoFooter>
+        <p>9172 East K Ave, Galesburg MI, 49053</p>
+        <ul>
+          <li>
             <a
-              href="https://www.bbb.org/western-michigan/business-reviews/pet-training/gillette-kennels-in-galesburg-mi-8000795#sealclick"
               target="_blank"
+              href="https://www.facebook.com/gillettekennels1/"
             >
-              <img
-                alt="Click for the BBB Business Review of this Pet Training in Galesburg MI"
-                src="https://seal-westernmichigan.bbb.org/seals/blue-seal-250-52-gillettekennels-8000795.png"
-              />
+              <FacebookOutlined />
             </a>
-          </Flex>
-          <RouteLink activeClassName="active" href="/">
-            <a>
-              <LogoOne size={3} crestSize={50} />
+          </li>
+          <li>
+            <a
+              target="_blank"
+              href="https://www.instagram.com/gillettekennels/"
+            >
+              <InstagramOutlined />
             </a>
-          </RouteLink>
-          <div>
-            <span>
-              <CopyrightCircleOutlined /> {date.getFullYear()}&nbsp;
-            </span>
-            <span>
-              <Copy>Gillette Kennels. All rights reserved.</Copy>
-            </span>
-          </div>
-        </FlexColumn>
-      </FooterInfo>
-    </FooterWrapper>
+          </li>
+        </ul>
+      </PromoFooter>
+      <FooterWrapper currentTheme={currentTheme}>
+        <Frame>
+          <iframe
+            width="100%"
+            height="100%"
+            frameBorder="0"
+            src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJpRxZd7uaF4gR7V1wVGncMpE&key=AIzaSyCZDOY0IiSO7q2u1PYLNN8rekYbU3-ZMm4&zoom=11"
+            allowFullScreen
+          />
+        </Frame>
+        <FooterInfo>
+          <BusinessHoursList businessHours={businessHours} />
+
+          <FlexColumn>
+            <FlexColumn>
+              <h1>Additional Info</h1>
+              <Link href="/terms-and-conditions">
+                <a>Terms and Conditions</a>
+              </Link>
+              <Link href="/privacy-policy">
+                <a>Privacy Policy</a>
+              </Link>
+            </FlexColumn>
+            <Flex
+              style={{
+                alignItems: "center",
+              }}
+            >
+              <a href="http://canineprofessionals.com/" target="_blank">
+                <img
+                  src="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1670006065/gk-app/memberiacp.gif"
+                  width="140"
+                  height="126"
+                />
+              </a>
+              <a
+                href="https://www.bbb.org/western-michigan/business-reviews/pet-training/gillette-kennels-in-galesburg-mi-8000795#sealclick"
+                target="_blank"
+              >
+                <img
+                  alt="Click for the BBB Business Review of this Pet Training in Galesburg MI"
+                  src="https://seal-westernmichigan.bbb.org/seals/blue-seal-250-52-gillettekennels-8000795.png"
+                />
+              </a>
+            </Flex>
+            <RouteLink activeClassName="active" href="/">
+              <a>
+                <LogoOne size={3} crestSize={50} />
+              </a>
+            </RouteLink>
+            <div>
+              <span>
+                <CopyrightCircleOutlined /> {date.getFullYear()}&nbsp;
+              </span>
+              <span>
+                <Copy>Gillette Kennels. All rights reserved.</Copy>
+              </span>
+            </div>
+          </FlexColumn>
+        </FooterInfo>
+      </FooterWrapper>
+    </>
   );
 };

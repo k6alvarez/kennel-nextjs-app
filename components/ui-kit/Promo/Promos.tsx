@@ -45,6 +45,7 @@ export const Promos = ({
   noFlexGrow = false,
   sliderMode = false,
   bannerMode = false,
+  animate = true,
 }: PromosProps) => {
   const { currentTheme } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -67,6 +68,7 @@ export const Promos = ({
               key={i}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
+              animate={animate}
             />
           ))}
         </Carousel>
@@ -93,6 +95,7 @@ export const Promos = ({
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 bannerMode={bannerMode}
+                animate={animate}
               />
             ))}
           </GridItems>

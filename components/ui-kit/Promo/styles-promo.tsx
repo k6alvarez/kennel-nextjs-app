@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 
 export const headerHt = "75px";
+export const addressBarHt = "34px";
+export const promoMessageHt = "236px";
 
 export const PromoFooter = styled.div`
   display: flex;
@@ -175,7 +177,7 @@ export const PromoPics = styled.div`
 export const PromoTitleWrapper = styled.div`
   margin: 0 auto;
   text-align: center;
-  padding: ${({ theme }) => theme.space[6]};
+  padding: ${({ theme }) => theme.space[4]};
   flex: 1;
   max-width: 80%;
 
@@ -185,6 +187,10 @@ export const PromoTitleWrapper = styled.div`
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
     padding: ${({ theme }) => theme.space[4]};
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+    padding: ${({ theme }) => theme.space[6]};
   }
 `;
 
