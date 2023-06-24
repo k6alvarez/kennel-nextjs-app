@@ -19,21 +19,19 @@ const FooterWrapper = styled.footer`
   width: 100%;
   font-size: ${({ theme }) => theme.fontSizes[0]};
   display: grid;
-  grid-template-areas: "map" "info" "bottom";
+  grid-template-areas: "info" "map" "bottom";
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
-    grid-template-areas: "map info" "bottom bottom";
+    grid-template-areas: "info map" "bottom bottom";
   }
 
   a {
-    color: ${({ theme, currentTheme }) =>
-      currentTheme === "naturalEarth"
-        ? theme.colors.textPrimary
-        : theme.colors.textSecondary};
+    color: ${({ theme }) => theme.colors.white};
   }
 
   h1 {
     font-family: ${({ theme }) => theme.fonts.heading};
+    color: ${({ theme }) => theme.colors.white};
   }
 `;
 
@@ -55,13 +53,7 @@ const FooterInfo = styled.div`
 
 const Flex = styled.div`
   display: flex;
-  background-color: ${({ theme, currentTheme }) => {
-    if (currentTheme === "naturalEarth") {
-      return theme.colors.primary;
-    } else {
-      return theme.colors.secondary;
-    }
-  }};
+  background-color: ${({ theme }) => theme.colors.white};
   padding: ${({ theme }) => theme.space[4]};
   justify-content: space-evenly;
 `;
@@ -100,6 +92,25 @@ export const BusinessWrapper = styled.div`
     width: 400px;
   }
 `;
+
+export const FooterBottom = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: ${({ theme }) => theme.space[2]};
+  width: 100%;
+  grid-area: bottom;
+  a {
+    color: ${({ theme }) => theme.colors.textSecondary};
+    width: max-content;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    margin: 0 ${({ theme }) => theme.space[2]};
+    align-items: center;
+  }
+`;
+
 export const Hoursblock = styled.div`
   display: flex;
   flex-direction: column;
@@ -127,8 +138,9 @@ export const TimeSpanElement = styled.span`
 
 export const Copy = styled.span`
   font-family: "Dancing_Script", cursive;
-  font-size: ${({ theme }) => `calc(${theme.fontSizes[1]}/ 1.3)`};
-
+  font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/ 1.3)`};
+  width: max-content;
+  white-space: nowrap;
   font-weight: bold;
 `;
 
@@ -182,7 +194,6 @@ export const Footer = () => {
           <iframe
             width="100%"
             height="100%"
-            frameBorder="0"
             src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJpRxZd7uaF4gR7V1wVGncMpE&key=AIzaSyCZDOY0IiSO7q2u1PYLNN8rekYbU3-ZMm4&zoom=11"
             allowFullScreen
           />
@@ -200,43 +211,46 @@ export const Footer = () => {
                 <a>Privacy Policy</a>
               </Link>
             </FlexColumn>
-            <Flex
-              style={{
-                alignItems: "center",
-              }}
-            >
-              <a href="http://canineprofessionals.com/" target="_blank">
-                <img
-                  src="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1670006065/gk-app/memberiacp.gif"
-                  width="140"
-                  height="126"
-                />
-              </a>
-              <a
-                href="https://www.bbb.org/western-michigan/business-reviews/pet-training/gillette-kennels-in-galesburg-mi-8000795#sealclick"
-                target="_blank"
-              >
-                <img
-                  alt="Click for the BBB Business Review of this Pet Training in Galesburg MI"
-                  src="https://seal-westernmichigan.bbb.org/seals/blue-seal-250-52-gillettekennels-8000795.png"
-                />
-              </a>
-            </Flex>
-            <RouteLink activeClassName="active" href="/">
-              <a>
-                <LogoOne size={3} crestSize={50} />
-              </a>
-            </RouteLink>
-            <div>
-              <span>
-                <CopyrightCircleOutlined /> {date.getFullYear()}&nbsp;
-              </span>
-              <span>
-                <Copy>Gillette Kennels. All rights reserved.</Copy>
-              </span>
-            </div>
           </FlexColumn>
         </FooterInfo>
+        <FooterBottom>
+          <RouteLink activeClassName="active" href="/">
+            <a>
+              <LogoOne size={3} crestSize={50} />
+              <Copy>
+                <span>
+                  <CopyrightCircleOutlined /> {date.getFullYear()}&nbsp;
+                </span>
+                <span>
+                  <Copy>Gillette Kennels. All rights reserved.</Copy>
+                </span>
+              </Copy>
+            </a>
+          </RouteLink>
+
+          <Flex
+            style={{
+              alignItems: "center",
+            }}
+          >
+            <a href="http://canineprofessionals.com/" target="_blank">
+              <img
+                src="https://res.cloudinary.com/dhcv2fdfq/image/upload/v1670006065/gk-app/memberiacp.gif"
+                width={80}
+              />
+            </a>
+            <a
+              href="https://www.bbb.org/western-michigan/business-reviews/pet-training/gillette-kennels-in-galesburg-mi-8000795#sealclick"
+              target="_blank"
+            >
+              <img
+                alt="Click for the BBB Business Review of this Pet Training in Galesburg MI"
+                src="https://seal-westernmichigan.bbb.org/seals/blue-seal-250-52-gillettekennels-8000795.png"
+                width={200}
+              />
+            </a>
+          </Flex>
+        </FooterBottom>
       </FooterWrapper>
     </>
   );
