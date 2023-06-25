@@ -18,7 +18,7 @@ const Flex = styled.div`
     }
   }
 `;
-export const BoardingDetails = ({ pets, formState }) => {
+export const BoardingDetails = ({ pets, formState, user }) => {
   return (
     <>
       <Flex>
@@ -29,14 +29,16 @@ export const BoardingDetails = ({ pets, formState }) => {
             {DateTime.fromISO(formState.departureDate.value).toFormat("DD")}
           </span>
         </p>
-        <p>
-          <span>Deposit amount due:</span>
-          <span>
-            {calculateDeposit(
-              formState.pets.length > 0 ? formState.pets : pets
-            )}
-          </span>
-        </p>
+        {!user && (
+          <p>
+            <span>Deposit amount due:</span>
+            <span>
+              {calculateDeposit(
+                formState.pets.length > 0 ? formState.pets : pets
+              )}
+            </span>
+          </p>
+        )}
       </Flex>
       <Flex>
         {!pets.length ? (

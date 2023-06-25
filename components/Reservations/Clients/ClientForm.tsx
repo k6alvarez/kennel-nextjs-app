@@ -82,6 +82,7 @@ export const ClientForm = ({ user }) => {
       content: (
         <FieldsetPetsInfo
           pets={pets}
+          user={user}
           setPets={setPets}
           formState={clientFormState}
           formDispatch={clientFormDispatch}

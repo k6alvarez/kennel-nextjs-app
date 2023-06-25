@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Collapse, Divider } from "antd";
+import { Collapse } from "antd";
 import styled from "styled-components";
 
 import { renderFormFields } from "../../Forms/renderFormFields";
@@ -19,6 +19,7 @@ import { BlockQuote } from "./FormIntro";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { BoardingDetails } from "./BoardingDetails";
 import { useGuestFormContext } from "../formContext";
+import { User } from "@prisma/client";
 
 export const SmallButton = styled.button`
   font-size: ${(props) => `calc(${props.theme.fontSizes[1]} / 1.6)`};
@@ -33,6 +34,7 @@ interface FieldsetPetsInfoProps {
   toggle?: (pet: PetProps) => void;
   onDelete?: (petId: string) => void;
   refetchPets?: () => void;
+  user?: User;
 }
 
 export const FieldsetPetsInfo = ({
@@ -44,6 +46,7 @@ export const FieldsetPetsInfo = ({
   toggle,
   onDelete,
   refetchPets,
+  user = null,
 }: FieldsetPetsInfoProps) => {
   const {
     petFormState,
@@ -126,7 +129,7 @@ export const FieldsetPetsInfo = ({
     <>
       <Error>{petFormError}</Error>
       <Fieldset disabled={petFormLoading}>
-        <BoardingDetails pets={pets} formState={formState} />
+        <BoardingDetails user={user} pets={pets} formState={formState} />
         {pets.length > 0 && (
           <PetCards>
             {pets?.map((pet, i) => {

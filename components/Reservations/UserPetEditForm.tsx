@@ -53,6 +53,7 @@ export const UserPetEditForm = ({ pet, callback, apiPath = "/api/pet" }) => {
 
           const bordetellaVaccine = {
             ...state["bordetellaVaccine"],
+            value: "",
             required: false,
             disabled: true,
           };
@@ -81,14 +82,14 @@ export const UserPetEditForm = ({ pet, callback, apiPath = "/api/pet" }) => {
   );
 
   useEffect(() => {
-    if (pet.type === "Cat") {
+    if (formState.type.value === "Cat") {
       formDispatch({ type: "setFormForCat" });
     }
 
-    if (pet.type === "Dog") {
+    if (formState.type.value === "Dog") {
       formDispatch({ type: "setFormForDog" });
     }
-  }, [pet]);
+  }, [formState.type.value]);
 
   return (
     <div>
