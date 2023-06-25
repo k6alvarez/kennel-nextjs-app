@@ -12,6 +12,7 @@ export const PromoFooter = styled.div`
   background-color: ${({ theme }) => theme.colors.secondary};
   font-size: ${(props) => props.theme.fontSizes[2]};
   padding: 0 ${(props) => props.theme.space[4]};
+  grid-area: addressBar;
 
   ul {
     display: flex;
@@ -20,7 +21,8 @@ export const PromoFooter = styled.div`
     margin: 0;
   }
 
-  a {
+  a,
+  .anticon {
     color: ${(props) => props.theme.colors.textSecondary};
 
     &:hover {

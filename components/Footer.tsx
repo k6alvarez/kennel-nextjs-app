@@ -19,10 +19,10 @@ const FooterWrapper = styled.footer`
   width: 100%;
   font-size: ${({ theme }) => theme.fontSizes[0]};
   display: grid;
-  grid-template-areas: "info" "map" "bottom";
+  grid-template-areas: "addressBar" "info" "map" "bottom";
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
-    grid-template-areas: "info map" "bottom bottom";
+    grid-template-areas: "addressBar" "info map" "bottom bottom";
   }
 
   a {
@@ -41,12 +41,13 @@ const FooterInfo = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
+  padding: ${({ theme }) => theme.space[4]} 0 ${({ theme }) => theme.space[6]};
 
-  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
     flex-direction: row;
     align-items: flex-start;
+    padding: ${({ theme }) => theme.space[5]} 0;
   }
-  padding: ${({ theme }) => theme.space[4]};
   justify-content: space-evenly;
   grid-area: info;
 `;
@@ -96,10 +97,16 @@ export const BusinessWrapper = styled.div`
 export const FooterBottom = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: ${({ theme }) => theme.space[2]};
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: ${({ theme }) => theme.space[4]};
   width: 100%;
   grid-area: bottom;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+    justify-content: space-between;
+  }
+
   a {
     color: ${({ theme }) => theme.colors.textSecondary};
     width: max-content;
@@ -119,10 +126,7 @@ export const Hoursblock = styled.div`
   width: 100%;
 
   > p {
-    color: ${({ theme, currentTheme }) =>
-      currentTheme === "naturalEarth"
-        ? theme.colors.textSecondary
-        : theme.colors.textSecondary};
+    color: ${({ theme }) => theme.colors.textSecondary};
   }
 
   a:hover {
@@ -168,28 +172,28 @@ export const Footer = () => {
   const { currentTheme } = React.useContext(ThemePreferenceContext);
   return (
     <>
-      <PromoFooter>
-        <p>9172 East K Ave, Galesburg MI, 49053</p>
-        <ul>
-          <li>
-            <a
-              target="_blank"
-              href="https://www.facebook.com/gillettekennels1/"
-            >
-              <FacebookOutlined />
-            </a>
-          </li>
-          <li>
-            <a
-              target="_blank"
-              href="https://www.instagram.com/gillettekennels/"
-            >
-              <InstagramOutlined />
-            </a>
-          </li>
-        </ul>
-      </PromoFooter>
       <FooterWrapper currentTheme={currentTheme}>
+        <PromoFooter>
+          <p>9172 East K Ave, Galesburg MI, 49053</p>
+          <ul>
+            <li>
+              <a
+                target="_blank"
+                href="https://www.facebook.com/gillettekennels1/"
+              >
+                <FacebookOutlined />
+              </a>
+            </li>
+            <li>
+              <a
+                target="_blank"
+                href="https://www.instagram.com/gillettekennels/"
+              >
+                <InstagramOutlined />
+              </a>
+            </li>
+          </ul>
+        </PromoFooter>
         <Frame>
           <iframe
             width="100%"
