@@ -25,13 +25,9 @@ const FooterWrapper = styled.footer`
     grid-template-areas: "addressBar" "info map" "bottom bottom";
   }
 
-  a {
-    color: ${({ theme }) => theme.colors.white};
-  }
-
   h1 {
     font-family: ${({ theme }) => theme.fonts.heading};
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.textSecondary};
   }
 `;
 
@@ -39,8 +35,7 @@ const FooterInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.nav};
   padding: ${({ theme }) => theme.space[4]} 0 ${({ theme }) => theme.space[6]};
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
@@ -100,6 +95,7 @@ export const FooterBottom = styled.div`
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  background-color: ${({ theme }) => theme.colors.nav};
   padding: ${({ theme }) => theme.space[4]};
   width: 100%;
   grid-area: bottom;
