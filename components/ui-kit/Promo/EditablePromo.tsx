@@ -14,12 +14,13 @@ export const EditablePromo = ({
   isLoading,
   setIsLoading,
   bannerMode = false,
+  animate = true,
 }) => {
   const props = useSpring({
     to: { opacity: 1, transform: "scale(1)" },
     from: {
-      opacity: 0,
-      transform: `scale(0.9)`,
+      opacity: animate ? 0 : 1,
+      transform: animate ? `scale(0.9)` : "scale(1)",
     },
     delay: delay + i * 180,
     config: config.slow,

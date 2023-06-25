@@ -50,7 +50,7 @@ export const EditImageOnly = ({
   bannerMode = false,
 }) => {
   const [fromPos, setFromPos] = useState(`${bannerMode ? "50%" : "30%"}`);
-  const [toPos, setToPos] = useState(`${bannerMode ? "50%" : "80%"}`);
+  const [toPos, setToPos] = useState(`${bannerMode ? "80%" : "80%"}`);
   const duration = 50000;
 
   const springProps = useSpring({

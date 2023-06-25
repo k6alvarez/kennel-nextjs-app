@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { EditForm } from "../Forms/styles";
-import { headerHt } from "./Promo/styles-promo";
+import { addressBarHt, headerHt, promoMessageHt } from "./Promo/styles-promo";
 
 export const Content = styled.article`
   padding: ${({ theme }) => theme.space[6]};
@@ -179,8 +179,11 @@ export const GridItems = styled.div`
 export const GridItem = styled.div`
   position: relative;
   width: 100%;
-  height: 33vh;
-  min-height: ${({ bannerMode }) => (bannerMode ? "500px" : "300px")};
+  height: ${({ bannerMode }) =>
+    bannerMode
+      ? `calc(70vh - ${headerHt} - ${addressBarHt} - ${promoMessageHt})`
+      : `calc(30vh)`};
+  min-height: 100px;
   background-image: url(${({ img }) => (img ? img : "")});
   background-color: ${({ theme, bg }) => theme.colors[bg] || theme.colors.nav};
   background-size: cover;
@@ -195,12 +198,15 @@ export const GridItem = styled.div`
   &:last-child {
     margin-right: 0;
   }
+  @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
+    min-height: 225px;
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     width: 100%;
-    background-position: center 20%;
-    height: ${({ size }) => (size ? size : "33vh")};
-    min-height: ${({ bannerMode }) => (bannerMode ? "40vh" : "350px")};
+    height: ${({ bannerMode }) =>
+      bannerMode ? `calc(50vh - ${headerHt} - ${addressBarHt})` : `calc(50vh)`};
+    min-height: 300px;
   }
 `;
 

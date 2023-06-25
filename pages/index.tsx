@@ -85,33 +85,10 @@ const MyApp = ({ contentItems, promoItems }) => {
   return (
     <Layout>
       <Promo
-        animate={shouldAnimate}
+        animate={false}
         promos={homeBanner}
         setPromos={setHomeBanner}
         bannerMode
-        // showFooter={
-        //   <PromoFooter>
-        //     <p>9172 East K Ave, Galesburg MI, 49053</p>
-        //     <ul>
-        //       <li>
-        //         <a
-        //           target="_blank"
-        //           href="https://www.facebook.com/gillettekennels1/"
-        //         >
-        //           <FacebookOutlined />
-        //         </a>
-        //       </li>
-        //       <li>
-        //         <a
-        //           target="_blank"
-        //           href="https://www.instagram.com/gillettekennels/"
-        //         >
-        //           <InstagramOutlined />
-        //         </a>
-        //       </li>
-        //     </ul>
-        //   </PromoFooter>
-        // }
       />
       <Promo
         animate={shouldAnimate}
