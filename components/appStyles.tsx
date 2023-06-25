@@ -221,6 +221,10 @@ export const GlobalStyle = createGlobalStyle`
     padding: ${({ theme }) => theme.space[4]};
   }
 
+  .ant-card-head-wrapper{
+    gap: ${({ theme }) => theme.space[2]};
+  }
+
   .ant-card-head-title {
     font-weight: 600;
     font-size: ${({ theme }) => theme.fontSizes[2]};

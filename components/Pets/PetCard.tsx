@@ -1,6 +1,7 @@
 import {
   CheckCircleOutlined,
   DeleteOutlined,
+  EditOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
 import { Card, Badge, Button as AntButton, Modal } from "antd";
@@ -162,24 +163,24 @@ export const PetCard = ({
         extra={
           <CardTitle>
             {onDelete && (
-              <button
-                type="button"
+              <AntButton
+                size="small"
                 onClick={() => {
                   onDelete(pet.id);
                 }}
               >
-                <DeleteOutlined /> Remove Pet
-              </button>
+                Remove Pet
+              </AntButton>
             )}
             {onUpdate && (
-              <button
-                type="button"
+              <AntButton
+                size="small"
                 onClick={() => {
                   onUpdate(pet.id);
                 }}
               >
-                <DeleteOutlined /> Update Pet
-              </button>
+                Update Pet
+              </AntButton>
             )}
           </CardTitle>
         }
@@ -190,7 +191,7 @@ export const PetCard = ({
         }}
         tabBarExtraContent={
           <>
-            <AntButton type="primary" onClick={showModal}>
+            <AntButton size="small" type="primary" onClick={showModal}>
               Edit Pet
             </AntButton>
             <Modal
