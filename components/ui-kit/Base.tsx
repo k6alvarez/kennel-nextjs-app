@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { EditForm } from "../Forms/styles";
 import { addressBarHt, headerHt, promoMessageHt } from "./Promo/styles-promo";
 
+export const maxContentWidth = "1200px";
+
 export const Content = styled.article`
   padding: ${({ theme }) => theme.space[6]};
   max-width: 100%;
@@ -16,7 +18,7 @@ export const Content = styled.article`
         ? `${theme.space[4]}`
         : `${theme.space[5]} ${theme.space[4]}`};
     width: ${({ maxWidth }) => (maxWidth ? maxWidth : "80vw")};
-    max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : "1200px")};
+    max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : maxContentWidth)};
   }
 
   ${EditForm} {
@@ -151,23 +153,9 @@ export const Content = styled.article`
 export const GridItemText = styled.div``;
 
 export const GridItems = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-  gap: ${({ theme }) => theme.space[4]};
-
-  @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
-    flex-direction: ${({ breakMobile }) => (breakMobile ? "column" : "row")};
-    padding: ${({ breakMobile, theme, bannerMode }) =>
-      breakMobile && !bannerMode ? theme.space[4] : "0"};
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints[2]}) {
-    flex-direction: row;
-    padding: ${({ theme, bannerMode }) => (bannerMode ? "0" : theme.space[6])};
-    gap: ${({ theme }) => theme.space[6]};
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: ${({ theme }) => theme.space[5]};
 
   fieldset {
     margin: 0;

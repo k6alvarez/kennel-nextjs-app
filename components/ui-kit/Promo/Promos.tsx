@@ -28,7 +28,9 @@ interface PromosProps {
 }
 
 const Container = styled.div`
-  width: 100%;
+  width: ${({ maxWidth }) => (maxWidth ? "100%" : "96%")};
+  max-width: ${({ maxWidth }) => (maxWidth ? "100%" : "1200px")};
+  margin: 0 auto;
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -50,35 +52,10 @@ export const Promos = ({
   const { currentTheme } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
   return (
-    <Container>
+    <>
       {sliderMode ? (
-        <Carousel autoplay dots={false} autoplaySpeed={5000} fade>
-          {promos.map((promo, i) => (
-            <EditablePromo
-              delay={delay}
-              promo={promo}
-              updatePromo={(newPromo) => {
-                const newPromos = [...promos];
-                newPromos[i] = newPromo;
-                setPromos(newPromos);
-              }}
-              editMode={editMode}
-              currentTheme={currentTheme}
-              i={i}
-              key={i}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
-              animate={animate}
-            />
-          ))}
-        </Carousel>
-      ) : (
-        <PromoPics
-          transparent={transparent}
-          currentTheme={currentTheme}
-          flex={noFlexGrow ? "unset" : "1"}
-        >
-          <GridItems variant={variant} bannerMode={bannerMode}>
+        <Container maxWidth>
+          <Carousel autoplay dots={false} autoplaySpeed={5000} fade>
             {promos.map((promo, i) => (
               <EditablePromo
                 delay={delay}
@@ -94,13 +71,42 @@ export const Promos = ({
                 key={i}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
-                bannerMode={bannerMode}
                 animate={animate}
               />
             ))}
-          </GridItems>
-        </PromoPics>
+          </Carousel>
+        </Container>
+      ) : (
+        <Container maxWidth={bannerMode}>
+          <PromoPics
+            transparent={transparent}
+            currentTheme={currentTheme}
+            flex={noFlexGrow ? "unset" : "1"}
+          >
+            <GridItems variant={variant} bannerMode={bannerMode}>
+              {promos.map((promo, i) => (
+                <EditablePromo
+                  delay={delay}
+                  promo={promo}
+                  updatePromo={(newPromo) => {
+                    const newPromos = [...promos];
+                    newPromos[i] = newPromo;
+                    setPromos(newPromos);
+                  }}
+                  editMode={editMode}
+                  currentTheme={currentTheme}
+                  i={i}
+                  key={i}
+                  isLoading={isLoading}
+                  setIsLoading={setIsLoading}
+                  bannerMode={bannerMode}
+                  animate={animate}
+                />
+              ))}
+            </GridItems>
+          </PromoPics>
+        </Container>
       )}
-    </Container>
+    </>
   );
 };

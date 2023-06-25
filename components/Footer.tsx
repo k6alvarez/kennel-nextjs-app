@@ -54,6 +54,7 @@ const FooterInfo = styled.div`
 
 const Flex = styled.div`
   display: flex;
+  flex-wrap: wrap;
   background-color: ${({ theme }) => theme.colors.white};
   padding: ${({ theme }) => theme.space[4]};
   justify-content: space-evenly;
@@ -105,6 +106,7 @@ export const FooterBottom = styled.div`
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
     justify-content: space-between;
+    padding: ${({ theme }) => theme.space[2]} ${({ theme }) => theme.space[4]};
   }
 
   a {
@@ -146,6 +148,7 @@ export const Copy = styled.span`
   width: max-content;
   white-space: nowrap;
   font-weight: bold;
+  margin-top: 5px;
 `;
 
 const Frame = styled.div`

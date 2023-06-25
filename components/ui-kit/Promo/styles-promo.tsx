@@ -128,7 +128,8 @@ export const PromoTextWrapper = styled.div`
       background-position: center;
       background-size: cover;
       width: ${({ hasLink }) => (hasLink ? "100%" : "unset")};
-      height: 80vw;
+      height: 15vw;
+      min-height: 250px;
 
       @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
         height: 15vw;
@@ -166,14 +167,8 @@ export const PromoTextWrapper = styled.div`
 export const PromoPics = styled.div`
   flex: ${({ flex }) => (flex ? flex : 1)};
   width: 100%;
-  background-color: ${({ theme, transparent, currentTheme }) =>
-    !transparent
-      ? currentTheme === "livelySoothing"
-        ? theme.colors.primaryDark
-        : currentTheme === "naturalEarth"
-        ? theme.colors.primaryDark
-        : theme.colors.secondary
-      : "transparent"};
+  background-color: ${({ theme, transparent }) =>
+    !transparent ? theme.colors.secondary : "transparent"};
 `;
 
 export const PromoTitleWrapper = styled.div`
