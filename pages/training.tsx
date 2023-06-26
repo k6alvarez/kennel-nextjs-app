@@ -98,7 +98,7 @@ const Training = ({ contentItems, promoItems }) => {
   }, []);
   useEffect(() => {
     if (tab) {
-      window.scrollTo({ top: 779, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
       setActiveKey(tab as string);
     }
   }, [tab]);
@@ -226,7 +226,7 @@ const Training = ({ contentItems, promoItems }) => {
             router.replace(`/training?tab=${key}`, undefined, {
               shallow: true,
             });
-            window.scrollTo({ top: 779, behavior: "smooth" });
+            window.scrollTo({ top: 0, behavior: "smooth" });
           }}
         />
       </TabsListWrapper>

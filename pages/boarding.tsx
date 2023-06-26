@@ -130,7 +130,7 @@ const Boarding = ({ contentItems, promoItems }) => {
   const [activeKey, setActiveKey] = useState("boarding");
   useEffect(() => {
     if (tab) {
-      window.scrollTo({ top: 779, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
       setActiveKey(tab as string);
     }
   }, [tab]);
@@ -264,7 +264,7 @@ const Boarding = ({ contentItems, promoItems }) => {
             router.replace(`/boarding?tab=${key}`, undefined, {
               shallow: true,
             });
-            window.scrollTo({ top: 779, behavior: "smooth" });
+            window.scrollTo({ top: 0, behavior: "smooth" });
           }}
         />
       </TabsListWrapper>
