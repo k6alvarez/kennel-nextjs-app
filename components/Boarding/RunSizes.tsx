@@ -6,11 +6,16 @@ import { ThemePreferenceContext } from "../../pages/_app";
 const RunSizeWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.secondary};
   display: grid;
+  justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   grid-gap: ${({ theme }) => theme.space[5]};
   padding: ${({ theme }) => theme.space[5]};
   width: 100%;
   margin: ${({ theme }) => theme.space[5]} 0;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 
 const getFilteredData = (data, filterType) => {

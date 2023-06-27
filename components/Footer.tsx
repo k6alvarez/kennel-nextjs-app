@@ -73,12 +73,13 @@ const FlexColumn = styled.div`
 export const LetterSpacedText = styled.p`
   margin: 0;
   font-weight: ${({ bold }) => (bold ? 400 : 300)};
-  font-size: ${({ theme, fs }) =>
-    `calc(${fs ? theme.fontSizes[fs] : theme.fontSizes[1]})`};
+  font-size: ${({ theme, fs }) => `calc(${fs ? fs : theme.fontSizes[1]})`};
   text-transform: ${({ textTransform }) =>
     textTransform ? textTransform : "capitalize"};
   letter-spacing: 1px;
   text-align: center;
+  line-height: 1.2;
+  margin-bottom: ${({ theme }) => theme.space[3]};
 `;
 
 export const BusinessWrapper = styled.div`

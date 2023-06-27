@@ -10,18 +10,17 @@ import {
   INITIAL_USER_STATE,
 } from "../../components/Reservations/formInitialState";
 import { PET_INITIAL_STATE } from "../../components/Pets/petFormReducer";
-import { isImageURL, isValidHttpUrl } from "../../components/Pets/services";
-import { FileOutlined } from "@ant-design/icons";
-import { Divider, Image, List, Tag } from "antd";
-
-import { DateTime } from "luxon";
-import { LetterSpacedText } from "../../components/Footer";
+import { Divider, List, Tag } from "antd";
 import { getDataSource } from "../../components/Reservations/helpers";
 import { ReservationNotFound } from "../../components/Reservations/ReservationNotFound";
 import { ReservationStatusSection } from "../../components/Reservations/ReservationStatusSection";
 
 export const DetailItem = styled.div`
   margin: ${({ theme }) => theme.space[0]} 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin-top: ${({ theme }) => theme.space[3]};
 `;
 
 const Flex = styled.div`
