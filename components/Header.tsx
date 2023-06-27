@@ -89,7 +89,6 @@ export const StyledNav = styled.nav`
 
   .rightNav {
     display: none;
-
     letter-spacing: 1px;
 
     @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
@@ -99,6 +98,34 @@ export const StyledNav = styled.nav`
     a:hover {
       text-decoration: underline;
     }
+  }
+`;
+
+export const SignedInFlex = styled(Flex)`
+  background-color: ${({ theme }) => theme.colors.white};
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  padding: 1rem;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+    position: relative;
+    bottom: auto;
+    width: auto;
+    padding: 0;
+    background-color: transparent;
+  }
+`;
+
+export const AdminModeFlex = styled(Flex)`
+  justify-content: center;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+    justify-content: inherit;
+  }
+
+  button {
+    margin: 0;
   }
 `;
 
@@ -198,22 +225,7 @@ const Header: React.FC = () => {
   let centerNav = null;
 
   if (status === "loading") {
-    leftNav = (
-      <div>
-        <LeftNav toggleDrawer={toggleDrawer} />
-      </div>
-    );
-    rightNav = (
-      <div className="rightNav">
-        <p>Validating session ...</p>
-      </div>
-    );
-
-    centerNav = (
-      <div className="centerNav">
-        <p>Validating session ...</p>
-      </div>
-    );
+    return <StyledNav currentTheme={currentTheme}></StyledNav>;
   }
 
   if (!session) {
@@ -236,7 +248,7 @@ const Header: React.FC = () => {
         <Link href="/profile">
           <a data-active={isActive("/profile")}>My Profile</a>
         </Link>
-        <Flex>
+        <SignedInFlex>
           <SignedInAs>Signed in as {loggedInUser?.email}</SignedInAs>
           <button
             onClick={() => {
@@ -247,9 +259,9 @@ const Header: React.FC = () => {
           >
             Log Out
           </button>
-        </Flex>
+        </SignedInFlex>
         {loggedInUser?.permissions.includes("ADMIN") && (
-          <Flex>
+          <AdminModeFlex>
             <button
               onClick={() => {
                 setEditMode(!editMode);
@@ -257,7 +269,7 @@ const Header: React.FC = () => {
             >
               Admin Mode {editMode ? "On" : "Off"}
             </button>
-          </Flex>
+          </AdminModeFlex>
         )}
       </NavWrapper>
     );
@@ -272,6 +284,7 @@ const Header: React.FC = () => {
       {leftNav}
       {centerNav}
       {rightNav}
+
       <Drawer
         title={
           <LogoName>
