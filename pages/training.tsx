@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { Tabs } from "antd";
 import prisma from "../lib/prisma";
@@ -6,7 +6,7 @@ import { GetServerSideProps } from "next";
 
 import Layout from "../components/Layout";
 import { Promo } from "../components/ui-kit/Promo";
-import { TabsListWrapper } from "./boarding";
+import { TABS_HEADER_HEIGHT, TabsListWrapper } from "./boarding";
 import { TrainingHome } from "../components/Training/TrainingHome";
 import { GroupLessons } from "../components/Training/GroupLessons";
 import { PrivateLessons } from "../components/Training/PrivateLessons";
@@ -43,6 +43,7 @@ const Training = ({ contentItems, promoItems }) => {
   const router = useRouter();
   const { editMode } = useContext(ThemePreferenceContext);
   const { tab } = router.query;
+  const ref = useRef(null);
   const [activeKey, setActiveKey] = useState("training");
   const [expiry, setExpiry] = useLocalStorage<number>(
     "trainingPageAnimate",
@@ -98,7 +99,10 @@ const Training = ({ contentItems, promoItems }) => {
   }, []);
   useEffect(() => {
     if (tab) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({
+        top: ref.current.offsetTop - TABS_HEADER_HEIGHT,
+        behavior: "smooth",
+      });
       setActiveKey(tab as string);
     }
   }, [tab]);
@@ -212,7 +216,7 @@ const Training = ({ contentItems, promoItems }) => {
         setContentItem={setTrainingPromoTitle}
         sliderMode
       />
-      <TabsListWrapper>
+      <TabsListWrapper ref={ref}>
         <Tabs
           defaultActiveKey="training"
           activeKey={activeKey}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { Tabs } from "antd";
@@ -20,6 +20,8 @@ import { BoardingServices } from "../components/Boarding/BoardingServices";
 import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
 import { isTimeStampExpired } from "../components/Admin/services";
 import { headerHt } from "../components/ui-kit/Promo/styles-promo";
+
+export const TABS_HEADER_HEIGHT = 57;
 
 export const TabsListWrapper = styled.div`
   position: relative;
@@ -63,6 +65,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
 const Boarding = ({ contentItems, promoItems }) => {
   const router = useRouter();
+  const ref = useRef(null);
   const { tab } = router.query;
   const { breakpoints, editMode } = useContext(ThemePreferenceContext);
   const size: Size = useWindowSize();
@@ -130,7 +133,10 @@ const Boarding = ({ contentItems, promoItems }) => {
   const [activeKey, setActiveKey] = useState("boarding");
   useEffect(() => {
     if (tab) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({
+        top: ref.current.offsetTop - TABS_HEADER_HEIGHT,
+        behavior: "smooth",
+      });
       setActiveKey(tab as string);
     }
   }, [tab]);
@@ -249,7 +255,7 @@ const Boarding = ({ contentItems, promoItems }) => {
         setContentItem={setBoardingPromoTitle}
         sliderMode
       />
-      <TabsListWrapper>
+      <TabsListWrapper ref={ref}>
         <Tabs
           defaultActiveKey="boarding"
           activeKey={activeKey}
