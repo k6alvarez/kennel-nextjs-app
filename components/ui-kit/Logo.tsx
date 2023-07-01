@@ -59,7 +59,31 @@ export const LogoOne = ({
       <Image
         width={crestSize}
         height={crestSize + 4}
-        src="/images/ShieldOutline.png"
+        src="/images/GilletteCrest.png"
+      />
+      <Wrapper size={size}>
+        <span>Gillette Kennels</span>
+        <Slogan size={size}>
+          &nbsp;&nbsp;An obedient dog, is a happy dog.
+        </Slogan>
+      </Wrapper>
+    </Flex>
+  );
+};
+
+export const LogoTwo = ({
+  size,
+  crestSize = 55,
+}: {
+  size?: number;
+  crestSize?: number;
+}) => {
+  return (
+    <Flex>
+      <Image
+        width={crestSize}
+        height={crestSize + 4}
+        src="/images/GilletteCrest.png"
       />
       <Wrapper size={size}>
         <span>Gillette Kennels</span>
