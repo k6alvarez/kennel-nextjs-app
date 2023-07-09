@@ -110,7 +110,6 @@ export const INITIAL_USER_STATE = {
     error: null,
     type: "text",
     label: "Unit",
-    required: true,
   },
   city: {
     value: "",
