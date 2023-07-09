@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import prisma from "../lib/prisma";
 import { GetServerSideProps } from "next";
 
@@ -6,11 +6,10 @@ import Layout from "../components/Layout";
 import { defaultDelay, Promo } from "../components/ui-kit/Promo";
 import { Content } from "../components/ui-kit/Base";
 import { Promos } from "../components/ui-kit/Promo/Promos";
-import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
 import { EditForm } from "../components/Forms/styles";
 import { Tiptap } from "../components/ui-kit/Tiptap";
 import { ThemePreferenceContext } from "./_app";
-import { isTimeStampExpired, saveContent } from "../components/Admin/services";
+import { saveContent } from "../components/Admin/services";
 
 export const defaultContent = {
   content: "",
@@ -39,8 +38,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 };
 
 const MyApp = ({ contentItems, promoItems }) => {
-  const [expiry, setExpiry] = useLocalStorage<number>("homePageAnimate", null);
-  const [shouldAnimate, setShouldAnimate] = useState(false);
   const { editMode } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
   const parsedContentItems = JSON.parse(contentItems);
@@ -52,9 +49,9 @@ const MyApp = ({ contentItems, promoItems }) => {
   const [missionStatement, setMissionStatement] = useState(
     parsedContentItems.find((item) => item.name === "missionStatement")
   );
-  const [homePromos, setHomePromos] = useState(
-    parsedPromoItems.filter((item) => item.promoGroup === "gallery")
-  );
+  // const [homePromos, setHomePromos] = useState(
+  //   parsedPromoItems.filter((item) => item.promoGroup === "gallery")
+  // );
 
   const [homeCallouts, setHomeCallouts] = useState(
     parsedPromoItems.filter((item) => item.promoGroup === "callouts") || []
@@ -67,14 +64,6 @@ const MyApp = ({ contentItems, promoItems }) => {
   const [homeBanner, setHomeBanner] = useState([
     parsedPromoItems.find((item) => item.name === "homeBanner"),
   ]);
-
-  useEffect(() => {
-    if (isTimeStampExpired(expiry)) {
-      // set expiry to 24 hours from now
-      setExpiry(new Date().getTime() + 24 * 60 * 60 * 1000);
-      setShouldAnimate(true);
-    }
-  }, []);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -89,9 +78,9 @@ const MyApp = ({ contentItems, promoItems }) => {
         bannerMode
       />
       <Promo
-        animate={false}        
+        animate={false}
         contentItem={homePromoTitle}
-        setContentItem={setHomePromoTitle}        
+        setContentItem={setHomePromoTitle}
         bannerMode
       />
       <Content>
