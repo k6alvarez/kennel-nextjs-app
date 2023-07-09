@@ -9,7 +9,7 @@ export const PromoFooter = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.primaryDark};
   font-size: ${(props) => props.theme.fontSizes[2]};
   padding: 0 ${(props) => props.theme.space[4]};
   grid-area: addressBar;
@@ -23,7 +23,7 @@ export const PromoFooter = styled.div`
 
   a,
   .anticon {
-    color: ${(props) => props.theme.colors.textSecondary};
+    color: ${(props) => props.theme.colors.textPrimary};
 
     &:hover {
       color: ${(props) => props.theme.colors.inputFocus};
@@ -31,21 +31,18 @@ export const PromoFooter = styled.div`
   }
 
   p {
-    color: ${(props) => props.theme.colors.textSecondary};
+    color: ${(props) => props.theme.colors.textPrimary};
     font-size: ${({ theme }) => theme.fontSizes[0]};
     margin: 0;
   }
 `;
 
 export const PromoWrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.primaryDark};
+  background-color: ${({ theme }) => theme.colors.secondary};
 
-  color: ${({ theme, currentTheme }) =>
-    currentTheme === "livelySoothing"
-      ? theme.colors.textSecondary
-      : theme.colors.textPrimary};
+  color: ${({ theme }) => theme.colors.textSecondary};
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: ${({ bannerMode }) => (bannerMode ? "1fr" : "1fr 1fr")};
   align-items: stretch;
   justify-content: space-between;
   gap: ${({ theme, bannerMode }) => (bannerMode ? "0" : theme.space[2])};

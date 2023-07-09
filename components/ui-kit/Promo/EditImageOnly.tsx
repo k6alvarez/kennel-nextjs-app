@@ -53,12 +53,6 @@ export const EditImageOnly = ({
   const [toPos, setToPos] = useState(`${bannerMode ? "80%" : "80%"}`);
   const duration = 50000;
 
-  const springProps = useSpring({
-    from: { backgroundPosition: `50% ${fromPos}` },
-    to: { backgroundPosition: `50% ${toPos}` },
-    config: { ...config.molasses, duration: duration },
-  });
-
   if (!promo) return null;
 
   useEffect(() => {
@@ -154,7 +148,6 @@ export const EditImageOnly = ({
       ) : (
         <>
           <GridItemAnimated
-            style={springProps}
             size={promo.size}
             img={promo.image}
             bannerMode={bannerMode}
