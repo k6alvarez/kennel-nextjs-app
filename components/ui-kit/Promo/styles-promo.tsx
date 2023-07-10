@@ -42,7 +42,8 @@ export const PromoWrapper = styled.div`
 
   color: ${({ theme }) => theme.colors.textSecondary};
   display: grid;
-  grid-template-columns: ${({ bannerMode }) => (bannerMode ? "1fr" : "1fr 1fr")};
+  grid-template-columns: ${({ bannerMode }) =>
+    bannerMode ? "1fr" : "1fr 1fr"};
   align-items: stretch;
   justify-content: space-between;
   gap: ${({ theme, bannerMode }) => (bannerMode ? "0" : theme.space[2])};
@@ -171,7 +172,7 @@ export const PromoPics = styled.div`
 export const PromoTitleWrapper = styled.div`
   margin: 0 auto;
   text-align: center;
-  padding: ${({ theme }) => theme.space[4]};
+  padding: ${({ theme }) => theme.space[5]} ${({ theme }) => theme.space[4]};
   flex: 1;
   max-width: 80%;
 
@@ -180,7 +181,7 @@ export const PromoTitleWrapper = styled.div`
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-    padding: ${({ theme }) => theme.space[4]};
+    padding: ${({ theme }) => theme.space[5]} ${({ theme }) => theme.space[4]};
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {

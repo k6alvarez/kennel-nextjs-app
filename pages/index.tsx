@@ -49,9 +49,6 @@ const MyApp = ({ contentItems, promoItems }) => {
   const [missionStatement, setMissionStatement] = useState(
     parsedContentItems.find((item) => item.name === "missionStatement")
   );
-  // const [homePromos, setHomePromos] = useState(
-  //   parsedPromoItems.filter((item) => item.promoGroup === "gallery")
-  // );
 
   const [homeCallouts, setHomeCallouts] = useState(
     parsedPromoItems.filter((item) => item.promoGroup === "callouts") || []

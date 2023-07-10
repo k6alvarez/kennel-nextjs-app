@@ -13,8 +13,6 @@ import { PrivateLessons } from "../components/Training/PrivateLessons";
 import { AgilityLessons } from "../components/Training/AgilityLessons";
 import { Consultations } from "../components/Training/Consultations";
 import { BoardingSchool } from "../components/Training/BoardingSchool";
-import { useLocalStorage } from "../components/ui-kit/hooks/useLocalStorage";
-import { isTimeStampExpired } from "../components/Admin/services";
 import { ThemePreferenceContext } from "./_app";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
@@ -45,19 +43,16 @@ const Training = ({ contentItems, promoItems }) => {
   const { tab } = router.query;
   const ref = useRef(null);
   const [activeKey, setActiveKey] = useState("training");
-  const [expiry, setExpiry] = useLocalStorage<number>(
-    "trainingPageAnimate",
-    null
-  );
-  const [shouldAnimate, setShouldAnimate] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const parsedContentItems = JSON.parse(contentItems);
 
   const parsedPromoItems = JSON.parse(promoItems);
 
-  const [trainingPromos, setTrainingPromos] = useState(
-    parsedPromoItems.filter((item) => item.promoGroup === "gallery")
-  );
+  const [boardingBanner, setBoardingBanner] = useState([
+    parsedPromoItems.find((item) => item.name === "trainingBanner"),
+  ]);
+
   const [trainingPromoTitle, setTrainingPromoTitle] = useState(
     parsedContentItems.find((item) => item.name === "trainingPromoTitle") || {
       content: "",
@@ -90,13 +85,6 @@ const Training = ({ contentItems, promoItems }) => {
 
   const stickyEditorPosTop = "108px";
 
-  useEffect(() => {
-    if (isTimeStampExpired(expiry)) {
-      // set expiry to 24 hours from now
-      setExpiry(new Date().getTime() + 24 * 60 * 60 * 1000);
-      setShouldAnimate(true);
-    }
-  }, []);
   useEffect(() => {
     if (tab) {
       window.scrollTo({
@@ -208,13 +196,16 @@ const Training = ({ contentItems, promoItems }) => {
   return (
     <Layout>
       <Promo
-        animate={shouldAnimate}
-        showFooter
-        promos={trainingPromos}
-        setPromos={setTrainingPromos}
-        contentItem={trainingPromoTitle || { content: "" }}
+        animate={false}
+        promos={boardingBanner}
+        setPromos={setBoardingBanner}
+        bannerMode
+      />
+      <Promo
+        animate={false}
+        contentItem={trainingPromoTitle}
         setContentItem={setTrainingPromoTitle}
-        sliderMode
+        bannerMode
       />
       <TabsListWrapper ref={ref}>
         <Tabs

@@ -25,6 +25,10 @@ export const EditablePromo = ({
     delay: delay + i * 180,
     config: config.slow,
   });
+
+  if (!promo) {
+    return null;
+  }
   return (
     <animated.div
       key={promo.id}
@@ -34,7 +38,7 @@ export const EditablePromo = ({
       }}
     >
       <fieldset disabled={isLoading}>
-        {promo.link ? (
+        {promo?.link ? (
           <EditLinkedImage
             editMode={editMode}
             currentTheme={currentTheme}

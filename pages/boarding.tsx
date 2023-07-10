@@ -80,6 +80,10 @@ const Boarding = ({ contentItems, promoItems }) => {
   const parsedContentItems = JSON.parse(contentItems);
   const parsedPromoItems = JSON.parse(promoItems);
 
+  const [boardingBanner, setBoardingBanner] = useState([
+    parsedPromoItems.find((item) => item.name === "boardingBanner"),
+  ]);
+
   const [boardingHome, setBoardingHome] = useState(
     parsedContentItems.find((item) => item.name === "boardingHome")
   );
@@ -110,10 +114,6 @@ const Boarding = ({ contentItems, promoItems }) => {
 
   const [boardingCWing, setBoardingCWing] = useState(
     parsedContentItems.find((item) => item.name === "boardingCWing")
-  );
-
-  const [boardingPromos, setBoardingPromos] = useState(
-    parsedPromoItems.filter((item) => item.promoGroup === "gallery")
   );
 
   const [boardingPromoTitle, setBoardingPromoTitle] = useState(
@@ -247,13 +247,16 @@ const Boarding = ({ contentItems, promoItems }) => {
   return (
     <Layout>
       <Promo
-        animate={shouldAnimate}
-        showFooter
-        promos={boardingPromos}
-        setPromos={setBoardingPromos}
-        contentItem={boardingPromoTitle || { content: "" }}
+        animate={false}
+        promos={boardingBanner}
+        setPromos={setBoardingBanner}
+        bannerMode
+      />
+      <Promo
+        animate={false}
+        contentItem={boardingPromoTitle}
         setContentItem={setBoardingPromoTitle}
-        sliderMode
+        bannerMode
       />
       <TabsListWrapper ref={ref}>
         <Tabs

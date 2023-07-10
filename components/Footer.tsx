@@ -19,7 +19,7 @@ const FooterWrapper = styled.footer`
   width: 100%;
   font-size: ${({ theme }) => theme.fontSizes[0]};
   display: grid;
-  grid-template-areas: "addressBar" "info"  "map" "bottom";
+  grid-template-areas: "info" "map" "bottom" "addressBar";
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     grid-template-areas: "addressBar" "info map" "bottom bottom";
@@ -59,7 +59,6 @@ const FlexColumn = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  
 
   a {
     text-align: center;
