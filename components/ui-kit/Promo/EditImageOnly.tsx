@@ -95,7 +95,7 @@ export const EditImageOnly = ({
                 const file = e.target.files[0];
                 const formData = new FormData();
                 formData.append("file", file);
-                formData.append("upload_preset", "gk-app");
+                formData.append("upload_preset", "gk-app-main-banner");
                 setIsLoading(true);
 
                 message.loading(`Uploading new image.`);

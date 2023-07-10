@@ -9,6 +9,7 @@ import { LogoName } from "./Navigation/NavStyles";
 import { ThemePreferenceContext } from "../pages/_app";
 import { User } from "@prisma/client";
 import { getUser } from "./Pets/services";
+import { headerHt } from "./ui-kit/Promo/styles-promo";
 
 const SignedInAs = styled.span`
   font-size: calc(${({ theme }) => theme.fontSizes[0]} / 1.2);
@@ -43,6 +44,7 @@ export const StyledNav = styled.nav`
   padding: ${({ theme }) => theme.space[3]};
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 5000;
+  min-height: ${headerHt};
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     display: grid;
