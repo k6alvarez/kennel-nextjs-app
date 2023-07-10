@@ -47,6 +47,17 @@ const Flex = styled.div`
   align-items: center;
 `;
 
+const LogoImages = styled.div`
+  display: flex;
+  position: relative;
+  span:nth-child(2) {
+    position: absolute !important;
+    top: 6px !important;
+    filter: grayscale(100%);
+    left: 10px !important;
+  }
+`;
+
 export const LogoOne = ({
   size,
   crestSize = 55,
@@ -56,11 +67,19 @@ export const LogoOne = ({
 }) => {
   return (
     <Flex>
-      <Image
-        width={crestSize}
-        height={crestSize + 4}
-        src="/images/GilletteCrest.png"
-      />
+      <LogoImages>
+        <Image
+          width={crestSize}
+          height={crestSize + 4}
+          src="/images/crest.svg"
+        />
+        <Image
+          width={crestSize - 20}
+          height={crestSize - 16}
+          src="/images/gk_new_crest_only.png"
+          className="abs-logo-image"
+        />
+      </LogoImages>
       <Wrapper size={size}>
         <span>Gillette Kennels</span>
         <Slogan size={size}>

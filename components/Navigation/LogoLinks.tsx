@@ -3,7 +3,7 @@ import { createGlobalStyle } from "styled-components";
 import { RouteLink } from "./RouteLink";
 import { LogoName, BadgeStyles } from "./NavStyles";
 import { MenuOutlined } from "@ant-design/icons";
-import { LogoOne, LogoTwo } from "../ui-kit/Logo";
+import { LogoOne } from "../ui-kit/Logo";
 const GlobalStyle = createGlobalStyle`
   ${BadgeStyles}
 `;
@@ -17,7 +17,7 @@ export const LeftNav = ({ toggleDrawer }) => {
       <LogoName>
         <RouteLink activeClassName="active" href="/">
           <a>
-            <LogoTwo />
+            <LogoOne />
           </a>
         </RouteLink>
       </LogoName>
