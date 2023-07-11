@@ -165,6 +165,7 @@ export const PromoTextWrapper = styled.div`
 export const PromoPics = styled.div`
   flex: ${({ flex }) => (flex ? flex : 1)};
   width: 100%;
+  padding: ${({ theme, bannerMode }) => (bannerMode ? 0 : theme.space[4])};
   background-color: ${({ theme, transparent }) =>
     !transparent ? theme.colors.secondary : "transparent"};
 `;

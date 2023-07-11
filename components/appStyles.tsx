@@ -339,6 +339,10 @@ export const GlobalStyle = createGlobalStyle`
     } 
   }
 
+  [class*="ant-image-preview-switch"] {
+    background-color: ${({ theme }) => theme.colors.primary};
+  }
+
   .virtual-table .ant-table-container:before,
   .virtual-table .ant-table-container:after {
     display: none;

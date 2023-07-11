@@ -5,6 +5,7 @@ import { defaultDelay } from "../ui-kit/Promo";
 import { saveContent } from "../Admin/services";
 import { EditForm } from "../Forms/styles";
 import { Tiptap } from "../ui-kit/Tiptap";
+import { message } from "antd";
 
 export const TrainingHome = ({
   editMode,
@@ -21,7 +22,7 @@ export const TrainingHome = ({
   return (
     <>
       <Content editorStickyTop={editorStickyTop}>
-        {editMode ? (
+        {editMode && content?.id ? (
           <EditForm onSubmit={(e) => e.preventDefault()}>
             <Tiptap
               content={content?.content || { content: "" }}

@@ -47,7 +47,9 @@ export const RunSizes = ({ filterType = "all" }) => {
     fetch("/api/runs")
       .then((res) => res.json())
       .then((data) => {
-        const filterData = getFilteredData(data, filterType);
+        const filterData = getFilteredData(data, filterType).sort(
+          (a, b) => a.order - b.order
+        );
         setRuns(filterData);
       });
   }, []);
@@ -55,11 +57,16 @@ export const RunSizes = ({ filterType = "all" }) => {
   return (
     <RunSizeWrapper>
       {runs.length > 0 ? (
-        runs
-          .sort((a, b) => a.order - b.order)
-          .map((run, i) => {
-            return <SingleRun editMode={editMode} key={i} run={run} />;
-          })
+        runs.map((run, i) => {
+          return (
+            <SingleRun
+              setRuns={setRuns}
+              editMode={editMode}
+              key={i}
+              run={run}
+            />
+          );
+        })
       ) : (
         <p>Run information coming soon.</p>
       )}

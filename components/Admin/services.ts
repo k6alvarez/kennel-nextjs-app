@@ -88,8 +88,17 @@ export const saveContent = async ({
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
+        }).then((res) => {
+            return res.json();
+        }).then(async (res) => {
+            if (res.errors) {
+                message.error("We're sorry, something went wrong. Please try again.");
+                throw new Error(res.errors);
+
+            }
+            message.success("Content saved successfully");
         });
-        message.success("Content saved successfully");
+
         setLoading && setLoading(false);
     } catch (error) {
         console.error(error);

@@ -20,6 +20,7 @@ const FooterWrapper = styled.footer`
   font-size: ${({ theme }) => theme.fontSizes[0]};
   display: grid;
   grid-template-areas: "info" "map" "bottom" "addressBar";
+  margin-top: ${({ theme }) => theme.space[6]};
 
   @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
     grid-template-areas: "addressBar" "info map" "bottom bottom";

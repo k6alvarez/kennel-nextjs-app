@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Image } from "antd";
 import styled from "styled-components";
 import { DetailItem } from "../../pages/reservation/[id]";
 import { LetterSpacedText } from "../Footer";
 import { base } from "../ui-kit/Theme";
 import { EditSingleRun } from "./EditSingleRun";
+import { Button } from "../ui-kit/Base";
+import { SingleRunGallery } from "./SingleRunGallery";
 
 const Flex = styled.div`
   display: grid;
@@ -16,8 +18,8 @@ const Flex = styled.div`
 export const RunItem = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: fit-content;
-  min-width: 100%;
+  width: 100%;
+  order: ${({ order }) => order};
 
   input {
     margin-bottom: 1rem;
@@ -30,11 +32,11 @@ export const ZIndex = styled.div`
   display: ${({ positionIndex }) => (positionIndex === 0 ? "block" : "none")};
   text-align: center;
 `;
-export const SingleRun = ({ run, editMode }) => {
+export const SingleRun = ({ run, setRuns, editMode }) => {
   return (
-    <RunItem>
+    <RunItem order={run.order}>
       {editMode ? (
-        <EditSingleRun run={run} />
+        <EditSingleRun run={run} setRuns={setRuns} />
       ) : (
         <Card>
           <p
@@ -44,21 +46,7 @@ export const SingleRun = ({ run, editMode }) => {
           >
             {run.name}
           </p>
-          {run.gallery.length > 0 && (
-            <Image.PreviewGroup>
-              {run.gallery.map((image, i) => {
-                return (
-                  <ZIndex
-                    positionIndex={i}
-                    key={i}
-                    zIndex={run.gallery.length - i}
-                  >
-                    <Image width="90%" src={image} />
-                  </ZIndex>
-                );
-              })}
-            </Image.PreviewGroup>
-          )}
+          {run.gallery.length > 0 && <SingleRunGallery gallery={run.gallery} />}
 
           <Flex>
             {run.sizeInside && (
