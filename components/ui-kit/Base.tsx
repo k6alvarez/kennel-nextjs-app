@@ -217,8 +217,12 @@ export const GridItemTitle = styled.p`
 
 export const Button = styled.button`
   position: relative;
-  margin-top: ${({ theme }) => theme.space[4]};
-  padding: ${({ theme, small }) => (small ? theme.space[2] : theme.space[3])};
+  margin-top: ${({ theme, small }) =>
+    small ? theme.space[0] : theme.space[4]};
+  padding: ${({ theme, small }) =>
+    small
+      ? `${theme.space[2]} ${theme.space[3]}`
+      : `${theme.space[4]} ${theme.space[4]}`};
   font-size: ${({ theme, small }) =>
     small ? theme.fontSizes[0] : theme.fontSizes[1]};
   background-color: ${({ theme, primary }) =>
@@ -228,9 +232,18 @@ export const Button = styled.button`
   border: none;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   min-width: 100px;
+  white-space: nowrap;
 
   &:disabled {
     cursor: not-allowed;
+  }
+
+  &:hover {
+    /* background-color: ${({ theme, primary }) =>
+      primary ? theme.colors.secondary : theme.colors.primary}; */
+    /* color: ${({ theme, primary }) =>
+      primary ? theme.colors.textSecondary : theme.colors.textPrimary}; */
+    font-weight: 600;
   }
 
   .ant-image {

@@ -1,10 +1,12 @@
-import { Card, Image, message } from "antd";
+import { Button, Card, Image, message } from "antd";
 import React, { useEffect } from "react";
 import { StyledInput, StyledLabel } from "../Forms/styles";
 import styled from "styled-components";
+import { CloseOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const Flex = styled.div`
   display: flex;
+  overflow-x: scroll;
   margin: ${(props) => props.theme.space[2]} 0;
   gap: ${({ theme, gap }) => (gap ? theme.space[gap] : 0)};
 
@@ -18,15 +20,38 @@ const Flex = styled.div`
     min-width: 100px;
   }
 `;
-export const EditSingleRun = ({ run }) => {
+
+const ImageDelete = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .ant-image {
+    margin-bottom: ${({ theme }) => theme.space[2]};
+  }
+
+  .anticon {
+    position: absolute;
+    padding: ${({ theme }) => theme.space[2]};
+    background-color: ${({ theme }) => theme.colors.secondary};
+    top: 0;
+    right: 0;
+    color: ${({ theme }) => theme.colors.textsecondary};
+    cursor: pointer;
+  }
+`;
+
+export const EditSingleRun = ({ run, setRuns }) => {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [currentRun, setCurrentRun] = React.useState(run);
   const [newGallery, setNewGallery] = React.useState([]);
 
   const handleChange = (e) => {
-    setCurrentRun({
-      ...currentRun,
-      [e.target.name]: e.target.value,
+    setRuns((prev) => {
+      const index = prev.findIndex((r) => r.id === run.id);
+      prev[index] = { ...prev[index], [e.target.name]: e.target.value };
+      return [...prev];
     });
   };
 
@@ -39,18 +64,35 @@ export const EditSingleRun = ({ run }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...currentRun,
-        gallery: newGallery.length > 0 ? newGallery : currentRun.gallery,
+        ...run,
       }),
     }).then((res) => res.json());
     if (data.error) {
       message.error("Error while updating. Refresh and try again.");
       setIsLoading(false);
       return;
+    } else {
+      setRuns((prev) => {
+        const index = prev.findIndex((r) => r.id === run.id);
+        prev[index] = { ...prev[index], ...run };
+        return [...prev];
+      });
     }
     message.success(`Content updated.`);
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    setRuns((prev) => {
+      const index = prev.findIndex((r) => r.id === run.id);
+      const dedupedGallery = new Set([...prev[index].gallery, ...newGallery]);
+      prev[index].gallery = [...dedupedGallery];
+      return [...prev];
+    });
+    if (isLoading) {
+      setIsLoading(false);
+    }
+  }, [newGallery]);
 
   return (
     <Card>
@@ -64,10 +106,10 @@ export const EditSingleRun = ({ run }) => {
             onChange={handleChange}
           />
           <Flex gap="4">
-            {newGallery.length > 0 ? (
-              <>
-                {newGallery.map((image, i) => {
-                  return (
+            {run.gallery.length > 0 &&
+              run.gallery.map((image, i) => {
+                return (
+                  <ImageDelete>
                     <Image
                       style={{
                         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2) ",
@@ -75,27 +117,20 @@ export const EditSingleRun = ({ run }) => {
                       key={i}
                       width={"150px"}
                       src={image}
+                      preview={false}
                     />
-                  );
-                })}
-              </>
-            ) : (
-              <>
-                {currentRun.gallery.length > 0 &&
-                  currentRun.gallery.map((image, i) => {
-                    return (
-                      <Image
-                        style={{
-                          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2) ",
-                        }}
-                        key={i}
-                        width={"150px"}
-                        src={image}
-                      />
-                    );
-                  })}
-              </>
-            )}
+                    <CloseOutlined
+                      onClick={() => {
+                        setRuns((prev) => {
+                          const index = prev.findIndex((r) => r.id === run.id);
+                          prev[index].gallery.splice(i, 1);
+                          return [...prev];
+                        });
+                      }}
+                    />
+                  </ImageDelete>
+                );
+              })}
           </Flex>
           <input
             type="file"
@@ -105,11 +140,13 @@ export const EditSingleRun = ({ run }) => {
             multiple
             onChange={(e) => {
               const files = Array.from(e.target.files);
+
               message.loading(`Uploading images...`);
+              setIsLoading(true);
               files.map(async (file) => {
                 const formData = new FormData();
                 formData.append("file", file);
-                formData.append("upload_preset", "gk-runs");
+                formData.append("upload_preset", "gk-promo-items");
 
                 const data = await fetch(
                   "https://api.cloudinary.com/v1_1/dhcv2fdfq/image/upload",
@@ -123,6 +160,7 @@ export const EditSingleRun = ({ run }) => {
                     "Error uploading image. Refresh and try again."
                   );
                   console.error(data.error);
+                  setIsLoading(false);
                   return;
                 }
                 setNewGallery((prev) => [...prev, data.secure_url]);

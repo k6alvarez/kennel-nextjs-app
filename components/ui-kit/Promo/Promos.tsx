@@ -51,6 +51,9 @@ export const Promos = ({
 }: PromosProps) => {
   const { currentTheme } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);
+
+  if (promos.length === 0) return null;
+
   return (
     <>
       {sliderMode ? (
@@ -82,6 +85,7 @@ export const Promos = ({
             transparent={transparent}
             currentTheme={currentTheme}
             flex={noFlexGrow ? "unset" : "1"}
+            bannerMode={bannerMode}
           >
             <GridItems variant={variant} bannerMode={bannerMode}>
               {promos.map((promo, i) => (

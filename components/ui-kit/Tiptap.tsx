@@ -340,6 +340,7 @@ export const Tiptap = ({
       </EditorContentWrapper>
       {onSave && (
         <Button
+          small
           primary
           onClick={() => {
             const html = editor.getHTML();

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { GridItem } from "../Base";
+import { Button, GridItem } from "../Base";
 import { PromoTextWrapper, ImageZoomWrapper } from "./styles-promo";
 import styled from "styled-components";
 import message from "antd/lib/message";
@@ -129,8 +129,9 @@ export const EditLinkedImage = ({
                   });
               }}
             />
-            <button
-              type="button"
+            <Button
+              small
+              primary
               onClick={async () => {
                 setIsLoading(true);
                 const data = await fetch(`/api/promo-item/${promo.id}`, {
@@ -154,7 +155,7 @@ export const EditLinkedImage = ({
               }}
             >
               Save Changes
-            </button>
+            </Button>
           </Flex>
         </PromoTextWrapper>
       ) : (
