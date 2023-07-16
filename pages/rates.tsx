@@ -84,9 +84,7 @@ const Rates: React.FC<Props> = ({ dates, contentItems }) => {
         ) : (
           <div dangerouslySetInnerHTML={{ __html: ratesContent?.content }} />
         )}
-      </Content>
-      <RunSizes />
-      <Content>
+        <RunSizes />
         {editMode ? (
           <EditForm onSubmit={(e) => e.preventDefault()}>
             <Tiptap

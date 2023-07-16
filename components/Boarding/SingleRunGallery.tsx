@@ -17,10 +17,11 @@ export const SingleRunGallery = ({ gallery }) => {
     <Wrapper>
       <Image
         preview={{ visible: false }}
-        width="90%"
+        width="80%"
         src={gallery[0]}
         onClick={() => setVisible(true)}
       />
+      <br />
       {gallery.length > 1 && (
         <Button primary small type="button" onClick={() => setVisible(true)}>
           View More Photos

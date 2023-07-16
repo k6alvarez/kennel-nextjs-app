@@ -16,8 +16,7 @@ const BoardingCats = ({
   editorStickyTop,
 }) => {
   return (
-    <>
-      <Content editorStickyTop={editorStickyTop}>
+    <Content editorStickyTop={editorStickyTop}>
         {editMode ? (
           <EditForm onSubmit={(e) => e.preventDefault()}>
             <Tiptap
@@ -36,9 +35,8 @@ const BoardingCats = ({
         ) : (
           <div dangerouslySetInnerHTML={{ __html: content?.content }} />
         )}
-      </Content>
-      <RunSizes filterType="cats-only" />
-    </>
+        <RunSizes filterType="cats-only" />
+      </Content>      
   );
 };
 

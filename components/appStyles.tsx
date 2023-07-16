@@ -118,6 +118,7 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1;
     padding-left: 0;
     display: flex;
+    flex-wrap: wrap;
     white-space: nowrap;
     align-items: center;
     gap: ${({ theme }) => theme.space[2]};
@@ -250,6 +251,10 @@ export const GlobalStyle = createGlobalStyle`
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .ant-avatar-square {
+    margin: 0 auto;
   }
 
   .ant-badge {    

@@ -42,13 +42,11 @@ export const TrainingHome = ({
         )}
       </Content>
       <Promos
-        delay={defaultDelay * 6}
         promos={classesPrimary}
         setPromos={setClassesPrimary}
         editMode={editMode}
       />
       <Promos
-        delay={defaultDelay * 6}
         promos={classesSecondary}
         setPromos={setClassesSecondary}
         editMode={editMode}

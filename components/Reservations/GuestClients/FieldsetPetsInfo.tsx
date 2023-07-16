@@ -133,6 +133,8 @@ export const FieldsetPetsInfo = ({
         {pets.length > 0 && (
           <PetCards>
             {pets?.map((pet, i) => {
+              console.log(formState.pets, pet);
+              console.log(petFormState);
               return (
                 <PetCard
                   apiPath={apiPath}
@@ -144,7 +146,7 @@ export const FieldsetPetsInfo = ({
                   refetchPets={refetchPets}
                   petSelected={
                     formState.pets instanceof Array
-                      ? formState.pets.includes(pet)
+                      ? formState.pets.filter((p) => p.id === pet.id).length > 0
                       : Object.keys(formState.pets).includes(pet.id)
                   }
                 />

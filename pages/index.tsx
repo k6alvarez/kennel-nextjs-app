@@ -101,15 +101,13 @@ const MyApp = ({ contentItems, promoItems }) => {
         ) : (
           <div dangerouslySetInnerHTML={{ __html: homeContent?.content }} />
         )}
-      </Content>
-      <Promos
-        delay={defaultDelay * 6}
-        promos={homeCallouts}
-        setPromos={setHomeCallouts}
-        editMode={editMode}
-        transparent
-      />
-      <Content>
+        <Promos
+          delay={defaultDelay * 6}
+          promos={homeCallouts}
+          setPromos={setHomeCallouts}
+          editMode={editMode}
+          transparent
+        />
         {editMode ? (
           <EditForm onSubmit={(e) => e.preventDefault()}>
             <Tiptap

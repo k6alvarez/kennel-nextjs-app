@@ -46,8 +46,4 @@ export const CardTitle = styled.div`
   > a {
     font-size: ${(props) => props.theme.fontSizes[0]};
   }
-
-  @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
-    flex-direction: row;
-  }
 `;

@@ -36,9 +36,7 @@ export const BoardingHome = ({
         ) : (
           <div dangerouslySetInnerHTML={{ __html: content?.content }} />
         )}
-      </Content>
-      <RunSizes filterType="a-b-wing" />
-      <Content editorStickyTop={editorStickyTop}>
+        <RunSizes filterType="a-b-wing" />
         {editMode ? (
           <EditForm onSubmit={(e) => e.preventDefault()}>
             <Tiptap
@@ -59,8 +57,8 @@ export const BoardingHome = ({
             dangerouslySetInnerHTML={{ __html: secondaryContent?.content }}
           />
         )}
+        <RunSizes filterType="c-wing" />
       </Content>
-      <RunSizes filterType="c-wing" />
     </>
   );
 };

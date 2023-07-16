@@ -29,7 +29,7 @@ interface PromosProps {
 
 const Container = styled.div`
   width: ${({ maxWidth }) => (maxWidth ? "100%" : "96%")};
-  max-width: ${({ maxWidth }) => (maxWidth ? "100%" : "1200px")};
+  max-width: ${({ maxWidth }) => (maxWidth ? "100%" : "1600px")};
   margin: 0 auto;
   display: flex;
   align-items: stretch;

@@ -26,7 +26,12 @@ const Container = styled.div`
   justify-content: space-evenly;
   align-items: stretch;
   flex: 1;
-  min-width: 33%;
+  min-width: 50%;
+  flex-wrap: wrap;
+
+  @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
+    min-width: 33%;
+  }
 
   > button {
     flex: 1;
