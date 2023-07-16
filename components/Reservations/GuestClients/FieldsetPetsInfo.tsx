@@ -133,8 +133,6 @@ export const FieldsetPetsInfo = ({
         {pets.length > 0 && (
           <PetCards>
             {pets?.map((pet, i) => {
-              console.log(formState.pets, pet);
-              console.log(petFormState);
               return (
                 <PetCard
                   apiPath={apiPath}

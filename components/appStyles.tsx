@@ -117,11 +117,15 @@ export const GlobalStyle = createGlobalStyle`
     margin-top: ${({ theme }) => theme.space[3]};
     line-height: 1;
     padding-left: 0;
-    display: flex;
-    flex-wrap: wrap;
+    display: flex;  
+    flex-wrap: wrap;  
     white-space: nowrap;
     align-items: center;
     gap: ${({ theme }) => theme.space[2]};
+
+    @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+      flex-wrap: initial;
+    }
   }
 
   input[type="submit"] {
