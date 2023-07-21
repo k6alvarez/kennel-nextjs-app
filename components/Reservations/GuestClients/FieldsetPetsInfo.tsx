@@ -144,7 +144,7 @@ export const FieldsetPetsInfo = ({
                   refetchPets={refetchPets}
                   petSelected={
                     formState.pets instanceof Array
-                      ? formState.pets.includes(pet)
+                      ? formState.pets.filter((p) => p.id === pet.id).length > 0
                       : Object.keys(formState.pets).includes(pet.id)
                   }
                 />

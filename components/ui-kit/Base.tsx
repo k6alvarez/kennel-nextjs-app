@@ -5,12 +5,16 @@ import { addressBarHt, headerHt, promoMessageHt } from "./Promo/styles-promo";
 export const maxContentWidth = "1200px";
 
 export const Content = styled.article`
-  padding: ${({ theme }) => theme.space[6]};
+  padding: ${({ theme }) => theme.space[2]};
   max-width: 100%;
   margin: 0 auto;
   position: relative;
   background-color: ${({ theme, cardWrapper }) =>
     cardWrapper ? theme.colors.secondaryDark : "inherit"};
+
+  @media (min-width: ${(props) => props.theme.breakpoints[0]}) {
+    padding: ${({ theme }) => theme.space[4]};
+  }
 
   @media (min-width: ${(props) => props.theme.breakpoints[2]}) {
     padding: ${({ theme, cardWrapper }) =>
@@ -122,7 +126,7 @@ export const Content = styled.article`
   }
 
   .ant-tabs-tab .ant-tabs-tab-btn {
-    font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/1.4)`};
+    font-size: ${({ theme }) => `calc(${theme.fontSizes[0]}/1.3)`};
 
     @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
       font-size: ${({ theme }) => theme.fontSizes[0]};
@@ -130,6 +134,7 @@ export const Content = styled.article`
   }
 
   &&&& .ant-tabs-tab {
+    height: 40px;
     @media (max-width: ${({ theme }) => theme.breakpoints[1]}) {
       padding: 0;
     }
@@ -154,13 +159,25 @@ export const GridItemText = styled.div``;
 
 export const GridItems = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: ${({ theme }) => theme.space[5]};
 
   fieldset {
     margin: 0;
     padding: 0;
     width: 100%;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[0]}) {
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints[2]}) {
+    grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
   }
 `;
 
@@ -239,10 +256,6 @@ export const Button = styled.button`
   }
 
   &:hover {
-    /* background-color: ${({ theme, primary }) =>
-      primary ? theme.colors.secondary : theme.colors.primary}; */
-    /* color: ${({ theme, primary }) =>
-      primary ? theme.colors.textSecondary : theme.colors.textPrimary}; */
     font-weight: 600;
   }
 

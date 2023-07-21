@@ -59,7 +59,7 @@ export const EditLinkedImage = ({
                 const file = e.target.files[0];
                 const formData = new FormData();
                 formData.append("file", file);
-                formData.append("upload_preset", "gk-app");
+                formData.append("upload_preset", "gk-promo-links");
                 setIsLoading(true);
 
                 message.loading(`Uploading new image.`);
@@ -70,26 +70,8 @@ export const EditLinkedImage = ({
                     body: formData,
                   }
                 ).then((res) => res.json());
-                // const uploadedImage = await fetch(
-                //   `/api/promo-item/${promo.id}`,
-                //   {
-                //     method: "PUT",
-                //     headers: {
-                //       "Content-Type": "application/json",
-                //     },
-                //     body: JSON.stringify({
-                //       image: data.secure_url,
-                //     }),
-                //   }
-                // ).then((res) => res.json());
-                // if (uploadedImage.error) {
-                //   message.error(uploadedImage.error);
-                //   setIsLoading(false);
-                //   return;
-                // }
                 updatePromo &&
                   updatePromo({ ...promo, image: data.secure_url });
-                // message.success(`New image uploaded.`);
                 setIsLoading(false);
               }}
               disabled={isLoading}

@@ -106,7 +106,7 @@ export const UserPetEditForm = ({ pet, callback, apiPath = "/api/pet" }) => {
                 payload: { newValue, error },
               });
             },
-            setFormLoading: () => {},
+            setFormLoading,
           })}
         </Fields>
         <Field>

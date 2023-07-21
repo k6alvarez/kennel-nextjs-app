@@ -18,6 +18,7 @@ export const StepsContent = styled.div`
 export const PetCards = styled.div`
   display: flex;
   align-items: stretch;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.space[4]};

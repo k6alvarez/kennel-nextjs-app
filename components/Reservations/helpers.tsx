@@ -203,6 +203,13 @@ export const getDataSource = (
   },
   source: Reservation | Pet
 ) => {
+  const renderValue = (value) => {
+    // check if date else return value
+    if (DateTime.fromISO(value).isValid) {
+      return DateTime.fromISO(value).toLocaleString(DateTime.DATE_FULL);
+    }
+    return value;
+  };
   const dataSource = Object.entries(source)
     .filter((key) => {
       let field = fieldGroup[key[0]];
@@ -219,11 +226,11 @@ export const getDataSource = (
           <LetterSpacedText fs={base.fontSizes[1]} bold>
             {field.label}
           </LetterSpacedText>
-          <LetterSpacedText as="div" fs={base.fontSizes[2]}>
+          <LetterSpacedText as="div" fs={base.fontSizes[1]}>
             {isValidHttpUrl(source[key[0]]) ? (
               <Image src={source[key[0]]} width={100} height={100} />
             ) : (
-              <span>{source[key[0]] || "n/a"}</span>
+              <span>{renderValue(source[key[0]]) || "n/a"}</span>
             )}
           </LetterSpacedText>
         </DetailItem>

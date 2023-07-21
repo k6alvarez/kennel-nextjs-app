@@ -126,11 +126,11 @@ export const PromoTextWrapper = styled.div`
       background-position: center;
       background-size: cover;
       width: ${({ hasLink }) => (hasLink ? "100%" : "unset")};
-      height: 15vw;
+      height: auto;
       min-height: 250px;
 
       @media (min-width: ${({ theme }) => theme.breakpoints[1]}) {
-        height: 15vw;
+        height: auto;
         background-position: center;
       }
     }
