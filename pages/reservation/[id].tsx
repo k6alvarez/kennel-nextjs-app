@@ -14,6 +14,7 @@ import { Divider, List, Tag } from "antd";
 import { getDataSource } from "../../components/Reservations/helpers";
 import { ReservationNotFound } from "../../components/Reservations/ReservationNotFound";
 import { ReservationStatusSection } from "../../components/Reservations/ReservationStatusSection";
+import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 
 export const DetailItem = styled.div`
   margin: ${({ theme }) => theme.space[0]} 0;
@@ -76,9 +77,27 @@ const Reservation = ({ reservation }) => {
             <Flex>
               <h2>Reservation Details</h2>
               {reservation.confirmed ? (
-                <Tag color="green">Confirmed</Tag>
+                <Tag
+                  style={{
+                    fontSize: "1.2rem",
+                    padding: "0.5rem 1rem",
+                  }}
+                  color="green"
+                >
+                  <CheckCircleOutlined />
+                  Confirmed
+                </Tag>
               ) : (
-                <Tag color="red">Not Confirmed</Tag>
+                <Tag
+                  style={{
+                    fontSize: "1.2rem",
+                    padding: "0.5rem 1rem",
+                  }}
+                  color="red"
+                >
+                  <CloseCircleOutlined />
+                  &nbsp; Not Confirmed
+                </Tag>
               )}
             </Flex>
           }

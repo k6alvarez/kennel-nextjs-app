@@ -5,7 +5,7 @@ import { base } from "../ui-kit/Theme";
 import styled from "styled-components";
 import { DateTime } from "luxon";
 import { PET_INITIAL_STATE } from "../Pets/petFormReducer";
-import { Divider, Image, List } from "antd";
+import { Divider, Image, List, Tag } from "antd";
 import { getDataSource } from "./helpers";
 
 const Wrapper = styled.div`
@@ -53,12 +53,28 @@ export const getFormattedValue = (field) => {
 
 export const ReservationSummary = ({ state, pets }) => {
   const getState = typeof state === "object" ? Object.keys(state) : state;
+
   return (
     <Wrapper>
       <Divider>
         <h2>Reservation Summary</h2>
       </Divider>
-
+      <Tag
+        color="blue"
+        style={{
+          fontSize: base.fontSizes[0],
+          padding: "0.5rem 1rem",
+          textTransform: "capitalize",
+        }}
+      >
+        {DateTime.fromISO(state.arrivalDate.value).toLocaleString(
+          DateTime.DATE_HUGE
+        )}{" "}
+        -{" "}
+        {DateTime.fromISO(state.departureDate.value).toLocaleString(
+          DateTime.DATE_HUGE
+        )}
+      </Tag>
       <List
         size="small"
         header={<h4>Owner Details</h4>}
@@ -78,7 +94,7 @@ export const ReservationSummary = ({ state, pets }) => {
                   {field.label}
                 </LetterSpacedText>
                 {key !== "pets" && (
-                  <LetterSpacedText as="div" fs={base.fontSizes[2]}>
+                  <LetterSpacedText as="div" fs={base.fontSizes[1]}>
                     {getFormattedValue(field)}
                   </LetterSpacedText>
                 )}
