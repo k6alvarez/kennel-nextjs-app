@@ -44,12 +44,12 @@ export const FormIntroGuest = () => {
     <>
       <p>
         Please note that for new client reservations, we require an
-        administrative fee of $25.00 per run, which functions as a deposit. You
-        have the convenience of paying this fee online using debit or credit
-        cards. The deposit will be credited towards your pet's stay, effectively
-        reducing your total amount due. It's important to note that this deposit
-        is non-refundable; however, if you provide a cancellation notice of at
-        least 24 hours, it can be applied to a future reservation.
+        administrative fee of $25.00. You have the convenience of paying this
+        fee online using debit or credit cards.
+        <BlockQuote>
+          This non-refundable fee is for setting up your record and does not
+          guarantee your reservation.
+        </BlockQuote>
       </p>
       <p>
         Additionally, by submitting the deposit payment, you are acknowledging

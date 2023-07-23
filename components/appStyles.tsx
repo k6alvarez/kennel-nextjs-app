@@ -356,4 +356,30 @@ export const GlobalStyle = createGlobalStyle`
   .virtual-table .ant-table-container:after {
     display: none;
   }
+
+  .ant-steps-vertical {
+    @media (min-width: 312px) {
+      flex-direction: row;
+    } 
+  }
+
+  .ant-steps-vertical > .ant-steps-item .ant-steps-item-icon {
+    @media (min-width: 312px) {
+      margin-right: ${({ theme }) => theme.space[2]};
+    } 
+  }
+
+  .ant-steps-item-icon {
+    @media (min-width: 312px) {
+      transform: scale(0.75);      
+    } 
+  }
+
+ 
+  .ant-steps-vertical > .ant-steps-item .ant-steps-item-title {
+    @media (min-width: 312px) {
+      font-size: 12px;
+      padding: 0;
+    } 
+  }
 `;
