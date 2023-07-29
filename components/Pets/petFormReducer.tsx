@@ -1,6 +1,8 @@
+import { DateTime } from "luxon";
+
 export const PET_INITIAL_STATE = {
   name: {
-    value: "",
+    value: "Roger",
     error: null,
     type: "text",
     label: "Pet Name",
@@ -15,7 +17,7 @@ export const PET_INITIAL_STATE = {
     required: true,
   },
   breed: {
-    value: "",
+    value: "Mix",
     error: null,
     type: "text",
     label: "Breed",
@@ -38,7 +40,7 @@ export const PET_INITIAL_STATE = {
     required: true,
   },
   color: {
-    value: "",
+    value: "Black",
     error: null,
     type: "text",
     label: "Color",
@@ -51,35 +53,36 @@ export const PET_INITIAL_STATE = {
     label: "Image",
   },
   vaccinations: {
-    value: "",
+    value:
+      "http://localhost:3000/_next/image?url=%2Fimages%2FShieldOutline.png&w=128&q=75",
     error: null,
     type: "file",
     label: "Vaccinations Upload",
     required: true,
   },
   distemperVaccine: {
-    value: "",
+    value: DateTime.now().toISODate(),
     error: null,
     type: "date",
     label: "Distemper Vaccine Expiration",
     required: true,
   },
   bordetellaVaccine: {
-    value: "",
+    value: DateTime.now().toISODate(),
     error: null,
     type: "date",
     label: "Bordetella Vaccine Expiration",
     required: true,
   },
   rabiesVaccine: {
-    value: "",
+    value: DateTime.now().toISODate(),
     error: null,
     type: "date",
     label: "Rabies Vaccine Expiration",
     required: true,
   },
   parvoVirusesVaccine: {
-    value: "",
+    value: DateTime.now().toISODate(),
     error: null,
     type: "date",
     label: "Parvo Viruses Vaccine Expiration",
@@ -104,7 +107,7 @@ export const PET_INITIAL_STATE = {
     required: true,
   },
   vet: {
-    value: "",
+    value: "ATLANTA VETERINARY SPECIALISTS",
     error: null,
     type: "text",
     label: "Veterinarian",

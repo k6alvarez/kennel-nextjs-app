@@ -5,10 +5,44 @@ import { Content } from "../components/ui-kit/Base";
 import { GuestClientForm } from "../components/Reservations/GuestClients/GuestClientForm";
 import { ClientForm } from "../components/Reservations/Clients/ClientForm";
 import { ClientStatusSelection } from "../components/Reservations/ClientStatusSelection";
-import { ArrowLeftOutlined } from "@ant-design/icons";
 import prisma from "../lib/prisma";
 import { GetServerSideProps } from "next";
 import { ThemePreferenceContext } from "./_app";
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+.virtual-table .ant-table-container:before,
+  .virtual-table .ant-table-container:after {
+    display: none;
+  }
+
+  .ant-steps-vertical {
+    @media (min-width: 312px) {
+      flex-direction: row;
+    } 
+  }
+
+  .ant-steps-vertical > .ant-steps-item .ant-steps-item-icon {
+    @media (min-width: 312px) {
+      margin-right: ${({ theme }) => theme.space[2]};
+    } 
+  }
+
+  .ant-steps-item-icon {
+    @media (min-width: 312px) {
+      transform: scale(0.75);      
+    } 
+  }
+
+ 
+  .ant-steps-vertical > .ant-steps-item .ant-steps-item-title {
+    @media (min-width: 312px) {
+      font-size: 12px;
+      padding: 0;
+    } 
+  }
+
+  `;
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -94,8 +128,6 @@ const Reservation = ({ contentItems, promoItems, user }) => {
           clientType={clientType}
           reservationWelcome={reservationWelcome}
           setReservationWelcome={setReservationWelcome}
-          bannerImage={bannerImage}
-          setBannerImage={setBannerImage}
         />
       </Layout>
     );
@@ -103,6 +135,7 @@ const Reservation = ({ contentItems, promoItems, user }) => {
 
   return (
     <Layout>
+      <GlobalStyle />
       <Content>
         <h1>Client Reservations</h1>
         {isNewClient ? <GuestClientForm /> : <ClientForm user={user} />}

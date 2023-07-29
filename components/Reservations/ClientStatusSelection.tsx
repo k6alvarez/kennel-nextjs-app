@@ -6,10 +6,8 @@ import { EditForm } from "../Forms/styles";
 import { Tiptap } from "../ui-kit/Tiptap";
 import { ThemePreferenceContext } from "../../pages/_app";
 import { saveContent } from "../Admin/services";
-import { EditablePromo } from "../ui-kit/Promo/EditablePromo";
 import { Content } from "../ui-kit/Base";
 import { headerHt } from "../ui-kit/Promo/styles-promo";
-import { Promo } from "../ui-kit/Promo";
 
 const ImageOverlay = styled.div`
   width: 100%;
@@ -120,8 +118,6 @@ export const ClientStatusSelection = ({
   clientType,
   reservationWelcome,
   setReservationWelcome,
-  bannerImage,
-  setBannerImage,
 }) => {
   const { editMode } = useContext(ThemePreferenceContext);
   const [isLoading, setIsLoading] = useState(false);

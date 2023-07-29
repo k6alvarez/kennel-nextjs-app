@@ -177,6 +177,35 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
           payload: { newValue: fieldFromState.value, error: null },
         });
     }
+
+    if (
+      field[0] === "bordetellaVaccine" ||
+      field[0] === "rabiesVaccine" ||
+      field[0] === "parvoVirusesVaccine" ||
+      field[0] === "distemperVaccine"
+    ) {
+      const vaccineExpirationDate = DateTime.fromISO(fieldFromState.value);
+      const arrivalDate = DateTime.fromISO(state.arrivalDate.value);
+
+      if (vaccineExpirationDate < arrivalDate) {
+        const error = `${fieldFromState.label} expiration date cannot be before arrival date. Please select a new date.`;
+        dispatch({
+          key: field[0],
+          payload: { newValue: fieldFromState.value, error },
+        });
+        return false;
+      }
+
+      const today = DateTime.now();
+      if (vaccineExpirationDate < today) {
+        const error = `${fieldFromState.label} expiration date cannot be before today. Please select a new date.`;
+        dispatch({
+          key: field[0],
+          payload: { newValue: fieldFromState.value, error },
+        });
+        return false;
+      }
+    }
   }
   return true;
 };
