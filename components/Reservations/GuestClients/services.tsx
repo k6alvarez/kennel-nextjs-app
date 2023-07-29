@@ -7,7 +7,10 @@ export const deleteGuestPet = async (id: string): Promise<void> => {
   });
 };
 
-export const guestFormUpdate = async (e, { state, dispatch, setFormError }) => {
+export const guestFormSubmitReservationRequest = async (
+  e,
+  { state, dispatch, setFormError, shouldCreateUser }
+) => {
   e?.preventDefault();
   message.loading("Sending reservation request.", 1);
   try {
@@ -16,6 +19,11 @@ export const guestFormUpdate = async (e, { state, dispatch, setFormError }) => {
         [key]: state[key].value !== undefined ? state[key].value : state[key],
       };
     });
+
+    if (shouldCreateUser) {
+      console.log("shouldCreateUser", shouldCreateUser);
+      // TODO: create user and update reservation with user id and email address. Send user email with login instructions.
+    }
 
     await fetch(`/api/guest-reservation/${state.id}`, {
       method: "PUT",
