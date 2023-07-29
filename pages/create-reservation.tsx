@@ -53,17 +53,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
   });
 
-  const promoItems = await prisma.promoItem.findMany({
-    where: {
-      page,
-    },
-  });
-
   if (!session) {
     return {
       props: {
         contentItems: JSON.stringify(contentItems),
-        promoItems: JSON.stringify(promoItems),
         user: null,
       },
     };
@@ -83,14 +76,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     props: {
       user: JSON.parse(JSON.stringify(userWithEmptyStrings)),
       contentItems: JSON.stringify(contentItems),
-      promoItems: JSON.stringify(promoItems),
     },
   };
 };
 
-const Reservation = ({ contentItems, promoItems, user }) => {
+const Reservation = ({ contentItems, user }) => {
   const parsedContentItems = JSON.parse(contentItems);
-  const parsedPromoItems = JSON.parse(promoItems);
   const { data: session, status } = useSession();
   const [clientType, setClientType] = useState({
     clientType: "",
@@ -101,10 +92,6 @@ const Reservation = ({ contentItems, promoItems, user }) => {
 
   const [reservationWelcome, setReservationWelcome] = useState(
     parsedContentItems.find((item) => item.name === "reservationWelcome")
-  );
-
-  const [bannerImage, setBannerImage] = useState(
-    parsedPromoItems.find((item) => item.name === "bannerImage")
   );
 
   if (status === "loading") {

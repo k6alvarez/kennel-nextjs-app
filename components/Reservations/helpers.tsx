@@ -28,26 +28,29 @@ export const prev = ({ current, setCurrent }) => {
 
 export const fieldValidator = ({ fields, state, dispatch }) => {
   for (const field of fields) {
-    const fieldFromState = state[field[0]];
-    const requiredFieldMissing =
-      fieldFromState.required && !fieldFromState.value;
-
+    const currentField = state[field[0]];
+    const requiredFieldMissing = currentField.required && !currentField.value;
+    const fieldDisabled = currentField.disabled;
     const fieldEmailInvalid =
-      fieldFromState.inputMode === "email" &&
-      !/^[^@]+@[^@]+\.[^@]+$/.test(fieldFromState.value);
+      currentField.inputMode === "email" &&
+      !/^[^@]+@[^@]+\.[^@]+$/.test(currentField.value);
 
     const fieldPhoneInvalid =
-      fieldFromState.inputMode === "tel" &&
+      currentField.inputMode === "tel" &&
       !/^\d{3}-\d{3}-\d{4}$/.test(
-        fieldFromState.value.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")
+        currentField.value.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")
       );
 
+    if (fieldDisabled) {
+      continue;
+    }
+
     if (requiredFieldMissing) {
-      const error = `${fieldFromState.label} is required.`;
+      const error = `${currentField.label} is required.`;
 
       dispatch({
         key: field[0],
-        payload: { newValue: fieldFromState.value, error },
+        payload: { newValue: currentField.value, error },
       });
 
       document.getElementById(field[0]).focus();
@@ -59,24 +62,24 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
     }
 
     if (fieldEmailInvalid) {
-      const error = `${fieldFromState.label} is not a valid email address.`;
+      const error = `${currentField.label} is not a valid email address.`;
       dispatch({
         key: field[0],
-        payload: { newValue: fieldFromState.value, error },
+        payload: { newValue: currentField.value, error },
       });
       return false;
     }
 
     if (fieldPhoneInvalid) {
-      const error = `${fieldFromState.label} is not a valid phone number.`;
+      const error = `${currentField.label} is not a valid phone number.`;
       dispatch({
         key: field[0],
-        payload: { newValue: fieldFromState.value, error },
+        payload: { newValue: currentField.value, error },
       });
       return false;
     }
     if (field[0] === "arrivalDate" || field[0] === "departureDate") {
-      const weekday = DateTime.fromISO(fieldFromState.value).weekday;
+      const weekday = DateTime.fromISO(currentField.value).weekday;
       const arrivalDate = DateTime.fromISO(state.arrivalDate.value);
       const departureDate = DateTime.fromISO(state.departureDate.value);
 
@@ -84,23 +87,23 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
         const error = `Arrival cannot be after departure. Please select a new date.`;
         dispatch({
           key: field[0],
-          payload: { newValue: fieldFromState.value, error },
+          payload: { newValue: currentField.value, error },
         });
         return false;
       }
 
       if (weekday === 6) {
-        const error = `We are closed on Saturdays. Please select a new ${fieldFromState.label}.`;
+        const error = `We are closed on Saturdays. Please select a new ${currentField.label}.`;
         dispatch({
           key: field[0],
-          payload: { newValue: fieldFromState.value, error },
+          payload: { newValue: currentField.value, error },
         });
         return false;
       }
     }
 
     if (field[0] === "arrivalTime" || field[0] === "departureTime") {
-      const time = DateTime.fromISO(fieldFromState.value).toLocaleString(
+      const time = DateTime.fromISO(currentField.value).toLocaleString(
         timeFormat
       );
 
@@ -108,11 +111,11 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
         const error = `We are not open until ${DateTime.fromISO(
           timeOpen
         ).toLocaleString(DateTime.TIME_SIMPLE)}. Please select a new ${
-          fieldFromState.label
+          currentField.label
         }.`;
         dispatch({
           key: field[0],
-          payload: { newValue: fieldFromState.value, error },
+          payload: { newValue: currentField.value, error },
         });
         return false;
       }
@@ -123,11 +126,11 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
         ).toLocaleString(DateTime.TIME_SIMPLE)} to ${DateTime.fromISO(
           timeBreakOpen
         ).toLocaleString(DateTime.TIME_SIMPLE)}. Please select a new ${
-          fieldFromState.label
+          currentField.label
         }.`;
         dispatch({
           key: field[0],
-          payload: { newValue: fieldFromState.value, error },
+          payload: { newValue: currentField.value, error },
         });
         return false;
       }
@@ -136,11 +139,11 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
         const error = `We are closed at ${DateTime.fromISO(
           timeClose
         ).toLocaleString(DateTime.TIME_SIMPLE)}. Please select a new ${
-          fieldFromState.label
+          currentField.label
         }.`;
         dispatch({
           key: field[0],
-          payload: { newValue: fieldFromState.value, error },
+          payload: { newValue: currentField.value, error },
         });
         return false;
       }
@@ -159,7 +162,7 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
         const error = `Arrival and departure times cannot be the same.`;
         dispatch({
           key: field[0],
-          payload: { newValue: fieldFromState.value, error },
+          payload: { newValue: currentField.value, error },
         });
         return false;
       }
@@ -168,13 +171,13 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
         const error = `Departure time cannot be before arrival time. Please select a new departure time.`;
         dispatch({
           key: field[0],
-          payload: { newValue: fieldFromState.value, error },
+          payload: { newValue: currentField.value, error },
         });
         return false;
       } else
         dispatch({
           key: field[0],
-          payload: { newValue: fieldFromState.value, error: null },
+          payload: { newValue: currentField.value, error: null },
         });
     }
 
@@ -184,24 +187,24 @@ export const fieldValidator = ({ fields, state, dispatch }) => {
       field[0] === "parvoVirusesVaccine" ||
       field[0] === "distemperVaccine"
     ) {
-      const vaccineExpirationDate = DateTime.fromISO(fieldFromState.value);
+      const vaccineExpirationDate = DateTime.fromISO(currentField.value);
       const arrivalDate = DateTime.fromISO(state.arrivalDate.value);
 
       if (vaccineExpirationDate < arrivalDate) {
-        const error = `${fieldFromState.label} expiration date cannot be before arrival date. Please select a new date.`;
+        const error = `${currentField.label} date cannot be before arrival date. Please select a new date.`;
         dispatch({
           key: field[0],
-          payload: { newValue: fieldFromState.value, error },
+          payload: { newValue: currentField.value, error },
         });
         return false;
       }
 
       const today = DateTime.now();
       if (vaccineExpirationDate < today) {
-        const error = `${fieldFromState.label} expiration date cannot be before today. Please select a new date.`;
+        const error = `${currentField.label} date cannot be before today. Please select a new date.`;
         dispatch({
           key: field[0],
-          payload: { newValue: fieldFromState.value, error },
+          payload: { newValue: currentField.value, error },
         });
         return false;
       }

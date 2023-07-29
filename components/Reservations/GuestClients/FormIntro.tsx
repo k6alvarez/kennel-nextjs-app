@@ -46,11 +46,11 @@ export const FormIntroGuest = () => {
         Please note that for new client reservations, we require an
         administrative fee of $25.00. You have the convenience of paying this
         fee online using debit or credit cards.
-        <BlockQuote>
-          This non-refundable fee is for setting up your record and does not
-          guarantee your reservation.
-        </BlockQuote>
       </p>
+      <BlockQuote>
+        This non-refundable fee is for setting up your record and does not
+        guarantee your reservation.
+      </BlockQuote>
       <p>
         Additionally, by submitting the deposit payment, you are acknowledging
         that you have read, understood, and agreed to our{" "}

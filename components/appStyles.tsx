@@ -180,6 +180,14 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-alert {
+    margin: ${({ theme }) => theme.space[4]} 0;
+
+    p {
+      margin: 0;
+    }
+  }
+
   .ant-drawer-body {
     padding: 0;
     font-family: ${({ theme }) => theme.fonts.body};

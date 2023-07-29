@@ -7,17 +7,8 @@ import { TotalDeposit } from "../styles";
 import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { ReservationSummary } from "../ReservationSummary";
 
-const getDepositTotal = (pets) => {
-  let depositTotal = 0;
-  pets.map((pet) => {
-    if (pet.preferredRunSize === "Small") {
-      return (depositTotal += 25);
-    } else if (pet.preferredRunSize === "Large") {
-      return (depositTotal += 25);
-    } else if (pet.preferredRunSize === "Extra Large") {
-      return (depositTotal += 25);
-    }
-  });
+const getDepositTotal = () => {
+  let depositTotal = 25;
 
   return "$" + depositTotal.toFixed(2);
 };
@@ -45,15 +36,22 @@ export const FieldSetPaymentInfo = ({ pets }) => {
         <BlockQuote>
           <div>
             <p>
-              A $25.00 per run deposit is required for new client reservations.
-              Your reservation is not complete and will not be confirmed until
-              we receive your deposit and the completed reservation form.
+              As a new client, there is a one-time boarding fee of $25 to cover
+              administrative costs. However, if you create a profile, you can
+              avoid this fee for future bookings. Your information will be
+              securely saved and you can update it at any time.
+            </p>
+            <p>
+              You have the convenience of paying this fee online using debit or
+              credit cards. This non-refundable fee is for setting up your
+              record and does not guarantee your reservation.
             </p>
             <TotalDeposit>
-              <p>Your total deposit due is {getDepositTotal(pets)}</p>
+              <p>Your total due is {getDepositTotal()}</p>
             </TotalDeposit>
           </div>
         </BlockQuote>
+        <p></p>
         <PayPalCheckout
           transactionTotal="25.00"
           onConfirm={(results) => {
