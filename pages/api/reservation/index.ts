@@ -33,7 +33,6 @@ const validateFields = async (fields: Reservation) => {
 
 export default async function handle(req, res) {
   let apiOptions
-  console.log("🚀 ~ file: index.ts:28 ~ handle ~ req.body", req.body)
   const petsAdded = req.body.pets.map((pet) => {
     return {
       id: pet.id
