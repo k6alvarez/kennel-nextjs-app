@@ -264,7 +264,12 @@ export const reservations = ({ reservations, guestReservations, user }) => {
       <Wrapper>
         {user?.permissions?.includes("ADMIN") ? (
           <main>
-            <Content>
+            <Content
+              style={{
+                width: "100%",
+                maxWidth: "100%",
+              }}
+            >
               <h1>Reservations</h1>
             </Content>
             <Tabs

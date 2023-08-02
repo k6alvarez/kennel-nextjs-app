@@ -4,8 +4,7 @@ import styled from "styled-components";
 import { Button, SplitHeader } from "../ui-kit/Base";
 import { getReservations } from "./services";
 import { VirtualTable } from "../ui-kit/Table/VirtualTable";
-import { Tag, Tooltip, message } from "antd";
-import { ArrowRightOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import { Tag, message } from "antd";
 import { DateTime } from "luxon";
 import { headerHt } from "../ui-kit/Promo/styles-promo";
 

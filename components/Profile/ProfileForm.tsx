@@ -5,13 +5,14 @@ import { renderFormFields } from "../Forms/renderFormFields";
 import { Fieldset, Fields, Error } from "../Forms/styles";
 import { BlockQuote } from "../Reservations/GuestClients/FormIntro";
 import { StepsAction } from "../Reservations/styles";
-import { Button } from "../ui-kit/Base";
+import { Button, SplitHeader } from "../ui-kit/Base";
 import {
   getProfileHeader,
   getUserName,
   profileFormFieldsValid,
 } from "./helpers";
 import { profileFormSubmit, requiredFieldsCheck } from "./services";
+import Router from "next/router";
 
 export const ProfileForm = ({
   user,
@@ -25,7 +26,17 @@ export const ProfileForm = ({
   const [formLoading, setFormLoading] = useState(false);
   return (
     <>
-      <h1>{getProfileHeader(user?.permissions || [])}</h1>
+      <SplitHeader>
+        <h1>{getProfileHeader(user?.permissions || [])}</h1>
+        <Button
+          primary
+          onClick={() => Router.push("/create-reservation")}
+          small
+        >
+          Book Reservation
+        </Button>
+      </SplitHeader>
+
       <p>{getUserName(user)}</p>
       {requiredFieldsCheck({ profileFormState }) && (
         <BlockQuote>
