@@ -1,4 +1,4 @@
-export const PET_INITIAL_STATE = {
+export const PET_DETAILS = {
   name: {
     value: "",
     error: null,
@@ -7,7 +7,7 @@ export const PET_INITIAL_STATE = {
     required: true,
   },
   type: {
-    value: "Dog",
+    value: "",
     error: null,
     type: "select",
     options: ["Dog", "Cat"],
@@ -22,7 +22,7 @@ export const PET_INITIAL_STATE = {
     required: true,
   },
   gender: {
-    value: "Female",
+    value: "",
     error: null,
     type: "select",
     options: ["Female", "Male"],
@@ -30,7 +30,7 @@ export const PET_INITIAL_STATE = {
     required: true,
   },
   fixed: {
-    value: "No",
+    value: "",
     error: null,
     type: "select",
     options: ["No", "Yes"],
@@ -48,8 +48,11 @@ export const PET_INITIAL_STATE = {
     value: "",
     error: null,
     type: "file",
-    label: "Image",
+    label: "Pet Image",
   },
+};
+
+export const PET_MEDICAL_DETAILS = {
   vaccinations: {
     value: "",
     error: null,
@@ -85,8 +88,11 @@ export const PET_INITIAL_STATE = {
     label: "Parvo Viruses Vaccine Expiration",
     required: true,
   },
+};
+
+export const PET_BOARDING_DETAILS = {
   age: {
-    value: "1",
+    value: "",
     error: null,
     type: "number",
     inputMode: "numeric",
@@ -95,7 +101,7 @@ export const PET_INITIAL_STATE = {
     required: true,
   },
   weight: {
-    value: "1",
+    value: "",
     error: null,
     type: "number",
     inputMode: "numeric",
@@ -142,6 +148,12 @@ export const PET_INITIAL_STATE = {
     label: "Bags Per Feeding",
     required: true,
   },
+};
+
+export const PET_INITIAL_STATE = {
+  ...PET_DETAILS,
+  ...PET_MEDICAL_DETAILS,
+  ...PET_BOARDING_DETAILS,
 };
 
 export const petFormReducer = (
@@ -192,6 +204,7 @@ export const petFormReducer = (
         ...guestFormState["bordetellaVaccine"],
         required: false,
         disabled: true,
+        error: null,
       };
 
       return {

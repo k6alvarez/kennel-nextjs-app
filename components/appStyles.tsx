@@ -180,6 +180,14 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .ant-alert {
+    margin: ${({ theme }) => theme.space[4]} 0;
+
+    p {
+      margin: 0;
+    }
+  }
+
   .ant-drawer-body {
     padding: 0;
     font-family: ${({ theme }) => theme.fonts.body};
@@ -348,38 +356,12 @@ export const GlobalStyle = createGlobalStyle`
     } 
   }
 
+  .ant-collapse-item-active .ant-collapse-header-text {
+    text-decoration: underline;    
+  }
+
   [class*="ant-image-preview-switch"] {
-    background-color: ${({ theme }) => theme.colors.primary};
-  }
-
-  .virtual-table .ant-table-container:before,
-  .virtual-table .ant-table-container:after {
-    display: none;
-  }
-
-  .ant-steps-vertical {
-    @media (min-width: 312px) {
-      flex-direction: row;
-    } 
-  }
-
-  .ant-steps-vertical > .ant-steps-item .ant-steps-item-icon {
-    @media (min-width: 312px) {
-      margin-right: ${({ theme }) => theme.space[2]};
-    } 
-  }
-
-  .ant-steps-item-icon {
-    @media (min-width: 312px) {
-      transform: scale(0.75);      
-    } 
-  }
-
- 
-  .ant-steps-vertical > .ant-steps-item .ant-steps-item-title {
-    @media (min-width: 312px) {
-      font-size: 12px;
-      padding: 0;
-    } 
-  }
+    background-color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.primary};
+  }  
 `;

@@ -7,7 +7,10 @@ export const deleteGuestPet = async (id: string): Promise<void> => {
   });
 };
 
-export const guestFormUpdate = async (e, { state, dispatch, setFormError }) => {
+export const guestFormSubmitReservationRequest = async (
+  e,
+  { state, dispatch, setFormError, shouldCreateUser }
+) => {
   e?.preventDefault();
   message.loading("Sending reservation request.", 1);
   try {
@@ -16,6 +19,46 @@ export const guestFormUpdate = async (e, { state, dispatch, setFormError }) => {
         [key]: state[key].value !== undefined ? state[key].value : state[key],
       };
     });
+    const userData = {
+      email: state.email.value,
+      name: state.name.value,
+      lastName: state.lastName.value,
+      phone: state.phone.value,
+      address: state.address.value,
+      city: state.city.value,
+      state: state.state.value,
+      zip: state.zip.value,
+      emergencyContactName: state.emergencyContactName.value,
+      emergencyContactPhone: state.emergencyContactPhone.value,
+    };
+
+    if (shouldCreateUser) {
+      await fetch("/api/create-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      })
+        .then(async (res) => {
+          return res.json();
+        })
+        .then(async (res) => {
+          // create user pets after user is created
+          if (res.errors) {
+            const validationError =
+              "Something went wrong. Please try again or contact us for assistance.";
+            Object.entries(res.errors).forEach(([key, value]) => {
+              dispatch({
+                key: key,
+                payload: {
+                  newValue: state[key].value,
+                  error: value,
+                },
+              });
+            });
+            setFormError(validationError);
+          }
+        });
+    }
 
     await fetch(`/api/guest-reservation/${state.id}`, {
       method: "PUT",
@@ -44,7 +87,10 @@ export const guestFormUpdate = async (e, { state, dispatch, setFormError }) => {
         dispatch({
           type: "resetForm",
         });
-        await Router.push("/res-guest/[id]", `/res-guest/${res.id}`);
+        await Router.push(
+          "/res-guest/[id]",
+          `/res-guest/${res.id}?useWelcome=${shouldCreateUser}`
+        );
       });
   } catch (error) {
     message.error(

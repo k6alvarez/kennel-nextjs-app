@@ -16,6 +16,10 @@ const RunSizeWrapper = styled.div`
   &:last-child {
     margin-bottom: 0;
   }
+
+  .ant-card {
+    flex-grow: unset;
+  }
 `;
 
 const getFilteredData = (data, filterType) => {
@@ -43,16 +47,22 @@ export const RunSizes = ({ filterType = "all" }) => {
   const [runs, setRuns] = React.useState([]);
   const { editMode } = useContext(ThemePreferenceContext);
 
+  const fetchData = async () => {
+    try {
+      const res = await fetch("/api/runs");
+      const data = await res.json();
+      const filterData = getFilteredData(data, filterType).sort(
+        (a, b) => a.order - b.order
+      );
+      setRuns(filterData);
+    } catch (error) {
+      console.error("Error fetching runs:", error);
+    }
+  };
+
   useEffect(() => {
-    fetch("/api/runs")
-      .then((res) => res.json())
-      .then((data) => {
-        const filterData = getFilteredData(data, filterType).sort(
-          (a, b) => a.order - b.order
-        );
-        setRuns(filterData);
-      });
-  }, []);
+    fetchData();
+  }, [filterType]);
 
   return (
     <RunSizeWrapper>

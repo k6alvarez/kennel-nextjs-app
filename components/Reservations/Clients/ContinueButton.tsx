@@ -12,10 +12,10 @@ export const ContinueButton = ({
   formError,
   setFormError,
   fieldsValidCallback = undefined,
-  pets = [],
 }) => {
-  const petsNotAdded = !formState.pets.length && current === 2;
-
+  const petsNotAdded = Array.isArray(formState.pets)
+    ? !formState.pets.length && current === 2
+    : !Object.keys(formState.pets).length && current === 2;
   const checkPetsAdded = (e) => {
     if (petsNotAdded) {
       e.preventDefault();

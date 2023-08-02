@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import styled from "styled-components";
 import prisma from "../../lib/prisma";
 import { Content } from "../../components/ui-kit/Base";
-import { Tag, List, Divider } from "antd";
+import { Tag, List, Divider, Alert } from "antd";
 import Layout from "../../components/Layout";
 import {
   INITIAL_RESERVATION_STATE,
@@ -13,6 +13,8 @@ import { PET_INITIAL_STATE } from "../../components/Pets/petFormReducer";
 import { getDataSource } from "../../components/Reservations/helpers";
 import { ReservationNotFound } from "../../components/Reservations/ReservationNotFound";
 import { ReservationStatusSection } from "../../components/Reservations/ReservationStatusSection";
+import { useRouter } from "next/router";
+import { BlockQuote } from "../../components/Reservations/GuestClients/FormIntro";
 
 const Flex = styled.div`
   display: flex;
@@ -40,6 +42,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 const ResGuest = ({ reservation }) => {
+  const router = useRouter();
+  const { useWelcome } = router.query;
+
   if (!reservation) {
     return <ReservationNotFound />;
   }
@@ -48,6 +53,17 @@ const ResGuest = ({ reservation }) => {
     <Layout>
       <Content maxWidth="900px">
         <ReservationStatusSection reservation={reservation} />
+        {useWelcome && (
+          <BlockQuote>
+            <>
+              <p>
+                Thanks for signing up! Next time you make a reservation,
+                <a href="/api/auth/signin"> log in</a> using the email address
+                you provided to set up your profile.
+              </p>
+            </>
+          </BlockQuote>
+        )}
         <Divider>
           <h2>Reservation Summary</h2>
         </Divider>
@@ -72,7 +88,6 @@ const ResGuest = ({ reservation }) => {
             <List.Item className="ant-list-50">{item}</List.Item>
           )}
         />
-
         {reservation.pets.map((pet) => {
           return (
             <List

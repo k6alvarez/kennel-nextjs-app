@@ -188,6 +188,11 @@ model Reservation {
   dateConfirmed       String?
   specialInstructions String?
   pets                Pet[]
+  depositStatus       String?
+  depositAmount       String?
+  depositDate         String?
+  depositId           String?
+  depositLink         String?
 
   @@map(name: "reservations")
 }

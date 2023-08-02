@@ -21,8 +21,12 @@ export const PetsTab = () => {
   return (
     <>
       <SplitHeader>
-        My Pets
-        <Button primary onClick={() => Router.push("/create-reservation")}>
+        <h1>My Pets</h1>
+        <Button
+          primary
+          onClick={() => Router.push("/create-reservation")}
+          small
+        >
           Book Reservation
         </Button>
       </SplitHeader>

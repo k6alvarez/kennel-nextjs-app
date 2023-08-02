@@ -2,22 +2,14 @@ import React, { useEffect, useState } from "react";
 import { PayPalCheckout } from "../Checkout";
 import { useGuestFormContext } from "../formContext";
 import { BlockQuote } from "./FormIntro";
-import { guestFormUpdate } from "./services";
+import { guestFormSubmitReservationRequest } from "./services";
 import { TotalDeposit } from "../styles";
 import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { ReservationSummary } from "../ReservationSummary";
+import { Checkbox } from "antd";
 
-const getDepositTotal = (pets) => {
-  let depositTotal = 0;
-  pets.map((pet) => {
-    if (pet.preferredRunSize === "Small") {
-      return (depositTotal += 25);
-    } else if (pet.preferredRunSize === "Large") {
-      return (depositTotal += 25);
-    } else if (pet.preferredRunSize === "Extra Large") {
-      return (depositTotal += 25);
-    }
-  });
+const getDepositTotal = () => {
+  let depositTotal = 25;
 
   return "$" + depositTotal.toFixed(2);
 };
@@ -26,13 +18,15 @@ export const FieldSetPaymentInfo = ({ pets }) => {
   const { guestFormDispatch, guestFormState, setGuestFormError } =
     useGuestFormContext();
   const [depositConfirmed, setDepositConfirmed] = useState(false);
+  const [shouldCreateUser, setShouldCreateUser] = useState(false);
 
   useEffect(() => {
     if (depositConfirmed && guestFormState.depositStatus === "COMPLETED") {
-      guestFormUpdate(undefined, {
+      guestFormSubmitReservationRequest(undefined, {
         state: guestFormState,
         setFormError: setGuestFormError,
         dispatch: guestFormDispatch,
+        shouldCreateUser,
       });
     }
   }, [guestFormState]);
@@ -45,34 +39,34 @@ export const FieldSetPaymentInfo = ({ pets }) => {
         <BlockQuote>
           <div>
             <p>
-              A $25.00 per run deposit is required for new client reservations.
-              Your reservation is not complete and will not be confirmed until
-              we receive your deposit and the completed reservation form.
+              As a new client, there is a one-time boarding fee of $25 to cover
+              administrative costs. However, if you create a profile, you can
+              avoid this fee for future bookings. Your information will be
+              securely saved and you can update it at any time.
             </p>
             <TotalDeposit>
-              <p>Your total deposit due is {getDepositTotal(pets)}</p>
+              <span>Your total due is {getDepositTotal()}</span>
             </TotalDeposit>
+            <PayPalCheckout
+              transactionTotal="25.00"
+              onConfirm={(results) => {
+                setDepositConfirmed(true);
+                guestFormDispatch({
+                  type: "depositConfirmed",
+                  payload: {
+                    depositStatus: results.status,
+                    depositAmount: results.purchase_units[0].amount.value,
+                    depositDate: results.create_time,
+                    depositId: results.id,
+                    depositLink: results.links[0].href,
+                    id: guestFormState.reservationId,
+                    pets,
+                  },
+                });
+              }}
+            />
           </div>
         </BlockQuote>
-        <PayPalCheckout
-          transactionTotal="25.00"
-          onConfirm={(results) => {
-            setDepositConfirmed(true);
-
-            guestFormDispatch({
-              type: "depositConfirmed",
-              payload: {
-                depositStatus: results.status,
-                depositAmount: results.purchase_units[0].amount.value,
-                depositDate: results.create_time,
-                depositId: results.id,
-                depositLink: results.links[0].href,
-                id: guestFormState.reservationId,
-                pets,
-              },
-            });
-          }}
-        />
       </>
 
       {depositConfirmed && (

@@ -268,7 +268,7 @@ export const Button = styled.button`
     transform: translate(-50%, -50%);
   }
 `;
-export const SplitHeader = styled.h1`
+export const SplitHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
