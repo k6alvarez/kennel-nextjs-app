@@ -126,11 +126,11 @@ export const ReservationsTab = () => {
         ) : (
           <>
             <p>You have no reservations.</p>
-            <bl>
+            <blockquote>
               Please note that for new client reservations, we require an
               administrative fee of $25.00. You have the convenience of paying
               this fee online using debit or credit cards.
-            </bl>
+            </blockquote>
           </>
         )}
       </TableWrapper>
