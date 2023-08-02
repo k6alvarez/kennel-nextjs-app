@@ -56,36 +56,35 @@ export const PET_DETAILS = {
 
 export const PET_MEDICAL_DETAILS = {
   vaccinations: {
-    value:
-      "http://localhost:3000/_next/image?url=%2Fimages%2FShieldOutline.png&w=128&q=75",
+    value: "",
     error: null,
     type: "file",
     label: "Vaccinations Upload",
     required: true,
   },
   distemperVaccine: {
-    value: DateTime.now().plus({ days: 1 }).toISODate(),
+    value: "",
     error: null,
     type: "date",
     label: "Distemper Vaccine Expiration",
     required: true,
   },
   bordetellaVaccine: {
-    value: DateTime.now().plus({ days: 1 }).toISODate(),
+    value: "",
     error: null,
     type: "date",
     label: "Bordetella Vaccine Expiration",
     required: true,
   },
   rabiesVaccine: {
-    value: DateTime.now().plus({ days: 1 }).toISODate(),
+    value: "",
     error: null,
     type: "date",
     label: "Rabies Vaccine Expiration",
     required: true,
   },
   parvoVirusesVaccine: {
-    value: DateTime.now().plus({ days: 1 }).toISODate(),
+    value: "",
     error: null,
     type: "date",
     label: "Parvo Viruses Vaccine Expiration",
@@ -95,7 +94,7 @@ export const PET_MEDICAL_DETAILS = {
 
 export const PET_BOARDING_DETAILS = {
   age: {
-    value: "1",
+    value: "",
     error: null,
     type: "number",
     inputMode: "numeric",
@@ -104,7 +103,7 @@ export const PET_BOARDING_DETAILS = {
     required: true,
   },
   weight: {
-    value: "1",
+    value: "",
     error: null,
     type: "number",
     inputMode: "numeric",
@@ -113,14 +112,14 @@ export const PET_BOARDING_DETAILS = {
     required: true,
   },
   vet: {
-    value: "ATLANTA VETERINARY SPECIALISTS",
+    value: "",
     error: null,
     type: "text",
     label: "Veterinarian",
     required: true,
   },
   preferredRunSize: {
-    value: "Small",
+    value: "small",
     error: null,
     type: "select",
     options: [
@@ -135,7 +134,7 @@ export const PET_BOARDING_DETAILS = {
     required: true,
   },
   feeding: {
-    value: "Client Food",
+    value: "",
     error: null,
     type: "select",
     label: "Feeding",
@@ -143,7 +142,7 @@ export const PET_BOARDING_DETAILS = {
     required: true,
   },
   feedingCount: {
-    value: "1",
+    value: "",
     error: null,
     type: "number",
     inputMode: "numeric",
