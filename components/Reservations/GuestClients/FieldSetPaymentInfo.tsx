@@ -44,9 +44,21 @@ export const FieldSetPaymentInfo = ({ pets }) => {
               avoid this fee for future bookings. Your information will be
               securely saved and you can update it at any time.
             </p>
+            <p>
+              You have the convenience of paying this fee online using debit or
+              credit cards. This non-refundable fee is for setting up your
+              record and does not guarantee your reservation.
+            </p>
             <TotalDeposit>
               <span>Your total due is {getDepositTotal()}</span>
             </TotalDeposit>
+            <Checkbox
+              style={{ margin: "0 auto" }}
+              onChange={(e) => setShouldCreateUser(e.target.checked)}
+              checked={shouldCreateUser}
+            >
+              Create a profile to avoid this fee for future bookings.
+            </Checkbox>
             <PayPalCheckout
               transactionTotal="25.00"
               onConfirm={(results) => {
