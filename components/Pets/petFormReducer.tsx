@@ -117,7 +117,7 @@ export const PET_BOARDING_DETAILS = {
     required: true,
   },
   preferredRunSize: {
-    value: "small",
+    value: "Small",
     error: null,
     type: "select",
     options: [
@@ -132,7 +132,7 @@ export const PET_BOARDING_DETAILS = {
     required: true,
   },
   feeding: {
-    value: "",
+    value: "Client Food",
     error: null,
     type: "select",
     label: "Feeding",
@@ -140,7 +140,7 @@ export const PET_BOARDING_DETAILS = {
     required: true,
   },
   feedingCount: {
-    value: "",
+    value: "1",
     error: null,
     type: "number",
     inputMode: "numeric",
