@@ -171,6 +171,8 @@ export const FieldsetPetsInfo = ({
     }
   }, [petFormState.feeding.value]);
 
+  let [openPanels, setOpenPanels] = React.useState([]);
+
   const handleAddPet = (e) => {
     e.preventDefault();
     setPetFormLoading(true);
@@ -204,6 +206,7 @@ export const FieldsetPetsInfo = ({
         setPetFormLoading(false);
         setPetFormError(undefined);
         setGuestFormError(undefined);
+        setOpenPanels([]);
       });
     }
     setGuestFormError(
@@ -239,7 +242,11 @@ export const FieldsetPetsInfo = ({
             })}
           </PetCards>
         )}
-        <Collapse expandIcon={() => <InfoCircleOutlined />}>
+        <Collapse
+          expandIcon={() => <InfoCircleOutlined />}
+          activeKey={openPanels}
+          onChange={setOpenPanels}
+        >
           <Collapse.Panel header={<>Add a pet</>} key="0">
             <>
               {pets.length < MAX_PETS_ALLOWED ? (

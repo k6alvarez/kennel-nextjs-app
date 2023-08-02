@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 
-export const PET_INITIAL_STATE = {
+export const PET_DETAILS = {
   name: {
     value: "Roger",
     error: null,
@@ -50,8 +50,11 @@ export const PET_INITIAL_STATE = {
     value: "",
     error: null,
     type: "file",
-    label: "Image",
+    label: "Pet Image",
   },
+};
+
+export const PET_MEDICAL_DETAILS = {
   vaccinations: {
     value:
       "http://localhost:3000/_next/image?url=%2Fimages%2FShieldOutline.png&w=128&q=75",
@@ -61,33 +64,36 @@ export const PET_INITIAL_STATE = {
     required: true,
   },
   distemperVaccine: {
-    value: DateTime.now().toISODate(),
+    value: DateTime.now().plus({ days: 1 }).toISODate(),
     error: null,
     type: "date",
     label: "Distemper Vaccine Expiration",
     required: true,
   },
   bordetellaVaccine: {
-    value: DateTime.now().toISODate(),
+    value: DateTime.now().plus({ days: 1 }).toISODate(),
     error: null,
     type: "date",
     label: "Bordetella Vaccine Expiration",
     required: true,
   },
   rabiesVaccine: {
-    value: DateTime.now().toISODate(),
+    value: DateTime.now().plus({ days: 1 }).toISODate(),
     error: null,
     type: "date",
     label: "Rabies Vaccine Expiration",
     required: true,
   },
   parvoVirusesVaccine: {
-    value: DateTime.now().toISODate(),
+    value: DateTime.now().plus({ days: 1 }).toISODate(),
     error: null,
     type: "date",
     label: "Parvo Viruses Vaccine Expiration",
     required: true,
   },
+};
+
+export const PET_BOARDING_DETAILS = {
   age: {
     value: "1",
     error: null,
@@ -147,6 +153,12 @@ export const PET_INITIAL_STATE = {
   },
 };
 
+export const PET_INITIAL_STATE = {
+  ...PET_DETAILS,
+  ...PET_MEDICAL_DETAILS,
+  ...PET_BOARDING_DETAILS,
+};
+
 export const petFormReducer = (
   guestFormState: { [x: string]: any },
   { type = "inputChange", key = undefined, payload = undefined }: any
@@ -195,6 +207,7 @@ export const petFormReducer = (
         ...guestFormState["bordetellaVaccine"],
         required: false,
         disabled: true,
+        error: null,
       };
 
       return {

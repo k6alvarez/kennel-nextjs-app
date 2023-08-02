@@ -65,3 +65,8 @@ export const createReservationDraft = async (
         console.error(error);
     }
 };
+
+export const getReservations = async () => {
+    const res = await fetch("/api/reservations");
+    return res.json();
+}

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useReducer, useState } from "react";
 import { GetServerSideProps } from "next";
+import styled from "styled-components";
 import { useRouter } from "next/router";
 import { Tabs } from "antd";
 import { DownOutlined } from "@ant-design/icons";
@@ -15,6 +16,7 @@ import { ProfileForm } from "../components/Profile/ProfileForm";
 import { PetsTab } from "../components/Pets/PetsTab";
 import { AdminTab } from "../components/Admin/AdminTab";
 import { statesArray } from "../components/Reservations/formInitialState";
+import { ReservationsTab } from "../components/Reservations/ReservationsTab";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -42,6 +44,43 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
   };
 };
+
+const StyledContent = styled(Content)`
+  @media (max-width: ${({ theme }) => theme.breakpoints[2]}) {
+    &&& .ant-tabs {
+      display: flex;
+      flex-direction: column;
+
+      .ant-tabs-tab {
+        height: auto;
+        margin: 0;
+
+        .ant-tabs-tab-btn {
+          font-size: ${({ theme }) => theme.fontSizes[0]};
+        }
+      }
+      .ant-tabs-ink-bar {
+        display: none;
+      }
+
+      .ant-tabs-nav .ant-tabs-nav-list {
+        flex-direction: row;
+        justify-content: space-around;
+        padding-bottom: ${({ theme }) => theme.space[3]};
+      }
+
+      .ant-tabs-tabpane {
+        padding-left: 0;
+      }
+
+      .ant-tabs-content-holder {
+        padding-top: ${({ theme }) => theme.space[3]};
+        border: 0;
+        border-top: 1px solid ${({ theme }) => theme.colors.secondary};
+      }
+    }
+  }
+`;
 
 export type PetProps = {
   id: string;
@@ -249,6 +288,11 @@ const Profile: React.FC<Props> = ({ user, appSettings }) => {
       key: "pets",
       children: <PetsTab />,
     },
+    {
+      label: "Reservations",
+      key: "reservations",
+      children: <ReservationsTab />,
+    },
   ];
 
   if (user.permissions.includes("ADMIN")) {
@@ -261,7 +305,7 @@ const Profile: React.FC<Props> = ({ user, appSettings }) => {
 
   return (
     <Layout>
-      <Content>
+      <StyledContent>
         <Tabs
           defaultActiveKey={typeof tab === "string" ? tab : "profile"}
           activeKey={typeof tab === "string" ? tab : profileTab}
@@ -276,7 +320,7 @@ const Profile: React.FC<Props> = ({ user, appSettings }) => {
             router.push(`/profile?tab=${key}`, undefined, { shallow: true });
           }}
         />
-      </Content>
+      </StyledContent>
     </Layout>
   );
 };

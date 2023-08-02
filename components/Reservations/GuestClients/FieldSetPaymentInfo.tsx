@@ -50,7 +50,7 @@ export const FieldSetPaymentInfo = ({ pets }) => {
               record and does not guarantee your reservation.
             </p>
             <TotalDeposit>
-              <p>Your total due is {getDepositTotal()}</p>
+              <span>Your total due is {getDepositTotal()}</span>
             </TotalDeposit>
             <Checkbox
               style={{ margin: "0 auto" }}

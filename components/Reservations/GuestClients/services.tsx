@@ -19,10 +19,45 @@ export const guestFormSubmitReservationRequest = async (
         [key]: state[key].value !== undefined ? state[key].value : state[key],
       };
     });
+    const userData = {
+      email: state.email.value,
+      name: state.name.value,
+      lastName: state.lastName.value,
+      phone: state.phone.value,
+      address: state.address.value,
+      city: state.city.value,
+      state: state.state.value,
+      zip: state.zip.value,
+      emergencyContactName: state.emergencyContactName.value,
+      emergencyContactPhone: state.emergencyContactPhone.value,
+    };
 
     if (shouldCreateUser) {
-      console.log("shouldCreateUser", shouldCreateUser);
-      // TODO: create user and update reservation with user id and email address. Send user email with login instructions.
+      await fetch("/api/create-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData),
+      })
+        .then(async (res) => {
+          return res.json();
+        })
+        .then(async (res) => {
+          // create user pets after user is created
+          if (res.errors) {
+            const validationError =
+              "Something went wrong. Please try again or contact us for assistance.";
+            Object.entries(res.errors).forEach(([key, value]) => {
+              dispatch({
+                key: key,
+                payload: {
+                  newValue: state[key].value,
+                  error: value,
+                },
+              });
+            });
+            setFormError(validationError);
+          }
+        });
     }
 
     await fetch(`/api/guest-reservation/${state.id}`, {
@@ -52,7 +87,10 @@ export const guestFormSubmitReservationRequest = async (
         dispatch({
           type: "resetForm",
         });
-        await Router.push("/res-guest/[id]", `/res-guest/${res.id}`);
+        await Router.push(
+          "/res-guest/[id]",
+          `/res-guest/${res.id}?useWelcome=${shouldCreateUser}`
+        );
       });
   } catch (error) {
     message.error(
