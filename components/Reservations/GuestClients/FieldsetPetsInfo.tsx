@@ -171,7 +171,7 @@ export const FieldsetPetsInfo = ({
     }
   }, [petFormState.feeding.value]);
 
-  let [openPanels, setOpenPanels] = React.useState([]);
+  let [openPanels, setOpenPanels] = React.useState<string | string[]>(["0"]);
 
   const handleAddPet = (e) => {
     e.preventDefault();
@@ -245,7 +245,7 @@ export const FieldsetPetsInfo = ({
         <Collapse
           expandIcon={() => <InfoCircleOutlined />}
           activeKey={openPanels}
-          onChange={setOpenPanels}
+          onChange={(keys) => setOpenPanels(keys)}
         >
           <Collapse.Panel header={<>Add a pet</>} key="0">
             <>
