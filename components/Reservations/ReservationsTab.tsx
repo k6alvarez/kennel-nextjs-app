@@ -60,68 +60,79 @@ export const ReservationsTab = () => {
       </SplitHeader>
 
       <TableWrapper>
-        <VirtualTable
-          scroll={{
-            y: window.innerHeight - parseInt(headerHt) - 235,
-          }}
-          columns={[
-            {
-              title: "Status",
-              dataIndex: "confirmed",
-              key: "confirmed",
-              render: (confirmed) => {
-                return (
-                  <Flex>
-                    {confirmed ? (
-                      <Tag color="green">Confirmed</Tag>
-                    ) : (
-                      <Tag color="red">Pending</Tag>
-                    )}
-                  </Flex>
-                );
+        {reservations.length > 0 ? (
+          <VirtualTable
+            scroll={{
+              y: window.innerHeight - parseInt(headerHt) - 235,
+            }}
+            columns={[
+              {
+                title: "Status",
+                dataIndex: "confirmed",
+                key: "confirmed",
+                render: (confirmed) => {
+                  return (
+                    <Flex>
+                      {confirmed ? (
+                        <Tag color="green">Confirmed</Tag>
+                      ) : (
+                        <Tag color="red">Pending</Tag>
+                      )}
+                    </Flex>
+                  );
+                },
               },
-            },
-            {
-              title: "Reservation Dates",
-              dataIndex: "arrivalDate",
-              key: "arrivalDate",
-              render: (arrivalDate, item) => {
-                return (
-                  <span>
-                    {DateTime.fromISO(arrivalDate).toLocaleString(
-                      DateTime.DATE_MED
-                    )}{" "}
-                    -{" "}
-                    {DateTime.fromISO(item.departureDate).toLocaleString(
-                      DateTime.DATE_MED
-                    )}
-                  </span>
-                );
+              {
+                title: "Reservation Dates",
+                dataIndex: "arrivalDate",
+                key: "arrivalDate",
+                render: (arrivalDate, item) => {
+                  return (
+                    <span>
+                      {DateTime.fromISO(arrivalDate).toLocaleString(
+                        DateTime.DATE_MED
+                      )}{" "}
+                      -{" "}
+                      {DateTime.fromISO(item.departureDate).toLocaleString(
+                        DateTime.DATE_MED
+                      )}
+                    </span>
+                  );
+                },
               },
-            },
-            {
-              title: "Pets",
-              dataIndex: "pets",
-              key: "pets",
-              render: (pets) =>
-                pets.map((pet, i) => (
-                  <span key={`pet-${i}`}>
-                    {i === pets.length - 1 ? pet.name : `${pet.name}, `}
-                  </span>
-                )),
-            },
-            {
-              title: "Email",
-              dataIndex: "email",
-              key: "email",
-              render: (email, item) => {
-                const emailAddressValue = email || item.author.email;
-                return <p>{emailAddressValue}</p>;
+              {
+                title: "Pets",
+                dataIndex: "pets",
+                key: "pets",
+                render: (pets) =>
+                  pets.map((pet, i) => (
+                    <span key={`pet-${i}`}>
+                      {i === pets.length - 1 ? pet.name : `${pet.name}, `}
+                    </span>
+                  )),
               },
-            },
-          ]}
-          dataSource={reservations}
-        />
+              {
+                title: "Email",
+                dataIndex: "email",
+                key: "email",
+                render: (email, item) => {
+                  const emailAddressValue = email || item.author.email;
+                  return <p>{emailAddressValue}</p>;
+                },
+              },
+            ]}
+            dataSource={reservations}
+          />
+        ) : (
+          <>
+            <p>You have no reservations.</p>
+            <bl>
+              Please note that for new client reservations, we require an
+              administrative fee of $25.00. You have the convenience of paying
+              this fee online using debit or credit cards.
+            </bl>
+          </>
+        )}
       </TableWrapper>
     </>
   );

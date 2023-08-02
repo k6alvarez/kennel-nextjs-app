@@ -17,10 +17,12 @@ import { Fieldset, Fields } from "../../Forms/styles";
 import { GoBackButton } from "./GoBackButton";
 import { SubmitReservationButton } from "./SubmitReservationButton";
 import { ContinueButton } from "./ContinueButton";
+import { ClientFormReservationSummary } from "./ClientFormReservationSummary";
 
 const { Step } = Steps;
 
 export const ClientForm = ({ user }) => {
+  const [depositRequired, setDepositRequired] = useState(true);
   const {
     clientFormState,
     handleChange,
@@ -103,9 +105,9 @@ export const ClientForm = ({ user }) => {
     {
       title: "Summary",
       content: (
-        <ReservationSummary
-          state={clientFormState}
-          pets={clientFormState.pets}
+        <ClientFormReservationSummary
+          depositRequired={depositRequired}
+          setDepositRequired={setDepositRequired}
         />
       ),
     },
@@ -159,7 +161,7 @@ export const ClientForm = ({ user }) => {
               }}
             />
 
-            <SubmitReservationButton current={current} />
+            {!depositRequired && <SubmitReservationButton current={current} />}
           </StepsAction>
         </form>
       )}

@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 };
 
 const StyledContent = styled(Content)`
-  @media (max-width: ${({ theme }) => theme.breakpoints[2]}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints[1]}) {
     &&& .ant-tabs {
       display: flex;
       flex-direction: column;

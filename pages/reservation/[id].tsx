@@ -14,7 +14,7 @@ import { Divider, List, Tag } from "antd";
 import { getDataSource } from "../../components/Reservations/helpers";
 import { ReservationNotFound } from "../../components/Reservations/ReservationNotFound";
 import { ReservationStatusSection } from "../../components/Reservations/ReservationStatusSection";
-import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined, WarningOutlined } from "@ant-design/icons";
 
 export const DetailItem = styled.div`
   margin: ${({ theme }) => theme.space[0]} 0;
@@ -79,7 +79,7 @@ const Reservation = ({ reservation }) => {
               {reservation.confirmed ? (
                 <Tag
                   style={{
-                    fontSize: "1.2rem",
+                    fontSize: "1rem",
                     padding: "0.5rem 1rem",
                   }}
                   color="green"
@@ -90,12 +90,12 @@ const Reservation = ({ reservation }) => {
               ) : (
                 <Tag
                   style={{
-                    fontSize: "1.2rem",
+                    fontSize: "1rem",
                     padding: "0.5rem 1rem",
                   }}
                   color="red"
                 >
-                  <CloseCircleOutlined />
+                  <WarningOutlined />
                   &nbsp; Not Confirmed
                 </Tag>
               )}
