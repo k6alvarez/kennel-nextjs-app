@@ -119,7 +119,7 @@ export const INITIAL_USER_STATE = {
     required: true,
   },
   state: {
-    value: "",
+    value: "MI",
     error: null,
     type: "select",
     label: "State",

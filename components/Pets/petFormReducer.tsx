@@ -7,7 +7,7 @@ export const PET_DETAILS = {
     required: true,
   },
   type: {
-    value: "",
+    value: "Dog",
     error: null,
     type: "select",
     options: ["Dog", "Cat"],
@@ -22,7 +22,7 @@ export const PET_DETAILS = {
     required: true,
   },
   gender: {
-    value: "",
+    value: "Female",
     error: null,
     type: "select",
     options: ["Female", "Male"],
@@ -30,7 +30,7 @@ export const PET_DETAILS = {
     required: true,
   },
   fixed: {
-    value: "",
+    value: "No",
     error: null,
     type: "select",
     options: ["No", "Yes"],
