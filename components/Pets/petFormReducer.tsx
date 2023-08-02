@@ -2,14 +2,14 @@ import { DateTime } from "luxon";
 
 export const PET_DETAILS = {
   name: {
-    value: "Roger",
+    value: "",
     error: null,
     type: "text",
     label: "Pet Name",
     required: true,
   },
   type: {
-    value: "Dog",
+    value: "",
     error: null,
     type: "select",
     options: ["Dog", "Cat"],
@@ -17,14 +17,14 @@ export const PET_DETAILS = {
     required: true,
   },
   breed: {
-    value: "Mix",
+    value: "",
     error: null,
     type: "text",
     label: "Breed",
     required: true,
   },
   gender: {
-    value: "Female",
+    value: "",
     error: null,
     type: "select",
     options: ["Female", "Male"],
@@ -32,7 +32,7 @@ export const PET_DETAILS = {
     required: true,
   },
   fixed: {
-    value: "No",
+    value: "",
     error: null,
     type: "select",
     options: ["No", "Yes"],
@@ -40,7 +40,7 @@ export const PET_DETAILS = {
     required: true,
   },
   color: {
-    value: "Black",
+    value: "",
     error: null,
     type: "text",
     label: "Color",

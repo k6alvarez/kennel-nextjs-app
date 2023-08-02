@@ -56,21 +56,21 @@ export const statesArray = [
 
 export const INITIAL_USER_STATE = {
   name: {
-    value: "Aisha",
+    value: "",
     error: null,
     type: "text",
     label: "First Name",
     required: true,
   },
   lastName: {
-    value: "Alvarez",
+    value: "",
     error: null,
     type: "text",
     label: "Last Name",
     required: true,
   },
   email: {
-    value: "ak@ak.com",
+    value: "",
     error: null,
     type: "text",
     inputMode: "email",
@@ -78,7 +78,7 @@ export const INITIAL_USER_STATE = {
     required: true,
   },
   phone: {
-    value: "123-456-7890",
+    value: "",
     error: null,
     type: "text",
     inputMode: "numeric",
@@ -89,7 +89,7 @@ export const INITIAL_USER_STATE = {
     required: true,
   },
   altPhone: {
-    value: "123-456-7890",
+    value: "",
     error: null,
     type: "text",
     inputMode: "numeric",
@@ -99,27 +99,27 @@ export const INITIAL_USER_STATE = {
     hint: `Format: 123-456-7890`,
   },
   address: {
-    value: "420 High Ave",
+    value: "",
     error: null,
     type: "text",
     label: "Address",
     required: true,
   },
   unit: {
-    value: "4",
+    value: "",
     error: null,
     type: "text",
     label: "Unit",
   },
   city: {
-    value: "Atlanta",
+    value: "",
     error: null,
     type: "text",
     label: "City",
     required: true,
   },
   state: {
-    value: "GA",
+    value: "",
     error: null,
     type: "select",
     label: "State",
@@ -127,20 +127,20 @@ export const INITIAL_USER_STATE = {
     options: statesArray,
   },
   zip: {
-    value: "30318",
+    value: "",
     error: null,
     type: "text",
     label: "Zip",
     required: true,
   },
   emergencyContactName: {
-    value: "Kenny",
+    value: "",
     error: null,
     label: "Emergency Contact Name",
     required: true,
   },
   emergencyContactPhone: {
-    value: "1233456789",
+    value: "",
     error: null,
     type: "text",
     inputMode: "tel",
