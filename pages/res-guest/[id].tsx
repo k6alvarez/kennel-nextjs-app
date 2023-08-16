@@ -53,7 +53,6 @@ const ResGuest = ({ reservation }) => {
     <Layout>
       <Content maxWidth="900px">
         <ReservationStatusSection reservation={reservation} />
-        {console.log(useWelcome)}
         {useWelcome && (
           <BlockQuote>
             <>
