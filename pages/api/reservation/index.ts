@@ -1,11 +1,9 @@
 import { createTransport } from "nodemailer";
-import { getFooter, getHeader } from "../auth/[...nextauth]";
 import { Reservation } from '@prisma/client';
 import { getSession } from 'next-auth/react';
 import { INITIAL_RESERVATION_STATE } from '../../../components/Reservations/formInitialState';
 
 import prisma from '../../../lib/prisma';
-import { themesMap } from "../../../components/appStyles";
 import { htmlNewReservationClient, textNewReservation, textNewReservationClient } from "../../../utils/emailHelpers";
 
 // POST /api/reservation
@@ -83,7 +81,7 @@ export default async function handle(req, res) {
       from: `Gillette Kennels ${process.env.EMAIL_FROM}`,
       subject: `Your reservation at ${process.env.HOSTNAME}`,
       text: textNewReservationClient({ url: `${process.env.HOSTNAME}/reservation/${reservation.id}` }),
-      html: htmlNewReservationClient({ url: `${process.env.HOSTNAME}/reservation/${reservation.id}`, host: process.env.HOSTNAME, origin: process.env.HOSTNAME, email: sessionUserEmail, theme: themesMap.light }),
+      html: htmlNewReservationClient({ url: `${process.env.HOSTNAME}/reservation/${reservation.id}`, host: process.env.HOSTNAME, origin: process.env.HOSTNAME, email: sessionUserEmail }),
 
     });
 
@@ -92,7 +90,7 @@ export default async function handle(req, res) {
       from: `Gillette Kennels ${sessionUserEmail}`,
       subject: `New Client Reservation ${process.env.HOSTNAME}`,
       text: textNewReservation({ url: `${process.env.HOSTNAME}/reservation/${reservation.id}` }),
-      html: htmlNewReservationClient({ url: `${process.env.HOSTNAME}/reservation/${reservation.id}`, host: process.env.HOSTNAME, origin: process.env.HOSTNAME, email: sessionUserEmail, theme: themesMap.light }),
+      html: htmlNewReservationClient({ url: `${process.env.HOSTNAME}/reservation/${reservation.id}`, host: process.env.HOSTNAME, origin: process.env.HOSTNAME, email: sessionUserEmail }),
     });
     return res.json(reservation);
   }

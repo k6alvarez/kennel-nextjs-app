@@ -7,6 +7,7 @@ import { VirtualTable } from "../ui-kit/Table/VirtualTable";
 import { Tag, message } from "antd";
 import { DateTime } from "luxon";
 import { headerHt } from "../ui-kit/Promo/styles-promo";
+import { ADMINISTRATIVE_FEE } from "../../utils/constants";
 
 const Flex = styled.div`
   display: flex;
@@ -128,8 +129,8 @@ export const ReservationsTab = () => {
             <p>You have no reservations.</p>
             <blockquote>
               Please note that for new client reservations, we require an
-              administrative fee of $25.00. You have the convenience of paying
-              this fee online using debit or credit cards.
+              administrative fee of ${ADMINISTRATIVE_FEE}. You have the
+              convenience of paying this fee online using debit or credit cards.
             </blockquote>
           </>
         )}

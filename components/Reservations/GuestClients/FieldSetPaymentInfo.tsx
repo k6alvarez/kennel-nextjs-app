@@ -7,12 +7,11 @@ import { TotalDeposit } from "../styles";
 import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { ReservationSummary } from "../ReservationSummary";
 import { Checkbox } from "antd";
-
-const getDepositTotal = () => {
-  let depositTotal = 25;
-
-  return "$" + depositTotal.toFixed(2);
-};
+import { ADMINISTRATIVE_FEE } from "../../../utils/constants";
+import {
+  cookiesAgreement,
+  getDepositTotal,
+} from "../../../utils/renderHelpers";
 
 export const FieldSetPaymentInfo = ({ pets }) => {
   const {
@@ -64,6 +63,7 @@ export const FieldSetPaymentInfo = ({ pets }) => {
               credit cards. This non-refundable fee is for setting up your
               record and does not guarantee your reservation.
             </p>
+
             <TotalDeposit>
               <span>Your total due is {getDepositTotal()}</span>
             </TotalDeposit>
@@ -76,7 +76,7 @@ export const FieldSetPaymentInfo = ({ pets }) => {
             </Checkbox>
             {!depositConfirmed && (
               <PayPalCheckout
-                transactionTotal="25.00"
+                transactionTotal={ADMINISTRATIVE_FEE}
                 onConfirm={(results) => {
                   setDepositConfirmed(true);
                   guestFormDispatch({

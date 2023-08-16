@@ -49,6 +49,7 @@ export const light = {
   inputFocus: "#1890ff",
   inputDisabled: "#dcd9d9",
   inputPlaceholder: "#a9a9a9",
+  emailBackground: "#f8f8f8",
 };
 
 export const livelySoothing = {
