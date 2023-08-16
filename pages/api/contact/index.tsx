@@ -1,4 +1,3 @@
-import prisma from "../../../lib/prisma";
 import { createTransport } from "nodemailer";
 import { getFooter, getHeader } from "../auth/[...nextauth]";
 import { themesMap } from "../../../components/appStyles";
@@ -48,7 +47,7 @@ function htmlGKContact(params?: {
   message?: string;
   name?: string;
 }) {
-  const { url, host, theme, origin } = params;
+  const { host, theme, origin } = params;
   const escapedHost = host?.replace(/\./g, "&#8203;.");
 
   const brandColor = theme?.primary || "#22d172";

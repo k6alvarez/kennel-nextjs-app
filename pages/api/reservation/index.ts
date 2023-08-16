@@ -1,8 +1,12 @@
+import { createTransport } from "nodemailer";
+import { getFooter, getHeader } from "../auth/[...nextauth]";
 import { Reservation } from '@prisma/client';
 import { getSession } from 'next-auth/react';
 import { INITIAL_RESERVATION_STATE } from '../../../components/Reservations/formInitialState';
 
 import prisma from '../../../lib/prisma';
+import { themesMap } from "../../../components/appStyles";
+import { htmlNewReservationClient, textNewReservation, textNewReservationClient } from "../../../utils/emailHelpers";
 
 // POST /api/reservation
 type Errors = {
@@ -63,8 +67,34 @@ export default async function handle(req, res) {
   if (errors && Object.keys(errors).length > 0) {
     return res.status(400).json({ errors });
   } else {
-    const result = await prisma.reservation.create(apiOptions);
-    return res.json(result);
+    const reservation = await prisma.reservation.create(apiOptions);
+
+    const transport = createTransport({
+      host: process.env.EMAIL_SERVER_HOST,
+      port: process.env.EMAIL_SERVER_PORT,
+      auth: {
+        user: process.env.EMAIL_SERVER_USER,
+        pass: process.env.EMAIL_SERVER_PASSWORD,
+      },
+    });
+
+    await transport.sendMail({
+      to: sessionUserEmail,
+      from: `Gillette Kennels ${process.env.EMAIL_FROM}`,
+      subject: `Your reservation at ${process.env.HOSTNAME}`,
+      text: textNewReservationClient({ url: `${process.env.HOSTNAME}/reservation/${reservation.id}` }),
+      html: htmlNewReservationClient({ url: `${process.env.HOSTNAME}/reservation/${reservation.id}`, host: process.env.HOSTNAME, origin: process.env.HOSTNAME, email: sessionUserEmail, theme: themesMap.light }),
+
+    });
+
+    await transport.sendMail({
+      to: process.env.EMAIL_FROM,
+      from: `Gillette Kennels ${sessionUserEmail}`,
+      subject: `New Client Reservation ${process.env.HOSTNAME}`,
+      text: textNewReservation({ url: `${process.env.HOSTNAME}/reservation/${reservation.id}` }),
+      html: htmlNewReservationClient({ url: `${process.env.HOSTNAME}/reservation/${reservation.id}`, host: process.env.HOSTNAME, origin: process.env.HOSTNAME, email: sessionUserEmail, theme: themesMap.light }),
+    });
+    return res.json(reservation);
   }
 
 }

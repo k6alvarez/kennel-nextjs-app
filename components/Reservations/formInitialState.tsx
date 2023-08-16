@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 
 export const statesArray = [
+  "Select a State",
   "AL",
   "AK",
   "AZ",
@@ -119,7 +120,7 @@ export const INITIAL_USER_STATE = {
     required: true,
   },
   state: {
-    value: "MI",
+    value: "",
     error: null,
     type: "select",
     label: "State",

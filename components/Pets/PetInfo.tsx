@@ -77,10 +77,16 @@ export const PetInfo = ({ pet, children = undefined }) => {
                                 Expired
                               </Tag>
                             </>
-                          ) : (
-                            DateTime.fromISO(pet[key]).toLocaleString(
+                          ) : DateTime.fromISO(pet[key]).toLocaleString(
                               DateTime.DATE_MED
-                            )
+                            ) === "Invalid DateTime" ? (
+                            <>Not Required</>
+                          ) : (
+                            <>
+                              {DateTime.fromISO(pet[key]).toLocaleString(
+                                DateTime.DATE_MED
+                              )}
+                            </>
                           )}
                         </div>
                       ) : (

@@ -257,6 +257,7 @@ export const GlobalStyle = createGlobalStyle`
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: fit-content;
   }
 
   .ant-collapse-expand-icon {

@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next';
-import NextAuth, { Theme } from 'next-auth';
+import NextAuth from 'next-auth';
 import { createTransport } from "nodemailer"
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
