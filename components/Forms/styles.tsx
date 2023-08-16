@@ -39,6 +39,10 @@ export const Field = styled.div`
   align-items: ${({ align }) => (align ? align : "center")};
   width: ${({ setWidth }) => (setWidth ? setWidth : "calc(100% - 1rem)")};
   grid-column: ${({ grow }) => (grow ? "span 2" : "auto")};
+
+  .ant-alert-icon {
+    font-size: ${({ theme }) => theme.fontSizes[2]};
+  }
 `;
 
 export const Hint = styled.span`

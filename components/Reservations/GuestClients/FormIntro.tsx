@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import styled, { css } from "styled-components";
+import { ADMINISTRATIVE_FEE } from "../../../utils/constants";
 
 export const blockquoteStyles = css`
   display: flex;
@@ -44,8 +45,8 @@ export const FormIntroGuest = () => {
     <>
       <p>
         Please note that for new client reservations, we require an
-        administrative fee of $25.00. You have the convenience of paying this
-        fee online using debit or credit cards.
+        administrative fee of ${ADMINISTRATIVE_FEE}. You have the convenience of
+        paying this fee online using debit or credit cards.
       </p>
       <BlockQuote>
         This non-refundable fee is for setting up your record and does not

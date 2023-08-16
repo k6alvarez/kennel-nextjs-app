@@ -7,27 +7,41 @@ import { TotalDeposit } from "../styles";
 import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { ReservationSummary } from "../ReservationSummary";
 import { Checkbox } from "antd";
-
-const getDepositTotal = () => {
-  let depositTotal = 25;
-
-  return "$" + depositTotal.toFixed(2);
-};
+import { ADMINISTRATIVE_FEE } from "../../../utils/constants";
+import {
+  cookiesAgreement,
+  getDepositTotal,
+} from "../../../utils/renderHelpers";
 
 export const FieldSetPaymentInfo = ({ pets }) => {
-  const { guestFormDispatch, guestFormState, setGuestFormError } =
-    useGuestFormContext();
+  const {
+    guestFormDispatch,
+    guestFormState,
+    setGuestFormError,
+    guestFormError,
+  } = useGuestFormContext();
+  const [paymentInfo, setPaymentInfo] = useState({});
   const [depositConfirmed, setDepositConfirmed] = useState(false);
   const [shouldCreateUser, setShouldCreateUser] = useState(false);
 
+  const handleSubmit = async () => {
+    await guestFormSubmitReservationRequest(undefined, {
+      state: guestFormState,
+      setFormError: setGuestFormError,
+      dispatch: guestFormDispatch,
+      shouldCreateUser,
+    });
+  };
+
   useEffect(() => {
     if (depositConfirmed && guestFormState.depositStatus === "COMPLETED") {
-      guestFormSubmitReservationRequest(undefined, {
-        state: guestFormState,
-        setFormError: setGuestFormError,
-        dispatch: guestFormDispatch,
-        shouldCreateUser,
-      });
+      handleSubmit()
+        .then((res) => {
+          console.log("handleSubmit res", res);
+        })
+        .catch((err) => {
+          console.log("handleSubmit err", err);
+        });
     }
   }, [guestFormState]);
 
@@ -49,6 +63,7 @@ export const FieldSetPaymentInfo = ({ pets }) => {
               credit cards. This non-refundable fee is for setting up your
               record and does not guarantee your reservation.
             </p>
+
             <TotalDeposit>
               <span>Your total due is {getDepositTotal()}</span>
             </TotalDeposit>
@@ -59,29 +74,31 @@ export const FieldSetPaymentInfo = ({ pets }) => {
             >
               Create a profile to avoid this fee for future bookings.
             </Checkbox>
-            <PayPalCheckout
-              transactionTotal="25.00"
-              onConfirm={(results) => {
-                setDepositConfirmed(true);
-                guestFormDispatch({
-                  type: "depositConfirmed",
-                  payload: {
-                    depositStatus: results.status,
-                    depositAmount: results.purchase_units[0].amount.value,
-                    depositDate: results.create_time,
-                    depositId: results.id,
-                    depositLink: results.links[0].href,
-                    id: guestFormState.reservationId,
-                    pets,
-                  },
-                });
-              }}
-            />
+            {!depositConfirmed && (
+              <PayPalCheckout
+                transactionTotal={ADMINISTRATIVE_FEE}
+                onConfirm={(results) => {
+                  setDepositConfirmed(true);
+                  guestFormDispatch({
+                    type: "depositConfirmed",
+                    payload: {
+                      depositStatus: results.status,
+                      depositAmount: results.purchase_units[0].amount.value,
+                      depositDate: results.create_time,
+                      depositId: results.id,
+                      depositLink: results.links[0].href,
+                      id: guestFormState.reservationId,
+                      pets,
+                    },
+                  });
+                  setPaymentInfo(results);
+                }}
+              />
+            )}
           </div>
         </BlockQuote>
       </>
-
-      {depositConfirmed && (
+      {!guestFormError && depositConfirmed && (
         <>
           <p>
             <Loading3QuartersOutlined spin /> Your deposit was successful. One

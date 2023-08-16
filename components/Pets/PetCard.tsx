@@ -4,8 +4,15 @@ import {
   EditOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
-import { Card, Badge, Button as AntButton, Modal } from "antd";
-import React, { useState } from "react";
+import {
+  Card,
+  Badge,
+  Button as AntButton,
+  Modal,
+  Tooltip,
+  message,
+} from "antd";
+import React, { useEffect, useState } from "react";
 import { PetProps } from "../../pages/profile";
 import {
   boardingInfoOnly,
@@ -31,6 +38,7 @@ const Container = styled.div`
 
   @media (min-width: ${(props) => props.theme.breakpoints[1]}) {
     min-width: 33%;
+    max-width: 50%;
   }
 
   > button {
@@ -83,10 +91,15 @@ export const PetCard = ({
 }: PetCardProps) => {
   const [activeTabKey1, setActiveTabKey1] = useState<string>("pet");
   const { guestFormDispatch, setGuestFormError } = useGuestFormContext();
+  const petName = pet.name;
 
   const onTab1Change = (key: string) => {
     setActiveTabKey1(key);
   };
+
+  useEffect(() => {
+    vaccinationsExpired(pet) && setActiveTabKey1("vaccines");
+  }, []);
 
   const tabList = [
     {
@@ -146,21 +159,28 @@ export const PetCard = ({
                 primary={petSelected}
                 type="button"
                 onClick={() => {
-                  toggle(pet);
+                  if (vaccinationsExpired(pet)) {
+                    setActiveTabKey1("vaccines");
+                    message.warning(
+                      "Vaccinations expired. Please update your pet's vaccinations."
+                    );
+                  } else {
+                    toggle(pet);
+                  }
                 }}
               >
                 {petSelected ? (
                   <>
-                    <CheckCircleOutlined /> {pet.name}
+                    <CheckCircleOutlined /> {petName}
                   </>
                 ) : (
                   <>
-                    <PlusCircleOutlined /> {pet.name}
+                    <PlusCircleOutlined /> {petName}
                   </>
                 )}
               </Button>
             ) : (
-              <span>{pet.name}</span>
+              <span>{petName}</span>
             )}
             {vaccinationsExpired(pet) && <Badge count="Vaccinations Expired" />}
           </CardTitle>
@@ -200,7 +220,7 @@ export const PetCard = ({
               Edit Pet
             </AntButton>
             <Modal
-              title={<CardTitle>Edit {pet.name}</CardTitle>}
+              title={<CardTitle>Edit {petName}</CardTitle>}
               open={isModalOpen}
               onCancel={() => setIsModalOpen(false)}
               footer={null}

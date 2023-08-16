@@ -7,10 +7,26 @@ import { DateTime } from "luxon";
 import { PET_INITIAL_STATE } from "../Pets/petFormReducer";
 import { Divider, Image, List, Tag } from "antd";
 import { getDataSource } from "./helpers";
+import { ClockCircleOutlined } from "@ant-design/icons";
+
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledTag = styled(Tag)`
+  font-size: ${(props) => props.theme.fontSizes[0]};
+  text-transform: capitalize;
+  text-align: center;
+  padding: 0.5rem;
+  margin: 0.5rem;
+`;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   h2 {
     align-self: center;
@@ -59,22 +75,29 @@ export const ReservationSummary = ({ state, pets }) => {
       <Divider>
         <h2>Reservation Summary</h2>
       </Divider>
-      <Tag
-        color="blue"
-        style={{
-          fontSize: base.fontSizes[0],
-          padding: "0.5rem 1rem",
-          textTransform: "capitalize",
-        }}
-      >
-        {DateTime.fromISO(state.arrivalDate.value).toLocaleString(
-          DateTime.DATE_HUGE
-        )}{" "}
-        -{" "}
-        {DateTime.fromISO(state.departureDate.value).toLocaleString(
-          DateTime.DATE_HUGE
-        )}
-      </Tag>
+      <Flex>
+        {" "}
+        <StyledTag icon={<ClockCircleOutlined />} color="blue">
+          Checkin:{" "}
+          {DateTime.fromISO(state.arrivalDate.value).toLocaleString(
+            DateTime.DATE_MED_WITH_WEEKDAY
+          )}{" "}
+          @{" "}
+          {DateTime.fromISO(state.arrivalTime.value).toLocaleString(
+            DateTime.TIME_SIMPLE
+          )}
+        </StyledTag>
+        <StyledTag icon={<ClockCircleOutlined />} color="blue">
+          Checkout:{" "}
+          {DateTime.fromISO(state.departureDate.value).toLocaleString(
+            DateTime.DATE_MED_WITH_WEEKDAY
+          )}{" "}
+          @{" "}
+          {DateTime.fromISO(state.departureTime.value).toLocaleString(
+            DateTime.TIME_SIMPLE
+          )}
+        </StyledTag>
+      </Flex>
       <List
         size="small"
         header={<h4>Owner Details</h4>}

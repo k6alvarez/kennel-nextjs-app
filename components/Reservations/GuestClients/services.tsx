@@ -37,27 +37,19 @@ export const guestFormSubmitReservationRequest = async (
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
-      })
-        .then(async (res) => {
-          return res.json();
-        })
-        .then(async (res) => {
-          // create user pets after user is created
-          if (res.errors) {
-            const validationError =
-              "Something went wrong. Please try again or contact us for assistance.";
-            Object.entries(res.errors).forEach(([key, value]) => {
-              dispatch({
-                key: key,
-                payload: {
-                  newValue: state[key].value,
-                  error: value,
-                },
-              });
-            });
-            setFormError(validationError);
-          }
-        });
+      }).then(async (res) => {
+        if (res.status === 400 || res.status === 500 || res.status === 404) {
+          const validationError =
+            "Something went wrong. Please try again or contact us for assistance.";
+          setFormError(validationError);
+        }
+        if (res.status === 409) {
+          const validationError =
+            "This email is already in use. Please log in or use a different email.";
+          setFormError(validationError);
+        }
+        return res.json();
+      });
     }
 
     await fetch(`/api/guest-reservation/${state.id}`, {
@@ -93,9 +85,6 @@ export const guestFormSubmitReservationRequest = async (
         );
       });
   } catch (error) {
-    message.error(
-      "Something went wrong. Please try again or contact us for assistance."
-    );
     console.error(error);
   }
 };

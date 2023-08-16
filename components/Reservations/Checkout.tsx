@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import { ADMINISTRATIVE_FEE } from "../../utils/constants";
 
 const PaypalContainer = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ const PaypalContainer = styled.div`
 export const PayPalCheckout = ({
   onClick = () => {},
   onConfirm = (results) => console.log("onConfirm fired", results),
-  transactionTotal = "25.00",
+  transactionTotal = ADMINISTRATIVE_FEE,
 }) => {
   useEffect(() => {
     // @ts-ignore

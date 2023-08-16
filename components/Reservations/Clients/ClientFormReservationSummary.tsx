@@ -8,12 +8,8 @@ import { TotalDeposit } from "../styles";
 import { createReservationDraft, getReservations } from "../services";
 import { useClientFormContext } from "../formContext";
 import { Field } from "../../Forms/styles";
-
-const getDepositTotal = () => {
-  let depositTotal = 25;
-
-  return "$" + depositTotal.toFixed(2);
-};
+import { ADMINISTRATIVE_FEE } from "../../../utils/constants";
+import { getDepositTotal } from "../../../utils/renderHelpers";
 
 export const ClientFormReservationSummary = ({
   depositRequired,
@@ -75,7 +71,7 @@ export const ClientFormReservationSummary = ({
             </TotalDeposit>
 
             <PayPalCheckout
-              transactionTotal="25.00"
+              transactionTotal={ADMINISTRATIVE_FEE}
               onConfirm={(results) => {
                 setDepositConfirmed(true);
                 createReservationDraft(undefined, {

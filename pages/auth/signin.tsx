@@ -10,6 +10,7 @@ import { Field, StyledInput, StyledLabel } from "../../components/Forms/styles";
 import Layout from "../../components/Layout";
 import { BlockQuote } from "../../components/Reservations/GuestClients/FormIntro";
 import { Button, Content } from "../../components/ui-kit/Base";
+import { cookiesAgreement } from "../../utils/renderHelpers";
 
 const Signin = ({ csrfToken, providers }) => {
   const router = useRouter();
@@ -27,12 +28,7 @@ const Signin = ({ csrfToken, providers }) => {
               will be able to book a reservation and manage your account.
             </p>
             <BlockQuote>
-              <p>
-                We use cookies to ensure that we give you the best experience on
-                our website. By continuing to use this site, you are agreeing to
-                our use of cookies. If you prefer not to accept cookies, you may
-                book as a new client.
-              </p>
+              <p>{cookiesAgreement}</p>
             </BlockQuote>
           </>
         ) : (

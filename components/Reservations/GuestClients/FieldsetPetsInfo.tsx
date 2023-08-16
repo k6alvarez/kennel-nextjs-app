@@ -71,12 +71,12 @@ const AddPetForm = ({
     {petFormState.feeding.value === "Client Food" && (
       <Field grow>
         <Alert
+          showIcon
           message={
             <p>
-              <InfoCircleOutlined />
-              &nbsp; If you provide food please package each meal in a *Ziploc®
-              (type) plastic bag (no fold-over sandwich baggies, please) with
-              each meal clearly labeled with your pet's name. See our{" "}
+              If you provide food please package each meal in a *Ziploc® (type)
+              plastic bag (no fold-over sandwich baggies, please) with each meal
+              clearly labeled with your pet's name. See our{" "}
               <Link target="_blank" href="/policies?tab=Feeding">
                 <a>feeding policy</a>
               </Link>{" "}
@@ -97,14 +97,14 @@ const AddPetForm = ({
 
     <Field grow>
       <Alert
+        showIcon
         message={
           <p>
-            <InfoCircleOutlined />
-            &nbsp; The uploaded vaccination records must match the selected
-            expiration dates else your reservation cannot be confirmed.
-            Additionally, the uploaded vaccination records must be from a
-            licensed veterinarian and must include the pet's name, the
-            veterinarian's name, and the date of the vaccination.
+            The uploaded vaccination records must match the selected expiration
+            dates else your reservation cannot be confirmed. Additionally, the
+            uploaded vaccination records must be from a licensed veterinarian
+            and must include the pet's name, the veterinarian's name, and the
+            date of the vaccination.
           </p>
         }
       />
@@ -171,7 +171,7 @@ export const FieldsetPetsInfo = ({
     }
   }, [petFormState.feeding.value]);
 
-  let [openPanels, setOpenPanels] = React.useState<string | string[]>(["0"]);
+  let [openPanels, setOpenPanels] = React.useState<string | string[]>([]);
 
   const handleAddPet = (e) => {
     e.preventDefault();
