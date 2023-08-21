@@ -7,6 +7,16 @@ export const EditForm = styled.form`
   margin: 0 0 ${({ theme }) => theme.space[4]} 0;
 `;
 
+export const RadioGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  label {
+    width: max-content;
+  }
+`;
+
 export const Fields = styled.div`
   display: flex;
   flex-direction: column;
@@ -72,7 +82,10 @@ export const StyledInput = styled.input`
 `;
 
 export const StyledLabel = styled.label`
+  max-width: 100%;
+  white-space: break-spaces;
   width: 100%;
+  line-height: 1.5;
   color: ${({ theme, error }) =>
     error ? theme.colors.primary : theme.colors.textSecondary};
 

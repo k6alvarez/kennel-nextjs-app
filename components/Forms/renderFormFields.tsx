@@ -1,4 +1,4 @@
-import { Checkbox, Image, message } from "antd";
+import { Checkbox, Image, Radio, message } from "antd";
 import {
   Field,
   StyledLabel,
@@ -6,6 +6,7 @@ import {
   Hint,
   StyledSelect,
   PreviewWrapper,
+  RadioGroup,
 } from "./styles";
 import { Editor } from "@tiptap/react";
 import { Tiptap } from "../ui-kit/Tiptap";
@@ -67,6 +68,24 @@ export const renderFormFields = ({
       field?.type === "image" && !field?.value;
     const requiredField = field?.required || false;
 
+    const getOptionsIfRadio = () => {
+      if (field?.type === "radio") {
+        return field?.options?.map((option, i) => (
+          <label key={i}>
+            <StyledInput
+              type="radio"
+              name={key}
+              value={option}
+              onChange={onChange}
+              required={requiredField}
+              checked={field?.value === option}
+            />
+            {option}
+          </label>
+        ));
+      }
+    };
+
     let imgLoading = false;
 
     if (field?.hidden) {
@@ -74,7 +93,7 @@ export const renderFormFields = ({
     }
 
     return (
-      <Field key={key} grow={field?.grow}>
+      <Field key={key} grow={field?.grow} radio={field?.type === "radio"}>
         {field?.type !== "checkbox" && (
           <StyledLabel htmlFor={key} error={field?.error || false}>
             {`${field?.label}${field?.required ? "*" : ""}`}
@@ -196,7 +215,12 @@ export const renderFormFields = ({
           />
         )}
 
-        {field?.type !== "textarea" &&
+        {field?.type === "radio" && (
+          <RadioGroup>{getOptionsIfRadio()}</RadioGroup>
+        )}
+
+        {field?.type !== "radio" &&
+          field?.type !== "textarea" &&
           field?.type !== "select" &&
           field?.type !== "file" &&
           field?.type !== "checkbox" &&
