@@ -29,7 +29,7 @@ export const INITIAL_APP_SETTINGS_FORM_STATE = {
   name: {
     value: "",
     error: null,
-    type: "textarea",
+    type: "tipTapEditor",
     label: "App Name",
     required: true,
   },

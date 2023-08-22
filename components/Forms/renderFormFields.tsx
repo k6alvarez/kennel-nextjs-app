@@ -166,6 +166,19 @@ export const renderFormFields = ({
         )}
 
         {field?.type === "textarea" && (
+          <textarea
+            id={key}
+            name={key}
+            onChange={onChange}
+            required={requiredField}
+            value={field?.value}
+            rows={Number(field?.rows) || 4}
+            placeholder={field?.placeholder}
+            disabled={field?.disabled}
+          />
+        )}
+
+        {field?.type === "tipTapEditor" && (
           <Tiptap
             content={editor}
             onchange={(html) => handleChange(key, html)}
@@ -220,6 +233,7 @@ export const renderFormFields = ({
         )}
 
         {field?.type !== "radio" &&
+          field?.type !== "tipTapEditor" &&
           field?.type !== "textarea" &&
           field?.type !== "select" &&
           field?.type !== "file" &&

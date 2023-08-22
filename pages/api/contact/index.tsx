@@ -1,5 +1,4 @@
 import { createTransport } from "nodemailer";
-import { themesMap } from "../../../components/appStyles";
 import {
   htmlContactFormSubmission,
   textContactFormSubmission,
