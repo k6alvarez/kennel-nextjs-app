@@ -96,7 +96,7 @@ export const QuestionnaireForm = ({ user }) => {
           })}
         </Fields>
       </Fieldset>
-      <button type="submit">Submit</button>
+      <input type="submit" value="Submit Questionnaire" />
     </form>
   );
 };
