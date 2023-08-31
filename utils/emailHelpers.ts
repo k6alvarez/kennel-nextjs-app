@@ -1,3 +1,4 @@
+import { INITIAL_QUESTIONNAIRE_FORM_STATE } from "../components/Forms/helpers";
 import { themesMap } from "../components/appStyles";
 
 const theme = themesMap.light
@@ -22,10 +23,20 @@ export function getHeader({ origin }) {
     style="background: ${color.mainBackground}; max-width: 1000px; margin: 10px auto; ">
       <tr>
         <td align="center" style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-          <ul style="list-style:none; margin: 0; padding: 0; display: flex; justify-content: space-between;gap: 14px;">
-            <li style="flex: 1; display: flex; justify-content: flex-start;">              
+          <ul style="list-style:none; margin: 0; padding: 0; display: flex; justify-content: space-between;gap: 14px; align-items: center;">
+            <li>              
               <a href="${origin}" style="color: ${color.text}; text-decoration: none;">
-              <img src="${origin}/images/gk_new_crest_only.png" alt="Gillette Kennels" style="width: 100px; height: 100px; object-fit: contain;"> Gillette Kennels</a>
+                <div style="display:flex; align-items:center;">
+                  <div style="display: flex; position: relative; align-items: center;">
+
+                    <img src="${origin}/images/crest.svg" alt="Gillette Kennels" style="width: 55px; height: 59px;">
+                    
+                    <img style="position: absolute !important; top: 6px !important; filter: grayscale(100%); left: 10px !important; width: 35px; height: 39px;" src="${origin}/images/gk_new_crest_only.png" alt="Gillette Kennels">
+                    
+                    Gillette Kennels
+                  </div>
+                </div>
+              </a>
             </li>
             <li>
               <a href="${origin}/boarding" style="color: ${color.text}; text-decoration: none;">Boarding</a>
@@ -254,8 +265,6 @@ export function htmlContactFormSubmission(params?: {
   `;
 }
 
-
-
 export function htmlReservationConfirmedClient(params?: { url?: string; origin?: string }) {
   const { url, origin } = params
   return `
@@ -288,4 +297,109 @@ export function htmlReservationConfirmedClient(params?: { url?: string; origin?:
 
 export function textReservationConfirmedClient({ url }) {
   return `Thank you for your reservation at ${process.env.HOSTNAME}. Your reservation has been confirmed. View your reservation details: ${url} `
+}
+
+const renderData = (data: string) => {
+  return Object.keys(data).map(key => {
+    return data[key] && `<div style="display:flex;flex-direction:column;margin: 1rem 0;"><span>${INITIAL_QUESTIONNAIRE_FORM_STATE[key].label}</span><span>${data[key]}</span> </div>`
+  }).join('')
+}
+
+const renderDataTextOnly = (data: string) => {
+  return Object.keys(data).map(key => {
+    return `${INITIAL_QUESTIONNAIRE_FORM_STATE[key].label} ${data[key]}`
+  }).join('\n')
+}
+
+export function textQuestionnaire({ url, data }: { data: string, url?: string }) {
+  return `A new questionnaire has been submitted from ${process.env.HOSTNAME}.${url
+    ? ` View the questionnaire details: ${url}` : ''}: ${renderDataTextOnly(data)}`
+}
+
+export function htmlQuestionnaireFormSubmission(params?: { data: string, url?: string; host?: string; origin?: string; email?: string }) {
+  const { url, host, origin, data } = params
+  const escapedHost = host?.replace(/\./g, "&#8203;.")
+
+
+  return `
+  <body style="background: ${color.background}; padding: 10px;">
+  
+  
+    ${getHeader({ origin })}
+  
+  
+    <table width="100%" border="0" cellspacing="20" cellpadding="0"
+      style="background: ${color.mainBackground}; max-width: 1000px; margin: 10px auto; ">
+      <tr>
+        <td align="center"
+          style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
+          A new questionnaire has been submitted from <a href="${escapedHost}" style="color: ${color.text}; text-decoration: none;">${escapedHost}</a>          
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="padding: 20px 0;">
+          <table border="0" cellspacing="0" cellpadding="0">   
+          <tr>
+              <td>
+                <p>Questionnaire details:</p>
+              </td>
+            </tr>         
+            <tr>
+              <td>
+                ${renderData(data)}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>      
+      ${getFooter()}
+    </table>
+  </body>
+  `
+}
+
+export function textQuestionnaireClient({ url, data }: { data: string, url?: string }) {
+  return `We have received your questionnaire from ${process.env.HOSTNAME}. We will contact you for next steps. ${url ? `View your questionnaire details at ${url}` : ''}: ${renderDataTextOnly(data)} `
+}
+export function htmlQuestionnaireFormSubmissionClient(params?: { data: string, url?: string; host?: string; origin?: string; email?: string }) {
+  const { url, host, origin, data } = params
+  const escapedHost = host?.replace(/\./g, "&#8203;.")
+
+  return `
+  <body style="background: ${color.background}; padding: 10px;">
+  
+  
+    ${getHeader({ origin })}
+  
+  
+    <table width="100%" border="0" cellspacing="20" cellpadding="0"
+      style="background: ${color.mainBackground}; max-width: 1000px; margin: 10px auto; ">
+      <tr>
+        <td align="center"
+          style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
+          Thank you for your questionnaire at <a href="${escapedHost}" style="color: ${color.text}; text-decoration: none;">${escapedHost}</a>
+        </td>
+      </tr>
+      
+      <tr>
+        <td align="center"
+          style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
+          Your questionnaire is pending review. We will contact you via email for next steps.
+        </td>
+
+      </tr>
+      <tr>
+        <td>
+          <p>Questionnaire details submitted:</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          ${renderData(data)}
+        </td>
+      </tr>
+      ${getFooter()}
+    </table>
+  </body>
+  `
 }
