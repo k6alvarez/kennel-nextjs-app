@@ -759,8 +759,9 @@ export const INITIAL_QUESTIONNAIRE_FORM_STATE = {
 export const getQuestionnaireFormFields = ({ user }) => {
   if (user) {
     for (const key in user) {
-      if (user.hasOwnProperty(key)) {
+      if (user.hasOwnProperty(key) && INITIAL_QUESTIONNAIRE_FORM_STATE[key]) {
         INITIAL_QUESTIONNAIRE_FORM_STATE[key].value = user[key];
+        INITIAL_QUESTIONNAIRE_FORM_STATE[key].disabled = true;
       }
     }
   }
