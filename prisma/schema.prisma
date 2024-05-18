@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("POSTGRES_PRISMA_URL")
 }
 
 enum Permission {
@@ -44,12 +44,17 @@ model Pet {
   bordetellaVaccine      String?
   rabiesVaccine          String?
   parvoVirusesVaccine    String?
+  felinLeukemiaVaccine   String?
+  felineFvrcpVaccine     String?
   age                    String
   weight                 String
   vet                    String
   preferredRunSize       String
   feeding                String
   feedingCount           String
+  feedingTimesPerDay     String        @default(value: "1")
+  medications            String?
+  medicationInstructions String?
   owner                  User          @relation(fields: [ownerId], references: [id])
   ownerId                String
   reservations           Reservation[]
@@ -75,12 +80,17 @@ model GuestPet {
   bordetellaVaccine      String?
   rabiesVaccine          String?
   parvoVirusesVaccine    String?
+  felinLeukemiaVaccine   String?
+  felineFvrcpVaccine     String?
   age                    String
   weight                 String
   vet                    String
   preferredRunSize       String
   feeding                String
   feedingCount           String
+  feedingTimesPerDay     String             @default(value: "1")
+  medications            String?
+  medicationInstructions String?
   reservations           GuestReservation[]
 
   @@map("guest_pets")
@@ -124,6 +134,9 @@ model Session {
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
   @@map("sessions")
 }
 
@@ -160,6 +173,7 @@ model User {
   Service               Service[]
   MedicalIssue          MedicalIssue[]
   AppSetting            AppSetting[]
+  Questionnaire         Questionnaire[]
 
   @@map(name: "users")
 }
@@ -179,6 +193,7 @@ model Reservation {
   updatedAt           DateTime @updatedAt @map(name: "updated_at")
   submitted           Boolean  @default(false)
   confirmed           Boolean  @default(false)
+  cancelled           Boolean  @default(false)
   author              User     @relation(fields: [authorId], references: [id])
   authorId            String
   arrivalDate         String
@@ -197,12 +212,119 @@ model Reservation {
   @@map(name: "reservations")
 }
 
+model Questionnaire {
+  id                          String   @id @default(cuid())
+  createdAt                   DateTime @default(now()) @map(name: "created_at")
+  updatedAt                   DateTime @updatedAt @map(name: "updated_at")
+  author                      User?    @relation(fields: [authorId], references: [id])
+  depositStatus               String?
+  depositAmount               String?
+  depositDate                 String?
+  depositId                   String?
+  depositLink                 String?
+  authorId                    String?
+  email                       String
+  name                        String
+  lastName                    String
+  address                     String
+  unit                        String
+  city                        String
+  state                       String
+  zip                         String
+  phone                       String
+  adultsInHome                String
+  childrenInHome              String
+  childrenAges                String
+  referredBy                  String
+  petName                     String
+  petBreed                    String   @default(value: "")
+  petAgeWhenAcquired          String
+  petAgeNow                   String
+  whereDidYouGetYourDog       String
+  whereDidYouGetYourDogOther  String
+  metAndInteractedWithParents String
+  reasonForNotMeetingParents  String
+  wereParentsFriendly         String
+  hipsCertified               String
+  dogHousebroken              String
+  dogPaperTrained             String
+  dogExcitementPiddle         String
+  dogFoodAndStools            String
+  dogCrateTrained             String
+  dogCrateType                String
+  crateLocation               String
+  cratePreference             String
+  crateUsage                  String
+  eliminationInCrate          String
+  eliminationRoutine          String
+  dogExercise                 String
+  healthProblems              String
+  healthProblemsExplanation   String
+  watchdogBehavior            String
+  objectDestruction           String
+  jumpingBehavior             String
+  jumpingCommand              String
+  jumpingResponse             String
+  jumpingDesire               String
+  mouthBehavior               String
+  aggressiveBehavior          String
+  aggressiveExplanation       String
+  furnitureRules              String
+  furnitureUsage              String
+  diggingHabits               String
+  doorDashBehavior            String
+  objectStealing              String
+  stolenObjectTypes           String
+  hasCat                      String
+  catLitterBoxAccess          String
+  catAggression               String
+  otherDogPresence            String
+  dogRelationships            String
+  objectRemoval               String
+  tugOfWar                    String
+  tugWith                     String
+  wrestling                   String
+  chaseGames                  String
+  playStyle                   String
+  sleepLocation               String
+  restingPlaceGrowling        String
+  blockingBehavior            String
+  fearOfNoises                String
+  reactToStrangersEnter       String
+  reactToStrangersOutOfHome   String
+  reactToChildren             String
+  parksAndWoodedAreas         String
+  ownedDogBefore              String
+  trainedDogBefore            String
+  interestInTraining          String
+  trainingGoals               String
+  previousTraining            String
+  previousTrainingLocation    String
+  leashResponse               String
+  leashBehaviors              String
+  recallCommand               String
+  recallPercentage            String
+  comeInsideOutside           String
+  correctedBehavior           String
+  correctedBehaviorDetails    String
+  physicalPunishment          String
+  carRideBehavior             String
+  obedienceWords              String
+  tricksTaught                String
+  demandingAttention          String
+  reasonForOwning             String
+  additionalInfo              String
+
+  @@map(name: "questionnaires")
+}
+
 model GuestReservation {
   id                    String     @id @default(cuid())
   createdAt             DateTime   @default(now()) @map(name: "created_at")
   updatedAt             DateTime   @updatedAt @map(name: "updated_at")
   submitted             Boolean    @default(false)
   confirmed             Boolean    @default(false)
+  cancelled             Boolean    @default(false)
   author                User?      @relation(fields: [authorId], references: [id])
   authorId              String?
   name                  String
