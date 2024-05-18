@@ -26,85 +26,7 @@ enum ContentPages {
   RESERVATIONS
 }
 
-model Pet {
-  id                     String        @id @default(cuid())
-  createdAt              DateTime      @default(now())
-  updatedAt              DateTime      @updatedAt
-  type                   String
-  name                   String
-  breed                  String
-  gender                 String
-  fixed                  String
-  color                  String
-  image                  String?
-  largeImage             String?
-  vaccinations           String
-  vaccinationsLargeImage String?
-  distemperVaccine       String?
-  bordetellaVaccine      String?
-  rabiesVaccine          String?
-  parvoVirusesVaccine    String?
-  felinLeukemiaVaccine   String?
-  felineFvrcpVaccine     String?
-  age                    String
-  weight                 String
-  vet                    String
-  preferredRunSize       String
-  feeding                String
-  feedingCount           String
-  feedingTimesPerDay     String        @default(value: "1")
-  medications            String?
-  medicationInstructions String?
-  owner                  User          @relation(fields: [ownerId], references: [id])
-  ownerId                String
-  reservations           Reservation[]
-
-  @@map("pets")
-}
-
-model GuestPet {
-  id                     String             @id @default(cuid())
-  createdAt              DateTime           @default(now())
-  updatedAt              DateTime           @updatedAt
-  type                   String
-  name                   String
-  breed                  String
-  gender                 String
-  fixed                  String
-  color                  String
-  image                  String?
-  largeImage             String?
-  vaccinations           String
-  vaccinationsLargeImage String?
-  distemperVaccine       String?
-  bordetellaVaccine      String?
-  rabiesVaccine          String?
-  parvoVirusesVaccine    String?
-  felinLeukemiaVaccine   String?
-  felineFvrcpVaccine     String?
-  age                    String
-  weight                 String
-  vet                    String
-  preferredRunSize       String
-  feeding                String
-  feedingCount           String
-  feedingTimesPerDay     String             @default(value: "1")
-  medications            String?
-  medicationInstructions String?
-  reservations           GuestReservation[]
-
-  @@map("guest_pets")
-}
-
-model Post {
-  id        String  @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  String?
-}
-
+// Required Authentication Models
 model Account {
   id                 String  @id @default(cuid())
   userId             String  @map("user_id")
@@ -185,6 +107,196 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verificationtokens")
+}
+
+// End Required Authentication Models
+
+// Optional Default App Models
+model Post {
+  id        String  @id @default(cuid())
+  title     String
+  content   String?
+  published Boolean @default(false)
+  author    User?   @relation(fields: [authorId], references: [id])
+  authorId  String?
+}
+
+model BusinessHours {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now()) @map(name: "created_at")
+  updatedAt  DateTime @updatedAt @map(name: "updated_at")
+  name       String   @unique
+  isClosed   Boolean  @default(false)
+  timeOpen   String?
+  timeClose  String?
+  breakClose String?
+  breakOpen  String?
+
+  @@map(name: "business_hours")
+}
+
+model ContentItem {
+  id        String       @id @default(cuid())
+  name      String       @unique
+  page      ContentPages @default(value: HOME)
+  content   String
+  author    User?        @relation(fields: [authorId], references: [id])
+  authorId  String?
+  updatedAt DateTime     @updatedAt @map(name: "updated_at")
+
+  @@map(name: "content_items")
+}
+
+model PromoItem {
+  id          String       @id @default(cuid())
+  author      User?        @relation(fields: [authorId], references: [id])
+  page        ContentPages @default(value: HOME)
+  name        String       @unique
+  promoGroup  String?
+  authorId    String?
+  updatedAt   DateTime     @updatedAt @map(name: "updated_at")
+  image       String?
+  size        String?
+  title       String?
+  description String?
+  link        String?
+
+  @@map(name: "promo_items")
+}
+
+model Policy {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  content   String
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String?
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+  @@map(name: "policies")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+  name        String   @unique
+  description String
+  price       String
+  duration    String
+  dailyLimit  String
+  available   Boolean  @default(true)
+  author      User?    @relation(fields: [authorId], references: [id])
+  authorId    String?
+
+  @@map(name: "services")
+}
+
+model AppSetting {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  title     String?
+  subtitle  String?
+  logo      String?
+  favicon   String?
+  facebook  String?
+  instagram String?
+  twitter   String?
+  youtube   String?
+  google    String?
+  yelp      String?
+  updatedAt DateTime @updatedAt @map("updated_at")
+  authorId  String?
+  slogan    String?
+  author    User?    @relation(fields: [authorId], references: [id])
+
+  @@map("app_settings")
+}
+
+// Kennel App Models
+model Pet {
+  id                     String        @id @default(cuid())
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+  type                   String
+  name                   String
+  breed                  String
+  gender                 String
+  fixed                  String
+  color                  String
+  image                  String?
+  largeImage             String?
+  vaccinations           String
+  vaccinationsLargeImage String?
+  distemperVaccine       String?
+  bordetellaVaccine      String?
+  rabiesVaccine          String?
+  parvoVirusesVaccine    String?
+  felinLeukemiaVaccine   String?
+  felineFvrcpVaccine     String?
+  age                    String
+  weight                 String
+  vet                    String
+  preferredRunSize       String
+  feeding                String
+  feedingCount           String
+  feedingTimesPerDay     String        @default(value: "1")
+  medications            String?
+  medicationInstructions String?
+  owner                  User          @relation(fields: [ownerId], references: [id])
+  ownerId                String
+  reservations           Reservation[]
+
+  @@map("pets")
+}
+
+model GuestPet {
+  id                     String             @id @default(cuid())
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+  type                   String
+  name                   String
+  breed                  String
+  gender                 String
+  fixed                  String
+  color                  String
+  image                  String?
+  largeImage             String?
+  vaccinations           String
+  vaccinationsLargeImage String?
+  distemperVaccine       String?
+  bordetellaVaccine      String?
+  rabiesVaccine          String?
+  parvoVirusesVaccine    String?
+  felinLeukemiaVaccine   String?
+  felineFvrcpVaccine     String?
+  age                    String
+  weight                 String
+  vet                    String
+  preferredRunSize       String
+  feeding                String
+  feedingCount           String
+  feedingTimesPerDay     String             @default(value: "1")
+  medications            String?
+  medicationInstructions String?
+  reservations           GuestReservation[]
+
+  @@map("guest_pets")
+}
+
+model MedicalIssue {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+  name        String   @unique
+  description String
+  price       String
+  duration    String
+  dailyLimit  String
+  available   Boolean  @default(true)
+  author      User?    @relation(fields: [authorId], references: [id])
+  authorId    String?
+
+  @@map(name: "medical_issues")
 }
 
 model Reservation {
@@ -373,60 +485,6 @@ model HolidayPremiumDates {
   @@map(name: "holiday_premium_dates")
 }
 
-model BusinessHours {
-  id         String   @id @default(cuid())
-  createdAt  DateTime @default(now()) @map(name: "created_at")
-  updatedAt  DateTime @updatedAt @map(name: "updated_at")
-  name       String   @unique
-  isClosed   Boolean  @default(false)
-  timeOpen   String?
-  timeClose  String?
-  breakClose String?
-  breakOpen  String?
-
-  @@map(name: "business_hours")
-}
-
-model ContentItem {
-  id        String       @id @default(cuid())
-  name      String       @unique
-  page      ContentPages @default(value: HOME)
-  content   String
-  author    User?        @relation(fields: [authorId], references: [id])
-  authorId  String?
-  updatedAt DateTime     @updatedAt @map(name: "updated_at")
-
-  @@map(name: "content_items")
-}
-
-model PromoItem {
-  id          String       @id @default(cuid())
-  author      User?        @relation(fields: [authorId], references: [id])
-  page        ContentPages @default(value: HOME)
-  name        String       @unique
-  promoGroup  String?
-  authorId    String?
-  updatedAt   DateTime     @updatedAt @map(name: "updated_at")
-  image       String?
-  size        String?
-  title       String?
-  description String?
-  link        String?
-
-  @@map(name: "promo_items")
-}
-
-model Policy {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  content   String
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  String?
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
-
-  @@map(name: "policies")
-}
-
 model Question {
   id        String   @id @default(cuid())
   name      String   @unique
@@ -458,55 +516,4 @@ model PetRun {
   @@map(name: "pet_runs")
 }
 
-model Service {
-  id          String   @id @default(cuid())
-  createdAt   DateTime @default(now()) @map(name: "created_at")
-  updatedAt   DateTime @updatedAt @map(name: "updated_at")
-  name        String   @unique
-  description String
-  price       String
-  duration    String
-  dailyLimit  String
-  available   Boolean  @default(true)
-  author      User?    @relation(fields: [authorId], references: [id])
-  authorId    String?
-
-  @@map(name: "services")
-}
-
-model MedicalIssue {
-  id          String   @id @default(cuid())
-  createdAt   DateTime @default(now()) @map(name: "created_at")
-  updatedAt   DateTime @updatedAt @map(name: "updated_at")
-  name        String   @unique
-  description String
-  price       String
-  duration    String
-  dailyLimit  String
-  available   Boolean  @default(true)
-  author      User?    @relation(fields: [authorId], references: [id])
-  authorId    String?
-
-  @@map(name: "medical_issues")
-}
-
-model AppSetting {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  title     String?
-  subtitle  String?
-  logo      String?
-  favicon   String?
-  facebook  String?
-  instagram String?
-  twitter   String?
-  youtube   String?
-  google    String?
-  yelp      String?
-  updatedAt DateTime @updatedAt @map("updated_at")
-  authorId  String?
-  slogan    String?
-  author    User?    @relation(fields: [authorId], references: [id])
-
-  @@map("app_settings")
-}
+// End Kennel App Models
