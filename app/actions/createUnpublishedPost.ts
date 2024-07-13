@@ -30,6 +30,15 @@ export const createUnpublishedPost = async (
       },
     });
 
+    if (!response) {
+      return {
+        statusMessage: {
+          message: "An error occurred",
+          type: "error",
+        },
+      };
+    }
+
     return {
       statusMessage: {
         message: `Post created, let's add some content`,
