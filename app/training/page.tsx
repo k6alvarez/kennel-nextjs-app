@@ -32,7 +32,7 @@ export default async function TrainingPage() {
 
   const getTrainingSection = (sectionName: string) => {
     return (
-      trainingSections.find((item) => item.name === sectionName)?.content ?? ""
+      trainingSections?.find((item) => item.name === sectionName)?.content ?? ""
     );
   };
 

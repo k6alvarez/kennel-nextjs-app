@@ -43,7 +43,7 @@ export default async function BoardingPage() {
   });
 
   const medicalIssues = await prisma?.medicalIssue.findMany();
-  const medicalItems = medicalIssues.map((issue) => {
+  const medicalItems = medicalIssues?.map((issue) => {
     return {
       label: issue.name,
       key: issue.id,
@@ -60,7 +60,7 @@ export default async function BoardingPage() {
   });
 
   const specialServices = await prisma?.service.findMany();
-  const serviceItems = specialServices.map((service) => {
+  const serviceItems = specialServices?.map((service) => {
     return {
       label: service.name,
       key: service.id,
@@ -78,7 +78,7 @@ export default async function BoardingPage() {
 
   const getBoardingSection = (sectionName: string) => {
     return (
-      boardingSections.find((item) => item.name === sectionName)?.content ?? ""
+      boardingSections?.find((item) => item.name === sectionName)?.content ?? ""
     );
   };
 
@@ -113,7 +113,7 @@ export default async function BoardingPage() {
             }}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-6">
-            {petRunsCats.map((run) => (
+            {petRunsCats?.map((run) => (
               <div key={run.id}>
                 <SingleRun run={run} />
               </div>

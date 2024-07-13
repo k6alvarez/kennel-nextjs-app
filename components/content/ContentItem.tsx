@@ -37,7 +37,7 @@ const ContentItem: React.FC<ContentItemProps> = async ({
       )}
       {isAdmin && (
         <UpsertContentItem
-          contentItem={contentItem}
+          contentItem={contentItem as any}
           page={page}
           section={section}
           name={name}

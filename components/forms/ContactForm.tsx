@@ -80,7 +80,7 @@ const formInputs = [
   },
 ];
 
-const ContactForm = ({ email }: { email?: string }) => {
+const ContactForm = ({ email }: { email?: string | null }) => {
   const { pending } = useFormStatus();
   if (email) {
     initialState.email = email;

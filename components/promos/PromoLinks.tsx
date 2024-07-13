@@ -14,7 +14,7 @@ const PromoLinks: React.FC = async () => {
   });
   return (
     <CardsWrapper classesOverride="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {promos.map((promo) => (
+      {promos?.map((promo) => (
         <div key={promo.id}>
           {promo.link ? (
             <Link href={promo.link}>

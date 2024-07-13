@@ -46,7 +46,7 @@ export const ReservationPets = ({
               label: "Add New Pet to Reservation",
               children: (
                 <PetDetails
-                  reservation={reservation}
+                  reservation={reservation as any}
                   pets={pets}
                   setPets={setPets}
                 />

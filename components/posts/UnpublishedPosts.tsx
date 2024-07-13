@@ -10,7 +10,7 @@ const UnpublishedPosts: React.FC = async () => {
   });
   return (
     <CardsWrapper>
-      <Cards items={unpublishedPosts} />
+      <Cards items={unpublishedPosts as any} />
     </CardsWrapper>
   );
 };

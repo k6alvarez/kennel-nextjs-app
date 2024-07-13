@@ -31,7 +31,7 @@ export default async function QuestionnairePage() {
           a field is does not apply, please type "N/A" in the field.
         </p>
       </blockquote>
-      <PetQuestionnaire user={session?.user} />
+      <PetQuestionnaire user={session?.user as any} />
     </Content>
   );
 }

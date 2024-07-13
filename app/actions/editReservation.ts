@@ -7,10 +7,6 @@ import prisma from "@/lib/prisma";
 import { User } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import {
-  textNewReservationClient,
-  htmlNewReservationClient,
-  textNewReservation,
-  htmlNewReservation,
   htmlReservationConfirmedClient,
   textReservationConfirmedClient,
 } from "./emailHelpers";
@@ -57,6 +53,15 @@ export const editReservation = async (prevState: any, formData: FormData) => {
       where: { id: prevState.id },
       data: body,
     });
+
+    if (!response) {
+      return {
+        statusMessage: {
+          message: "An error occurred",
+          type: "error",
+        },
+      };
+    }
 
     revalidatePath(`/res-guest/${response.id}`), "page";
 

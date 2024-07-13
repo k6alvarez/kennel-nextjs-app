@@ -35,7 +35,7 @@ export const upsertContentItem = async (prevState: any, formData: FormData) => {
   try {
     validateContentItem(body);
 
-    let updatedItem: ContentItem | null = null;
+    let updatedItem: any = null;
     if (prevState.id) {
       updatedItem = await prisma?.contentItem.update({
         where: { id: prevState.id },

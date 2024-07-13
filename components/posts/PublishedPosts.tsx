@@ -10,7 +10,7 @@ const PublishedPosts: React.FC = async () => {
   });
   return (
     <CardsWrapper>
-      <Cards items={posts} />
+      <Cards items={posts as any} />
     </CardsWrapper>
   );
 };

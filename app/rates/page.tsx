@@ -33,7 +33,8 @@ export default async function RatesPage() {
       <BoardingRates />
       <ContentItem page="RATES" section="MAIN" name="ratesHolidayContent" />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-6">
-        {holidayPremiumDates.length > 0 &&
+        {holidayPremiumDates &&
+          holidayPremiumDates.length > 0 &&
           holidayPremiumDates.map((date) => (
             <Card
               style={{
