@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import ContentItem from "@/components/content/ContentItem";
 import { Content } from "@/components/ui/Content";
 import { Collapse } from "antd";
+import prisma from "@/lib/prisma";
 
 export const generateMetadata = async () => {
   try {
