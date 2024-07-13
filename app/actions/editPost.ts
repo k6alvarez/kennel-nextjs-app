@@ -30,6 +30,15 @@ export const editPost = async (prevState: any, formData: FormData) => {
       },
     });
 
+    if (!response) {
+      return {
+        statusMessage: {
+          message: "An error occurred",
+          type: "error",
+        },
+      };
+    }
+
     return {
       statusMessage: {
         message: "Post updated successfully",
