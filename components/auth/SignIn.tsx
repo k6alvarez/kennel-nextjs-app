@@ -1,28 +1,24 @@
-import { auth, signIn, signOut } from "@/auth";
+import { auth, signOut } from "@/auth";
+import Link from "next/link";
 
 export default async function SignIn() {
   const session = await auth();
 
   return (
-    <div>
-      {!session?.user ? "You are not signed in" : session.user.email}
+    <div className="md:flex md:justify-end text-sm lg:text-base">
       {!session?.user ? (
-        <form
-          action={async () => {
-            "use server";
-            await signIn();
-          }}
-        >
-          <button type="submit">Sign In</button>
-        </form>
+        <Link href="/auth/signin">Log In</Link>
       ) : (
         <form
           action={async () => {
             "use server";
-            await signOut();
+            await signOut({ redirectTo: "/" });
           }}
         >
-          <button type="submit">Sign Out</button>
+          <div className="flex flex-1 gap-4 justify-evenly">
+            <Link href="/profile">Profile</Link>
+            <button type="submit">Log Out</button>
+          </div>
         </form>
       )}
     </div>
